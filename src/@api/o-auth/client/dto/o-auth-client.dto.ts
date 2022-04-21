@@ -13,7 +13,7 @@ export class OAuthClientDto
     id: string;
 
     @ApiProperty({
-        type       : String,
+        type       : OAuthClientGrantType,
         enum       : ['AUTHORIZATION_CODE','CLIENT_CREDENTIALS','PASSWORD'],
         description: 'grantType [input here api field description]',
     })

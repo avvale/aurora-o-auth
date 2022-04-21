@@ -11,11 +11,17 @@ export class OAuthRefreshTokenDto
     id: string;
 
     @ApiProperty({
-        type       : OAuthAccessTokenDto,
+        type       : String,
         description: 'accessTokenId [input here api field description]',
+    })
+    accessTokenId: string;
+
+    @ApiProperty({
+        type       : OAuthAccessTokenDto,
+        description: 'accessToken [input here api field description]',
         example    : '',
     })
-    accessTokenId: OAuthAccessTokenDto;
+    accessToken: OAuthAccessTokenDto;
 
     @ApiProperty({
         type       : String,
