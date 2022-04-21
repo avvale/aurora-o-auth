@@ -5,8 +5,7 @@ import { ICommandBus, IQueryBus } from 'aurora-ts-core';
 import { FindClientByIdQuery } from '../../../../@apps/o-auth/client/application/find/find-client-by-id.query';
 import { CreateClientCommand } from '../../../../@apps/o-auth/client/application/create/create-client.command';
 import { OAuthClient, OAuthCreateClientInput } from '../../../../graphql';
-import { CreateClientDto } from '../dto/create-client.dto';
-import { ClientDto } from '../dto/client.dto';
+import { OAuthClientDto, OAuthCreateClientDto } from '../dto';
 
 @Injectable()
 export class OAuthCreateClientHandler
@@ -17,9 +16,9 @@ export class OAuthCreateClientHandler
     ) {}
 
     async main(
-        payload: OAuthCreateClientInput | CreateClientDto,
+        payload: OAuthCreateClientInput | OAuthCreateClientDto,
         timezone?: string,
-    ): Promise<OAuthClient | ClientDto>
+    ): Promise<OAuthClient | OAuthClientDto>
     {
         await this.commandBus.dispatch(new CreateClientCommand(payload, { timezone }));
 

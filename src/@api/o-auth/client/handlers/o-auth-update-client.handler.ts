@@ -5,8 +5,7 @@ import { ICommandBus, IQueryBus, QueryStatement } from 'aurora-ts-core';
 import { FindClientByIdQuery } from '../../../../@apps/o-auth/client/application/find/find-client-by-id.query';
 import { UpdateClientCommand } from '../../../../@apps/o-auth/client/application/update/update-client.command';
 import { OAuthClient, OAuthUpdateClientInput } from '../../../../graphql';
-import { UpdateClientDto } from '../dto/update-client.dto';
-import { ClientDto } from '../dto/client.dto';
+import { OAuthClientDto, OAuthUpdateClientDto } from '../dto';
 
 @Injectable()
 export class OAuthUpdateClientHandler
@@ -17,10 +16,10 @@ export class OAuthUpdateClientHandler
     ) {}
 
     async main(
-        payload: OAuthUpdateClientInput | UpdateClientDto,
+        payload: OAuthUpdateClientInput | OAuthUpdateClientDto,
         constraint?: QueryStatement,
         timezone?: string,
-    ): Promise<OAuthClient | ClientDto>
+    ): Promise<OAuthClient | OAuthClientDto>
     {
         await this.commandBus.dispatch(new UpdateClientCommand(payload, constraint, { timezone }));
 

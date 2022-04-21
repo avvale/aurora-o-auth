@@ -5,7 +5,7 @@ import { ICommandBus, IQueryBus, QueryStatement } from 'aurora-ts-core';
 import { GetApplicationsQuery } from '../../../../@apps/o-auth/application/application/get/get-applications.query';
 import { DeleteApplicationsCommand } from '../../../../@apps/o-auth/application/application/delete/delete-applications.command';
 import { OAuthApplication } from '../../../../graphql';
-import { ApplicationDto } from '../dto/application.dto';
+import { OAuthApplicationDto } from '../dto';
 
 @Injectable()
 export class OAuthDeleteApplicationsHandler
@@ -19,7 +19,7 @@ export class OAuthDeleteApplicationsHandler
         queryStatement?: QueryStatement,
         constraint?: QueryStatement,
         timezone?: string,
-    ): Promise<OAuthApplication[] | ApplicationDto[]>
+    ): Promise<OAuthApplication[] | OAuthApplicationDto[]>
     {
         const applications = await this.queryBus.ask(new GetApplicationsQuery(queryStatement, constraint, { timezone }));
 

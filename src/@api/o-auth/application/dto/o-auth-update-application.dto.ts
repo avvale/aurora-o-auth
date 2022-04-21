@@ -1,6 +1,7 @@
+/* eslint-disable indent */
 import { ApiProperty } from '@nestjs/swagger';
 
-export class CreateApplicationDto
+export class OAuthUpdateApplicationDto
 {
     @ApiProperty({
         type       : String,
@@ -36,6 +37,6 @@ export class CreateApplicationDto
         type       : [String],
         description: 'clientIds [input here api field description]',
     })
-    clientIds?: string[];
+    clientIds: string[];
 
 }

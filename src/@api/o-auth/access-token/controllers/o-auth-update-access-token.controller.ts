@@ -2,8 +2,7 @@
 import { Controller, Put, Body } from '@nestjs/common';
 import { ApiTags, ApiOkResponse, ApiOperation } from '@nestjs/swagger';
 import { Constraint, QueryStatement, Timezone } from 'aurora-ts-core';
-import { UpdateAccessTokenDto } from '../dto/update-access-token.dto';
-import { AccessTokenDto } from '../dto/access-token.dto';
+import { OAuthAccessTokenDto, OAuthUpdateAccessTokenDto } from '../dto';
 
 // @apps
 import { OAuthUpdateAccessTokenHandler } from '../handlers/o-auth-update-access-token.handler';
@@ -18,9 +17,9 @@ export class OAuthUpdateAccessTokenController
 
     @Put()
     @ApiOperation({ summary: 'Update access-token' })
-    @ApiOkResponse({ description: 'The record has been successfully updated.', type: AccessTokenDto})
+    @ApiOkResponse({ description: 'The record has been successfully updated.', type: OAuthAccessTokenDto})
     async main(
-        @Body() payload: UpdateAccessTokenDto,
+        @Body() payload: OAuthUpdateAccessTokenDto,
         @Constraint() constraint?: QueryStatement,
         @Timezone() timezone?: string,
     )

@@ -1,8 +1,10 @@
 /* eslint-disable indent */
 import { ApiProperty } from '@nestjs/swagger';
-import { ApplicationDto } from '../../../o-auth/application/dto/application.dto';
+import { OAuthApplicationDto } from '../../../o-auth/application/dto/o-auth-application.dto';
+import { OAuthAccessTokenDto } from '../../../o-auth/access-token/dto/o-auth-access-token.dto';
+import { OAuthClientGrantType } from '../../../../graphql';
 
-export class ClientDto
+export class OAuthClientDto
 {
     @ApiProperty({
         type       : String,
@@ -15,7 +17,7 @@ export class ClientDto
         enum       : ['AUTHORIZATION_CODE','CLIENT_CREDENTIALS','PASSWORD'],
         description: 'grantType [input here api field description]',
     })
-    grantType: string;
+    grantType: OAuthClientGrantType;
 
     @ApiProperty({
         type       : String,
@@ -66,10 +68,16 @@ export class ClientDto
     isMaster: boolean;
 
     @ApiProperty({
-        type       : [ApplicationDto],
+        type       : [OAuthApplicationDto],
         description: 'applicationIds [input here api field description]',
     })
-    applications?: ApplicationDto[];
+    applications?: OAuthApplicationDto[];
+
+    @ApiProperty({
+        type       : [OAuthAccessTokenDto],
+        description: 'accessTokens [input here api field description]',
+    })
+    accessTokens?: OAuthAccessTokenDto[];
 
     @ApiProperty({
         type       : String,

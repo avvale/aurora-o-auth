@@ -4,7 +4,7 @@ import { IQueryBus, QueryStatement } from 'aurora-ts-core';
 // @apps
 import { FindApplicationByIdQuery } from '../../../../@apps/o-auth/application/application/find/find-application-by-id.query';
 import { OAuthApplication } from '../../../../graphql';
-import { ApplicationDto } from '../dto/application.dto';
+import { OAuthApplicationDto } from '../dto';
 
 @Injectable()
 export class OAuthFindApplicationByIdHandler
@@ -17,7 +17,7 @@ export class OAuthFindApplicationByIdHandler
         id: string,
         constraint?: QueryStatement,
         timezone?: string,
-    ): Promise<OAuthApplication | ApplicationDto>
+    ): Promise<OAuthApplication | OAuthApplicationDto>
     {
         return await this.queryBus.ask(new FindApplicationByIdQuery(id, constraint, { timezone }));
     }

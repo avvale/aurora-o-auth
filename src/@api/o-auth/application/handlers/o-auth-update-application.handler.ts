@@ -5,8 +5,7 @@ import { ICommandBus, IQueryBus, QueryStatement } from 'aurora-ts-core';
 import { FindApplicationByIdQuery } from '../../../../@apps/o-auth/application/application/find/find-application-by-id.query';
 import { UpdateApplicationCommand } from '../../../../@apps/o-auth/application/application/update/update-application.command';
 import { OAuthApplication, OAuthUpdateApplicationInput } from '../../../../graphql';
-import { UpdateApplicationDto } from '../dto/update-application.dto';
-import { ApplicationDto } from '../dto/application.dto';
+import { OAuthApplicationDto, OAuthUpdateApplicationDto } from '../dto';
 
 @Injectable()
 export class OAuthUpdateApplicationHandler
@@ -17,10 +16,10 @@ export class OAuthUpdateApplicationHandler
     ) {}
 
     async main(
-        payload: OAuthUpdateApplicationInput | UpdateApplicationDto,
+        payload: OAuthUpdateApplicationInput | OAuthUpdateApplicationDto,
         constraint?: QueryStatement,
         timezone?: string,
-    ): Promise<OAuthApplication | ApplicationDto>
+    ): Promise<OAuthApplication | OAuthApplicationDto>
     {
         await this.commandBus.dispatch(new UpdateApplicationCommand(payload, constraint, { timezone }));
 

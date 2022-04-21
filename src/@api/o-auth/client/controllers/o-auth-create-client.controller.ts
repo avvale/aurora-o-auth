@@ -1,22 +1,14 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-import { Controller, Post, Body, UseGuards } from '@nestjs/common';
+import { Controller, Post, Body } from '@nestjs/common';
 import { ApiTags, ApiCreatedResponse, ApiOperation } from '@nestjs/swagger';
 import { Timezone } from 'aurora-ts-core';
-import { CreateClientDto } from '../dto/create-client.dto';
-import { ClientDto } from '../dto/client.dto';
-
-// authorization
-import { Permissions } from '../../../../@apps/iam/shared/domain/modules/auth/decorators/permissions.decorator';
-import { AuthenticationJwtGuard } from '../../../../@apps/iam/shared/domain/modules/auth/guards/authentication-jwt.guard';
-import { AuthorizationGuard } from '../../../../@apps/iam/shared/domain/modules/auth/guards/authorization.guard';
+import { OAuthClientDto, OAuthCreateClientDto } from '../dto';
 
 // @apps
 import { OAuthCreateClientHandler } from '../handlers/o-auth-create-client.handler';
 
 @ApiTags('[o-auth] client')
 @Controller('o-auth/client/create')
-@Permissions('oAuth.client.create')
-@UseGuards(AuthenticationJwtGuard, AuthorizationGuard)
 export class OAuthCreateClientController
 {
     constructor(
@@ -25,9 +17,9 @@ export class OAuthCreateClientController
 
     @Post()
     @ApiOperation({ summary: 'Create client' })
-    @ApiCreatedResponse({ description: 'The record has been successfully created.', type: ClientDto })
+    @ApiCreatedResponse({ description: 'The record has been successfully created.', type: OAuthClientDto })
     async main(
-        @Body() payload: CreateClientDto,
+        @Body() payload: OAuthCreateClientDto,
         @Timezone() timezone?: string,
     )
     {

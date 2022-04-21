@@ -12,14 +12,6 @@ import { OAuthModule } from '../../../src/@api/o-auth/o-auth.module';
 import * as request from 'supertest';
 import * as _ from 'lodash';
 
-// has OAuth
-import { JwtModule } from '@nestjs/jwt';
-import { IAccountRepository } from '../../../src/@apps/iam/account/domain/account.repository';
-import { MockAccountRepository } from '../../../src/@apps/iam/account/infrastructure/mock/mock-account.repository';
-import { IamModule } from '../../../src/@api/iam/iam.module';
-import { AuthorizationGuard } from '../../../src/@api/shared/modules/auth/guards/authorization.guard';
-import { TestingJwtService } from '../../../src/@api/o-auth/credential/services/testing-jwt.service';
-import * as fs from 'fs';
 
 
 // disable import foreign modules, can be micro-services
@@ -30,7 +22,6 @@ describe('client', () =>
     let app: INestApplication;
     let repository: IClientRepository;
     let seeder: MockClientSeeder;
-    let testJwt: string;
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let mockData: any;
@@ -41,7 +32,6 @@ describe('client', () =>
             imports: [
                 ...importForeignModules,
                 OAuthModule,
-                IamModule,
                 GraphQLConfigModule,
                 SequelizeModule.forRootAsync({
                     imports   : [ConfigModule],
@@ -63,30 +53,17 @@ describe('client', () =>
                         };
                     },
                 }),
-                JwtModule.register({
-                    privateKey: fs.readFileSync('src/oauth-private.key', 'utf8'),
-                    publicKey: fs.readFileSync('src/oauth-public.key', 'utf8'),
-                    signOptions: {
-                        algorithm: 'RS256',
-                    }
-                }),
             ],
             providers: [
                 MockClientSeeder,
-                TestingJwtService,
             ],
         })
-            .overrideProvider(IAccountRepository)
-            .useClass(MockAccountRepository)
-            .overrideGuard(AuthorizationGuard)
-            .useValue({ canActivate: () => true })
             .compile();
 
         mockData        = clients;
         app             = module.createNestApplication();
         repository      = module.get<IClientRepository>(IClientRepository);
         seeder          = module.get<MockClientSeeder>(MockClientSeeder);
-        testJwt         = module.get(TestingJwtService).getJwt();
 
         // seed mock data in memory database
         await repository.insert(seeder.collectionSource);
@@ -99,7 +76,6 @@ describe('client', () =>
         return request(app.getHttpServer())
             .post('/o-auth/client/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ id: null },
@@ -116,7 +92,6 @@ describe('client', () =>
         return request(app.getHttpServer())
             .post('/o-auth/client/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ grantType: null },
@@ -133,7 +108,6 @@ describe('client', () =>
         return request(app.getHttpServer())
             .post('/o-auth/client/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ name: null },
@@ -150,7 +124,6 @@ describe('client', () =>
         return request(app.getHttpServer())
             .post('/o-auth/client/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ secret: null },
@@ -167,7 +140,6 @@ describe('client', () =>
         return request(app.getHttpServer())
             .post('/o-auth/client/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ isActive: null },
@@ -184,7 +156,6 @@ describe('client', () =>
         return request(app.getHttpServer())
             .post('/o-auth/client/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ isMaster: null },
@@ -201,7 +172,6 @@ describe('client', () =>
         return request(app.getHttpServer())
             .post('/o-auth/client/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ id: undefined },
@@ -218,7 +188,6 @@ describe('client', () =>
         return request(app.getHttpServer())
             .post('/o-auth/client/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ grantType: undefined },
@@ -235,7 +204,6 @@ describe('client', () =>
         return request(app.getHttpServer())
             .post('/o-auth/client/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ name: undefined },
@@ -252,7 +220,6 @@ describe('client', () =>
         return request(app.getHttpServer())
             .post('/o-auth/client/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ secret: undefined },
@@ -269,7 +236,6 @@ describe('client', () =>
         return request(app.getHttpServer())
             .post('/o-auth/client/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ isActive: undefined },
@@ -286,7 +252,6 @@ describe('client', () =>
         return request(app.getHttpServer())
             .post('/o-auth/client/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ isMaster: undefined },
@@ -303,7 +268,6 @@ describe('client', () =>
         return request(app.getHttpServer())
             .post('/o-auth/client/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ id: '*************************************' },
@@ -320,7 +284,6 @@ describe('client', () =>
         return request(app.getHttpServer())
             .post('/o-auth/client/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ name: '****************************************************************************************************************************************************************************************************************************************************************' },
@@ -337,7 +300,6 @@ describe('client', () =>
         return request(app.getHttpServer())
             .post('/o-auth/client/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ secret: '*******************************************************************************************' },
@@ -354,7 +316,6 @@ describe('client', () =>
         return request(app.getHttpServer())
             .post('/o-auth/client/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ authUrl: '*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************' },
@@ -371,7 +332,6 @@ describe('client', () =>
         return request(app.getHttpServer())
             .post('/o-auth/client/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ redirect: '*********************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************************' },
@@ -388,7 +348,6 @@ describe('client', () =>
         return request(app.getHttpServer())
             .post('/o-auth/client/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ expiredAccessToken: 11111111111 },
@@ -405,7 +364,6 @@ describe('client', () =>
         return request(app.getHttpServer())
             .post('/o-auth/client/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ expiredRefreshToken: 11111111111 },
@@ -422,7 +380,6 @@ describe('client', () =>
         return request(app.getHttpServer())
             .post('/o-auth/client/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ expiredAccessToken: -1 },
@@ -438,7 +395,6 @@ describe('client', () =>
         return request(app.getHttpServer())
             .post('/o-auth/client/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ expiredRefreshToken: -1 },
@@ -454,7 +410,6 @@ describe('client', () =>
         return request(app.getHttpServer())
             .post('/o-auth/client/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ isActive: 'true' },
@@ -470,7 +425,6 @@ describe('client', () =>
         return request(app.getHttpServer())
             .post('/o-auth/client/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ isMaster: 'true' },
@@ -486,7 +440,6 @@ describe('client', () =>
         return request(app.getHttpServer())
             .post('/o-auth/client/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ grantType: '****' },
@@ -503,7 +456,6 @@ describe('client', () =>
         return request(app.getHttpServer())
             .post('/o-auth/client/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send(mockData[0])
             .expect(409);
     });
@@ -513,7 +465,6 @@ describe('client', () =>
         return request(app.getHttpServer())
             .post('/o-auth/clients/paginate')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 query:
                 {
@@ -537,7 +488,6 @@ describe('client', () =>
         return request(app.getHttpServer())
             .post('/o-auth/clients/get')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .expect(200)
             .then(res =>
             {
@@ -552,13 +502,12 @@ describe('client', () =>
         return request(app.getHttpServer())
             .post('/o-auth/client/find')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 query:
                 {
                     where:
                     {
-                        id: 'e0ef4714-fe04-4428-a273-cbec7cc7d2be',
+                        id: '9a01b27a-2262-4af7-962d-dc7dd9530175',
                     },
                 },
             })
@@ -570,7 +519,6 @@ describe('client', () =>
         return request(app.getHttpServer())
             .post('/o-auth/client/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ id: '5b19d6ac-4081-573b-96b3-56964d5326a8' },
@@ -583,7 +531,6 @@ describe('client', () =>
         return request(app.getHttpServer())
             .post('/o-auth/client/find')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 query:
                 {
@@ -603,9 +550,8 @@ describe('client', () =>
     test('/REST:GET o-auth/client/find/{id} - Got 404 Not Found', () =>
     {
         return request(app.getHttpServer())
-            .get('/o-auth/client/find/8894a175-038d-4422-a260-39a68657815e')
+            .get('/o-auth/client/find/6191e6e5-e57f-4b54-a891-5f76921608a6')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .expect(404);
     });
 
@@ -614,7 +560,6 @@ describe('client', () =>
         return request(app.getHttpServer())
             .get('/o-auth/client/find/5b19d6ac-4081-573b-96b3-56964d5326a8')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .expect(200)
             .then(res =>
             {
@@ -627,10 +572,9 @@ describe('client', () =>
         return request(app.getHttpServer())
             .put('/o-auth/client/update')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
-                ...{ id: '9c918ed5-8007-4e4d-ab8a-0e69d05184e9' },
+                ...{ id: '2b929e98-f91a-4e43-a724-f66a3bb2605e' },
             })
             .expect(404);
     });
@@ -640,17 +584,16 @@ describe('client', () =>
         return request(app.getHttpServer())
             .put('/o-auth/client/update')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
-                grantType: 'CLIENT_CREDENTIALS',
-                name: 'Small Plastic Pants',
-                secret: '3oa3zfzle21ibwkfebz7qweixbkl1ozuaq7o0lsc4bqsjygt9asuv4w1llbuhnc8rppb40xdn0ykt73kgnmqgfivr',
-                authUrl: 'eyounhh61c65dg21dqme1a93r14djrukj1u45iswckpujsz27uarv4zbhwozscu4ue9g8bydyz17ou5vh8dhjyxy68n9hawqtn3vuqs5hyhbc0adwezv65xxynh4rimc0w5in0mgvywep0yi9275pofoioxljhtjffswbhnuhddn04lmmyt0kgoo79kks5xnl44z5299pkofukgs4371fvqb3ytn6fiuipwrevx5lriz9uy06yy0kqc6e6y7dl8kc7g98kef4vuk9vc6ux9g3gomc8z15gyqy9vl9y9hto508a5umaaifw4wt29kkpi77xsn94fwn6i1ejisidao3gdaxxs65ien97vk0g94f0kp404lxptfmahzby3k2datf46yt4szhd9awrbcapd5eak7g0f2drvycspesh5i4sw6xa0stobe5h3h8qta89rtpk93tpkbeoot9svkyd1swdi1ewqaysue51p6u6njscjguo3k8oxt9kzvhchqa2itwka3udr8ykasc4qnk88x6xjdghdmd5wuwr563d26is69q7j0wvmu19lh12yb507g293fxiocwhhtftktl2th2hntpi7kunts2s6x34k56yyskwbwutnj4ds6dzx29kevc4ztkdhm1s7ykzf40g3fzqnm3rg18ob3yohfss6wf5bjyn3h4wetsdgzx31hvwdfgy8vfcmjbelyg4hiwjxwwrcleazjntwuwu6sj0vvh5bwjo93edrto7sbvvwcbimphh8qr8jq4ohuloukpg3hpvzm1qjb156ykyh8brt6d9a0j4mm1k6oxx0z8ggiulu1rdb4z6wikamuj10w743byhz3fy6hiu3q94r9wmdusg06s3z42d92rhhyq99uhg23t0qfdcf71slhdtrmuy6uzpkjwk265nit1k87foymlq3d2i9n6xg0obja3by1887kub8x1r42d0p7yvcthg700tndg0mmw81wjrhi4yxqi5z88sfngwa2zb1ttmx6qhqw143quz9ddiyovghif3lwhprim3d6deibidnhru2ph9pon0e5655tue45tslssp3r85s2m99ws803fn5emh2427klb3335t5c2zu6hyz1c1kowczgpsgu30zy7xjy9bar1tnciafz3vji08fffqncvm7zsdnlvrp6bgbcld64771avx4zbbz39vkuvdi433vaxe0ww2jga0vmi7jbycch7oajss61xre5550hdx3k6pg97vwuikdtbln74ri5s0uzq8j1pd2ke6uozats841dsa18n1sae0io2w6rsymp2cizm9nie4uk4qjnti8d3z3wi602ov8ab43iihsh3cc9gtg09d8whkxnqtobw4wnw065oemyk9oxiktmqn0ytopd01qk3lfwr8xonl4sr4u78q5j5ypbswz7iex4onyvroykr83ad76o6t5k7vs1urihdscr0roll5vdfexp0mmoktmylwcla18m2bktz39ac2r9sj16cc08sl2fgr39oyv57n3lx3u4gzqk7hdufyavz9vzgxtlu8skclr72ckatr3s8644w8y69cwsp575chsb74broopoz4h0la1lhooewjnfzu1jxk890linitmnowpjm67915wi1cd7tg4b0g0atavzvdgdd75q00swllzod8031q4hsj8pwusoxncuznla0deirpa2x7jdi0y1j159jvck2z73opjpnx8ld075qkpctzamasg3a0df8y5tc7vbzun89ooo7c2ht99h5qez1y3hzhdyxjf13kv683nhixpora3dr2ujf9nyo36gj5vknj7ycrdehbo7vrjdu9khzfozquj0r2mdbdcw29c0uica33mb0qv2de3043vaj8ophmmet6od6rpfc5aj67t3mt2693pz1xbajjuza0vnno1s2gxscbn8jdaylqem187t71ava3th7st154c5dzzl4s2pk9fnextyenwyx3g2epduginau1jvigssaxeipndxhh1wctgaavis6e91fez',
-                redirect: 'o6yedbnt77zdzzswv9gyljxldan6xzumz6rsfiih2tkhxb4rxmarcmd4rhhklyuyyb9dy5ceqbq6pyzrgljtuunbslagzf098u7j5z25u7oksor74jx5rwqvpavsv069o850oy9si96zfpssned2tcfn9n955m3ho0xb9kdvgvjzayzikwaj5mvhd4o3s7hhdpm7ki80airjr42piyeyd0ltg4xxr6cmp38ageo36ceafb0cbw0u2imqmvzitgmzdrpfuilnof7znd1pkpmqnb9blls36hzsz1xovgavdj8clmc73kmi7k5f8rtkpt714abtaqutyt09m19k24p8lgoperhqilwni3l247ba9k0tu3m4xjgnodzayxkbeez628i8cpnd0xdm2r5akexqsu4xf6lmvbxmrrp8oobhks2vbjsjucy03ojv2kx44y5o1ga76u16nj8afre28p4o6c7w8x3o36ceudmtvnin2aykz30wg4k5vpmricn7zbee7ci62uc7go94gpfw2o0zrvkyf9wzw2b3tz8j0d1vadrnvkb98ozszt6alybc0oc4n86uqrzu54iuae34ur8swfjbuwx2vibms39m3l7bkyuscveo0mf7zo8knqr5jmj2xuye1z39exya0tliow5pyhzntqy12rnhgl95kcbtlq9b4uj4ncohjlelftheaw0yfdid1v78j1blsw7nb4s6ehs9745mp0ne1o93rrf3fzmtfh2ri2hc4sxoniqkkwtcmzc52i1oynrqojsveordoo7xcmfnahyx9nti1fr0fc2bijlf2kat1svs9kosjumask9s4hzjlmrr4thdxvxe8va35p50lo81v7hcantuyla299ppcqpwtl93xhco1anxh56ntxwr0ix3yvkuin34rs3ttbb8ozmwieb0a1f7hz5l7ksop101mqvmeuqr7psvru4ueasyb7dafqpmdclih1cgade51duobiblpawqw6hkiylfnpnr9wylzgm2vrx86ht847fa2fcnjyoptnosesser8xldkyn5mwfv5klaswhq2m5h4newpvcdkqvarppmus2zmmnps0y6hzynmrnr9s9lsdpc11rsru6n2c1dxg5tebl1l7dgbmzpy49buaqvehbi3t60y08ahrdpozbx8ndq3kxfq4i7rvgcn97l03yonah3meq3h117sxjqn1qvytpkwu6akdakffv0691iimxfyskrbsx7dzpv6axhtx5ft4y32o5buzboq9obj5fuu91joyynuy4cq5t6ctaf30ymg7d3yow5sgo75wp7066zp9kb57kzgjc2wbcpviivymzc2l14uy4ootf3iq87yzkbfkhx8vf2jq9ke4810f00bo0dvn97z0e7nv5bz9wkkcav4rypxw2umrq1yq6j8kgptugpvip948bb4jjoh3k1lxftbur50xq01a8wm6xfwwfpp1mklv8hziwd5hovslouxltozlof4ak1m590779yzp9mfzm7zstg1oojbz49ezae9p2r71lodjr6k5jjp536ntow7hv7sw0s9tthco4ykl3bb7p5dosgmrfu12ieql9a9xo6jul5xd84z6di1h4m6nk60aofen4tuv5mgxlq05krwk1tpxrx5ly8dsqh1ra1u5zopfolgef1ha9b28ksgnrob0u18fg41czn0gvr8zk4ttemp5flx1b24i7argzlo0o6zlep9331z8isiljthcsbuh5aki5rjrksyqixlyam8xpqfojw5dspguyr1mahvcq8cr0q72mbawh9wug70m6rf7c3ucaiqae9me0cpv08wjq6prna8vkv9ykjt5flv40jusv8v5zznhx9e21takkqf21aszv1gq50l6ivrmiexrzd2g1n1hmkyg9bniijr70ffq470dz36itxn9meqjekb0piwar62z3kbrgco0nbgvg75vdlr9oojgxa84w8gr87b7fm1yt7aj3p0m1r0cj4sr2lm90xvn3wwuy0g5m933og3cuxzol5u4',
-                expiredAccessToken: 337882480,
-                expiredRefreshToken: 869645135,
-                isActive: false,
+                grantType: 'PASSWORD',
+                name: 'Handcrafted Soft Chips',
+                secret: 'cl3xq0okam395o2ej33l7a2xs871gdv271skk6ti3ornqmcgi2mrbmxr6s6ze09gt2n604yjpgqxsce5jw540l4ro',
+                authUrl: '1qz08fiz0ai1ybobngxgw7vh9mfv3ij5t2pkj09gu3vda7j4w9152n440ezqf2a58d08tvmflik5vv1fn2nvkt9g4ost5awvh24vqj7gz7ri0lwpjhbw0reb56y72nq494k1oom365yzv9iy8fbjrdmf9o2rk9uh5wgyyubpky1w5mjb5toemsqhdd9hw4j8uc2pall0kqs7st4k1bvhn926prk4h4cyrtu3n3kgx6fddsvpdxi8cwr3e54zwtpvu8cbj1y5nvn46089eypgwkd8yt21jqvotwyct4h1hcvxasr6kfkow5f6ud1xw96423wfj1mndnrje924imwcg2f0ebrsdopeq0y4i2snoz7mwmvn6zvmvh5t8vzzhjkucpddly05d0bodzo5mxfr6ahgmaqa0mer84mv4fyyheume20liyero1x3lma245bf1j6ld4m6z4kemrx26v47a9nrmvyrkiij1kgo8qgrwnsjtg0r82tgubzcce2c2smnco2kq2hru5awqisvw1pzj0u44qxa28ezjq7meg7taunkubgkgmhf3bbutuw257raiuh4oxdv2bvilxtip97zhh6zort0hhx3t6xqcjd7zfuhm00kvsgy96klqmx5ogedpm34ktejpho5uf3jzavorpec4pis5fxyqzmm2o4l2ltnzh0u17e4gqo9nk6bt8e3x55arlmdls02b8ka3tukvyzahb4mzd28t1hdv18vaeaj6ufrafanlblk27ezt5zyfmmtu3j384xjvu9xxi1zw9w2t8e37dredkej4qdzm6wg898wun2qdmzgw4z076vmzze5yef8znh4dsdz3956bss1k9ye12fp9wivegwkguisdihgynvy4ncijax08p53u0b6w8g4208rc6s3pjwjswizprpzx3lb6dufz70sbmfl58cfkpmi8e7a4x25jkfj1sp80ird78ehqw4zvl62w7vwwpmgi6qnpacnadjfflu83p7twbuzffrn8o50p0gzbonmb1uy4e85ov5k65vbfds92d28d744e4rvs1x5yovj3qiyugsdoy8bhdxjpiwuiybfdjihyevf1pidftfu3u6ssjm8jhao8od82abmx4x3ix4685ggqe779ch0iuta1go8is56vwwtayelhv37lq5xfgth5i6cnbm1jhqadfd7mzxjsqo9iqvjeav2xqwz72w5s8ch2rd8vs3h5y2a57khl0uvffh3xedjutyynks2kot1izfw5btwpd03f69lw7uqrs7ydw4dlvx6kwem2uzbt321510p7uykxarv3wzip3diwbwhhe7179pjssc83tcrr08i3nt8oobekv49rfoc4tz7zynvm5unacjp0besixq3c9i4krjs96yf5nw7vzx2sk292bc243sqkwhs97c99kk0f8kya9qsy5ypyxyobdn4oa7wtn2z2wkjor4cm32avkos3n53z0b44fqtji0j913909fuaywnzyttz5t6jlrackk7o3z238jpggnf52run41xcslxi4jtc07qgnflqahacb69xbuuiv5qd393ciwnwlbb6bek07fubys3bo4sjtxf3hps2abqadjkrwh3cs4qlmswjsotp81znchl1g4d1jbta1qxjvci7gm91fwnhrkz1yhpx66k8iuxnpjcahwlzi2xmcwnhp8ddfrutcdipdz8r8ismz2hdkh96ezxdn5fevnw7nmoa4o7vw7j2kh2oxpp8d6dg484yhdcs42foxoh5zbv977y206yj985f2wfxhxkj9dndkj9lingux3czfcftobxjmxgx710gmtz5hocnem0a06avz5jvjfbolh0n4al6b6ksw7xqj2yyu1q07ki4r13gw2m08o07uzz5slj3ma8wczx7nuto0l0oduqic795n45sswpjb1n7ap0th9sq0fogh33z8l1uey9iap8idmhisfsvy99txmrwexufeoyatsn1bhyh1pp60av66g0qcy9aqzz1enr92uw103zq2qaagiaxbf',
+                redirect: 'c85g75zwi6btrn4rwkw3pxqiwcis5h44u2fs6repefxj3vh70v6upvffzzd3suwvuf6tadwimcrk7a4rbjxphjspin3h3u9e7n11d5sumzeavzvd63tvuizx388l58q0n35wq8x6nu1lbszvl27pgq8jugmi1gqoq6vhh7j38lv0j0q95xp61pfa31pqdq5rpcwrxdf84xdkffr7n3gcsx4ge1c4fn2ujtawsgt080ypnupi8oud8sise246acgauuemds3u192lslclxr3nors8y59qncokshuurxxf2ntd7m99zhui5pxrz7ayxsx8ays2v7twl5i8ha5onud1ec8oie1q8aq9390afrcz7mvqwt1k8fkvcwkp1jx54x8as3aer4qv2kenxoz1dpi9hcnwp6hokf0nhlze1g44tx4kp4e2m2mx7j7lsmscqurhf9jszr6guzq2yyammpuyw32w93uz3kgc7isux5fw9mornj13wx9arol803kiz6i2arus68r65e4ulsqwngi5ldum98efuktpuxeppxfrxyndcch82ycp3a680eifgxdz3996c2iawu1rkvo33nh644o7l90xvqbjr69zeqe70nnou0l73zemywdrmpmgsr0tt7i1gmy9bc72s8qqdbobyva1r6t5v5x2gutg5khe3j47pw44rq13ba3d3l9pvu7ckaaccx1podkf8v2yojjungobyx8msp6ml4zaacl2lr5oojda1jtd0xiydd9dm6d2hklyarjfhkf5ofmjmyp4zjoyqw8wmltc3dcc5oe62hf5k88byjd0juy0yyepr5xa1josxwqce4kdp279o8swiieqzlhid3h26l0dhzqm7r1bcri81xtibklf9mew4tddr3tl7ue7bub5my60zlicsfgsz6vt6q1ghg0gf9j8r7g9fkvujcvgrd9led6gpq4zk326uemf1c9jjvabopcjc7bg42kkg29c5ccmb8k9jqmielkvxq0h4gyj5v7nq3hkloydt6uupvyjo2lt2y4kbzct1jif2xuibktaw486ebfcrgsdhtjnffqyzwgr90jahjqlazm53n7lhyaysvxscotutg3k1gnnf5dex3bl65h384lkrx2ogk6t7jotoohnovx1iujtbt3mvy9y90sdb789nj5l7j6co6oyscw9n7mwf4wxj14w9hvgb7rq7j2rv1f1a3r23nnem4enwkujmzmez90hyd6rggmvjnuxhck3hcsbnuz185fr59hlanwra71t9v4auxnuyxj8udn3qtca2lpw00qmjz4ned20tsdj8a6gqn5v938tjg9i0d8dnecup52hlwxln49hx6csn80fo9x7affbj8emoh9zh7356rvh6x9qk81fqkis971sfxt71ssf2k05kp33bmtkqqomsoapruya3dj0s0uuie1xnhj7jqegc7m5kxs95g28nlphijk0xc94emnyjybh8in0zj7oruzln2dn4m1yx3wjgtrxiogl73yn6iwhqbgz5p435mvyeohgikuzlqrbjv1bp1eq4moulcopnrb68rynxypyq5vszx2mlqmrdld9wwu9wrnds1z78itl3dndzhrefk3d39lfxq52ga2nouwr443ivap3gvju8kxh2a6j2em3o3g62wgp9wwyk1somsnvneo1rn6mbm1wuu6aahr9el8611kpgpdjlwaevma6082nies6t6gp53l74t7gu6s6zckyqqnyh0v3itp3m47gq7j9jvbk2lvb914bx2pj5fuafyvpazj2j1h2phjz98b6c0tbxw2jvqfeqpomfmlei9pp59h17ka7gumetkdrgf8w22ch5tg71fqah1l003lw6dhhisjp0agimqc8c030glpaultksv9nt1cejwx2vezu81r78ok0gfsfipx4rs09tdjzc145bnmz3o1fqouzfi2bbehfcff3cfjxi8tzyyagq4g8aloj370bzra68k4msma8cjsiji4zqczqsjdv95rrc9cu148r6qyfrda',
+                expiredAccessToken: 418382984,
+                expiredRefreshToken: 502930848,
+                isActive: true,
                 isMaster: false,
                 applicationIds: [],
             })
@@ -664,9 +607,8 @@ describe('client', () =>
     test('/REST:DELETE o-auth/client/delete/{id} - Got 404 Not Found', () =>
     {
         return request(app.getHttpServer())
-            .delete('/o-auth/client/delete/1e56dd7f-918b-47bf-bfcd-f9530bdb5383')
+            .delete('/o-auth/client/delete/83783952-f2e9-44bb-8c78-797f2698d65b')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .expect(404);
     });
 
@@ -675,7 +617,6 @@ describe('client', () =>
         return request(app.getHttpServer())
             .delete('/o-auth/client/delete/5b19d6ac-4081-573b-96b3-56964d5326a8')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .expect(200);
     });
 
@@ -684,7 +625,6 @@ describe('client', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 query: `
                     mutation ($payload:OAuthCreateClientInput!)
@@ -723,7 +663,6 @@ describe('client', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 query: `
                     query ($query:QueryStatement $constraint:QueryStatement)
@@ -761,7 +700,6 @@ describe('client', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 query: `
                     query ($query:QueryStatement)
@@ -800,7 +738,6 @@ describe('client', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 query: `
                     mutation ($payload:OAuthCreateClientInput!)
@@ -824,14 +761,14 @@ describe('client', () =>
                     payload: {
                         id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
                         grantType: 'CLIENT_CREDENTIALS',
-                        name: 'Small Fresh Hat',
-                        secret: 'gxfzae0fk54y4ck6vd4ou8jpqp2yvds9evp1uy26o2o2ihj0upcriwub57newwlstz90jpiz5c3gyaw8rz1qqx4r2',
-                        authUrl: 'lk1858dqcvzy86i3ta1bre924azln6w69qh04i09xevfdauwltet2jj29vt62or4f5uuy7ir9h889jlqdtt3kt7o6rr67xli7l0ut7su8454ry8q3w0jll93pdtyprrymnd1ye7yaua3d8u60gdaefm5a4c3ouznxegm5bnagwfnjlf9gm1yu1dkkfhyjp6izuwt15xkd6gq94281oy576h7ukodsvk2riqbshz8t0fag7ipwcdfyp60c6uq71xjlhqzrxbah1mkoxdqpkr8eswqrsnd35x2mfm1vueafdno76aem71f16sxtpiuzgbzhnt5lqy1doi9km0y111pgyva2fyjtaa4k40ywfqeehaeoad0juwqy1pn44dj2hw5mi5k8q19qcenkz634n61pqdofkx3cvybhc0hnnq290upjw1wv5r8gyv09ah2wft39bjeol9gik6oa6vjwkca6s4zfsyc0nmtltcv41ch2ozj0b4ztjyxanpuruc9y4bhezhiqq33cidgyx7j4ctwz25l51q9hgrh0f5j6lk06qa283hu2hub62hobz60f88px3t1uw0mfcck2uylyr3fx3h5wnm58l8mth1lrnf6eyyax2cnumioutub6aezghtdfkgak6m7xv88tnue8v1gn3qc772m6ixbqpy9ezrc18gzoz1jyvwiqgr4qea391ipw5x7kctg8uiduuxxgkuizt48bi1t6dczuqy02kvrjnk3xst0xseuagcolwi9ovosk56e2tun7s2it75o06okvjdz73a3mu70d9en4obhas6puufw8hwsr06v05kg26x7p07b2cp6i0nksdeb98nhnm5iihqg70xn1k1pmbg0q5l2r0s1hnomforlcgw5p0zzyuqc3kl11tmp778c6gjmiazu9u80ndugo4mw2zg2ri4sep6ncnclvz6rgmk5oi9bnvjunp08aprd8yy7pqk8dmvjw664wuhpo0qzeyrpmrelfqyegoaqfni916zpif39shtho09398k8p707z2anpv7t2mofdf3fjeylu0s3a785ey3skkgdvqqfr1wx9ghujs8pi9bw1cg7sljud28l0jvx7etvhs87p8r65sy40yc3d5uyp9f63ha22xt9dlofrym9w146l9rg8vu8rascfsvva3lr8980ng8ib3rectkv01f2rwd1snv8bojo93y7byxedvvmd4zgf2q4lipmm317jmzhia9x4wmtjykpd6vzei9w7wccdx29nktpmzrw4q6776vellirbc8ny3rcbkh15bg2ds4oe7f4yfin3ng8jy50bt4comrhjcdorpzg66qk2bps0ii5ws0niyhkl62yautkdooy7gcnuytvq4dpjnxboxoejtb8f6woy42xq9kjyeu3wfxfvf2v49u0yyoful6e0u30v8x7xttjwb3mbefj6and163xf3h3pd07stzm019a5yudx6b1ssmqikksgwpdmwfiagjr0dze4a24o1o5wlempj8p5sn2xmlfvjv3q9jseb0654k6f27y7t30jnp6742mbw6vglxylo69hv1g9q7pirl3h2q6dv6w14ly4x2v93140g89gcbo7nwvbg69h5iv13zgarxu4eafapwzd7co1lhliqlg99g1f6qy3sts757eyyjehu42o6i2l3v421cbupo0956qmtrfebl6zs9gtygzjjpirxz1a99dvswg9y9k2kh2ucggftq5cp8xd8k54csbtgm9xvhmi8z22zr9dftihgcwaksz43j3i4txl5xftcmgwxpaue87eu7qb5ql5pq7erwlxt2h4iu22k9lrubiwn96dyxbb5ltshymwgpuvqbhfok932wtf80vnxb7mnhueiz0xu9v23s793phrmavc47lth3o76hb1cd8cqymjj2gcm5doz1hlwv1r01zes1otiyr1xzpkebykksgie482yntpd0yjawt2a63rql38r4mm2xrpdl6i2bqbu344fsroqnxfores5sy4qdja4t71li2ipp',
-                        redirect: '5n7lebkmseaj3d7b9njy25cnsybhwoh9tly9cx0bzhe4bfcbllqqwfuadwot85n5xl6hrtyyykc5d0wr7fihdkywtxswahgil9jp9csoyva8pss0qe04igsw5hjvov1b10gyelem091k1sjvmdqsclx8sjoysno6kyewomuudlt1usz4lkwkhsvpy21w86f66ylgtvugfwht4lei8fstsgug8ib8c6fpzvmqufufhys894wxak2wx4cp8tcv2t94nr8o4ss93lcb5t0byj1h6vmfqghev35tqnpafuju9sjsugsmbq4y1e1kx8xubs34makkx06sxmnuwsc8jmjms68gz1k296r1qjjjew5blcmjem0cup8kuvtgpcgi1xanuki6jwqs64o5lgo2vdr0beneq90xba8tfnnhg989ob44offw0ulilrkagt49b9vahnsvj8j7j7p9uz60hwygljxieqpmhkwkoj5co9c02v6r24irdnkvbticc8frwuv3vmzodr72oxx9fgravd1mzfho5l0u0k8vnqa29vbpdm4pblpwb1tutbdolehgkluuy4c1srklfl3pcnfbli48ykpq97vn9lnkw39i2x17icsqqdh7jbr474ztws7kqjyim70xiio76facvq94q88kzwewkphghbf8h1l2bgbm33uowvzc5e52ronfpem2cvx7hmzoz9xo2buss150h4qqc0t8nfkcbi80pfa1buhd52wei2r0zmt7jpdre04zgwuvfja0l4rbtquwpc1jws5phwbhucxs027fvstopzlsgvc5sw9tqxsce95sr3cj1cij4g9er1je3gmkj3yli7ow6y0lm88zv2a8mz9ntfnt4ohy9be2uwdecn2rf466tbl2veosrs08uom7u7lj4uqcauz2go2f99a6tgxb9n17xpgfsz8jphswr82jdfj6nt3wdn2h5h1zsja9y5egnc323wwyh6741w30m4ae2lcsh9nc8lqvmkseqn86klo96kcge5iaz07nofjajx7hc78qiug6p87lzom0eioqli33d0r3r0sdel3dcpkoj1svjvvxsixa0noc6j4ai4oujj91fyqrh1lucw7sloapncyrbnbyo4v5k7188yi3dzmksrt56dn9vr6tonq4cmc3vtj8ciinagtk0cbddylzvt9rk4jra77h5rsigeha0ogkwnb7wqi91fs5kfqjcxsq40k7z078ugonb0xufm1b9bgfhf7csce3bp0f8g98jgf3q9a7qvc90nz0gc8imv0ko2y2qidf9kq4zykoloufoh0eqwvm7qx82efq6pvvuxi3en3j79y5juph6lx14boylggefjvtr0okljrrmv4bgypccy6wlzi241x3ee7immu1xvfk8ucn27cwimgmuksvm8s18xno7wu11kspy15vibrqezdw4k5ovt1ji2vzngk2w56kjn4slckq91npluwduztreo9dnlbgr6dps1t4u3ehqvrxlhaodw00t1krv2d5rkp3jvvgospf0301z4pxv444980jts9dqgnl51oxqs4c7e2tr2xihg9so3qsk22rbtc9tnwwm5blncqa7ecwmnklfnhpormmuxlgz2ci7tsaj7sy915x7pbm1qsrn56s2o7dalcjdtsm5pn314gn41c41x3630mmzm4odjqqmta1ert102vvmjyqejcz6srdajcekyvm76o63a2yi8bgsgmz6p6g693fiwbj7g5r5xp1bxq0bg5ub8m60gnqdfd1p6ft41rryj2t5eagokx25c6x4czs7uj6hemut979tllhdkm48kinityshj9mfy8226wu741qaj7cq8eauq5a63g4xo4zafkl1vnsig9y36bksk4xp052kxwe1wtis6elnfu8n8zat4e7eii8lefhext8ktz59r36s5n6iumniz9xg7nopg3vtbhgv8zhwivbu7sg5ac8mva0ftp41b5mekkuh6mz0nveyua9bf37jefgup5cwepc8fgjpfli61yh3p7',
-                        expiredAccessToken: 912778894,
-                        expiredRefreshToken: 489356772,
+                        name: 'Refined Plastic Towels',
+                        secret: 'upbnzere96twq2d23mfz2prz22qedwxegardpwub765ylr4jdzm3nbfcx6scj6qv5h790g4nboxr7wxipfrq8zvg3',
+                        authUrl: 'y4qhnxacescrciqrxnfoccqfs4jv12qwcvv2ogwdqrwugtj3kqjyy9n8k10wpvzondtrjmdbd4yjl3c9dixctcw5vvgjy65l7fz7p816ws1qjun5an5ykj7pfr8tgv9bhvnd3bf364cri2vlc10jb5imiphmlr6f7ztgqwl6gnbdjzoaeq77drlizw6cudo3qh6d9r9y18sq0xkvosppyz1o9a36maifurpjumha9mfwyu6i31dd9o8yp1h9nao7rdf1mr4p1zfz1d29mitb3bkvmh0xyv3i8uu6287cgilyf3v7q9wrf8ujonxm847lis4jvd2jhxjy173l84nndoqzuidzbvmyarqj1sdf3doitahk450310juq2kx5k5umts2g5mm61hzftg3lwkvvg3jslmqoj7hh7rny0dfyyrm87uu99iwd4xbb08lh3t7cfez96wgkgbnmo38jy7nh79qygx094ghat322txtiduuxgyx4gh98ygcvxago4d8v1sppz8v0a6vcwolyc6t2rx3eidzja3s3tkuni9l326rdx7eae7nmp7x77d72z2efx7l3gcl5gc2kzcnjtk034arpx0idv1dnsuuvd8a0yf4kq81nuwjmux0pdbr2ypga5tfwybpbnda8svicmoz96y6bv18rbte68u2nh35fc4wxwmaozgpyqas963shr4jsoen1f2q5uoufg8pjz069oj53hcfp9g90ouro6nkz8k4g0a4vbjdsxq10sfmc1o8tyur8t5cmspnj4l35dqb33ck1dgy9nkah4h0z8m48vp1grh3gwrut75dojwg9qvcj0dd0sax9d3g5zjvjn6z7f4btjt5y6xzym7ddy3yb2caf1p6v3h8wub2d1s367l00f8ugl1w2n2s13rdb35kllon96ffqkmghazg90i033x3ezps0dd33wxm9kl25jt17uwvmjfj8wno2862o4umel6iida6rnsrt67zmaq32xg42hm18v6m2944rqg9oq31ew6zsuae36x6kpw93pofj7to8axdux45elmynbs22p51qycbi4ete1h44amh5bd87l2av4wbbd0jc1k4y7fdk305b2a2tozvkp77av2ukjtm9keg3vf4v734b36swcs8ccwv0jvcplv4ao4h6x76gcjkq5h5oorbn18tbe53rgsyco7qnzu2ws5xgxj63n5ms68kpmcm0mqxbnxlxwhz7odxknw2ck6nphddze7k1w0isvff9b35466gttgj235buae7dh3oth5a2l1ejswn7myiu3hav612539rkqrrpjxefl1wdq7s8psxu2qqxjikf3h84r1dvfb1qzj5ncnsqmbcvsz536kp53vcwkf391wxjad4n5axxmym9kazamnivyl95ia135j7bgpab8zvwuu4llzs2chmolt37235ybtjen646n5bvdhs6hkrsker7hd9o92qo5turz5lekcjr0tluolp5frm7hgr1aobg8eae9dn6l2eo156605bgff7thdnxdf9ug3dmm3onqc1k29eaw1tio71xxab6kfpedg4n0wsf9bilm0xpi59yknx2r1ut6p72sbaggvj1g71eco99em3mhs1cmrnqd0nqiw5cggb0a2fsvchopvj29nsd49fy57gb6b3wgldyt98vd7ewdeis1estxl0n8b3tr4ekike4ha22wfe88ct8sygytwdhspalbj268638machrm6bc0kz2od1rautao5k6qt7q3tl67fbi2m9qbf7ec93ebndkjfk1j6xaxwgnokwsftf0zo5bkdps20chynkd4kp2l19tkdbqhh51gqu7xk8kig6wcs1twpxie3tivr6h8g2j15r4spc3eu1i4ia4hcrfzekpx436pvmhit4rrs038xsggtvxu6tna1nxcnbj3yumuf6ibh6ct2j7wjatx8kvy1uib5z1dbv2yzh4612lcz73dij67mzcdtomfugdzlxtxgtavg11jzu1nspiepfw7kn9l7re5f3jwb063',
+                        redirect: '8q9mo654lort9c1zj7b4uqtxhpelibmvg48u6civwzmmhuauh8mro9wewjvnoj8jp8ks34ai144rckgzcqitv1zf50gklm5u798x4audzbf44canvt7wvw9s4qkekhaglmqmxd1wxkjwko7fg8vbqlf9ff6df0q6mm892jn5koc1fivt10rvhmoqs1wnmewofuhjrmgic50wmw2jge41yq09zfn8zysahp1tnf5dx0t8ph6bxmw5k9kzakeegqdy7pyfytpfdst71978wcu5o5fpfi3m17j5irlzrqg62o21ex104o2rhagh2s8iw4ltfmcbhvpenxjico5tdi6yxr7wujj84z2t7u2pllczcj5wpq62hbtclj1dbmtbu6yks66zpodw5mmlp3t6opothp75e2mrz67meavvf3ujv17gs7xstq7czfhecodstf8kozkjblq33hyfacaz4ke2x54i5ltam18u4g1zmkn4wf8mos7crayktue69z5o4cl77ry0b0ind8o6ce4h1m79rc73o13h0jc0dcwsxcz9km10z800k8okb3v5za3bdr6lmjb5vzts6o95we23qfb68k1o8f3rrk4g7umiyax1fnpy5bxfv39vr40teuhuw4v8caq8aoti24vx1iad9rni74e291er653n1ipfx5rza3kd0ivq3jav49k75vthlulhzasyxw7uvulqvk17g5bm42579lbrrbukfsa9hp5z4oir0rbi3bf9je9td05dnyn73g5lqu6j3o5b930l3u0kuazp87ldia6hzta562gplorq2yv2gkb7cq0rbnsdi7f30cqjgubslb0t2mv9qetcst2s2abkx0uf67gbz43od15cy1gtftco83rqxkfbespnpuv2z8ml9ycdxwyib5l6jr697ab9oqaj3rpbecbpqg2iwfkuws8ay4f068wx63jrtml27bz9jdx4znlqo4vo3mcpg6k37lt0dbt89h8l42n2wgc1ytrvgeuznv0v94rhyrpbxj24ul45ymgrcwzo7efjbssqbe2itmjwaehsy7kdib9ju6isva5291fh2j8am4snxstjjr1gvub5kp3cyvlw0ra6jxlken47h8tsw1v16arkvdg7t8wktsz98jd2trojz76ouu7lvcgr1eoxfl9qiaefyelzg4me0crziogxgpdau5twg6345niljba8435ia6gn0rhhj5a84s42mr8mup7effg7602z9kg2ndhviwf4txoowce4bv3ytauhf16wwba020n0rmsnz1c2tp2qb8enyx2k8l0z7tp6s1ygldipl0dk0bma3jymge4j8xn5k8s7s96bxy3y06n5tekdnoxkmhzw3fh4kpl82s6zyamsc4tep3wlusqi06gtxg4x7bfoqediq3abnqtv29g8axyj8mqrqjidvhzku7t8x6h34t2wra9u1pjplk2f4axs19d7zlrxggfhyxfahetdhkxe6uw5rmqdlyt7ltdbnj8hdw36k8mdn7vhrsroxl1geer61169ieg2rir7puwluadwnasnv1miqvixk70nh2k664sknovwsvxchv7qamhu51dd183zlre78fztb26diiir3iawfcq3qprs3j82evzaczc70ostec6jk2qxc7hq4jp7mxx339v9di568hcur0603el9x5we5inzqhbq42c3rtt6wix7nb3sn4y6z4uyfir9wwp80cu3kyf14kizsjnwo0s2lkljgw8c46jnfghxpb1ylwz4jjagbf1xh418bovtnjgqg81ub7hqag2bne43g20go3z2w1qsyuzwoygnucz45d02hnlnw92pwy8t6w3y0vgejo364o3tfsxu0p1osz26dgyg1r5edync20asi5wpqidpvucyy63f3yun3d4i48xul0duzmtkpm3euxskawn01jw6sk6ughm28tu1djnis2k38x4hszvy65k7sy8ge42lb2ztlf6ekvgc6998dgn1kh12c53ubwijmz1qb0w7oogh6tkjyp6',
+                        expiredAccessToken: 780229050,
+                        expiredRefreshToken: 394604281,
                         isActive: false,
-                        isMaster: true,
+                        isMaster: false,
                     },
                 },
             })
@@ -847,7 +784,6 @@ describe('client', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 query: `
                     query ($query:QueryStatement)
@@ -875,7 +811,7 @@ describe('client', () =>
                     {
                         where:
                         {
-                            id: 'ae2fa2c8-dbd5-41e2-bc2c-17df11f92f40',
+                            id: '038eeb20-77aa-4ec7-bacb-372d5091ea73',
                         },
                     },
                 },
@@ -894,7 +830,6 @@ describe('client', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 query: `
                     query ($query:QueryStatement)
@@ -939,7 +874,6 @@ describe('client', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 query: `
                     query ($id:ID!)
@@ -962,7 +896,7 @@ describe('client', () =>
                     }
                 `,
                 variables: {
-                    id: '6d9d7c6a-55cb-4560-8dd5-20381a8cd943',
+                    id: 'bc7aff04-5d3a-4dca-b07e-371cfd9e7fb5',
                 },
             })
             .expect(200)
@@ -979,7 +913,6 @@ describe('client', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 query: `
                     query ($id:ID!)
@@ -1017,7 +950,6 @@ describe('client', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 query: `
                     mutation ($payload:OAuthUpdateClientInput!)
@@ -1042,7 +974,7 @@ describe('client', () =>
                 variables: {
                     payload: {
                         ...mockData[0],
-                        ...{ id: '6c38768f-878e-43fc-9d2c-d28d1271fec9' },
+                        ...{ id: '986daca2-b72d-469f-bc0d-47bad2be7ca2' },
                     },
                 },
             })
@@ -1060,7 +992,6 @@ describe('client', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 query: `
                     mutation ($payload:OAuthUpdateClientInput!)
@@ -1086,14 +1017,14 @@ describe('client', () =>
                     payload: {
                         id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
                         grantType: 'CLIENT_CREDENTIALS',
-                        name: 'Generic Plastic Fish',
-                        secret: 'y8i1g779toltyt3uugmwl7f71sdvydnm0yqz4lk3len1ay9qdz3dgsti0tkp68n5325061l4j7p876oa0w9k6ec36',
-                        authUrl: 'b53gqquj654fqaboq06jamnqeaj7i1ex2q6spppqq1wgogk6giipucbqw4d2ai27pm8pf3edmqvq3vha98l68ajpzdbnq1rbtxntwedrkj4obobokiq3r89aflpm48fpf650x3gi1ksgh4vbtqqigiyvmvonl2b493k91t41cr0gq7dhjf502kluw63vvg2vsgmcksl7dn6n7sp2pqusbqx7hvww39z8x03cl4nvwkv9vy5b4glc0wzbu6ssam2vakq81gsb3dymyyej9cz1w8gcfc4qdmjax0nvuvthw66d1ag4ptowuiu53oqif3u75y2syjidxsguu4hry2ei7btqxzl3pcb9ixjd0yvn471j2a76aaetd5sirdtj89xin6f1t23bjoi2ara7lmgtz9qncwh6kgflj81u7dnz9ekfeaafrap7zoe68frcos4cnoqmnzqphe061s1olvk13ysc6k2t1kickgmei89vot1oye21zgi304abp5rs41ux0400q5wvnh14i5io77nmvft5h6q3bzad2t2p6py2trkq6qvxb0321uq2hvig9yfhgiadtu97it4byhv3l9soabf5w06bai93fqtj1c1kl08r4ltn7y1b1orn7mupiqxymsh24nw8h7twahzwizg8lcsm7v0dslnm8my95n0hs057lzmue2vu1ra11uk1tl4c7xv81ejd7ugwbkl0cvxtgwrf1yr182q7hrda0wudld5a4yejj91x98fwinc667jr9qm6subfg596n797wmgp3g05cdce4kpp5yzmzppz26jkbu3cnvgi6t71bca488wj6th1lqs7glwbjxbiyp7s6757azwzgk1rz3iocb12oh8tl5rkqrv0ain832grwwz2xkheymvgnj9c0nzh3l1al6qok69jk2q1mx1f16g3evgv4tpqhm2kjr2wiz75xsjwefcsha5haij7rn2q7ktxjhpojyw6f6jty7zdp8ndq4kcth64d9156d3is5kecr3wdd3b4wb1ig6soh4urfyw11ww7c7q7ty4xf82yidgpg24tlzy3a43h98zz6dese4xaoztdxduy59rl5ydpqyri2fepizfu06leut65xz8gfmbcekq9hc0i57iozxm4h7dw79e6xbes8j0blo8z9xzvzg0ku4p7rogt0w3wnhhmcg7kqf45ci4qtoq9wrtuq4oxx5foa4svcqa5ir48s39x45kwhn5i0opc0ckgb99n5qyoegad5bajq6xgf25409w8iyhoheqzxwasjuo0akd8ssi1pqgwsche4odtjreerga2dekgx2hi96wcqun7dnmw8c4kmt7tbq9l9o6jmfsbmg1h9m5aeoqvcixzegdyf4q1r6tjctwkubfqdxbizbk9a39eptjrf2yt0gyu15kpjsc68v6l5n4bb9qcu6mmw5qp6fcviz17gguao4ixq3tqytvyarq8pjvdhhxmsl4w4252h6ep1kfw4pwztydfkeso0gwy2w0vckwfci2be8y27eo3ywvd8733ozzwoztz6k06k41fu7fck4dagyl4uhrhppfv6c1ioj5r9gvlw0ikdypxa5bk02ao2bcwyizeq2r2dyl1c8jiuzbpykj9ovlieam8lsl3z09u0nt6epe682jdjwy5wwhx39el79jz90qgtmy4nyuqs1406vo12tgmy160jmznpdkuo7rw26h5mq5v0h07u0d1hnqba9qb1cv2dlyd9ozylzvtmyb4xq2f2zin7ukai6bgo8muwdelgqkefeh8guer1ya7ulcb8o2wdndygjcfxoz2v4po30bo7sm7gbmmq7babc7keorwh1yds0ep76jb5fz6nn0sgnzjpstsindei8wfgb4m7wr1vwwwo5e0z68qivyso0enn9uxo1dldfdubmnncct7ugz7vfmergzwn57y55xkkjeun8nau60p9ol38snx4qlf1tbnix5800pmc5coar7iaw8v9ej5r8xj64d4c4w7jdpa5y9tyxdum74s06ak86',
-                        redirect: 'oljg80xyfhjep530pa75ek8cq7k35es6zpgzo5bu1dkctv6tc325js5wdglnw82mxq7akmbsdyjlw0wtwr5qm58rknvk8fpcibgm416yd4bmmryux4ewuxpnrgfiighxyswwkxlh7y8u51co9m7porwnymhohqbpjf9ppnr5alnz33md8dwk0vb8ald5npllctplvkw2u1g53u1ts9pk1yah339epl05b9e34g2a268a00ybfz0z7t4t6xl841zaz00h3r0f0ckenys32ch87vtdicaxa627nmsjl3rqlbxfdy9qmdhyaxx4rzgs7ihcnqpkxgi8v1y39fosvtdblyhjl13e3pmnxuqij8rzkmau976kxeivzxvvi43rbm05128pvu1cud6o35at2i096uypr77znrmn0h5rq6709s96vcy41e9dqn5n0r9kjxfi3yso6d1ao0lf6qmt345ychv1dgzpw2z73qxn1ioigkonbtrllssvxrv18j83ucyk8ib6tlqzked4jevhrlso84o521gtqifs1q2w0sk4g5awjw2grjwkwf0mf77kxzn5au6kgqaoj69l1b9bkodxat3e76johhts2cosk1wlaz34dbimrf6w1rui30exrdjtwdofrorvdf8s5wvfyx0xytvbjqoi6ydwjvkiycqws0ee6l41wq102fqh76801dr3lghjdykkfncuf0u5wtisqv505y03l829dvitbqibuyytoulpgi8jw0mxcurxfe1x1jya8ht452ckf1na1luqu70jij8uwrg84ljnjp4ndzj1cmlpi1dacnbi9o0rv960zg2m9fixymiehg12iqkhppbjefqmlsjlstw6xsjh77jni8un5g63bbb2nj17pvqlnwa2noddqtmy3aijo19ay74hp62lm50dm1294clbc50ynubel7s3se9rb3lrd0me3y6wd1ta4fh9fz8yerl7pyejw9mto7cb27qkgpx9x3uvuujfc94ofzw2crf662s5ywpyzwoek3ujo3tkb6gx5zu75wmd060qgbtyxo9q5vtbrj4y700i4sd4m71wnjtus5v222ch2r8haynqvmhyxliib4xj1m7kezcg09vb3kwysp64uzka62p63e7k55j6gsbrb5tu2fp81dszlrijhdqp9kb4a1rxzddvnaac0uin6jdnzmnfix3bbi76hux3x00eud5236aynstem28xku5rt8oanqy05hi8jjwhhyklyumn7mb0e57ggxut5fg2k13q51z3jmblgi2raiw03o2norkkv907q9tma2hy4t3blq9551ix2jl7ienycsvqqgn71z4auntxw2lgb5ty65h7o287agxlfddw7ghw0pz5kwuq71hblx1qu5j7sslt91aococcm4owpewkmdb4k1r5n6mzn26n99olz59yb4pxzvj9hd8gkjxh6d9fvl0c7dktfm92jh9rrtlt0dq4kvf5ftlg063tx9zl6v7ixyug3kkyhdtcl78v0oeol2eqai6imsn526bffvwcg2ii3cp5syhhk5y2wy1ebsjhmmqmqe9sfkkwhfxxnmbybgcsxy1xfh16bz9k3z2yixf5lmqj951e4vc8rli92kbg3g4ns4mw2wua2nx316hvg8zvpk9n0u6cvtiqx899zdm288slbebh1iqncv4krufdt37wpncphlmdjh7zat1n2gjtxsdok2dkd4mindtkh0nhz42ut8n4z55w0yzkpwjrb8pw8bgf2u82enuzlrnpc7mbk243srcqw5cf56mjvu15x97whn8lh3mq5fmfkgwng37hm83xpzjihywsatjexsljdkk95iklif6iy0vcx0paeotxi3afls2tmd4y6n98b27o2d8wpzt696bq5fh6cc27jqtkc16zsz40gky0srqj9kfexj04q2t6iequyjz4s761ejvcnua3l942okua1xpacve2jb99311jntz9yi2bkgnxp7xe9ysnuqw7yn5qmtmxmfi61ntvtoj0mqb5xxg',
-                        expiredAccessToken: 595047614,
-                        expiredRefreshToken: 958283200,
-                        isActive: false,
-                        isMaster: false,
+                        name: 'Awesome Metal Towels',
+                        secret: '13scbyo8zvp2fo2onf7rpn7ywhz5b8c8z3tzn2sa3xi9kbw4t4pkok58vbyedamuwecsrq40c6cl6rliv9wq6esoz',
+                        authUrl: 'm98lksfhifochsdfgz5zqjnkz12oaev7xq3js6yk9nhxkw108c97ujdgil0fg2h5p3yqlzbxb893ffbenlkyghvq1xfonlhdkyzhoc4ttqjpgzqm83xzyvzr4ha6kwyr436s8wmgfn8qsdxs0ra4miu70vc3dhpclzxqq8efkpl3tuqjnbhxax2cfpwahpk8hjesmyvjhbico3uuyit0vouqb1mx5yv2c1jyi7upoj53l7oocn5a6k6vaf91akafs2rnfdxtvj8w658ujdyalp9gia3u44tj4dcauish2jy93ekc28ids58qwg9o7zgbpelt4dko68h2x1anwgrh5d51u629e68mfc0qegj0nazoc4804hjbx8xpxwj5lr7r7u9x1ms948q3ehbmlf5bie0si6j1g5yjb0shian4p5x4m6ng6bwot9yu3a7w019jhpvhos6favs3qatse8nq7exj45ziudga3tff9qvj9rav865riakxdxpfmb7icvltchb7tvrvgagyao3inu6ku19qz9v1sw64qrur6ls14bhtdcxifmlhr6n4njsjesyrdq44sm5okx5yjl73uvf34hj09ekhe8z33k1cby7qg3wiu72gbq0eg16f2jay978r1e819irb3btpt2ofyi0ydncqvxor8mxc4f9fbewwfiusig162l3wl1ebbdrs2ok4sz6leg0nlknpvck6slxo0e0lkkhgr24204ctjefd8ln3049e3lmqeoknrnzeqxjpnuao3sy5tnw7lfqq71ap0ld8fj35y7v79wqy5l2ygp9wcjird8y7jm93xckqvvl0ck1i1z4ujeires0suu8h2sewsfkzw11hom0xbrx4bd36cgm4fux2na7pe7wp8pzt8mxhjakdq07mptp6esg0k84yc2e4zfugwy9j2t35h1zk06e6txefdihn8mkec55pfhlqcwmgub6qh60irmgbm3mh0pr50ozvuwv1ib12piult6j4gjz9h5wuntvuxjablu50gi94yap6ymu7cawhhwbr47cq5lfgp1lyce6jt6rxdfofe9yv2xuz9gftbyvkdobyjomu1gbeinfuomvwdajtv2r3wdgwrs2zoc2098ttq1k3xsuz8aobbvwzzh2eo3onn4knixkwjtv92w08rbq67ck1fahuk3ewffo6r02e9ayzikvxnbu2ie9dd25adgbq5jxanloruv4g4a7u64zym5lwvtu3y2vaet7g0lj8qr5srlng4z067fzk469yt2kb2moui3ykdql59qi2ec54jzyyj28ogb0r92ne0lakreic42jcqe2tweakclw69falznaei8mlm6gtbvrga6tkeyhdqargmlfq6jp5mxl1v4hb1m79p51qovf6ttmjst83rbigdrw1wpsfuawrgsjylfc46lsgwhekg9psbag62f25c4e7r8nlwxig2swxx49xax3kcges9wzn0xplofmrb3nhmr5gw5xukngkco5mavet4r5k1t8arcyodhhlko83jvnjutscwpjimgz2nrnms6cuitwr5ay7ko6guzyv3u0j4lnbwjuf0ja95a3lcnkk94xmlwtwr7xrvot8w6xytlsftgng8usiq4v142rqakm7h2pytop2iaue4x3yihujahee5s9h5jlh36lsg11t34l5zqciv8tnch3oatw6yagjotwuku5d100hnp0koit3tqfmv735e5wf8ky82hzhfwotkt52k7zpr1fl9ve5u3oifzji5djg4wthzhlg6jd6gd10ye8ylzx8h9gnxkt51vhglnvphvs2iojvlify4z1y6zu4ljlge9ivwi7l9liuan1mf6x2wy0ymqsfditkkaxr3dabi8nagbk1stli17s96jqrzwfm229p2f90f91jadt4leg1c76u5robahof88or4o7ox3ya6ku72iz8lnqef25sot5nk76aa43439iqpc22slfe1t07l06rd09cwxtl4fkv6j9ja7tsc7jzjkztj239n9t8m8xdqze',
+                        redirect: 's2zpugyskiqip61x6mh205fkk4oc87orj2nd0ydczjffyvyuzxr2mgs5d22ba45zpyzk958gn1hes77aj0jij8ktmxhv1l8s92761qfa1gft2r03tb14wufq5r5vbwh5l44h2msnuk1s9rcs735uq2ti3nrf3lzn10cwn6wrh3i46317i5g7w7sj9v4quzhqk9fb7scehq4xab5ffd2les8cfgknqs5faeylhcct5vv7ya7h7nsys3x7v2lxqgdx7m9j1k0j1mavft6sbdlct1yfrkm87mz2qjr9kphk8rlbev65w728fw0k6w134dunwgubgofgsp1eoglzwh36wjjqzmkgi8mc9yp9nxmkiwmvgqkjo9i2qzsnnp46u9v650nixy23bl4yi35l9z2jxktr5mudgnp5niaj5cjbsdfkkgluvxqd4twmygndxrrx2p45tkh4u5w36lo6h3zzf62n54ahfd167tj95kwhoge0u1aulj84fgji6dazc0pv3bwt7thtm3fu64urv3ate70guj51mf888lit2wd18t1upotn2rlaczfwcz7dy5ihc0qj03xj3nmflfiivzs9vuknthpppotzb3m1wc7l99xwvpsf4bjoimngsjn8584tkdh7gawck1icekltv05qtv8swbjj8wwzw2s78cw2umkg9piwl662i39scm84w9fahzws8i468vsshthux01fe5t19gp9iq3g3n05x4zskkuvz31hfszssmc3rqqn67jchivm3zesmhkmpfr4g3vfw3l3buks8f1om0mrv8nz5c53efzxz3axdglr02p9rsora30elxhj7573xudq6z1cld2rvg1p5xe2ay7a9pd4e1hh3zdik6wodk0fcmyys0hsg6717flui5m902cd0kg8fxsdfp5qpey5bgop4zboqwvwjm24g7ltcagq62zp7ibrohk27ygnj4027zwn1fq84s3gbm93l2bgnuhhfnnl8px1gw8wcbuzp39hsfvvycudxef7fhipx2pwr2r319va9j1bbivsa2zqzno5xwjb5wft6krb9tjf7lk263bssb0zmqsn63pf7kfhbh4tkgnex3dzl4ujmk99mwrl3bz2tixilr4a6ozmln8ipgfe25nxru9fg6eulgo53v8q26opsb0mtigb9wm0h0rl3ub0d9jg7l4kbukru4d0qfpa5ij4viellscrr8bjcxyrc0v2fauerk67lcwlfhlsdvajfh08382956844xcq0pm0jjhosfecrnyuoubf2t0xokt0y3h2alodcooolt7vr57glakk01xd3afczl36y2qbhtktbe9a8mptlrgnfqkmiurgnbyclxyw9tc207y4pjhypf2yktygpnnwbjz4qyqari5smlthjcg3of3p4o4q2l1ujpl2sph6qz48tbl4neiq8nd8hi1l9455x1hizzhyboee2asubb1h6pelqq86ohcnkjxraquxzl5yv0zqbtdtfuzy88pv6ko3ncsqxtnoq01e4e7rp44qyxhdrbnp2eoar2avbruv4fa7zz5rf6fvoxeilmes2x5h49qn2up4x9l4mmjxx9oi92ocg6cj8ps9ipzgzoyz197pao59h60lcc73lz8bqcxsfq7eeklxnstpygs2c5fj69hbft2kc8jnuicfrduym1nd6aoft2a5zspvbu7byso97m7ym1786ryhw2tomyk5w5zoan8qci1bfy621ta5nbkduiv9jw2fzms9pc36uh6ykgnm0atjlv4q3c5kgc9l5hmrdt4rfjououag4mhq3oe5u66r811w1wy3xtgcak6hbof0eyoqlkkwk7fply55uymmn1xn3x8vq8cdybg58ttrp8aa4i6v5ytth9hdw4viamio6k372ij4lcfg9806yud8kobgwiud94kii18j5whthgqrzkgfoqe6im1hhe2826q9d2nyipirzz8tg9iwvtpi7zuvp2wvec67x3aqhszt5w4ksf3n8iikf18f0giwrha2sves4u3',
+                        expiredAccessToken: 770659116,
+                        expiredRefreshToken: 369138264,
+                        isActive: true,
+                        isMaster: true,
                         applicationIds: [],
                     },
                 },
@@ -1110,7 +1041,6 @@ describe('client', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 query: `
                     mutation ($id:ID!)
@@ -1133,7 +1063,7 @@ describe('client', () =>
                     }
                 `,
                 variables: {
-                    id: '0f58afd9-2e12-4d95-a84f-da2c7196d011',
+                    id: '421a63c8-b60d-4076-9c02-ee0c7f7075ef',
                 },
             })
             .expect(200)
@@ -1150,7 +1080,6 @@ describe('client', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 query: `
                     mutation ($id:ID!)

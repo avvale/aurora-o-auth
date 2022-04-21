@@ -3,7 +3,7 @@ boundedContextName: o-auth
 moduleName: client
 moduleNames: clients
 aggregateName: OAuthClient
-hasOAuth: true
+hasOAuth: false
 hasTenant: false
 aggregateProperties:
   - name: id

@@ -4,7 +4,7 @@ import { IQueryBus, QueryStatement } from 'aurora-ts-core';
 // @apps
 import { FindRefreshTokenByIdQuery } from '../../../../@apps/o-auth/refresh-token/application/find/find-refresh-token-by-id.query';
 import { OAuthRefreshToken } from '../../../../graphql';
-import { RefreshTokenDto } from '../dto/refresh-token.dto';
+import { OAuthRefreshTokenDto } from '../dto';
 
 @Injectable()
 export class OAuthFindRefreshTokenByIdHandler
@@ -17,7 +17,7 @@ export class OAuthFindRefreshTokenByIdHandler
         id: string,
         constraint?: QueryStatement,
         timezone?: string,
-    ): Promise<OAuthRefreshToken | RefreshTokenDto>
+    ): Promise<OAuthRefreshToken | OAuthRefreshTokenDto>
     {
         return await this.queryBus.ask(new FindRefreshTokenByIdQuery(id, constraint, { timezone }));
     }

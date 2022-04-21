@@ -1,8 +1,8 @@
 /* eslint-disable indent */
 import { ApiProperty } from '@nestjs/swagger';
-import { AccessTokenDto } from '../../../o-auth/access-token/dto/access-token.dto';
+import { OAuthClientDto } from '../../../o-auth/client/dto/o-auth-client.dto';
 
-export class RefreshTokenDto
+export class OAuthApplicationDto
 {
     @ApiProperty({
         type       : String,
@@ -11,29 +11,34 @@ export class RefreshTokenDto
     id: string;
 
     @ApiProperty({
-        type       : AccessTokenDto,
-        description: 'accessTokenId [input here api field description]',
-        example    : '',
+        type       : String,
+        description: 'name [input here api field description]',
     })
-    accessTokenId: AccessTokenDto;
+    name: string;
 
     @ApiProperty({
         type       : String,
-        description: 'token [input here api field description]',
+        description: 'code [input here api field description]',
     })
-    token: string;
+    code: string;
+
+    @ApiProperty({
+        type       : String,
+        description: 'secret [input here api field description]',
+    })
+    secret: string;
 
     @ApiProperty({
         type       : Boolean,
-        description: 'isRevoked [input here api field description]',
+        description: 'isMaster [input here api field description]',
     })
-    isRevoked: boolean;
+    isMaster: boolean;
 
     @ApiProperty({
-        type       : String,
-        description: 'expiresAt [input here api field description]',
+        type       : [OAuthClientDto],
+        description: 'clientIds [input here api field description]',
     })
-    expiresAt?: string;
+    clients?: OAuthClientDto[];
 
     @ApiProperty({
         type       : String,

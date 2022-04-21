@@ -219,7 +219,7 @@
         },
         {
             "path": "src/@apps/o-auth/client/application/update/update-client.command.ts",
-            "integrity": "sha1:04a9d64d313b33e4bb2bc0a0658b32c79a914338"
+            "integrity": "sha1:4ad2a782dda0938e13e72be457b165c5df0b9146"
         },
         {
             "path": "src/@apps/o-auth/client/application/update/update-client.service.spec.ts",
@@ -263,7 +263,7 @@
         },
         {
             "path": "src/@apps/o-auth/client/infrastructure/seeds/client.seed.ts",
-            "integrity": "sha1:e59a924ff02e79231306f84e201ac45e19685387"
+            "integrity": "sha1:3d1a53fc390e9688a9a5ac4c2c4539baea87967b"
         },
         {
             "path": "src/@apps/o-auth/client/infrastructure/sequelize/sequelize-client.model.ts",
@@ -279,7 +279,7 @@
         },
         {
             "path": "src/@apps/o-auth/client/domain/value-objects/client-grant-type.ts",
-            "integrity": "sha1:23543a884ff4c69ffd04a9f229f865e5e14b4898"
+            "integrity": "sha1:7724b1e596d081b69254d00c5e1a5e417b753bfe"
         },
         {
             "path": "src/@apps/o-auth/client/domain/value-objects/client-name.ts",
@@ -335,7 +335,7 @@
         },
         {
             "path": "src/@api/o-auth/client/controllers/o-auth-create-client.controller.ts",
-            "integrity": "sha1:4ede8330acdf3a2857618e1a2d175ddc3872c9c3"
+            "integrity": "sha1:17d9ed0b86d50ddef2aec4fd74c4d88589fa36e6"
         },
         {
             "path": "src/@api/o-auth/client/controllers/o-auth-create-clients.controller.spec.ts",
@@ -343,7 +343,7 @@
         },
         {
             "path": "src/@api/o-auth/client/controllers/o-auth-create-clients.controller.ts",
-            "integrity": "sha1:50bab8b79f3a506b2f49ca47b0909bf0e4fbda7b"
+            "integrity": "sha1:9bec9e4d5af9b464cb3b9bb38ce803bf7959501e"
         },
         {
             "path": "src/@api/o-auth/client/controllers/o-auth-delete-client-by-id.controller.spec.ts",
@@ -351,7 +351,7 @@
         },
         {
             "path": "src/@api/o-auth/client/controllers/o-auth-delete-client-by-id.controller.ts",
-            "integrity": "sha1:ae606975932e538261d5068c58a1b49984f1a668"
+            "integrity": "sha1:0ab894e2ee3e598d8d9b20e40af8ec342e053ca5"
         },
         {
             "path": "src/@api/o-auth/client/controllers/o-auth-delete-clients.controller.spec.ts",
@@ -359,7 +359,7 @@
         },
         {
             "path": "src/@api/o-auth/client/controllers/o-auth-delete-clients.controller.ts",
-            "integrity": "sha1:ffe02c24e1412b62bb8cf43c70868f33ca8d2b0b"
+            "integrity": "sha1:889254c09707e96f836a9c563afc97455025201d"
         },
         {
             "path": "src/@api/o-auth/client/controllers/o-auth-find-client-by-id.controller.spec.ts",
@@ -367,7 +367,7 @@
         },
         {
             "path": "src/@api/o-auth/client/controllers/o-auth-find-client-by-id.controller.ts",
-            "integrity": "sha1:6f608382b157077b394350a078fc0ee8184626d7"
+            "integrity": "sha1:c1df847c9250bcdddfbc604d513351479377e8d0"
         },
         {
             "path": "src/@api/o-auth/client/controllers/o-auth-find-client.controller.spec.ts",
@@ -375,7 +375,7 @@
         },
         {
             "path": "src/@api/o-auth/client/controllers/o-auth-find-client.controller.ts",
-            "integrity": "sha1:d7b44745d64e4052a1ac897f0e9a6f3322bfe644"
+            "integrity": "sha1:db69b430be17ea99c8e8b1d51fd42270c43071a0"
         },
         {
             "path": "src/@api/o-auth/client/controllers/o-auth-get-clients.controller.spec.ts",
@@ -383,7 +383,7 @@
         },
         {
             "path": "src/@api/o-auth/client/controllers/o-auth-get-clients.controller.ts",
-            "integrity": "sha1:eaad27582d8d06424eeb95bd8b6a8979f9c93d8b"
+            "integrity": "sha1:b3fe4dafb273c79629fb73709d1caac63cd8dba8"
         },
         {
             "path": "src/@api/o-auth/client/controllers/o-auth-paginate-clients.controller.spec.ts",
@@ -391,7 +391,7 @@
         },
         {
             "path": "src/@api/o-auth/client/controllers/o-auth-paginate-clients.controller.ts",
-            "integrity": "sha1:bb4e70d38055a84ad1c3ecb75090c79d4c89d86d"
+            "integrity": "sha1:02f415de28fb691a93c8f808b3c5507853a6e10d"
         },
         {
             "path": "src/@api/o-auth/client/controllers/o-auth-update-client.controller.spec.ts",
@@ -399,19 +399,23 @@
         },
         {
             "path": "src/@api/o-auth/client/controllers/o-auth-update-client.controller.ts",
-            "integrity": "sha1:8623f1a32eb43f926765bf117409dd3635ff3125"
+            "integrity": "sha1:cf24b3e1662ef2a8f63a6d4ea25f3e1eed6a3e2e"
         },
         {
-            "path": "src/@api/o-auth/client/dto/client.dto.ts",
-            "integrity": "sha1:51825e6ebb6efe4d848d055976cd9852d14c06b8"
+            "path": "src/@api/o-auth/client/dto/o-auth-client.dto.ts",
+            "integrity": "sha1:cd66a8c475ea7481d4396c07c692cf4ee20969f0"
         },
         {
-            "path": "src/@api/o-auth/client/dto/create-client.dto.ts",
-            "integrity": "sha1:b2786156062e1a976d63998078b254636901c592"
+            "path": "src/@api/o-auth/client/dto/o-auth-create-client.dto.ts",
+            "integrity": "sha1:a1e9f7699dcec319bce59330572b7f0555952cf7"
         },
         {
-            "path": "src/@api/o-auth/client/dto/update-client.dto.ts",
-            "integrity": "sha1:a7ff769ad5d859da0354ba234d792fbb1b1912e4"
+            "path": "src/@api/o-auth/client/dto/o-auth-update-client.dto.ts",
+            "integrity": "sha1:e77d4b286ef079d98cf0a0c7e98e2235d869af27"
+        },
+        {
+            "path": "src/@api/o-auth/client/dto/index.ts",
+            "integrity": "sha1:83c59f94571328fd3eed15f9041aa6ae598fccf0"
         },
         {
             "path": "src/@api/o-auth/client/graphql/client.graphql",
@@ -423,7 +427,7 @@
         },
         {
             "path": "src/@api/o-auth/client/handlers/o-auth-create-client.handler.ts",
-            "integrity": "sha1:a71750a0a106d381bae6d2772094a1247c36a2e5"
+            "integrity": "sha1:1beca82b041f875a1d56cef6f83011e8e5104957"
         },
         {
             "path": "src/@api/o-auth/client/handlers/o-auth-create-clients.handler.spec.ts",
@@ -431,7 +435,7 @@
         },
         {
             "path": "src/@api/o-auth/client/handlers/o-auth-create-clients.handler.ts",
-            "integrity": "sha1:775f443de67d055f04859d3d9743297a72e5527b"
+            "integrity": "sha1:b73c8928c5a3614fbe0c7a9a5bc150c639cb7d04"
         },
         {
             "path": "src/@api/o-auth/client/handlers/o-auth-delete-client-by-id.handler.spec.ts",
@@ -439,7 +443,7 @@
         },
         {
             "path": "src/@api/o-auth/client/handlers/o-auth-delete-client-by-id.handler.ts",
-            "integrity": "sha1:4b1e1b9456c420771995e958ed9b47426cfd43f3"
+            "integrity": "sha1:9868ac4b87db28dd4e45b334e9af1db04a5965cb"
         },
         {
             "path": "src/@api/o-auth/client/handlers/o-auth-delete-clients.handler.spec.ts",
@@ -447,7 +451,7 @@
         },
         {
             "path": "src/@api/o-auth/client/handlers/o-auth-delete-clients.handler.ts",
-            "integrity": "sha1:904c247754e4807d796b9bb01c7f8106d8b548c1"
+            "integrity": "sha1:fe6c2301df94762a7dc17a57c2b9798316d73706"
         },
         {
             "path": "src/@api/o-auth/client/handlers/o-auth-find-client-by-id.handler.spec.ts",
@@ -455,7 +459,7 @@
         },
         {
             "path": "src/@api/o-auth/client/handlers/o-auth-find-client-by-id.handler.ts",
-            "integrity": "sha1:ae927f1376313731800e0e87360a3dafddc113e0"
+            "integrity": "sha1:4997165cb9b5add34c797629aef1d26a23360e2b"
         },
         {
             "path": "src/@api/o-auth/client/handlers/o-auth-find-client.handler.spec.ts",
@@ -463,7 +467,7 @@
         },
         {
             "path": "src/@api/o-auth/client/handlers/o-auth-find-client.handler.ts",
-            "integrity": "sha1:175ded8c5d217bbbb6fa99aa68b0d61e4b90cb92"
+            "integrity": "sha1:d0910ee1c042692e30437214f8878fe243cdc0d8"
         },
         {
             "path": "src/@api/o-auth/client/handlers/o-auth-get-clients.handler.spec.ts",
@@ -471,7 +475,7 @@
         },
         {
             "path": "src/@api/o-auth/client/handlers/o-auth-get-clients.handler.ts",
-            "integrity": "sha1:db99bbd84393eb52067f38846e0667d8fc286f75"
+            "integrity": "sha1:2c69a2f3d8b7314010c637ce503801624a1ba398"
         },
         {
             "path": "src/@api/o-auth/client/handlers/o-auth-paginate-clients.handler.spec.ts",
@@ -487,7 +491,7 @@
         },
         {
             "path": "src/@api/o-auth/client/handlers/o-auth-update-client.handler.ts",
-            "integrity": "sha1:c2ab5fd934b6dc90ce5bf04d4151100d497b7a6e"
+            "integrity": "sha1:461aef20432fa869d75f18c7cacba7b4423f2ed0"
         },
         {
             "path": "src/@api/o-auth/client/index.ts",
@@ -499,7 +503,7 @@
         },
         {
             "path": "src/@api/o-auth/client/resolvers/o-auth-create-client.resolver.ts",
-            "integrity": "sha1:38330b79c3951a6fd849cd503bb5ca435f3d0cb1"
+            "integrity": "sha1:a68fc9c3c59370f56908e42654e51fb64cfb0959"
         },
         {
             "path": "src/@api/o-auth/client/resolvers/o-auth-create-clients.resolver.spec.ts",
@@ -507,7 +511,7 @@
         },
         {
             "path": "src/@api/o-auth/client/resolvers/o-auth-create-clients.resolver.ts",
-            "integrity": "sha1:79a002acffa097ccfa9e1f26c79cee1a3448cbf8"
+            "integrity": "sha1:93a83ec0c747f320158382c8b0ad8ab249a51dec"
         },
         {
             "path": "src/@api/o-auth/client/resolvers/o-auth-delete-client-by-id.resolver.spec.ts",
@@ -515,7 +519,7 @@
         },
         {
             "path": "src/@api/o-auth/client/resolvers/o-auth-delete-client-by-id.resolver.ts",
-            "integrity": "sha1:e1c554d02f5d79ead11402da0169fa84505908e2"
+            "integrity": "sha1:3fc89d8b9e459bcb62773f51e96bfff45adc7f4a"
         },
         {
             "path": "src/@api/o-auth/client/resolvers/o-auth-delete-clients.resolver.spec.ts",
@@ -523,7 +527,7 @@
         },
         {
             "path": "src/@api/o-auth/client/resolvers/o-auth-delete-clients.resolver.ts",
-            "integrity": "sha1:df6cad00dc25447951dd3bd9b4f6f411c12b9da4"
+            "integrity": "sha1:64452a40ed113b5a013c45145739fef54e3d7449"
         },
         {
             "path": "src/@api/o-auth/client/resolvers/o-auth-find-client-by-id.resolver.spec.ts",
@@ -531,7 +535,7 @@
         },
         {
             "path": "src/@api/o-auth/client/resolvers/o-auth-find-client-by-id.resolver.ts",
-            "integrity": "sha1:217454cdeb0e198c23a4749974e6eee36a3337b2"
+            "integrity": "sha1:b33fff834a649366eda7b760c13a33223dcf3911"
         },
         {
             "path": "src/@api/o-auth/client/resolvers/o-auth-find-client.resolver.spec.ts",
@@ -539,7 +543,7 @@
         },
         {
             "path": "src/@api/o-auth/client/resolvers/o-auth-find-client.resolver.ts",
-            "integrity": "sha1:c73ab434f6635b007874438f8e54faa68c98170b"
+            "integrity": "sha1:3cb503a789f96900aeda868f35cdb7af45416e17"
         },
         {
             "path": "src/@api/o-auth/client/resolvers/o-auth-get-clients.resolver.spec.ts",
@@ -547,7 +551,7 @@
         },
         {
             "path": "src/@api/o-auth/client/resolvers/o-auth-get-clients.resolver.ts",
-            "integrity": "sha1:aa3e7ef6694786359d99c7c234b670d5d4df88cd"
+            "integrity": "sha1:aaf4936aad5e5c3888a8e54b5d0cadfb4003025b"
         },
         {
             "path": "src/@api/o-auth/client/resolvers/o-auth-paginate-clients.resolver.spec.ts",
@@ -555,7 +559,7 @@
         },
         {
             "path": "src/@api/o-auth/client/resolvers/o-auth-paginate-clients.resolver.ts",
-            "integrity": "sha1:6fdef81a7a5a6f117b1d1cd5d5a0999172eee255"
+            "integrity": "sha1:bbc915e7f10fdb46df3e4930a86e7a932d0f912f"
         },
         {
             "path": "src/@api/o-auth/client/resolvers/o-auth-update-client.resolver.spec.ts",
@@ -563,7 +567,7 @@
         },
         {
             "path": "src/@api/o-auth/client/resolvers/o-auth-update-client.resolver.ts",
-            "integrity": "sha1:c059015a4601d76d831cb110d183bc70a5c115cc"
+            "integrity": "sha1:3cdeaf6322461f35d29c319898e507ecf42a2dac"
         },
         {
             "path": "src/@api/o-auth/client/seeder/seeder.module.ts",
@@ -575,11 +579,11 @@
         },
         {
             "path": "test/acceptance/o-auth/client.e2e-spec.ts",
-            "integrity": "sha1:ca04b935d7b0c422ea8887a7a55a444d21ef326b"
+            "integrity": "sha1:d5c367d8dfe1ebcb0ce1abf5816ae04ae6510dce"
         },
         {
             "path": "postman/o-auth.client.postman.json",
-            "integrity": "sha1:734ee25077026dc285526bbc6b8a53bc7b947e69"
+            "integrity": "sha1:3610bfe64805118ce8c6a02a4818afcfe3a00429"
         }
     ]
 }

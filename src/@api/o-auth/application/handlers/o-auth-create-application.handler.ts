@@ -5,8 +5,7 @@ import { ICommandBus, IQueryBus } from 'aurora-ts-core';
 import { FindApplicationByIdQuery } from '../../../../@apps/o-auth/application/application/find/find-application-by-id.query';
 import { CreateApplicationCommand } from '../../../../@apps/o-auth/application/application/create/create-application.command';
 import { OAuthApplication, OAuthCreateApplicationInput } from '../../../../graphql';
-import { CreateApplicationDto } from '../dto/create-application.dto';
-import { ApplicationDto } from '../dto/application.dto';
+import { OAuthApplicationDto, OAuthCreateApplicationDto } from '../dto';
 
 @Injectable()
 export class OAuthCreateApplicationHandler
@@ -17,9 +16,9 @@ export class OAuthCreateApplicationHandler
     ) {}
 
     async main(
-        payload: OAuthCreateApplicationInput | CreateApplicationDto,
+        payload: OAuthCreateApplicationInput | OAuthCreateApplicationDto,
         timezone?: string,
-    ): Promise<OAuthApplication | ApplicationDto>
+    ): Promise<OAuthApplication | OAuthApplicationDto>
     {
         await this.commandBus.dispatch(new CreateApplicationCommand(payload, { timezone }));
 

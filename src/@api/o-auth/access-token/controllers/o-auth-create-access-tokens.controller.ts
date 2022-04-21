@@ -2,8 +2,7 @@
 import { Controller, Post, Body } from '@nestjs/common';
 import { ApiTags, ApiCreatedResponse, ApiBody, ApiOperation } from '@nestjs/swagger';
 import { Timezone } from 'aurora-ts-core';
-import { AccessTokenDto } from '../dto/access-token.dto';
-import { CreateAccessTokenDto } from '../dto/create-access-token.dto';
+import { OAuthAccessTokenDto, OAuthCreateAccessTokenDto } from '../dto';
 
 // @apps
 import { OAuthCreateAccessTokensHandler } from '../handlers/o-auth-create-access-tokens.handler';
@@ -18,10 +17,10 @@ export class OAuthCreateAccessTokensController
 
     @Post()
     @ApiOperation({ summary: 'Create access-tokens in batch' })
-    @ApiCreatedResponse({ description: 'The records has been created successfully.' , type: [AccessTokenDto]})
-    @ApiBody({ type: [CreateAccessTokenDto]})
+    @ApiCreatedResponse({ description: 'The records has been created successfully.' , type: [OAuthAccessTokenDto]})
+    @ApiBody({ type: [OAuthCreateAccessTokenDto]})
     async main(
-        @Body() payload: CreateAccessTokenDto[],
+        @Body() payload: OAuthCreateAccessTokenDto[],
         @Timezone() timezone?: string,
     )
     {

@@ -1,16 +1,16 @@
 import { EnumValueObject, ValidationRules } from 'aurora-ts-core';
 
-export class ClientGrantType extends EnumValueObject
+export class ClientGrantTypeTest extends EnumValueObject
 {
-    public readonly type: 'ClientGrantType';
+    public readonly type: 'ClientGrantTypeTest';
 
     constructor(value: string, validationRules: ValidationRules = {})
     {
         super(value, Object.assign({
-            name       : 'ClientGrantType',
+            name       : 'ClientGrantTypeTest',
             nullable   : false,
             undefinable: false,
-            enumOptions: ['AUTHORIZATION_CODE','CLIENT_CREDENTIALS','PASSWORD'],
+            enumOptions: ['TEST','TEST_2','TEST_3'],
         }, validationRules));
     }
 }

@@ -5,8 +5,7 @@ import { ICommandBus, IQueryBus, QueryStatement } from 'aurora-ts-core';
 import { FindRefreshTokenByIdQuery } from '../../../../@apps/o-auth/refresh-token/application/find/find-refresh-token-by-id.query';
 import { UpdateRefreshTokenCommand } from '../../../../@apps/o-auth/refresh-token/application/update/update-refresh-token.command';
 import { OAuthRefreshToken, OAuthUpdateRefreshTokenInput } from '../../../../graphql';
-import { UpdateRefreshTokenDto } from '../dto/update-refresh-token.dto';
-import { RefreshTokenDto } from '../dto/refresh-token.dto';
+import { OAuthRefreshTokenDto, OAuthUpdateRefreshTokenDto } from '../dto';
 
 @Injectable()
 export class OAuthUpdateRefreshTokenHandler
@@ -17,10 +16,10 @@ export class OAuthUpdateRefreshTokenHandler
     ) {}
 
     async main(
-        payload: OAuthUpdateRefreshTokenInput | UpdateRefreshTokenDto,
+        payload: OAuthUpdateRefreshTokenInput | OAuthUpdateRefreshTokenDto,
         constraint?: QueryStatement,
         timezone?: string,
-    ): Promise<OAuthRefreshToken | RefreshTokenDto>
+    ): Promise<OAuthRefreshToken | OAuthRefreshTokenDto>
     {
         await this.commandBus.dispatch(new UpdateRefreshTokenCommand(payload, constraint, { timezone }));
 

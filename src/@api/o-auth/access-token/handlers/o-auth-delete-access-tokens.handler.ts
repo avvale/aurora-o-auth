@@ -5,7 +5,7 @@ import { ICommandBus, IQueryBus, QueryStatement } from 'aurora-ts-core';
 import { GetAccessTokensQuery } from '../../../../@apps/o-auth/access-token/application/get/get-access-tokens.query';
 import { DeleteAccessTokensCommand } from '../../../../@apps/o-auth/access-token/application/delete/delete-access-tokens.command';
 import { OAuthAccessToken } from '../../../../graphql';
-import { AccessTokenDto } from '../dto/access-token.dto';
+import { OAuthAccessTokenDto } from '../dto';
 
 @Injectable()
 export class OAuthDeleteAccessTokensHandler
@@ -19,7 +19,7 @@ export class OAuthDeleteAccessTokensHandler
         queryStatement?: QueryStatement,
         constraint?: QueryStatement,
         timezone?: string,
-    ): Promise<OAuthAccessToken[] | AccessTokenDto[]>
+    ): Promise<OAuthAccessToken[] | OAuthAccessTokenDto[]>
     {
         const accessTokens = await this.queryBus.ask(new GetAccessTokensQuery(queryStatement, constraint, { timezone }));
 

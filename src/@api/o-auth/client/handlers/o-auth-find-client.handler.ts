@@ -4,7 +4,7 @@ import { IQueryBus, QueryStatement } from 'aurora-ts-core';
 // @apps
 import { FindClientQuery } from '../../../../@apps/o-auth/client/application/find/find-client.query';
 import { OAuthClient } from '../../../../graphql';
-import { ClientDto } from '../dto/client.dto';
+import { OAuthClientDto } from '../dto';
 
 @Injectable()
 export class OAuthFindClientHandler
@@ -17,7 +17,7 @@ export class OAuthFindClientHandler
         queryStatement?: QueryStatement,
         constraint?: QueryStatement,
         timezone?: string,
-    ): Promise<OAuthClient | ClientDto>
+    ): Promise<OAuthClient | OAuthClientDto>
     {
         return await this.queryBus.ask(new FindClientQuery(queryStatement, constraint, { timezone }));
     }

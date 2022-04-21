@@ -5,8 +5,7 @@ import { ICommandBus, IQueryBus, QueryStatement } from 'aurora-ts-core';
 import { FindAccessTokenByIdQuery } from '../../../../@apps/o-auth/access-token/application/find/find-access-token-by-id.query';
 import { UpdateAccessTokenCommand } from '../../../../@apps/o-auth/access-token/application/update/update-access-token.command';
 import { OAuthAccessToken, OAuthUpdateAccessTokenInput } from '../../../../graphql';
-import { UpdateAccessTokenDto } from '../dto/update-access-token.dto';
-import { AccessTokenDto } from '../dto/access-token.dto';
+import { OAuthAccessTokenDto, OAuthUpdateAccessTokenDto } from '../dto';
 
 @Injectable()
 export class OAuthUpdateAccessTokenHandler
@@ -17,10 +16,10 @@ export class OAuthUpdateAccessTokenHandler
     ) {}
 
     async main(
-        payload: OAuthUpdateAccessTokenInput | UpdateAccessTokenDto,
+        payload: OAuthUpdateAccessTokenInput | OAuthUpdateAccessTokenDto,
         constraint?: QueryStatement,
         timezone?: string,
-    ): Promise<OAuthAccessToken | AccessTokenDto>
+    ): Promise<OAuthAccessToken | OAuthAccessTokenDto>
     {
         await this.commandBus.dispatch(new UpdateAccessTokenCommand(payload, constraint, { timezone }));
 

@@ -1,6 +1,7 @@
+/* eslint-disable indent */
 import { ApiProperty } from '@nestjs/swagger';
 
-export class UpdateRefreshTokenDto
+export class OAuthCreateAccessTokenDto
 {
     @ApiProperty({
         type       : String,
@@ -10,15 +11,27 @@ export class UpdateRefreshTokenDto
 
     @ApiProperty({
         type       : String,
-        description: 'accessTokenId [input here api field description]',
+        description: 'clientId [input here api field description]',
     })
-    accessTokenId: string;
+    clientId: string;
+
+    @ApiProperty({
+        type       : String,
+        description: 'accountId [input here api field description]',
+    })
+    accountId?: string;
 
     @ApiProperty({
         type       : String,
         description: 'token [input here api field description]',
     })
     token: string;
+
+    @ApiProperty({
+        type       : String,
+        description: 'name [input here api field description]',
+    })
+    name?: string;
 
     @ApiProperty({
         type       : Boolean,
@@ -30,6 +43,6 @@ export class UpdateRefreshTokenDto
         type       : String,
         description: 'expiresAt [input here api field description]',
     })
-    expiresAt: string;
+    expiresAt?: string;
 
 }

@@ -2,7 +2,7 @@
 import { Body, Controller, HttpCode, Post } from '@nestjs/common';
 import { ApiTags, ApiOkResponse, ApiOperation, ApiBody, ApiQuery } from '@nestjs/swagger';
 import { Constraint, QueryStatement, Timezone } from 'aurora-ts-core';
-import { AccessTokenDto } from '../dto/access-token.dto';
+import { OAuthAccessTokenDto } from '../dto';
 
 // @apps
 import { OAuthFindAccessTokenHandler } from '../handlers/o-auth-find-access-token.handler';
@@ -18,7 +18,7 @@ export class OAuthFindAccessTokenController
     @Post()
     @HttpCode(200)
     @ApiOperation({ summary: 'Find access-token according to query' })
-    @ApiOkResponse({ description: 'The record has been successfully created.', type: AccessTokenDto })
+    @ApiOkResponse({ description: 'The record has been successfully created.', type: OAuthAccessTokenDto })
     @ApiBody({ type: QueryStatement })
     @ApiQuery({ name: 'query', type: QueryStatement })
     async main(

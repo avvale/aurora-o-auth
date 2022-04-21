@@ -5,8 +5,7 @@ import { ICommandBus, IQueryBus } from 'aurora-ts-core';
 import { FindAccessTokenByIdQuery } from '../../../../@apps/o-auth/access-token/application/find/find-access-token-by-id.query';
 import { CreateAccessTokenCommand } from '../../../../@apps/o-auth/access-token/application/create/create-access-token.command';
 import { OAuthAccessToken, OAuthCreateAccessTokenInput } from '../../../../graphql';
-import { CreateAccessTokenDto } from '../dto/create-access-token.dto';
-import { AccessTokenDto } from '../dto/access-token.dto';
+import { OAuthAccessTokenDto, OAuthCreateAccessTokenDto } from '../dto';
 
 @Injectable()
 export class OAuthCreateAccessTokenHandler
@@ -17,9 +16,9 @@ export class OAuthCreateAccessTokenHandler
     ) {}
 
     async main(
-        payload: OAuthCreateAccessTokenInput | CreateAccessTokenDto,
+        payload: OAuthCreateAccessTokenInput | OAuthCreateAccessTokenDto,
         timezone?: string,
-    ): Promise<OAuthAccessToken | AccessTokenDto>
+    ): Promise<OAuthAccessToken | OAuthAccessTokenDto>
     {
         await this.commandBus.dispatch(new CreateAccessTokenCommand(payload, { timezone }));
 

@@ -1,21 +1,14 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-import { Controller, Delete, Body, UseGuards } from '@nestjs/common';
+import { Controller, Delete, Body } from '@nestjs/common';
 import { ApiTags, ApiOkResponse, ApiOperation, ApiBody, ApiQuery } from '@nestjs/swagger';
 import { Constraint, QueryStatement, Timezone } from 'aurora-ts-core';
-import { ClientDto } from '../dto/client.dto';
-
-// authorization
-import { Permissions } from '../../../../@apps/iam/shared/domain/modules/auth/decorators/permissions.decorator';
-import { AuthenticationJwtGuard } from '../../../../@apps/iam/shared/domain/modules/auth/guards/authentication-jwt.guard';
-import { AuthorizationGuard } from '../../../../@apps/iam/shared/domain/modules/auth/guards/authorization.guard';
+import { OAuthClientDto } from '../dto';
 
 // @apps
 import { OAuthDeleteClientsHandler } from '../handlers/o-auth-delete-clients.handler';
 
 @ApiTags('[o-auth] client')
 @Controller('o-auth/clients/delete')
-@Permissions('oAuth.client.delete')
-@UseGuards(AuthenticationJwtGuard, AuthorizationGuard)
 export class OAuthDeleteClientsController
 {
     constructor(
@@ -24,7 +17,7 @@ export class OAuthDeleteClientsController
 
     @Delete()
     @ApiOperation({ summary: 'Delete clients in batch according to query' })
-    @ApiOkResponse({ description: 'The records has been deleted successfully.', type: [ClientDto]})
+    @ApiOkResponse({ description: 'The records has been deleted successfully.', type: [OAuthClientDto]})
     @ApiBody({ type: QueryStatement })
     @ApiQuery({ name: 'query', type: QueryStatement })
     async main(

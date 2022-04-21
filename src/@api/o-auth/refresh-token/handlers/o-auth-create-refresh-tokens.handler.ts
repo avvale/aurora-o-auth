@@ -4,7 +4,7 @@ import { ICommandBus } from 'aurora-ts-core';
 // @apps
 import { CreateRefreshTokensCommand } from '../../../../@apps/o-auth/refresh-token/application/create/create-refresh-tokens.command';
 import { OAuthCreateRefreshTokenInput } from '../../../../graphql';
-import { CreateRefreshTokenDto } from '../dto/create-refresh-token.dto';
+import { OAuthCreateRefreshTokenDto } from '../dto';
 
 @Injectable()
 export class OAuthCreateRefreshTokensHandler
@@ -14,7 +14,7 @@ export class OAuthCreateRefreshTokensHandler
     ) {}
 
     async main(
-        payload: OAuthCreateRefreshTokenInput[] | CreateRefreshTokenDto[],
+        payload: OAuthCreateRefreshTokenInput[] | OAuthCreateRefreshTokenDto[],
         timezone?: string,
     ): Promise<boolean>
     {

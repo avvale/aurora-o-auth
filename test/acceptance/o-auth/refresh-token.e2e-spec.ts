@@ -12,14 +12,6 @@ import { OAuthModule } from '../../../src/@api/o-auth/o-auth.module';
 import * as request from 'supertest';
 import * as _ from 'lodash';
 
-// has OAuth
-import { JwtModule } from '@nestjs/jwt';
-import { IAccountRepository } from '../../../src/@apps/iam/account/domain/account.repository';
-import { MockAccountRepository } from '../../../src/@apps/iam/account/infrastructure/mock/mock-account.repository';
-import { IamModule } from '../../../src/@api/iam/iam.module';
-import { AuthorizationGuard } from '../../../src/@api/shared/modules/auth/guards/authorization.guard';
-import { TestingJwtService } from '../../../src/@api/o-auth/credential/services/testing-jwt.service';
-import * as fs from 'fs';
 
 
 // disable import foreign modules, can be micro-services
@@ -30,7 +22,6 @@ describe('refresh-token', () =>
     let app: INestApplication;
     let repository: IRefreshTokenRepository;
     let seeder: MockRefreshTokenSeeder;
-    let testJwt: string;
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let mockData: any;
@@ -41,7 +32,6 @@ describe('refresh-token', () =>
             imports: [
                 ...importForeignModules,
                 OAuthModule,
-                IamModule,
                 GraphQLConfigModule,
                 SequelizeModule.forRootAsync({
                     imports   : [ConfigModule],
@@ -63,30 +53,17 @@ describe('refresh-token', () =>
                         };
                     },
                 }),
-                JwtModule.register({
-                    privateKey: fs.readFileSync('src/oauth-private.key', 'utf8'),
-                    publicKey: fs.readFileSync('src/oauth-public.key', 'utf8'),
-                    signOptions: {
-                        algorithm: 'RS256',
-                    }
-                }),
             ],
             providers: [
                 MockRefreshTokenSeeder,
-                TestingJwtService,
             ],
         })
-            .overrideProvider(IAccountRepository)
-            .useClass(MockAccountRepository)
-            .overrideGuard(AuthorizationGuard)
-            .useValue({ canActivate: () => true })
             .compile();
 
         mockData        = refreshTokens;
         app             = module.createNestApplication();
         repository      = module.get<IRefreshTokenRepository>(IRefreshTokenRepository);
         seeder          = module.get<MockRefreshTokenSeeder>(MockRefreshTokenSeeder);
-        testJwt         = module.get(TestingJwtService).getJwt();
 
         // seed mock data in memory database
         await repository.insert(seeder.collectionSource);
@@ -99,7 +76,6 @@ describe('refresh-token', () =>
         return request(app.getHttpServer())
             .post('/o-auth/refresh-token/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ id: null },
@@ -116,7 +92,6 @@ describe('refresh-token', () =>
         return request(app.getHttpServer())
             .post('/o-auth/refresh-token/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ accessTokenId: null },
@@ -133,7 +108,6 @@ describe('refresh-token', () =>
         return request(app.getHttpServer())
             .post('/o-auth/refresh-token/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ token: null },
@@ -150,7 +124,6 @@ describe('refresh-token', () =>
         return request(app.getHttpServer())
             .post('/o-auth/refresh-token/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ isRevoked: null },
@@ -167,7 +140,6 @@ describe('refresh-token', () =>
         return request(app.getHttpServer())
             .post('/o-auth/refresh-token/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ id: undefined },
@@ -184,7 +156,6 @@ describe('refresh-token', () =>
         return request(app.getHttpServer())
             .post('/o-auth/refresh-token/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ accessTokenId: undefined },
@@ -201,7 +172,6 @@ describe('refresh-token', () =>
         return request(app.getHttpServer())
             .post('/o-auth/refresh-token/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ token: undefined },
@@ -218,7 +188,6 @@ describe('refresh-token', () =>
         return request(app.getHttpServer())
             .post('/o-auth/refresh-token/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ isRevoked: undefined },
@@ -235,7 +204,6 @@ describe('refresh-token', () =>
         return request(app.getHttpServer())
             .post('/o-auth/refresh-token/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ id: '*************************************' },
@@ -252,7 +220,6 @@ describe('refresh-token', () =>
         return request(app.getHttpServer())
             .post('/o-auth/refresh-token/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ accessTokenId: '*************************************' },
@@ -269,7 +236,6 @@ describe('refresh-token', () =>
         return request(app.getHttpServer())
             .post('/o-auth/refresh-token/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ isRevoked: 'true' },
@@ -285,7 +251,6 @@ describe('refresh-token', () =>
         return request(app.getHttpServer())
             .post('/o-auth/refresh-token/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ expiresAt: '****' },
@@ -302,7 +267,6 @@ describe('refresh-token', () =>
         return request(app.getHttpServer())
             .post('/o-auth/refresh-token/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send(mockData[0])
             .expect(409);
     });
@@ -312,7 +276,6 @@ describe('refresh-token', () =>
         return request(app.getHttpServer())
             .post('/o-auth/refresh-tokens/paginate')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 query:
                 {
@@ -336,7 +299,6 @@ describe('refresh-token', () =>
         return request(app.getHttpServer())
             .post('/o-auth/refresh-tokens/get')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .expect(200)
             .then(res =>
             {
@@ -351,13 +313,12 @@ describe('refresh-token', () =>
         return request(app.getHttpServer())
             .post('/o-auth/refresh-token/find')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 query:
                 {
                     where:
                     {
-                        id: '6323e7e3-019a-4885-a100-f4bcbd8dfc28',
+                        id: '92d356a5-4ab5-4b27-a67c-7b7fd7f3a2df',
                     },
                 },
             })
@@ -369,7 +330,6 @@ describe('refresh-token', () =>
         return request(app.getHttpServer())
             .post('/o-auth/refresh-token/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ id: '5b19d6ac-4081-573b-96b3-56964d5326a8' },
@@ -382,7 +342,6 @@ describe('refresh-token', () =>
         return request(app.getHttpServer())
             .post('/o-auth/refresh-token/find')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 query:
                 {
@@ -402,9 +361,8 @@ describe('refresh-token', () =>
     test('/REST:GET o-auth/refresh-token/find/{id} - Got 404 Not Found', () =>
     {
         return request(app.getHttpServer())
-            .get('/o-auth/refresh-token/find/7169179e-de13-4cd3-b611-9b62df7b75db')
+            .get('/o-auth/refresh-token/find/145049ce-78d6-49a2-87a2-a20e45e788a9')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .expect(404);
     });
 
@@ -413,7 +371,6 @@ describe('refresh-token', () =>
         return request(app.getHttpServer())
             .get('/o-auth/refresh-token/find/5b19d6ac-4081-573b-96b3-56964d5326a8')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .expect(200)
             .then(res =>
             {
@@ -426,10 +383,9 @@ describe('refresh-token', () =>
         return request(app.getHttpServer())
             .put('/o-auth/refresh-token/update')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
-                ...{ id: 'bf7d00b9-242d-43af-a2ee-d154ad266653' },
+                ...{ id: '3b343c93-792d-4e94-81fe-bf89a68579be' },
             })
             .expect(404);
     });
@@ -439,13 +395,12 @@ describe('refresh-token', () =>
         return request(app.getHttpServer())
             .put('/o-auth/refresh-token/update')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
                 accessTokenId: '5b19d6ac-4081-573b-96b3-56964d5326a8',
-                token: 'Sequi cumque cupiditate et eaque culpa commodi in. Est sit modi quasi aut hic. Commodi quo recusandae laudantium in. Neque magni quae exercitationem sint autem et qui in perspiciatis. Quae quia sint laboriosam reprehenderit ullam. Laboriosam nesciunt quia non occaecati aspernatur deleniti.',
-                isRevoked: true,
-                expiresAt: '2022-04-21 10:49:49',
+                token: 'Velit officiis repudiandae sint tempora. Voluptatem nobis eligendi consequatur rerum voluptatum sit. Asperiores doloremque omnis recusandae id iure reprehenderit asperiores qui et. Accusantium atque voluptas saepe sed dolore dolores molestiae fugit omnis. Laboriosam quia itaque sed et quo minima amet. Nihil molestias voluptate labore dolores quis eum mollitia provident beatae.',
+                isRevoked: false,
+                expiresAt: '2022-04-21 04:52:12',
             })
             .expect(200)
             .then(res =>
@@ -457,9 +412,8 @@ describe('refresh-token', () =>
     test('/REST:DELETE o-auth/refresh-token/delete/{id} - Got 404 Not Found', () =>
     {
         return request(app.getHttpServer())
-            .delete('/o-auth/refresh-token/delete/9838f57b-205f-4963-99ce-f9e7c406852b')
+            .delete('/o-auth/refresh-token/delete/133d8406-b55e-4406-8d87-56b931421e78')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .expect(404);
     });
 
@@ -468,7 +422,6 @@ describe('refresh-token', () =>
         return request(app.getHttpServer())
             .delete('/o-auth/refresh-token/delete/5b19d6ac-4081-573b-96b3-56964d5326a8')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .expect(200);
     });
 
@@ -477,7 +430,6 @@ describe('refresh-token', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 query: `
                     mutation ($payload:OAuthCreateRefreshTokenInput!)
@@ -511,7 +463,6 @@ describe('refresh-token', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 query: `
                     query ($query:QueryStatement $constraint:QueryStatement)
@@ -549,7 +500,6 @@ describe('refresh-token', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 query: `
                     query ($query:QueryStatement)
@@ -583,7 +533,6 @@ describe('refresh-token', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 query: `
                     mutation ($payload:OAuthCreateRefreshTokenInput!)
@@ -602,9 +551,9 @@ describe('refresh-token', () =>
                     payload: {
                         id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
                         accessTokenId: '5b19d6ac-4081-573b-96b3-56964d5326a8',
-                        token: 'Ut possimus aut sunt libero libero earum. Et quidem est ut distinctio dolorem dicta beatae. Et ut et atque est eveniet recusandae error. Quisquam sint in unde neque a libero et cupiditate. Non error distinctio nemo non. Quis atque perspiciatis velit eum consequatur.',
-                        isRevoked: true,
-                        expiresAt: '2022-04-20 16:09:06',
+                        token: 'Nam cupiditate a beatae et. Soluta dolor quis voluptates. Aut illo ea cupiditate maiores unde sint. Facilis quia architecto maiores ipsa nemo facilis.',
+                        isRevoked: false,
+                        expiresAt: '2022-04-21 11:56:09',
                     },
                 },
             })
@@ -620,7 +569,6 @@ describe('refresh-token', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 query: `
                     query ($query:QueryStatement)
@@ -643,7 +591,7 @@ describe('refresh-token', () =>
                     {
                         where:
                         {
-                            id: 'c15c0930-4460-4cb4-84b1-186cd191554c',
+                            id: '37bbbeb9-4066-49c6-9f09-0b9fbacf9127',
                         },
                     },
                 },
@@ -662,7 +610,6 @@ describe('refresh-token', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 query: `
                     query ($query:QueryStatement)
@@ -702,7 +649,6 @@ describe('refresh-token', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 query: `
                     query ($id:ID!)
@@ -720,7 +666,7 @@ describe('refresh-token', () =>
                     }
                 `,
                 variables: {
-                    id: '6a78ac29-3f4c-4685-ba57-f0f94a728463',
+                    id: '286d956a-88a2-4369-8bbe-ad5785eff568',
                 },
             })
             .expect(200)
@@ -737,7 +683,6 @@ describe('refresh-token', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 query: `
                     query ($id:ID!)
@@ -770,7 +715,6 @@ describe('refresh-token', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 query: `
                     mutation ($payload:OAuthUpdateRefreshTokenInput!)
@@ -790,7 +734,7 @@ describe('refresh-token', () =>
                 variables: {
                     payload: {
                         ...mockData[0],
-                        ...{ id: 'a0b00fbc-6880-4f21-957f-ccaa345c5b14' },
+                        ...{ id: 'db1c93ee-2ffc-4485-a149-3938542a87a2' },
                     },
                 },
             })
@@ -808,7 +752,6 @@ describe('refresh-token', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 query: `
                     mutation ($payload:OAuthUpdateRefreshTokenInput!)
@@ -829,9 +772,9 @@ describe('refresh-token', () =>
                     payload: {
                         id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
                         accessTokenId: '5b19d6ac-4081-573b-96b3-56964d5326a8',
-                        token: 'Qui recusandae assumenda esse voluptas. Ratione corrupti tenetur adipisci ut doloremque illum. Sunt qui non assumenda doloribus facilis deserunt amet.',
+                        token: 'Sit corrupti repellendus. Doloremque velit modi adipisci. Exercitationem accusantium officia enim. Quis molestias sed odio sunt laboriosam omnis.',
                         isRevoked: true,
-                        expiresAt: '2022-04-21 06:04:49',
+                        expiresAt: '2022-04-20 23:06:18',
                     },
                 },
             })
@@ -847,7 +790,6 @@ describe('refresh-token', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 query: `
                     mutation ($id:ID!)
@@ -865,7 +807,7 @@ describe('refresh-token', () =>
                     }
                 `,
                 variables: {
-                    id: '1b777ce5-9d28-4d88-a062-feb91542c343',
+                    id: '61f3d62a-2079-438a-b69c-6268e6d9243c',
                 },
             })
             .expect(200)
@@ -882,7 +824,6 @@ describe('refresh-token', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 query: `
                     mutation ($id:ID!)

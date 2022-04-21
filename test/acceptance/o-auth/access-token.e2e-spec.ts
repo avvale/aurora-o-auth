@@ -350,7 +350,7 @@ describe('access-token', () =>
                 {
                     where:
                     {
-                        id: '1b6c7892-6246-4a71-b840-aba7a7cd7f2a',
+                        id: '7adb7271-99dd-4f63-a20f-eee3e095e668',
                     },
                 },
             })
@@ -393,7 +393,7 @@ describe('access-token', () =>
     test('/REST:GET o-auth/access-token/find/{id} - Got 404 Not Found', () =>
     {
         return request(app.getHttpServer())
-            .get('/o-auth/access-token/find/6d7c4d4c-8f7b-4204-8381-483ec3df3724')
+            .get('/o-auth/access-token/find/d0287594-0f31-40e8-abf2-94b49f1a3a1f')
             .set('Accept', 'application/json')
             .expect(404);
     });
@@ -417,7 +417,7 @@ describe('access-token', () =>
             .set('Accept', 'application/json')
             .send({
                 ...mockData[0],
-                ...{ id: '2397c5a1-4466-4790-84ea-7c65df2d856d' },
+                ...{ id: '6fe8a832-07ee-4631-8a83-472b6b85f862' },
             })
             .expect(404);
     });
@@ -431,10 +431,10 @@ describe('access-token', () =>
                 id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
                 clientId: '5b19d6ac-4081-573b-96b3-56964d5326a8',
                 accountId: '5b19d6ac-4081-573b-96b3-56964d5326a8',
-                token: 'Inventore qui ea et modi consequatur accusantium quidem. Error quia deserunt numquam natus aut tempore consequuntur corporis. Voluptates facilis autem. Et voluptatum non ratione rem voluptatibus voluptas aut omnis ut. Odit qui fugit ipsa. Aut aspernatur omnis.',
-                name: 'Fantastic Rubber Mouse',
-                isRevoked: true,
-                expiresAt: '2022-04-20 15:32:18',
+                token: 'Blanditiis accusamus ut. Sit quas est a laboriosam tenetur. Vel quam eum hic autem nam. Dolorem possimus dolor et sed laboriosam nobis odit esse. Libero est id ipsam esse quia ex quae harum. Aspernatur corporis neque aspernatur ut autem et quaerat modi.',
+                name: 'Intelligent Plastic Fish',
+                isRevoked: false,
+                expiresAt: '2022-04-21 18:26:56',
             })
             .expect(200)
             .then(res =>
@@ -446,7 +446,7 @@ describe('access-token', () =>
     test('/REST:DELETE o-auth/access-token/delete/{id} - Got 404 Not Found', () =>
     {
         return request(app.getHttpServer())
-            .delete('/o-auth/access-token/delete/6c7f915b-25ef-44ca-a221-f6fe592169a1')
+            .delete('/o-auth/access-token/delete/d8270ed1-ddb2-4983-91cc-9e6b7f10975c')
             .set('Accept', 'application/json')
             .expect(404);
     });
@@ -591,10 +591,10 @@ describe('access-token', () =>
                         id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
                         clientId: '5b19d6ac-4081-573b-96b3-56964d5326a8',
                         accountId: '5b19d6ac-4081-573b-96b3-56964d5326a8',
-                        token: 'Officiis voluptatem illum repudiandae sint consectetur. Reiciendis ea ipsa repellat quis esse quod modi molestiae. Molestiae deleniti repellat quia sit mollitia. Esse labore quia assumenda officiis veniam veritatis iusto expedita repudiandae. Molestiae corrupti animi in mollitia quae sapiente ducimus et. Voluptatum placeat nihil fugiat consequatur.',
-                        name: 'Unbranded Steel Car',
-                        isRevoked: true,
-                        expiresAt: '2022-04-21 06:18:06',
+                        token: 'Et sit repellendus praesentium non velit quo ullam non repellendus. Nihil molestiae eaque quia incidunt cumque dignissimos voluptate. A iste itaque quis quasi velit sunt perferendis. Eveniet corporis dignissimos dolorum.',
+                        name: 'Awesome Steel Fish',
+                        isRevoked: false,
+                        expiresAt: '2022-04-21 04:18:14',
                     },
                 },
             })
@@ -633,7 +633,7 @@ describe('access-token', () =>
                     {
                         where:
                         {
-                            id: 'ea622d7f-a37b-4c7f-ae96-09278935b4cc',
+                            id: 'fbd386d8-bfab-4b1c-af1c-be70801b24f3',
                         },
                     },
                 },
@@ -710,7 +710,7 @@ describe('access-token', () =>
                     }
                 `,
                 variables: {
-                    id: 'a09e408f-5359-410b-ae10-2f0d01797622',
+                    id: '51d9c97c-b720-4fd8-93f0-0f0ed32c8e84',
                 },
             })
             .expect(200)
@@ -780,7 +780,7 @@ describe('access-token', () =>
                 variables: {
                     payload: {
                         ...mockData[0],
-                        ...{ id: 'f95bd3fe-7f23-4129-8c27-c7af8618e1cc' },
+                        ...{ id: '77fbf1ea-1eee-41f2-b9f5-618f10ccb74d' },
                     },
                 },
             })
@@ -820,10 +820,10 @@ describe('access-token', () =>
                         id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
                         clientId: '5b19d6ac-4081-573b-96b3-56964d5326a8',
                         accountId: '5b19d6ac-4081-573b-96b3-56964d5326a8',
-                        token: 'Error corrupti sit vel corporis error sequi. Enim ut fuga ipsam ut illo quaerat ipsam numquam. Rerum nisi quibusdam dolorem numquam.',
-                        name: 'Unbranded Granite Computer',
-                        isRevoked: false,
-                        expiresAt: '2022-04-21 07:01:18',
+                        token: 'In ea aliquam excepturi hic magnam molestiae repellat natus. Necessitatibus est laboriosam illum consequuntur ipsa est dolorem. Et cumque cumque sint fugiat odio laboriosam aliquam totam. Eaque neque dolorem voluptatem.',
+                        name: 'Handmade Steel Cheese',
+                        isRevoked: true,
+                        expiresAt: '2022-04-20 23:16:36',
                     },
                 },
             })
@@ -857,7 +857,7 @@ describe('access-token', () =>
                     }
                 `,
                 variables: {
-                    id: '9d79f600-ea76-4653-8e09-235a702cf5be',
+                    id: '6ed19117-843a-4626-94ad-581bccd94421',
                 },
             })
             .expect(200)

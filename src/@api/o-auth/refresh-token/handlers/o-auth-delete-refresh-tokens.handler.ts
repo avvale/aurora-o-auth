@@ -5,7 +5,7 @@ import { ICommandBus, IQueryBus, QueryStatement } from 'aurora-ts-core';
 import { GetRefreshTokensQuery } from '../../../../@apps/o-auth/refresh-token/application/get/get-refresh-tokens.query';
 import { DeleteRefreshTokensCommand } from '../../../../@apps/o-auth/refresh-token/application/delete/delete-refresh-tokens.command';
 import { OAuthRefreshToken } from '../../../../graphql';
-import { RefreshTokenDto } from '../dto/refresh-token.dto';
+import { OAuthRefreshTokenDto } from '../dto';
 
 @Injectable()
 export class OAuthDeleteRefreshTokensHandler
@@ -19,7 +19,7 @@ export class OAuthDeleteRefreshTokensHandler
         queryStatement?: QueryStatement,
         constraint?: QueryStatement,
         timezone?: string,
-    ): Promise<OAuthRefreshToken[] | RefreshTokenDto[]>
+    ): Promise<OAuthRefreshToken[] | OAuthRefreshTokenDto[]>
     {
         const refreshTokens = await this.queryBus.ask(new GetRefreshTokensQuery(queryStatement, constraint, { timezone }));
 

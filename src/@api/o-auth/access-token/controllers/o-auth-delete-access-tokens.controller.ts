@@ -2,7 +2,7 @@
 import { Controller, Delete, Body } from '@nestjs/common';
 import { ApiTags, ApiOkResponse, ApiOperation, ApiBody, ApiQuery } from '@nestjs/swagger';
 import { Constraint, QueryStatement, Timezone } from 'aurora-ts-core';
-import { AccessTokenDto } from '../dto/access-token.dto';
+import { OAuthAccessTokenDto } from '../dto';
 
 // @apps
 import { OAuthDeleteAccessTokensHandler } from '../handlers/o-auth-delete-access-tokens.handler';
@@ -17,7 +17,7 @@ export class OAuthDeleteAccessTokensController
 
     @Delete()
     @ApiOperation({ summary: 'Delete access-tokens in batch according to query' })
-    @ApiOkResponse({ description: 'The records has been deleted successfully.', type: [AccessTokenDto]})
+    @ApiOkResponse({ description: 'The records has been deleted successfully.', type: [OAuthAccessTokenDto]})
     @ApiBody({ type: QueryStatement })
     @ApiQuery({ name: 'query', type: QueryStatement })
     async main(

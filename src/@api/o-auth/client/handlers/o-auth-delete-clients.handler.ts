@@ -5,7 +5,7 @@ import { ICommandBus, IQueryBus, QueryStatement } from 'aurora-ts-core';
 import { GetClientsQuery } from '../../../../@apps/o-auth/client/application/get/get-clients.query';
 import { DeleteClientsCommand } from '../../../../@apps/o-auth/client/application/delete/delete-clients.command';
 import { OAuthClient } from '../../../../graphql';
-import { ClientDto } from '../dto/client.dto';
+import { OAuthClientDto } from '../dto';
 
 @Injectable()
 export class OAuthDeleteClientsHandler
@@ -19,7 +19,7 @@ export class OAuthDeleteClientsHandler
         queryStatement?: QueryStatement,
         constraint?: QueryStatement,
         timezone?: string,
-    ): Promise<OAuthClient[] | ClientDto[]>
+    ): Promise<OAuthClient[] | OAuthClientDto[]>
     {
         const clients = await this.queryBus.ask(new GetClientsQuery(queryStatement, constraint, { timezone }));
 

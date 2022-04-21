@@ -4,7 +4,7 @@ import { ICommandBus } from 'aurora-ts-core';
 // @apps
 import { CreateClientsCommand } from '../../../../@apps/o-auth/client/application/create/create-clients.command';
 import { OAuthCreateClientInput } from '../../../../graphql';
-import { CreateClientDto } from '../dto/create-client.dto';
+import { OAuthCreateClientDto } from '../dto';
 
 @Injectable()
 export class OAuthCreateClientsHandler
@@ -14,7 +14,7 @@ export class OAuthCreateClientsHandler
     ) {}
 
     async main(
-        payload: OAuthCreateClientInput[] | CreateClientDto[],
+        payload: OAuthCreateClientInput[] | OAuthCreateClientDto[],
         timezone?: string,
     ): Promise<boolean>
     {

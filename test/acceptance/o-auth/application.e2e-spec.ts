@@ -12,14 +12,6 @@ import { OAuthModule } from '../../../src/@api/o-auth/o-auth.module';
 import * as request from 'supertest';
 import * as _ from 'lodash';
 
-// has OAuth
-import { JwtModule } from '@nestjs/jwt';
-import { IAccountRepository } from '../../../src/@apps/iam/account/domain/account.repository';
-import { MockAccountRepository } from '../../../src/@apps/iam/account/infrastructure/mock/mock-account.repository';
-import { IamModule } from '../../../src/@api/iam/iam.module';
-import { AuthorizationGuard } from '../../../src/@api/shared/modules/auth/guards/authorization.guard';
-import { TestingJwtService } from '../../../src/@api/o-auth/credential/services/testing-jwt.service';
-import * as fs from 'fs';
 
 
 // disable import foreign modules, can be micro-services
@@ -30,7 +22,6 @@ describe('application', () =>
     let app: INestApplication;
     let repository: IApplicationRepository;
     let seeder: MockApplicationSeeder;
-    let testJwt: string;
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let mockData: any;
@@ -41,7 +32,6 @@ describe('application', () =>
             imports: [
                 ...importForeignModules,
                 OAuthModule,
-                IamModule,
                 GraphQLConfigModule,
                 SequelizeModule.forRootAsync({
                     imports   : [ConfigModule],
@@ -63,30 +53,17 @@ describe('application', () =>
                         };
                     },
                 }),
-                JwtModule.register({
-                    privateKey: fs.readFileSync('src/oauth-private.key', 'utf8'),
-                    publicKey: fs.readFileSync('src/oauth-public.key', 'utf8'),
-                    signOptions: {
-                        algorithm: 'RS256',
-                    }
-                }),
             ],
             providers: [
                 MockApplicationSeeder,
-                TestingJwtService,
             ],
         })
-            .overrideProvider(IAccountRepository)
-            .useClass(MockAccountRepository)
-            .overrideGuard(AuthorizationGuard)
-            .useValue({ canActivate: () => true })
             .compile();
 
         mockData        = applications;
         app             = module.createNestApplication();
         repository      = module.get<IApplicationRepository>(IApplicationRepository);
         seeder          = module.get<MockApplicationSeeder>(MockApplicationSeeder);
-        testJwt         = module.get(TestingJwtService).getJwt();
 
         // seed mock data in memory database
         await repository.insert(seeder.collectionSource);
@@ -99,7 +76,6 @@ describe('application', () =>
         return request(app.getHttpServer())
             .post('/o-auth/application/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ id: null },
@@ -116,7 +92,6 @@ describe('application', () =>
         return request(app.getHttpServer())
             .post('/o-auth/application/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ name: null },
@@ -133,7 +108,6 @@ describe('application', () =>
         return request(app.getHttpServer())
             .post('/o-auth/application/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ code: null },
@@ -150,7 +124,6 @@ describe('application', () =>
         return request(app.getHttpServer())
             .post('/o-auth/application/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ secret: null },
@@ -167,7 +140,6 @@ describe('application', () =>
         return request(app.getHttpServer())
             .post('/o-auth/application/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ isMaster: null },
@@ -184,7 +156,6 @@ describe('application', () =>
         return request(app.getHttpServer())
             .post('/o-auth/application/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ id: undefined },
@@ -201,7 +172,6 @@ describe('application', () =>
         return request(app.getHttpServer())
             .post('/o-auth/application/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ name: undefined },
@@ -218,7 +188,6 @@ describe('application', () =>
         return request(app.getHttpServer())
             .post('/o-auth/application/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ code: undefined },
@@ -235,7 +204,6 @@ describe('application', () =>
         return request(app.getHttpServer())
             .post('/o-auth/application/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ secret: undefined },
@@ -252,7 +220,6 @@ describe('application', () =>
         return request(app.getHttpServer())
             .post('/o-auth/application/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ isMaster: undefined },
@@ -269,7 +236,6 @@ describe('application', () =>
         return request(app.getHttpServer())
             .post('/o-auth/application/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ id: '*************************************' },
@@ -286,7 +252,6 @@ describe('application', () =>
         return request(app.getHttpServer())
             .post('/o-auth/application/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ name: '****************************************************************************************************************************************************************************************************************************************************************' },
@@ -303,7 +268,6 @@ describe('application', () =>
         return request(app.getHttpServer())
             .post('/o-auth/application/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ code: '***************************************************' },
@@ -320,7 +284,6 @@ describe('application', () =>
         return request(app.getHttpServer())
             .post('/o-auth/application/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ secret: '*******************************************************************************************' },
@@ -337,7 +300,6 @@ describe('application', () =>
         return request(app.getHttpServer())
             .post('/o-auth/application/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ isMaster: 'true' },
@@ -354,7 +316,6 @@ describe('application', () =>
         return request(app.getHttpServer())
             .post('/o-auth/application/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send(mockData[0])
             .expect(409);
     });
@@ -364,7 +325,6 @@ describe('application', () =>
         return request(app.getHttpServer())
             .post('/o-auth/applications/paginate')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 query:
                 {
@@ -388,7 +348,6 @@ describe('application', () =>
         return request(app.getHttpServer())
             .post('/o-auth/applications/get')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .expect(200)
             .then(res =>
             {
@@ -403,13 +362,12 @@ describe('application', () =>
         return request(app.getHttpServer())
             .post('/o-auth/application/find')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 query:
                 {
                     where:
                     {
-                        id: '7a64b6aa-26b9-401e-b350-855b1b99524e',
+                        id: 'd7b7ff25-3454-4a62-9ecd-5fd3fd415f1e',
                     },
                 },
             })
@@ -421,7 +379,6 @@ describe('application', () =>
         return request(app.getHttpServer())
             .post('/o-auth/application/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
                 ...{ id: '5b19d6ac-4081-573b-96b3-56964d5326a8' },
@@ -434,7 +391,6 @@ describe('application', () =>
         return request(app.getHttpServer())
             .post('/o-auth/application/find')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 query:
                 {
@@ -454,9 +410,8 @@ describe('application', () =>
     test('/REST:GET o-auth/application/find/{id} - Got 404 Not Found', () =>
     {
         return request(app.getHttpServer())
-            .get('/o-auth/application/find/6fcca338-0141-4027-9eb3-a952d5482002')
+            .get('/o-auth/application/find/dbe2cec1-07d4-4358-bfc9-ac18f8530e95')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .expect(404);
     });
 
@@ -465,7 +420,6 @@ describe('application', () =>
         return request(app.getHttpServer())
             .get('/o-auth/application/find/5b19d6ac-4081-573b-96b3-56964d5326a8')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .expect(200)
             .then(res =>
             {
@@ -478,10 +432,9 @@ describe('application', () =>
         return request(app.getHttpServer())
             .put('/o-auth/application/update')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 ...mockData[0],
-                ...{ id: '491ee56c-cbc4-47d8-a3dc-90aa84774169' },
+                ...{ id: 'cd3b03b2-327e-4a0f-92cb-fe0f25554009' },
             })
             .expect(404);
     });
@@ -491,13 +444,12 @@ describe('application', () =>
         return request(app.getHttpServer())
             .put('/o-auth/application/update')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
-                name: 'Incredible Frozen Chair',
-                code: 'r5zmvzg1m0e6rofx57ofbq5svryxh3crhlma4glouy7cg7ydi',
-                secret: 'fglcouc5benoljsrdcrnrbnik103ls1w9w3l6j684plxgnmlu4me1jz49nir1q90h0p84kuv99ajleyn5u312bt1p',
-                isMaster: false,
+                name: 'Sleek Frozen Pizza',
+                code: 'c8nko4dt274kbahxacajry4af9dijz28mf2paerbrkbc11asr',
+                secret: '548f552n817xbqs5dr6r4ln3m9ovdb743f6qyivbvaes8tf9b3043vb1yrmkpmtt9dczw59i2dt7c9wb8pl2kba5p',
+                isMaster: true,
                 clientIds: [],
             })
             .expect(200)
@@ -510,9 +462,8 @@ describe('application', () =>
     test('/REST:DELETE o-auth/application/delete/{id} - Got 404 Not Found', () =>
     {
         return request(app.getHttpServer())
-            .delete('/o-auth/application/delete/76d5e6d2-56ba-4edb-862a-9c1c8d7d5ba1')
+            .delete('/o-auth/application/delete/e027afce-7e82-4a7e-aa08-3b482d94fe43')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .expect(404);
     });
 
@@ -521,7 +472,6 @@ describe('application', () =>
         return request(app.getHttpServer())
             .delete('/o-auth/application/delete/5b19d6ac-4081-573b-96b3-56964d5326a8')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .expect(200);
     });
 
@@ -530,7 +480,6 @@ describe('application', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 query: `
                     mutation ($payload:OAuthCreateApplicationInput!)
@@ -564,7 +513,6 @@ describe('application', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 query: `
                     query ($query:QueryStatement $constraint:QueryStatement)
@@ -602,7 +550,6 @@ describe('application', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 query: `
                     query ($query:QueryStatement)
@@ -636,7 +583,6 @@ describe('application', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 query: `
                     mutation ($payload:OAuthCreateApplicationInput!)
@@ -654,9 +600,9 @@ describe('application', () =>
                 variables: {
                     payload: {
                         id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
-                        name: 'Refined Wooden Bike',
-                        code: 'c63l89ycq83sxa5kpr6eophjvpgob4m5das5ieyf3tv1kb841',
-                        secret: '76hcfmhwj47mhaojo40k571os4ljhhcssb7rfm171vl9ibagvvn2r1cakohjrm5155gjm3d3pu0a5lqlul11ixdvr',
+                        name: 'Sleek Steel Sausages',
+                        code: 'bfzt25vl6r3wa99ly6fed5hryt31o0nxvflk2vbucngs2eu4a',
+                        secret: 'foqp56gkbur3ah486xg3rfxy48i7kyjbcwk51w1hi8nrr8jsngqtwv5ay42wq8a3p8vyp77ge2r5uum8ebafs2auc',
                         isMaster: false,
                     },
                 },
@@ -673,7 +619,6 @@ describe('application', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 query: `
                     query ($query:QueryStatement)
@@ -696,7 +641,7 @@ describe('application', () =>
                     {
                         where:
                         {
-                            id: 'b0e81d4e-eed7-4709-b423-409a56928c8a',
+                            id: 'd29c382a-3790-49c0-afa6-e2f771b25446',
                         },
                     },
                 },
@@ -715,7 +660,6 @@ describe('application', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 query: `
                     query ($query:QueryStatement)
@@ -755,7 +699,6 @@ describe('application', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 query: `
                     query ($id:ID!)
@@ -773,7 +716,7 @@ describe('application', () =>
                     }
                 `,
                 variables: {
-                    id: '5616a40f-568a-4132-bcb4-94a52373787a',
+                    id: 'bb862354-564b-4e59-aec3-8599cd9652c1',
                 },
             })
             .expect(200)
@@ -790,7 +733,6 @@ describe('application', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 query: `
                     query ($id:ID!)
@@ -823,7 +765,6 @@ describe('application', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 query: `
                     mutation ($payload:OAuthUpdateApplicationInput!)
@@ -843,7 +784,7 @@ describe('application', () =>
                 variables: {
                     payload: {
                         ...mockData[0],
-                        ...{ id: '0828159e-a426-44c1-9cf8-c3f51ce39098' },
+                        ...{ id: 'e99891d5-6892-4f79-8441-74a519e96525' },
                     },
                 },
             })
@@ -861,7 +802,6 @@ describe('application', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 query: `
                     mutation ($payload:OAuthUpdateApplicationInput!)
@@ -881,10 +821,10 @@ describe('application', () =>
                 variables: {
                     payload: {
                         id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
-                        name: 'Sleek Granite Fish',
-                        code: 'i2dd1qjtl8pd2ltu025lgs6rpx5dh6re4ussdq9s9q3o6jpfx',
-                        secret: '4fer6g8260uh4nvcl23ng68t2zxj61whwybdmaflg1v7ua7pknqqid4w6zp49lo7iid0491y2iwbz96jwd5tlu881',
-                        isMaster: false,
+                        name: 'Incredible Plastic Tuna',
+                        code: 'j1hag2ki5cvpofaxjjbhuvj61zues36y6toj6hmlylbh2gv51',
+                        secret: 'j8a287fx75jv9ezv9r58dl7abecx53w024r42lzdk6y5xyn9o7utxcnkq617dmcl9s18vj6qagh58bhaxg10gcavv',
+                        isMaster: true,
                         clientIds: [],
                     },
                 },
@@ -901,7 +841,6 @@ describe('application', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 query: `
                     mutation ($id:ID!)
@@ -919,7 +858,7 @@ describe('application', () =>
                     }
                 `,
                 variables: {
-                    id: '35dd2caf-28d9-49ac-8d93-6ab14b56aa32',
+                    id: '11704df7-8b71-4747-8423-baa2c18525f7',
                 },
             })
             .expect(200)
@@ -936,7 +875,6 @@ describe('application', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${testJwt}`)
             .send({
                 query: `
                     mutation ($id:ID!)

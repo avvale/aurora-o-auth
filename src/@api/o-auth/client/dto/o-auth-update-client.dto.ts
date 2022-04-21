@@ -1,6 +1,7 @@
+/* eslint-disable indent */
 import { ApiProperty } from '@nestjs/swagger';
 
-export class UpdateClientDto
+export class OAuthUpdateClientDto
 {
     @ApiProperty({
         type       : String,
