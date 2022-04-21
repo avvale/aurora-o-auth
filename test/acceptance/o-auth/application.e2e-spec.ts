@@ -367,7 +367,7 @@ describe('application', () =>
                 {
                     where:
                     {
-                        id: 'd7b7ff25-3454-4a62-9ecd-5fd3fd415f1e',
+                        id: 'e482cdd6-b70b-43e3-9b4b-ef9cf78f2dd2',
                     },
                 },
             })
@@ -410,7 +410,7 @@ describe('application', () =>
     test('/REST:GET o-auth/application/find/{id} - Got 404 Not Found', () =>
     {
         return request(app.getHttpServer())
-            .get('/o-auth/application/find/dbe2cec1-07d4-4358-bfc9-ac18f8530e95')
+            .get('/o-auth/application/find/9e58d932-07e3-430d-8053-765a520e8886')
             .set('Accept', 'application/json')
             .expect(404);
     });
@@ -434,7 +434,7 @@ describe('application', () =>
             .set('Accept', 'application/json')
             .send({
                 ...mockData[0],
-                ...{ id: 'cd3b03b2-327e-4a0f-92cb-fe0f25554009' },
+                ...{ id: '0df70fe8-af02-4a69-8e9f-c42b08774311' },
             })
             .expect(404);
     });
@@ -446,10 +446,10 @@ describe('application', () =>
             .set('Accept', 'application/json')
             .send({
                 id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
-                name: 'Sleek Frozen Pizza',
-                code: 'c8nko4dt274kbahxacajry4af9dijz28mf2paerbrkbc11asr',
-                secret: '548f552n817xbqs5dr6r4ln3m9ovdb743f6qyivbvaes8tf9b3043vb1yrmkpmtt9dczw59i2dt7c9wb8pl2kba5p',
-                isMaster: true,
+                name: 'Handmade Frozen Gloves',
+                code: 'l57f7d8pk3ms6ydu0m87z84eej4ssjjc9adz7zqmedop0h18h',
+                secret: 'xe95m5ondpv9x8yfa64ilnc44gt305v7twxwvopv0t6xdczio5cxh93tdmvfmcwgwobrevq4b6axvpihocb40eqrd',
+                isMaster: false,
                 clientIds: [],
             })
             .expect(200)
@@ -462,7 +462,7 @@ describe('application', () =>
     test('/REST:DELETE o-auth/application/delete/{id} - Got 404 Not Found', () =>
     {
         return request(app.getHttpServer())
-            .delete('/o-auth/application/delete/e027afce-7e82-4a7e-aa08-3b482d94fe43')
+            .delete('/o-auth/application/delete/78457ac1-2e20-4df7-9e60-b73eaa57a668')
             .set('Accept', 'application/json')
             .expect(404);
     });
@@ -600,9 +600,9 @@ describe('application', () =>
                 variables: {
                     payload: {
                         id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
-                        name: 'Sleek Steel Sausages',
-                        code: 'bfzt25vl6r3wa99ly6fed5hryt31o0nxvflk2vbucngs2eu4a',
-                        secret: 'foqp56gkbur3ah486xg3rfxy48i7kyjbcwk51w1hi8nrr8jsngqtwv5ay42wq8a3p8vyp77ge2r5uum8ebafs2auc',
+                        name: 'Sleek Concrete Fish',
+                        code: 'c0mz1bdz2miypw1bpb7lu87zqo58p28f5ts7g5mxb56s8v74s',
+                        secret: 'zbn439sjcjkeyyffa8qjq3p2q41kd5v3ml0x56tanxpec48xehoxokqxpwcwpo592fm66yx8fov5ydg8y0lsbk39e',
                         isMaster: false,
                     },
                 },
@@ -641,7 +641,7 @@ describe('application', () =>
                     {
                         where:
                         {
-                            id: 'd29c382a-3790-49c0-afa6-e2f771b25446',
+                            id: '008a6077-26ca-4e8b-81dc-758f8ab38387',
                         },
                     },
                 },
@@ -716,7 +716,7 @@ describe('application', () =>
                     }
                 `,
                 variables: {
-                    id: 'bb862354-564b-4e59-aec3-8599cd9652c1',
+                    id: '5fb42cd1-4730-4795-9e00-36671ff17a76',
                 },
             })
             .expect(200)
@@ -784,7 +784,7 @@ describe('application', () =>
                 variables: {
                     payload: {
                         ...mockData[0],
-                        ...{ id: 'e99891d5-6892-4f79-8441-74a519e96525' },
+                        ...{ id: 'c8ca2a40-ef9c-4e76-b0ab-e1eb28522f81' },
                     },
                 },
             })
@@ -821,9 +821,9 @@ describe('application', () =>
                 variables: {
                     payload: {
                         id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
-                        name: 'Incredible Plastic Tuna',
-                        code: 'j1hag2ki5cvpofaxjjbhuvj61zues36y6toj6hmlylbh2gv51',
-                        secret: 'j8a287fx75jv9ezv9r58dl7abecx53w024r42lzdk6y5xyn9o7utxcnkq617dmcl9s18vj6qagh58bhaxg10gcavv',
+                        name: 'Fantastic Wooden Pants',
+                        code: 'gb4nlq6fqxdcib6dzz6fhotjybkztbzaf3elzpx13mphsdhl8',
+                        secret: 'ne1tv1hqoq5e4o607sh6ciqwyeiv68sl5yb165to05ia3kr5ssym9uiw9kl7gd5naf648xfvyv3g602x703onkx8n',
                         isMaster: true,
                         clientIds: [],
                     },
@@ -858,7 +858,7 @@ describe('application', () =>
                     }
                 `,
                 variables: {
-                    id: '11704df7-8b71-4747-8423-baa2c18525f7',
+                    id: 'ba1137eb-d54d-4790-ba7b-43e271ac7a78',
                 },
             })
             .expect(200)
