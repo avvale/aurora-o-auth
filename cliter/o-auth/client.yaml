@@ -65,6 +65,7 @@ aggregateProperties:
     relationshipSingularName: accessToken
     relationshipAggregate: OAuthAccessToken
     relationshipModulePath: o-auth/access-token
+    relationshipAvoidConstraint: true
   - name: createdAt
     type: timestamp
     nullable: true

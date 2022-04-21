@@ -20,6 +20,8 @@ aggregateProperties:
     relationshipModulePath: o-auth/client
     relationshipKey: id
     relationshipField: client
+    relationshipAvoidConstraint: true
+    index: index
   - name: accountId
     type: id
     length: 36
@@ -43,6 +45,8 @@ aggregateProperties:
     relationship: one-to-one
     relationshipAggregate: OAuthRefreshToken
     relationshipModulePath: o-auth/refresh-token
+    relationshipAvoidConstraint: true
+    index: index
   - name: createdAt
     type: timestamp
     nullable: true

@@ -1,4 +1,4 @@
-version: 1.0.0
+version: 0.0.1
 boundedContextName: o-auth
 moduleName: refresh-token
 moduleNames: refresh-tokens
@@ -19,6 +19,8 @@ aggregateProperties:
     relationshipAggregate: OAuthAccessToken
     relationshipModulePath: o-auth/access-token
     relationshipField: accessToken
+    relationshipAvoidConstraint: true
+    index: index
   - name: token
     type: text
     nullable: false

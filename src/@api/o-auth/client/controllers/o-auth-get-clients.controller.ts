@@ -1,0 +1,43 @@
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+import { Body, Controller, HttpCode, Post, UseGuards } from '@nestjs/common';
+import { ApiTags, ApiOkResponse, ApiOperation, ApiBody, ApiQuery } from '@nestjs/swagger';
+import { Constraint, QueryStatement, Timezone } from 'aurora-ts-core';
+import { ClientDto } from '../dto/client.dto';
+
+// authorization
+import { Permissions } from '../../../../@apps/iam/shared/domain/modules/auth/decorators/permissions.decorator';
+import { AuthenticationJwtGuard } from '../../../../@apps/iam/shared/domain/modules/auth/guards/authentication-jwt.guard';
+import { AuthorizationGuard } from '../../../../@apps/iam/shared/domain/modules/auth/guards/authorization.guard';
+
+// @apps
+import { OAuthGetClientsHandler } from '../handlers/o-auth-get-clients.handler';
+
+@ApiTags('[o-auth] client')
+@Controller('o-auth/clients/get')
+@Permissions('oAuth.client.get')
+@UseGuards(AuthenticationJwtGuard, AuthorizationGuard)
+export class OAuthGetClientsController
+{
+    constructor(
+        private readonly handler: OAuthGetClientsHandler,
+    ) {}
+
+    @Post()
+    @HttpCode(200)
+    @ApiOperation({ summary: 'Get clients according to query' })
+    @ApiOkResponse({ description: 'The records has been found successfully.', type: [ClientDto]})
+    @ApiBody({ type: QueryStatement })
+    @ApiQuery({ name: 'query', type: QueryStatement })
+    async main(
+        @Body('query') queryStatement?: QueryStatement,
+        @Constraint() constraint?: QueryStatement,
+        @Timezone() timezone?: string,
+    )
+    {
+        return await this.handler.main(
+            queryStatement,
+            constraint,
+            timezone,
+        );
+    }
+}
