@@ -41,14 +41,14 @@ describe('OAuthGetRefreshTokensHandler', () =>
         commandBus = module.get<ICommandBus>(ICommandBus);
     });
 
-    test('OAuthGetRefreshTokensResolver should be defined', () =>
+    test('OAuthGetRefreshTokensHandler should be defined', () =>
     {
         expect(handler).toBeDefined();
     });
 
     describe('main', () =>
     {
-        test('OAuthGetRefreshTokensResolver should be defined', () =>
+        test('OAuthGetRefreshTokensHandler should be defined', () =>
         {
             expect(handler).toBeDefined();
         });

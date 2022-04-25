@@ -42,19 +42,19 @@ describe('OAuthUpdateApplicationHandler', () =>
         commandBus  = module.get<ICommandBus>(ICommandBus);
     });
 
-    test('OAuthUpdateApplicationResolver should be defined', () =>
+    test('OAuthUpdateApplicationHandler should be defined', () =>
     {
         expect(handler).toBeDefined();
     });
 
     describe('main', () =>
     {
-        test('OAuthUpdateApplicationResolver should be defined', () =>
+        test('OAuthUpdateApplicationHandler should be defined', () =>
         {
             expect(handler).toBeDefined();
         });
 
-        test('should return a application created', async () =>
+        test('should return a application updated', async () =>
         {
             jest.spyOn(queryBus, 'ask').mockImplementation(() => new Promise(resolve => resolve(applications[0])));
             expect(await handler.main(<OAuthUpdateApplicationInput>applications[0])).toBe(applications[0]);

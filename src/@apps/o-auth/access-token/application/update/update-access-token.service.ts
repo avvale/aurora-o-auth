@@ -55,11 +55,11 @@ export class UpdateAccessTokenService
 
 
         // update
-        await this.repository.update(accessToken, { constraint, cQMetadata });
+        await this.repository.update(accessToken, { constraint, cQMetadata, updateOptions: cQMetadata?.repositoryOptions });
 
         // merge EventBus methods with object returned by the repository, to be able to apply and commit events
         const accessTokenRegister = this.publisher.mergeObjectContext(
-            accessToken
+            accessToken,
         );
 
         accessTokenRegister.updated(accessToken); // apply event to model events

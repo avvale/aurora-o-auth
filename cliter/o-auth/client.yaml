@@ -55,9 +55,10 @@ aggregateProperties:
     relationshipSingularName: application
     relationshipAggregate: OAuthApplication
     relationshipModulePath: o-auth/application
-    intermediateModel: OAuthApplicationsClientsModel
-    intermediateModelModuleSection: o-auth/application
-    intermediateModelFile: applications-clients
+    relationshipAvoidConstraint: true
+    pivotAggregateName: OAuthApplicationsClients
+    pivotPath: o-auth/application
+    pivotFileName: applications-clients
   - name: accessTokens
     type: OAuthAccessToken
     nullable: true

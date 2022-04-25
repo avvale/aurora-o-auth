@@ -33,6 +33,7 @@ export class CreateApplicationCommandHandler implements ICommandHandler<CreateAp
                 isMaster: new ApplicationIsMaster(command.payload.isMaster),
                 clientIds: new ApplicationClientIds(command.payload.clientIds),
             },
+            command.cQMetadata,
         );
     }
 }

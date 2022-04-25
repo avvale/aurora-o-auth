@@ -42,19 +42,19 @@ describe('OAuthUpdateAccessTokenHandler', () =>
         commandBus  = module.get<ICommandBus>(ICommandBus);
     });
 
-    test('OAuthUpdateAccessTokenResolver should be defined', () =>
+    test('OAuthUpdateAccessTokenHandler should be defined', () =>
     {
         expect(handler).toBeDefined();
     });
 
     describe('main', () =>
     {
-        test('OAuthUpdateAccessTokenResolver should be defined', () =>
+        test('OAuthUpdateAccessTokenHandler should be defined', () =>
         {
             expect(handler).toBeDefined();
         });
 
-        test('should return a accessToken created', async () =>
+        test('should return a accessToken updated', async () =>
         {
             jest.spyOn(queryBus, 'ask').mockImplementation(() => new Promise(resolve => resolve(accessTokens[0])));
             expect(await handler.main(<OAuthUpdateAccessTokenInput>accessTokens[0])).toBe(accessTokens[0]);

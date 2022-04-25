@@ -34,7 +34,8 @@ export class CreateRefreshTokensCommandHandler implements ICommandHandler<Create
                         isRevoked: new RefreshTokenIsRevoked(refreshToken.isRevoked),
                         expiresAt: new RefreshTokenExpiresAt(refreshToken.expiresAt, {}, { removeTimezone: command.cQMetadata.timezone }),
                     };
-                })
+                }),
+            command.cQMetadata,
         );
     }
 }

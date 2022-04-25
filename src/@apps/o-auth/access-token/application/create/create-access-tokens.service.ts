@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { EventPublisher } from '@nestjs/cqrs';
+import { CQMetadata } from 'aurora-ts-core';
 import {
     AccessTokenId,
     AccessTokenClientId,
@@ -34,6 +35,7 @@ export class CreateAccessTokensService
             isRevoked: AccessTokenIsRevoked;
             expiresAt: AccessTokenExpiresAt;
         } [],
+        cQMetadata?: CQMetadata,
     ): Promise<void>
     {
         // create aggregate with factory pattern
@@ -51,7 +53,7 @@ export class CreateAccessTokensService
         ));
 
         // insert
-        await this.repository.insert(aggregateAccessTokens);
+        await this.repository.insert(aggregateAccessTokens, { insertOptions: cQMetadata?.repositoryOptions });
 
         // create AddAccessTokensContextEvent to have object wrapper to add event publisher functionality
         // insert EventBus in object, to be able to apply and commit events

@@ -63,7 +63,7 @@ export abstract class IAccessTokenRepository implements IRepository<OAuthAccessT
             createOptions?: ObjectLiteral;
             dataFactory?: (aggregate: OAuthAccessToken) => ObjectLiteral;
             // arguments to find object and check if object is duplicated
-            finderQueryStatement: (aggregate: OAuthAccessToken) => QueryStatement;
+            finderQueryStatement?: (aggregate: OAuthAccessToken) => QueryStatement;
         }
     ): Promise<void>;
 

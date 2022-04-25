@@ -41,14 +41,14 @@ describe('OAuthGetApplicationsHandler', () =>
         commandBus = module.get<ICommandBus>(ICommandBus);
     });
 
-    test('OAuthGetApplicationsResolver should be defined', () =>
+    test('OAuthGetApplicationsHandler should be defined', () =>
     {
         expect(handler).toBeDefined();
     });
 
     describe('main', () =>
     {
-        test('OAuthGetApplicationsResolver should be defined', () =>
+        test('OAuthGetApplicationsHandler should be defined', () =>
         {
             expect(handler).toBeDefined();
         });

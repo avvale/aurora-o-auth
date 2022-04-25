@@ -1,5 +1,6 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { EventPublisher } from '@nestjs/cqrs';
+import { CQMetadata } from 'aurora-ts-core';
 import {
     ApplicationId,
     ApplicationName,
@@ -31,6 +32,7 @@ export class CreateApplicationService
             isMaster: ApplicationIsMaster;
             clientIds: ApplicationClientIds;
         },
+        cQMetadata?: CQMetadata,
     ): Promise<void>
     {
         // create aggregate with factory pattern
@@ -46,11 +48,11 @@ export class CreateApplicationService
             null, // deletedAt
         );
 
-        await this.repository.create(application);
+        await this.repository.create(application, { createOptions: cQMetadata?.repositoryOptions });
 
         // merge EventBus methods with object returned by the repository, to be able to apply and commit events
         const applicationRegister = this.publisher.mergeObjectContext(
-            application
+            application,
         );
 
         applicationRegister.created(application); // apply event to model events

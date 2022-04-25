@@ -42,19 +42,19 @@ describe('OAuthUpdateClientHandler', () =>
         commandBus  = module.get<ICommandBus>(ICommandBus);
     });
 
-    test('OAuthUpdateClientResolver should be defined', () =>
+    test('OAuthUpdateClientHandler should be defined', () =>
     {
         expect(handler).toBeDefined();
     });
 
     describe('main', () =>
     {
-        test('OAuthUpdateClientResolver should be defined', () =>
+        test('OAuthUpdateClientHandler should be defined', () =>
         {
             expect(handler).toBeDefined();
         });
 
-        test('should return a client created', async () =>
+        test('should return a client updated', async () =>
         {
             jest.spyOn(queryBus, 'ask').mockImplementation(() => new Promise(resolve => resolve(clients[0])));
             expect(await handler.main(<OAuthUpdateClientInput>clients[0])).toBe(clients[0]);

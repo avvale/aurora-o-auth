@@ -43,6 +43,7 @@ export class CreateClientCommandHandler implements ICommandHandler<CreateClientC
                 isMaster: new ClientIsMaster(command.payload.isMaster),
                 applicationIds: new ClientApplicationIds(command.payload.applicationIds),
             },
+            command.cQMetadata,
         );
     }
 }

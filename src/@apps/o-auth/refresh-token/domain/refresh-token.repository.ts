@@ -63,7 +63,7 @@ export abstract class IRefreshTokenRepository implements IRepository<OAuthRefres
             createOptions?: ObjectLiteral;
             dataFactory?: (aggregate: OAuthRefreshToken) => ObjectLiteral;
             // arguments to find object and check if object is duplicated
-            finderQueryStatement: (aggregate: OAuthRefreshToken) => QueryStatement;
+            finderQueryStatement?: (aggregate: OAuthRefreshToken) => QueryStatement;
         }
     ): Promise<void>;
 

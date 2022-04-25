@@ -43,7 +43,7 @@ describe('OAuthDeleteAccessTokenByIdController', () =>
 
     describe('main', () =>
     {
-        test('OAuthDeleteAccessTokenByIdController should be defined', () =>
+        test('OAuthDeleteAccessTokenByIdHandler should be defined', () =>
         {
             expect(handler).toBeDefined();
         });

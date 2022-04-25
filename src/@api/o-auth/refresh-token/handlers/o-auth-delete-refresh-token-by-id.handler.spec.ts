@@ -43,7 +43,7 @@ describe('OAuthDeleteRefreshTokenByIdController', () =>
 
     describe('main', () =>
     {
-        test('OAuthDeleteRefreshTokenByIdController should be defined', () =>
+        test('OAuthDeleteRefreshTokenByIdHandler should be defined', () =>
         {
             expect(handler).toBeDefined();
         });

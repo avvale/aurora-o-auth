@@ -29,7 +29,7 @@ describe('DeleteClientsService', () =>
                         delete: (queryStatement) => { /**/ },
                     }
                 },
-            ]
+            ],
         }).compile();
 
         service         = module.get(DeleteClientsService);

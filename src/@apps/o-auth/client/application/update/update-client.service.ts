@@ -67,11 +67,11 @@ export class UpdateClientService
 
 
         // update
-        await this.repository.update(client, { constraint, cQMetadata });
+        await this.repository.update(client, { constraint, cQMetadata, updateOptions: cQMetadata?.repositoryOptions });
 
         // merge EventBus methods with object returned by the repository, to be able to apply and commit events
         const clientRegister = this.publisher.mergeObjectContext(
-            client
+            client,
         );
 
         clientRegister.updated(client); // apply event to model events

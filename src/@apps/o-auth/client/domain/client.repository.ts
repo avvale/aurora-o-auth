@@ -63,7 +63,7 @@ export abstract class IClientRepository implements IRepository<OAuthClient>
             createOptions?: ObjectLiteral;
             dataFactory?: (aggregate: OAuthClient) => ObjectLiteral;
             // arguments to find object and check if object is duplicated
-            finderQueryStatement: (aggregate: OAuthClient) => QueryStatement;
+            finderQueryStatement?: (aggregate: OAuthClient) => QueryStatement;
         }
     ): Promise<void>;
 

@@ -38,7 +38,7 @@ describe('OAuthCreateAccessTokensHandler', () =>
 
     describe('main', () =>
     {
-        test('OAuthCreateAccessTokensController should be defined', () =>
+        test('OAuthCreateAccessTokensHandler should be defined', () =>
         {
             expect(handler).toBeDefined();
         });

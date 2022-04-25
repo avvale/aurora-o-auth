@@ -35,6 +35,7 @@ export class CreateAccessTokenCommandHandler implements ICommandHandler<CreateAc
                 isRevoked: new AccessTokenIsRevoked(command.payload.isRevoked),
                 expiresAt: new AccessTokenExpiresAt(command.payload.expiresAt, {}, { removeTimezone: command.cQMetadata.timezone }),
             },
+            command.cQMetadata,
         );
     }
 }

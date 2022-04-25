@@ -80,7 +80,11 @@ export class OAuthClientModel extends Model<OAuthClientModel>
     isMaster: boolean;
 
 
-    @BelongsToMany(() => OAuthApplicationModel, () => OAuthApplicationsClientsModel)
+    @BelongsToMany(() => OAuthApplicationModel, {
+        through: () => OAuthApplicationsClientsModel,
+        uniqueKey: 'Uq01OAuthApplicationsClients',
+        constraints: false,
+    })
     applications: OAuthApplicationModel[];
 
 

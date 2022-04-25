@@ -43,7 +43,7 @@ describe('OAuthDeleteApplicationByIdController', () =>
 
     describe('main', () =>
     {
-        test('OAuthDeleteApplicationByIdController should be defined', () =>
+        test('OAuthDeleteApplicationByIdHandler should be defined', () =>
         {
             expect(handler).toBeDefined();
         });

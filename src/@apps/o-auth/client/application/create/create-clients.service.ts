@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { EventPublisher } from '@nestjs/cqrs';
+import { CQMetadata } from 'aurora-ts-core';
 import {
     ClientId,
     ClientGrantType,
@@ -42,6 +43,7 @@ export class CreateClientsService
             isMaster: ClientIsMaster;
             applicationIds: ClientApplicationIds;
         } [],
+        cQMetadata?: CQMetadata,
     ): Promise<void>
     {
         // create aggregate with factory pattern
@@ -63,7 +65,7 @@ export class CreateClientsService
         ));
 
         // insert
-        await this.repository.insert(aggregateClients);
+        await this.repository.insert(aggregateClients, { insertOptions: cQMetadata?.repositoryOptions });
 
         // create AddClientsContextEvent to have object wrapper to add event publisher functionality
         // insert EventBus in object, to be able to apply and commit events

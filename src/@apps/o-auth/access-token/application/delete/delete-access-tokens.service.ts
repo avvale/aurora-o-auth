@@ -13,12 +13,21 @@ export class DeleteAccessTokensService
         private readonly repository: IAccessTokenRepository,
     ) {}
 
-    async main(queryStatement?: QueryStatement, constraint?: QueryStatement, cQMetadata?: CQMetadata): Promise<void>
+    async main(
+        queryStatement?: QueryStatement,
+        constraint?: QueryStatement,
+        cQMetadata?: CQMetadata,
+    ): Promise<void>
     {
         // get object to delete
         const accessTokens = await this.repository.get({ queryStatement, constraint, cQMetadata });
 
-        await this.repository.delete({ queryStatement, constraint, cQMetadata });
+        await this.repository.delete({
+            queryStatement,
+            constraint,
+            cQMetadata,
+            deleteOptions: cQMetadata?.repositoryOptions,
+        });
 
         // create AddAccessTokensContextEvent to have object wrapper to add event publisher functionality
         // insert EventBus in object, to be able to apply and commit events

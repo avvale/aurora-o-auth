@@ -41,14 +41,14 @@ describe('OAuthPaginateAccessTokensHandler', () =>
         commandBus = module.get<ICommandBus>(ICommandBus);
     });
 
-    test('OAuthPaginateAccessTokensResolver should be defined', () =>
+    test('OAuthPaginateAccessTokensHandler should be defined', () =>
     {
         expect(handler).toBeDefined();
     });
 
     describe('main', () =>
     {
-        test('OAuthPaginateAccessTokensResolver should be defined', () =>
+        test('OAuthPaginateAccessTokensHandler should be defined', () =>
         {
             expect(handler).toBeDefined();
         });

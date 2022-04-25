@@ -41,14 +41,14 @@ describe('OAuthFindRefreshTokenHandler', () =>
         commandBus  = module.get<ICommandBus>(ICommandBus);
     });
 
-    test('OAuthFindRefreshTokenResolver should be defined', () =>
+    test('OAuthFindRefreshTokenHandler should be defined', () =>
     {
         expect(handler).toBeDefined();
     });
 
     describe('main', () =>
     {
-        test('OAuthFindRefreshTokenResolver should be defined', () =>
+        test('OAuthFindRefreshTokenHandler should be defined', () =>
         {
             expect(handler).toBeDefined();
         });

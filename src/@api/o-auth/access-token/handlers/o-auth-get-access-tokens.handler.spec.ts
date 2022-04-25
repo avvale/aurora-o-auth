@@ -41,14 +41,14 @@ describe('OAuthGetAccessTokensHandler', () =>
         commandBus = module.get<ICommandBus>(ICommandBus);
     });
 
-    test('OAuthGetAccessTokensResolver should be defined', () =>
+    test('OAuthGetAccessTokensHandler should be defined', () =>
     {
         expect(handler).toBeDefined();
     });
 
     describe('main', () =>
     {
-        test('OAuthGetAccessTokensResolver should be defined', () =>
+        test('OAuthGetAccessTokensHandler should be defined', () =>
         {
             expect(handler).toBeDefined();
         });

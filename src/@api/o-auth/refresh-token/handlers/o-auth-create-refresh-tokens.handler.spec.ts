@@ -38,7 +38,7 @@ describe('OAuthCreateRefreshTokensHandler', () =>
 
     describe('main', () =>
     {
-        test('OAuthCreateRefreshTokensController should be defined', () =>
+        test('OAuthCreateRefreshTokensHandler should be defined', () =>
         {
             expect(handler).toBeDefined();
         });

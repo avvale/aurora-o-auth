@@ -41,14 +41,14 @@ describe('OAuthFindApplicationHandler', () =>
         commandBus  = module.get<ICommandBus>(ICommandBus);
     });
 
-    test('OAuthFindApplicationResolver should be defined', () =>
+    test('OAuthFindApplicationHandler should be defined', () =>
     {
         expect(handler).toBeDefined();
     });
 
     describe('main', () =>
     {
-        test('OAuthFindApplicationResolver should be defined', () =>
+        test('OAuthFindApplicationHandler should be defined', () =>
         {
             expect(handler).toBeDefined();
         });

@@ -49,11 +49,11 @@ export class UpdateRefreshTokenService
 
 
         // update
-        await this.repository.update(refreshToken, { constraint, cQMetadata });
+        await this.repository.update(refreshToken, { constraint, cQMetadata, updateOptions: cQMetadata?.repositoryOptions });
 
         // merge EventBus methods with object returned by the repository, to be able to apply and commit events
         const refreshTokenRegister = this.publisher.mergeObjectContext(
-            refreshToken
+            refreshToken,
         );
 
         refreshTokenRegister.updated(refreshToken); // apply event to model events

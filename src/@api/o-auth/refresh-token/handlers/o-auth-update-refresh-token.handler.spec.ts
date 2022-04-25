@@ -42,19 +42,19 @@ describe('OAuthUpdateRefreshTokenHandler', () =>
         commandBus  = module.get<ICommandBus>(ICommandBus);
     });
 
-    test('OAuthUpdateRefreshTokenResolver should be defined', () =>
+    test('OAuthUpdateRefreshTokenHandler should be defined', () =>
     {
         expect(handler).toBeDefined();
     });
 
     describe('main', () =>
     {
-        test('OAuthUpdateRefreshTokenResolver should be defined', () =>
+        test('OAuthUpdateRefreshTokenHandler should be defined', () =>
         {
             expect(handler).toBeDefined();
         });
 
-        test('should return a refreshToken created', async () =>
+        test('should return a refreshToken updated', async () =>
         {
             jest.spyOn(queryBus, 'ask').mockImplementation(() => new Promise(resolve => resolve(refreshTokens[0])));
             expect(await handler.main(<OAuthUpdateRefreshTokenInput>refreshTokens[0])).toBe(refreshTokens[0]);

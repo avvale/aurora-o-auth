@@ -1,5 +1,6 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { EventPublisher } from '@nestjs/cqrs';
+import { CQMetadata } from 'aurora-ts-core';
 import {
     RefreshTokenId,
     RefreshTokenAccessTokenId,
@@ -29,6 +30,7 @@ export class CreateRefreshTokenService
             isRevoked: RefreshTokenIsRevoked;
             expiresAt: RefreshTokenExpiresAt;
         },
+        cQMetadata?: CQMetadata,
     ): Promise<void>
     {
         // create aggregate with factory pattern
@@ -43,11 +45,11 @@ export class CreateRefreshTokenService
             null, // deletedAt
         );
 
-        await this.repository.create(refreshToken);
+        await this.repository.create(refreshToken, { createOptions: cQMetadata?.repositoryOptions });
 
         // merge EventBus methods with object returned by the repository, to be able to apply and commit events
         const refreshTokenRegister = this.publisher.mergeObjectContext(
-            refreshToken
+            refreshToken,
         );
 
         refreshTokenRegister.created(refreshToken); // apply event to model events

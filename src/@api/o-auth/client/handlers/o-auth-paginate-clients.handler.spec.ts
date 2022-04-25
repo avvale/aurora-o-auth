@@ -41,14 +41,14 @@ describe('OAuthPaginateClientsHandler', () =>
         commandBus = module.get<ICommandBus>(ICommandBus);
     });
 
-    test('OAuthPaginateClientsResolver should be defined', () =>
+    test('OAuthPaginateClientsHandler should be defined', () =>
     {
         expect(handler).toBeDefined();
     });
 
     describe('main', () =>
     {
-        test('OAuthPaginateClientsResolver should be defined', () =>
+        test('OAuthPaginateClientsHandler should be defined', () =>
         {
             expect(handler).toBeDefined();
         });

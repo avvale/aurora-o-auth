@@ -52,11 +52,11 @@ export class UpdateApplicationService
 
 
         // update
-        await this.repository.update(application, { constraint, cQMetadata });
+        await this.repository.update(application, { constraint, cQMetadata, updateOptions: cQMetadata?.repositoryOptions });
 
         // merge EventBus methods with object returned by the repository, to be able to apply and commit events
         const applicationRegister = this.publisher.mergeObjectContext(
-            application
+            application,
         );
 
         applicationRegister.updated(application); // apply event to model events

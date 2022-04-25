@@ -29,7 +29,7 @@ describe('DeleteAccessTokensService', () =>
                         delete: (queryStatement) => { /**/ },
                     }
                 },
-            ]
+            ],
         }).compile();
 
         service         = module.get(DeleteAccessTokensService);

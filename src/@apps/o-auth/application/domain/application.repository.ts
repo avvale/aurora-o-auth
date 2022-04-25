@@ -63,7 +63,7 @@ export abstract class IApplicationRepository implements IRepository<OAuthApplica
             createOptions?: ObjectLiteral;
             dataFactory?: (aggregate: OAuthApplication) => ObjectLiteral;
             // arguments to find object and check if object is duplicated
-            finderQueryStatement: (aggregate: OAuthApplication) => QueryStatement;
+            finderQueryStatement?: (aggregate: OAuthApplication) => QueryStatement;
         }
     ): Promise<void>;
 

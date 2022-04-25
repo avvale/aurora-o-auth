@@ -33,10 +33,10 @@ aggregateProperties:
     relationshipSingularName: client
     relationshipAggregate: OAuthClient
     relationshipModulePath: o-auth/client
-    intermediateTable: o_auth_applications_clients
-    intermediateModel: OAuthApplicationsClientsModel
-    intermediateModelModuleSection: o-auth/application
-    intermediateModelFile: applications-clients
+    relationshipAvoidConstraint: true
+    pivotAggregateName: OAuthApplicationsClients
+    pivotPath: o-auth/application
+    pivotFileName: applications-clients
   - name: createdAt
     type: timestamp
     nullable: true

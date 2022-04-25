@@ -38,7 +38,7 @@ describe('OAuthCreateClientsHandler', () =>
 
     describe('main', () =>
     {
-        test('OAuthCreateClientsController should be defined', () =>
+        test('OAuthCreateClientsHandler should be defined', () =>
         {
             expect(handler).toBeDefined();
         });

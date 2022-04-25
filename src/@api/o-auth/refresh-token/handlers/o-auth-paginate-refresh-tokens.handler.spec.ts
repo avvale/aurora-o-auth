@@ -41,14 +41,14 @@ describe('OAuthPaginateRefreshTokensHandler', () =>
         commandBus = module.get<ICommandBus>(ICommandBus);
     });
 
-    test('OAuthPaginateRefreshTokensResolver should be defined', () =>
+    test('OAuthPaginateRefreshTokensHandler should be defined', () =>
     {
         expect(handler).toBeDefined();
     });
 
     describe('main', () =>
     {
-        test('OAuthPaginateRefreshTokensResolver should be defined', () =>
+        test('OAuthPaginateRefreshTokensHandler should be defined', () =>
         {
             expect(handler).toBeDefined();
         });

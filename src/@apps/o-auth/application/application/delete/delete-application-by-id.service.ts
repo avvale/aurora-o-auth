@@ -13,14 +13,24 @@ export class DeleteApplicationByIdService
         private readonly repository: IApplicationRepository,
     ) {}
 
-    async main(id: ApplicationId, constraint?: QueryStatement, cQMetadata?: CQMetadata): Promise<void>
+    async main(
+        id: ApplicationId,
+        constraint?: QueryStatement,
+        cQMetadata?: CQMetadata,
+    ): Promise<void>
     {
         // get object to delete
         const application = await this.repository.findById(id, { constraint, cQMetadata });
 
         // it is not necessary to pass the constraint in the delete, if the object
         // is not found in the findById, an exception will be thrown.
-        await this.repository.deleteById(application.id, { cQMetadata });
+        await this.repository.deleteById(
+            application.id,
+            {
+                deleteOptions: cQMetadata?.repositoryOptions,
+                cQMetadata,
+            },
+        );
 
         // insert EventBus in object, to be able to apply and commit events
         const applicationRegister = this.publisher.mergeObjectContext(application);
