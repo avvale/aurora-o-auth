@@ -23,17 +23,17 @@ describe('PaginateAccessTokensQueryHandler', () =>
                 PaginateAccessTokensQueryHandler,
                 {
                     provide : IAccessTokenRepository,
-                    useClass: MockAccessTokenRepository
+                    useClass: MockAccessTokenRepository,
                 },
                 {
                     provide : PaginateAccessTokensService,
                     useValue: {
-                        main: () => {},
-                    }
-                }
-            ]
+                        main: () => { /**/ },
+                    },
+                },
+            ],
         })
-        .compile();
+            .compile();
 
         queryHandler    = module.get<PaginateAccessTokensQueryHandler>(PaginateAccessTokensQueryHandler);
         service         = module.get<PaginateAccessTokensService>(PaginateAccessTokensService);
@@ -54,22 +54,22 @@ describe('PaginateAccessTokensQueryHandler', () =>
                 {
                     count: 10,
                     total: 100,
-                    rows: repository.collectionSource.slice(0,10)
-                }
+                    rows : repository.collectionSource.slice(0,10),
+                },
             )));
             expect(await queryHandler.execute(
                 new PaginateAccessTokensQuery(
                     {
                         offset: 0,
-                        limit: 10
-                    }
-                )
+                        limit : 10,
+                    },
+                ),
             )).toStrictEqual(
                 new PaginationResponse(
                     100,
                     10,
-                    repository.collectionSource.slice(0,10).map(item => item.toDTO())
-                )
+                    repository.collectionSource.slice(0,10).map(item => item.toDTO()),
+                ),
             );
         });
     });

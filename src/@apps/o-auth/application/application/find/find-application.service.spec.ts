@@ -22,13 +22,14 @@ describe('FindApplicationService', () =>
                 FindApplicationService,
                 MockApplicationRepository,
                 {
-                    provide: IApplicationRepository,
+                    provide : IApplicationRepository,
                     useValue: {
-                        find: (queryStatement) => {}
-                    }
-                }
-            ]
-        }).compile();
+                        find: () => { /**/ },
+                    },
+                },
+            ],
+        })
+            .compile();
 
         service         = module.get(FindApplicationService);
         repository      = module.get(IApplicationRepository);

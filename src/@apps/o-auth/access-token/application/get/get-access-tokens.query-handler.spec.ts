@@ -22,17 +22,17 @@ describe('GetAccessTokensQueryHandler', () =>
                 GetAccessTokensQueryHandler,
                 {
                     provide : IAccessTokenRepository,
-                    useClass: MockAccessTokenRepository
+                    useClass: MockAccessTokenRepository,
                 },
                 {
                     provide : GetAccessTokensService,
                     useValue: {
-                        main: () => {},
-                    }
-                }
-            ]
+                        main: () => { /**/ },
+                    },
+                },
+            ],
         })
-        .compile();
+            .compile();
 
         queryHandler    = module.get<GetAccessTokensQueryHandler>(GetAccessTokensQueryHandler);
         service         = module.get<GetAccessTokensService>(GetAccessTokensService);

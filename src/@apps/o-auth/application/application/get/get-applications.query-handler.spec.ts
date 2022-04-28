@@ -22,17 +22,17 @@ describe('GetApplicationsQueryHandler', () =>
                 GetApplicationsQueryHandler,
                 {
                     provide : IApplicationRepository,
-                    useClass: MockApplicationRepository
+                    useClass: MockApplicationRepository,
                 },
                 {
                     provide : GetApplicationsService,
                     useValue: {
-                        main: () => {},
-                    }
-                }
-            ]
+                        main: () => { /**/ },
+                    },
+                },
+            ],
         })
-        .compile();
+            .compile();
 
         queryHandler    = module.get<GetApplicationsQueryHandler>(GetApplicationsQueryHandler);
         service         = module.get<GetApplicationsService>(GetApplicationsService);

@@ -22,12 +22,12 @@ describe('PaginateRefreshTokensService', () =>
                 PaginateRefreshTokensService,
                 MockRefreshTokenRepository,
                 {
-                    provide: IRefreshTokenRepository,
+                    provide : IRefreshTokenRepository,
                     useValue: {
-                        paginate: (queryStatement, constraints) => {}
-                    }
-                }
-            ]
+                        paginate: (queryStatement, constraints) => { /**/ },
+                    },
+                },
+            ],
         }).compile();
 
         service         = module.get(PaginateRefreshTokensService);
@@ -47,15 +47,15 @@ describe('PaginateRefreshTokensService', () =>
             jest.spyOn(repository, 'paginate').mockImplementation(() => new Promise(resolve => resolve({
                 total: mockRepository.collectionSource.slice(0,10).length,
                 count: mockRepository.collectionSource.slice(0,10).length,
-                rows: mockRepository.collectionSource.slice(0,10)
+                rows : mockRepository.collectionSource.slice(0,10),
             })));
             expect(await service.main({
                 offset: 0,
-                limit: 10
+                limit : 10
             })).toStrictEqual({
                 total: mockRepository.collectionSource.slice(0,10).length,
                 count: mockRepository.collectionSource.slice(0,10).length,
-                rows: mockRepository.collectionSource.slice(0,10)
+                rows : mockRepository.collectionSource.slice(0,10),
             });
         });
     });

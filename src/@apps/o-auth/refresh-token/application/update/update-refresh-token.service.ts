@@ -25,11 +25,11 @@ export class UpdateRefreshTokenService
 
     async main(
         payload: {
-            id: RefreshTokenId,
-            accessTokenId?: RefreshTokenAccessTokenId,
-            token?: RefreshTokenToken,
-            isRevoked?: RefreshTokenIsRevoked,
-            expiresAt?: RefreshTokenExpiresAt,
+            id: RefreshTokenId;
+            accessTokenId?: RefreshTokenAccessTokenId;
+            token?: RefreshTokenToken;
+            isRevoked?: RefreshTokenIsRevoked;
+            expiresAt?: RefreshTokenExpiresAt;
         },
         constraint?: QueryStatement,
         cQMetadata?: CQMetadata,

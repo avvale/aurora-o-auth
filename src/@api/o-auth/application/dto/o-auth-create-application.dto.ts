@@ -35,7 +35,7 @@ export class OAuthCreateApplicationDto
 
     @ApiProperty({
         type       : [String],
-        description: 'clientIds [input here api field description]',
+        description: 'clients [input here api field description]',
     })
     clientIds?: string[];
 

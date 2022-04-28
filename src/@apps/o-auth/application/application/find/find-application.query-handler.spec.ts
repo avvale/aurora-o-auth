@@ -22,17 +22,17 @@ describe('FindApplicationQueryHandler', () =>
                 FindApplicationQueryHandler,
                 {
                     provide : IApplicationRepository,
-                    useClass: MockApplicationRepository
+                    useClass: MockApplicationRepository,
                 },
                 {
                     provide : FindApplicationService,
                     useValue: {
-                        main: () => {},
-                    }
-                }
-            ]
+                        main: () => { /**/ },
+                    },
+                },
+            ],
         })
-        .compile();
+            .compile();
 
         queryHandler    = module.get<FindApplicationQueryHandler>(FindApplicationQueryHandler);
         service         = module.get<FindApplicationService>(FindApplicationService);
@@ -51,7 +51,7 @@ describe('FindApplicationQueryHandler', () =>
         {
             jest.spyOn(service, 'main').mockImplementation(() => new Promise(resolve => resolve(repository.collectionSource[0])));
             expect(await queryHandler.execute(
-                new FindApplicationQuery()
+                new FindApplicationQuery(),
             )).toStrictEqual(mapper.mapAggregateToResponse(repository.collectionSource[0]));
         });
     });

@@ -23,17 +23,17 @@ describe('FindAccessTokenByIdQueryHandler', () =>
                 FindAccessTokenByIdQueryHandler,
                 {
                     provide : IAccessTokenRepository,
-                    useClass: MockAccessTokenRepository
+                    useClass: MockAccessTokenRepository,
                 },
                 {
                     provide : FindAccessTokenByIdService,
                     useValue: {
-                        main: () => {},
-                    }
-                }
-            ]
+                        main: () => { /**/ },
+                    },
+                },
+            ],
         })
-        .compile();
+            .compile();
 
         queryHandler    = module.get<FindAccessTokenByIdQueryHandler>(FindAccessTokenByIdQueryHandler);
         service         = module.get<FindAccessTokenByIdService>(FindAccessTokenByIdService);
@@ -55,7 +55,7 @@ describe('FindAccessTokenByIdQueryHandler', () =>
                 new FindAccessTokenByIdQuery(
                     accessTokens[0].id,
 
-                )
+                ),
             )).toStrictEqual(mapper.mapAggregateToResponse(repository.collectionSource[0]));
         });
     });

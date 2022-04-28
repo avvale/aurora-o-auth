@@ -1,5 +1,6 @@
 
-import { CQMetadata, IRepository, ObjectLiteral, Pagination, QueryStatement } from 'aurora-ts-core';
+import { LiteralObject } from '@nestjs/common';
+import { CQMetadata, IRepository, Pagination, QueryStatement } from 'aurora-ts-core';
 import { OAuthApplication } from './application.aggregate';
 import { ApplicationId } from './value-objects';
 
@@ -60,8 +61,8 @@ export abstract class IApplicationRepository implements IRepository<OAuthApplica
     abstract create(
         application: OAuthApplication,
         options?: {
-            createOptions?: ObjectLiteral;
-            dataFactory?: (aggregate: OAuthApplication) => ObjectLiteral;
+            createOptions?: LiteralObject;
+            dataFactory?: (aggregate: OAuthApplication) => LiteralObject;
             // arguments to find object and check if object is duplicated
             finderQueryStatement?: (aggregate: OAuthApplication) => QueryStatement;
         }
@@ -71,8 +72,8 @@ export abstract class IApplicationRepository implements IRepository<OAuthApplica
     abstract insert(
         applications: OAuthApplication[],
         options?: {
-            insertOptions?: ObjectLiteral;
-            dataFactory?: (aggregate: OAuthApplication) => ObjectLiteral;
+            insertOptions?: LiteralObject;
+            dataFactory?: (aggregate: OAuthApplication) => LiteralObject;
         }
     ): Promise<void>;
 
@@ -80,12 +81,12 @@ export abstract class IApplicationRepository implements IRepository<OAuthApplica
     abstract update(
         application: OAuthApplication,
         options?: {
-            updateOptions?: ObjectLiteral;
+            updateOptions?: LiteralObject;
             constraint?: QueryStatement;
             cQMetadata?: CQMetadata;
-            dataFactory?: (aggregate: OAuthApplication) => ObjectLiteral;
+            dataFactory?: (aggregate: OAuthApplication) => LiteralObject;
             // arguments to find object to update, with i18n we use langId and id relationship with parent entity
-            findArguments?: ObjectLiteral;
+            findArguments?: LiteralObject;
         }
     ): Promise<void>;
 
@@ -93,7 +94,7 @@ export abstract class IApplicationRepository implements IRepository<OAuthApplica
     abstract deleteById(
         id: ApplicationId,
         options?: {
-            deleteOptions?: ObjectLiteral;
+            deleteOptions?: LiteralObject;
             constraint?: QueryStatement;
             cQMetadata?: CQMetadata;
         }
@@ -102,7 +103,7 @@ export abstract class IApplicationRepository implements IRepository<OAuthApplica
     // delete records
     abstract delete(
         options?: {
-            deleteOptions?: ObjectLiteral;
+            deleteOptions?: LiteralObject;
             queryStatement?: QueryStatement;
             constraint?: QueryStatement;
             cQMetadata?: CQMetadata;

@@ -25,9 +25,9 @@ describe('DeleteRefreshTokensService', () =>
                 {
                     provide : IRefreshTokenRepository,
                     useValue: {
-                        get   : (queryStatement) => { /**/ },
-                        delete: (queryStatement) => { /**/ },
-                    }
+                        get   : () => { /**/ },
+                        delete: () => { /**/ },
+                    },
                 },
             ],
         }).compile();

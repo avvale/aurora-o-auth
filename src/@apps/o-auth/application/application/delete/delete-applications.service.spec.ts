@@ -25,9 +25,9 @@ describe('DeleteApplicationsService', () =>
                 {
                     provide : IApplicationRepository,
                     useValue: {
-                        get   : (queryStatement) => { /**/ },
-                        delete: (queryStatement) => { /**/ },
-                    }
+                        get   : () => { /**/ },
+                        delete: () => { /**/ },
+                    },
                 },
             ],
         }).compile();

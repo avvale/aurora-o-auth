@@ -1,4 +1,5 @@
-import { IMapper, MapperOptions, ObjectLiteral, CQMetadata } from 'aurora-ts-core';
+import { LiteralObject } from '@nestjs/common';
+import { IMapper, MapperOptions, CQMetadata } from 'aurora-ts-core';
 import { OAuthRefreshToken } from './refresh-token.aggregate';
 import { RefreshTokenResponse } from './refresh-token.response';
 import {
@@ -23,7 +24,7 @@ export class RefreshTokenMapper implements IMapper
      * Map object to aggregate
      * @param refreshToken
      */
-    mapModelToAggregate(refreshToken: ObjectLiteral, cQMetadata?: CQMetadata): OAuthRefreshToken
+    mapModelToAggregate(refreshToken: LiteralObject, cQMetadata?: CQMetadata): OAuthRefreshToken
     {
         if (!refreshToken) return;
 
@@ -34,7 +35,7 @@ export class RefreshTokenMapper implements IMapper
      * Map array of objects to array aggregates
      * @param refreshTokens
      */
-    mapModelsToAggregates(refreshTokens: ObjectLiteral[], cQMetadata?: CQMetadata): OAuthRefreshToken[]
+    mapModelsToAggregates(refreshTokens: LiteralObject[], cQMetadata?: CQMetadata): OAuthRefreshToken[]
     {
         if (!Array.isArray(refreshTokens)) return;
 
@@ -61,7 +62,7 @@ export class RefreshTokenMapper implements IMapper
         return refreshTokens.map(refreshToken => this.makeResponse(refreshToken));
     }
 
-    private makeAggregate(refreshToken: ObjectLiteral, cQMetadata?: CQMetadata): OAuthRefreshToken
+    private makeAggregate(refreshToken: LiteralObject, cQMetadata?: CQMetadata): OAuthRefreshToken
     {
         return OAuthRefreshToken.register(
             new RefreshTokenId(refreshToken.id, { undefinable: true }),

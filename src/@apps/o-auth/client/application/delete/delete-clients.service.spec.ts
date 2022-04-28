@@ -25,9 +25,9 @@ describe('DeleteClientsService', () =>
                 {
                     provide : IClientRepository,
                     useValue: {
-                        get   : (queryStatement) => { /**/ },
-                        delete: (queryStatement) => { /**/ },
-                    }
+                        get   : () => { /**/ },
+                        delete: () => { /**/ },
+                    },
                 },
             ],
         }).compile();

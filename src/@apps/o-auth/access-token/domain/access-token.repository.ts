@@ -1,5 +1,6 @@
 
-import { CQMetadata, IRepository, ObjectLiteral, Pagination, QueryStatement } from 'aurora-ts-core';
+import { LiteralObject } from '@nestjs/common';
+import { CQMetadata, IRepository, Pagination, QueryStatement } from 'aurora-ts-core';
 import { OAuthAccessToken } from './access-token.aggregate';
 import { AccessTokenId } from './value-objects';
 
@@ -60,8 +61,8 @@ export abstract class IAccessTokenRepository implements IRepository<OAuthAccessT
     abstract create(
         accessToken: OAuthAccessToken,
         options?: {
-            createOptions?: ObjectLiteral;
-            dataFactory?: (aggregate: OAuthAccessToken) => ObjectLiteral;
+            createOptions?: LiteralObject;
+            dataFactory?: (aggregate: OAuthAccessToken) => LiteralObject;
             // arguments to find object and check if object is duplicated
             finderQueryStatement?: (aggregate: OAuthAccessToken) => QueryStatement;
         }
@@ -71,8 +72,8 @@ export abstract class IAccessTokenRepository implements IRepository<OAuthAccessT
     abstract insert(
         accessTokens: OAuthAccessToken[],
         options?: {
-            insertOptions?: ObjectLiteral;
-            dataFactory?: (aggregate: OAuthAccessToken) => ObjectLiteral;
+            insertOptions?: LiteralObject;
+            dataFactory?: (aggregate: OAuthAccessToken) => LiteralObject;
         }
     ): Promise<void>;
 
@@ -80,12 +81,12 @@ export abstract class IAccessTokenRepository implements IRepository<OAuthAccessT
     abstract update(
         accessToken: OAuthAccessToken,
         options?: {
-            updateOptions?: ObjectLiteral;
+            updateOptions?: LiteralObject;
             constraint?: QueryStatement;
             cQMetadata?: CQMetadata;
-            dataFactory?: (aggregate: OAuthAccessToken) => ObjectLiteral;
+            dataFactory?: (aggregate: OAuthAccessToken) => LiteralObject;
             // arguments to find object to update, with i18n we use langId and id relationship with parent entity
-            findArguments?: ObjectLiteral;
+            findArguments?: LiteralObject;
         }
     ): Promise<void>;
 
@@ -93,7 +94,7 @@ export abstract class IAccessTokenRepository implements IRepository<OAuthAccessT
     abstract deleteById(
         id: AccessTokenId,
         options?: {
-            deleteOptions?: ObjectLiteral;
+            deleteOptions?: LiteralObject;
             constraint?: QueryStatement;
             cQMetadata?: CQMetadata;
         }
@@ -102,7 +103,7 @@ export abstract class IAccessTokenRepository implements IRepository<OAuthAccessT
     // delete records
     abstract delete(
         options?: {
-            deleteOptions?: ObjectLiteral;
+            deleteOptions?: LiteralObject;
             queryStatement?: QueryStatement;
             constraint?: QueryStatement;
             cQMetadata?: CQMetadata;

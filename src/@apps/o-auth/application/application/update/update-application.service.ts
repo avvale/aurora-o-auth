@@ -26,12 +26,12 @@ export class UpdateApplicationService
 
     async main(
         payload: {
-            id: ApplicationId,
-            name?: ApplicationName,
-            code?: ApplicationCode,
-            secret?: ApplicationSecret,
-            isMaster?: ApplicationIsMaster,
-            clientIds?: ApplicationClientIds,
+            id: ApplicationId;
+            name?: ApplicationName;
+            code?: ApplicationCode;
+            secret?: ApplicationSecret;
+            isMaster?: ApplicationIsMaster;
+            clientIds?: ApplicationClientIds;
         },
         constraint?: QueryStatement,
         cQMetadata?: CQMetadata,

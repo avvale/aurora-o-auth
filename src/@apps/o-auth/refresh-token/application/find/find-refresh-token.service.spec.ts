@@ -22,13 +22,14 @@ describe('FindRefreshTokenService', () =>
                 FindRefreshTokenService,
                 MockRefreshTokenRepository,
                 {
-                    provide: IRefreshTokenRepository,
+                    provide : IRefreshTokenRepository,
                     useValue: {
-                        find: (queryStatement) => {}
-                    }
-                }
-            ]
-        }).compile();
+                        find: () => { /**/ },
+                    },
+                },
+            ],
+        })
+            .compile();
 
         service         = module.get(FindRefreshTokenService);
         repository      = module.get(IRefreshTokenRepository);

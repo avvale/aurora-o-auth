@@ -20,7 +20,7 @@ describe('DeleteAccessTokenByIdCommandHandler', () =>
                     provide: DeleteAccessTokenByIdService,
                     useValue: {
                         main: () => {},
-                    }
+                    },
                 },
             ],
         }).compile();

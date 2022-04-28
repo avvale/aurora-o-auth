@@ -27,13 +27,13 @@ export class UpdateAccessTokenService
 
     async main(
         payload: {
-            id: AccessTokenId,
-            clientId?: AccessTokenClientId,
-            accountId?: AccessTokenAccountId,
-            token?: AccessTokenToken,
-            name?: AccessTokenName,
-            isRevoked?: AccessTokenIsRevoked,
-            expiresAt?: AccessTokenExpiresAt,
+            id: AccessTokenId;
+            clientId?: AccessTokenClientId;
+            accountId?: AccessTokenAccountId;
+            token?: AccessTokenToken;
+            name?: AccessTokenName;
+            isRevoked?: AccessTokenIsRevoked;
+            expiresAt?: AccessTokenExpiresAt;
         },
         constraint?: QueryStatement,
         cQMetadata?: CQMetadata,

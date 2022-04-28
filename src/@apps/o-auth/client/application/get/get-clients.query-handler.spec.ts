@@ -22,17 +22,17 @@ describe('GetClientsQueryHandler', () =>
                 GetClientsQueryHandler,
                 {
                     provide : IClientRepository,
-                    useClass: MockClientRepository
+                    useClass: MockClientRepository,
                 },
                 {
                     provide : GetClientsService,
                     useValue: {
-                        main: () => {},
-                    }
-                }
-            ]
+                        main: () => { /**/ },
+                    },
+                },
+            ],
         })
-        .compile();
+            .compile();
 
         queryHandler    = module.get<GetClientsQueryHandler>(GetClientsQueryHandler);
         service         = module.get<GetClientsService>(GetClientsService);

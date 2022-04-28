@@ -22,12 +22,12 @@ describe('GetApplicationsService', () =>
                 GetApplicationsService,
                 MockApplicationRepository,
                 {
-                    provide: IApplicationRepository,
+                    provide : IApplicationRepository,
                     useValue: {
-                        get: (queryStatement) => {}
-                    }
-                }
-            ]
+                        get: () => { /**/ },
+                    },
+                },
+            ],
         }).compile();
 
         service         = module.get(GetApplicationsService);

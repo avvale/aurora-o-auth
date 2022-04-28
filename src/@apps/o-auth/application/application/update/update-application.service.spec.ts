@@ -35,12 +35,12 @@ describe('UpdateApplicationService', () =>
                 UpdateApplicationService,
                 MockApplicationRepository,
                 {
-                    provide: IApplicationRepository,
+                    provide : IApplicationRepository,
                     useValue: {
-                        update: (item) => { /**/ }
-                    }
+                        update: () => { /**/ },
+                    },
                 },
-            ]
+            ],
         }).compile();
 
         service         = module.get(UpdateApplicationService);

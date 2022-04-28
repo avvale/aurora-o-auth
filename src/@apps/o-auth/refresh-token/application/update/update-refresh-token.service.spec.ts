@@ -34,12 +34,12 @@ describe('UpdateRefreshTokenService', () =>
                 UpdateRefreshTokenService,
                 MockRefreshTokenRepository,
                 {
-                    provide: IRefreshTokenRepository,
+                    provide : IRefreshTokenRepository,
                     useValue: {
-                        update: (item) => { /**/ }
-                    }
+                        update: () => { /**/ },
+                    },
                 },
-            ]
+            ],
         }).compile();
 
         service         = module.get(UpdateRefreshTokenService);

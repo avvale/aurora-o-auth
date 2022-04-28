@@ -1,4 +1,5 @@
-import { IMapper, MapperOptions, ObjectLiteral, CQMetadata } from 'aurora-ts-core';
+import { LiteralObject } from '@nestjs/common';
+import { IMapper, MapperOptions, CQMetadata } from 'aurora-ts-core';
 import { OAuthClient } from './client.aggregate';
 import { ClientResponse } from './client.response';
 import {
@@ -30,7 +31,7 @@ export class ClientMapper implements IMapper
      * Map object to aggregate
      * @param client
      */
-    mapModelToAggregate(client: ObjectLiteral, cQMetadata?: CQMetadata): OAuthClient
+    mapModelToAggregate(client: LiteralObject, cQMetadata?: CQMetadata): OAuthClient
     {
         if (!client) return;
 
@@ -41,7 +42,7 @@ export class ClientMapper implements IMapper
      * Map array of objects to array aggregates
      * @param clients
      */
-    mapModelsToAggregates(clients: ObjectLiteral[], cQMetadata?: CQMetadata): OAuthClient[]
+    mapModelsToAggregates(clients: LiteralObject[], cQMetadata?: CQMetadata): OAuthClient[]
     {
         if (!Array.isArray(clients)) return;
 
@@ -68,7 +69,7 @@ export class ClientMapper implements IMapper
         return clients.map(client => this.makeResponse(client));
     }
 
-    private makeAggregate(client: ObjectLiteral, cQMetadata?: CQMetadata): OAuthClient
+    private makeAggregate(client: LiteralObject, cQMetadata?: CQMetadata): OAuthClient
     {
         return OAuthClient.register(
             new ClientId(client.id, { undefinable: true }),

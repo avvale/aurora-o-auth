@@ -23,17 +23,17 @@ describe('FindApplicationByIdQueryHandler', () =>
                 FindApplicationByIdQueryHandler,
                 {
                     provide : IApplicationRepository,
-                    useClass: MockApplicationRepository
+                    useClass: MockApplicationRepository,
                 },
                 {
                     provide : FindApplicationByIdService,
                     useValue: {
-                        main: () => {},
-                    }
-                }
-            ]
+                        main: () => { /**/ },
+                    },
+                },
+            ],
         })
-        .compile();
+            .compile();
 
         queryHandler    = module.get<FindApplicationByIdQueryHandler>(FindApplicationByIdQueryHandler);
         service         = module.get<FindApplicationByIdService>(FindApplicationByIdService);
@@ -55,7 +55,7 @@ describe('FindApplicationByIdQueryHandler', () =>
                 new FindApplicationByIdQuery(
                     applications[0].id,
 
-                )
+                ),
             )).toStrictEqual(mapper.mapAggregateToResponse(repository.collectionSource[0]));
         });
     });

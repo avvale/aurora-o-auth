@@ -29,9 +29,9 @@ describe('DeleteAccessTokenByIdService', () =>
                     useValue: {
                         deleteById: id => { /**/ },
                         findById  : id => { /**/ },
-                    }
+                    },
                 },
-            ]
+            ],
         }).compile();
 
         service         = module.get(DeleteAccessTokenByIdService);
@@ -50,7 +50,7 @@ describe('DeleteAccessTokenByIdService', () =>
         {
             jest.spyOn(repository, 'findById').mockImplementation(() => new Promise(resolve => resolve(mockRepository.collectionSource[0])));
             expect(await service.main(
-                new AccessTokenId(accessTokens[0].id)
+                new AccessTokenId(accessTokens[0].id),
             )).toBe(undefined);
         });
     });

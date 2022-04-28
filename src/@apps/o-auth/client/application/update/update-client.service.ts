@@ -31,17 +31,17 @@ export class UpdateClientService
 
     async main(
         payload: {
-            id: ClientId,
-            grantType?: ClientGrantType,
-            name?: ClientName,
-            secret?: ClientSecret,
-            authUrl?: ClientAuthUrl,
-            redirect?: ClientRedirect,
-            expiredAccessToken?: ClientExpiredAccessToken,
-            expiredRefreshToken?: ClientExpiredRefreshToken,
-            isActive?: ClientIsActive,
-            isMaster?: ClientIsMaster,
-            applicationIds?: ClientApplicationIds,
+            id: ClientId;
+            grantType?: ClientGrantType;
+            name?: ClientName;
+            secret?: ClientSecret;
+            authUrl?: ClientAuthUrl;
+            redirect?: ClientRedirect;
+            expiredAccessToken?: ClientExpiredAccessToken;
+            expiredRefreshToken?: ClientExpiredRefreshToken;
+            isActive?: ClientIsActive;
+            isMaster?: ClientIsMaster;
+            applicationIds?: ClientApplicationIds;
         },
         constraint?: QueryStatement,
         cQMetadata?: CQMetadata,

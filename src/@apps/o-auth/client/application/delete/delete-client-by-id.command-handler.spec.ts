@@ -20,7 +20,7 @@ describe('DeleteClientByIdCommandHandler', () =>
                     provide: DeleteClientByIdService,
                     useValue: {
                         main: () => {},
-                    }
+                    },
                 },
             ],
         }).compile();

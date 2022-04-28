@@ -1,4 +1,5 @@
-import { IMapper, MapperOptions, ObjectLiteral, CQMetadata } from 'aurora-ts-core';
+import { LiteralObject } from '@nestjs/common';
+import { IMapper, MapperOptions, CQMetadata } from 'aurora-ts-core';
 import { OAuthAccessToken } from './access-token.aggregate';
 import { AccessTokenResponse } from './access-token.response';
 import {
@@ -26,7 +27,7 @@ export class AccessTokenMapper implements IMapper
      * Map object to aggregate
      * @param accessToken
      */
-    mapModelToAggregate(accessToken: ObjectLiteral, cQMetadata?: CQMetadata): OAuthAccessToken
+    mapModelToAggregate(accessToken: LiteralObject, cQMetadata?: CQMetadata): OAuthAccessToken
     {
         if (!accessToken) return;
 
@@ -37,7 +38,7 @@ export class AccessTokenMapper implements IMapper
      * Map array of objects to array aggregates
      * @param accessTokens
      */
-    mapModelsToAggregates(accessTokens: ObjectLiteral[], cQMetadata?: CQMetadata): OAuthAccessToken[]
+    mapModelsToAggregates(accessTokens: LiteralObject[], cQMetadata?: CQMetadata): OAuthAccessToken[]
     {
         if (!Array.isArray(accessTokens)) return;
 
@@ -64,7 +65,7 @@ export class AccessTokenMapper implements IMapper
         return accessTokens.map(accessToken => this.makeResponse(accessToken));
     }
 
-    private makeAggregate(accessToken: ObjectLiteral, cQMetadata?: CQMetadata): OAuthAccessToken
+    private makeAggregate(accessToken: LiteralObject, cQMetadata?: CQMetadata): OAuthAccessToken
     {
         return OAuthAccessToken.register(
             new AccessTokenId(accessToken.id, { undefinable: true }),

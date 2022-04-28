@@ -20,7 +20,7 @@ describe('DeleteRefreshTokenByIdCommandHandler', () =>
                     provide: DeleteRefreshTokenByIdService,
                     useValue: {
                         main: () => {},
-                    }
+                    },
                 },
             ],
         }).compile();

@@ -22,17 +22,17 @@ describe('FindClientQueryHandler', () =>
                 FindClientQueryHandler,
                 {
                     provide : IClientRepository,
-                    useClass: MockClientRepository
+                    useClass: MockClientRepository,
                 },
                 {
                     provide : FindClientService,
                     useValue: {
-                        main: () => {},
-                    }
-                }
-            ]
+                        main: () => { /**/ },
+                    },
+                },
+            ],
         })
-        .compile();
+            .compile();
 
         queryHandler    = module.get<FindClientQueryHandler>(FindClientQueryHandler);
         service         = module.get<FindClientService>(FindClientService);
@@ -51,7 +51,7 @@ describe('FindClientQueryHandler', () =>
         {
             jest.spyOn(service, 'main').mockImplementation(() => new Promise(resolve => resolve(repository.collectionSource[0])));
             expect(await queryHandler.execute(
-                new FindClientQuery()
+                new FindClientQuery(),
             )).toStrictEqual(mapper.mapAggregateToResponse(repository.collectionSource[0]));
         });
     });

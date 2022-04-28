@@ -22,13 +22,14 @@ describe('FindAccessTokenService', () =>
                 FindAccessTokenService,
                 MockAccessTokenRepository,
                 {
-                    provide: IAccessTokenRepository,
+                    provide : IAccessTokenRepository,
                     useValue: {
-                        find: (queryStatement) => {}
-                    }
-                }
-            ]
-        }).compile();
+                        find: () => { /**/ },
+                    },
+                },
+            ],
+        })
+            .compile();
 
         service         = module.get(FindAccessTokenService);
         repository      = module.get(IAccessTokenRepository);

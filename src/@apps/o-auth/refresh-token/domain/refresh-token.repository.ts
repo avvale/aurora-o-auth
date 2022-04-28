@@ -1,5 +1,6 @@
 
-import { CQMetadata, IRepository, ObjectLiteral, Pagination, QueryStatement } from 'aurora-ts-core';
+import { LiteralObject } from '@nestjs/common';
+import { CQMetadata, IRepository, Pagination, QueryStatement } from 'aurora-ts-core';
 import { OAuthRefreshToken } from './refresh-token.aggregate';
 import { RefreshTokenId } from './value-objects';
 
@@ -60,8 +61,8 @@ export abstract class IRefreshTokenRepository implements IRepository<OAuthRefres
     abstract create(
         refreshToken: OAuthRefreshToken,
         options?: {
-            createOptions?: ObjectLiteral;
-            dataFactory?: (aggregate: OAuthRefreshToken) => ObjectLiteral;
+            createOptions?: LiteralObject;
+            dataFactory?: (aggregate: OAuthRefreshToken) => LiteralObject;
             // arguments to find object and check if object is duplicated
             finderQueryStatement?: (aggregate: OAuthRefreshToken) => QueryStatement;
         }
@@ -71,8 +72,8 @@ export abstract class IRefreshTokenRepository implements IRepository<OAuthRefres
     abstract insert(
         refreshTokens: OAuthRefreshToken[],
         options?: {
-            insertOptions?: ObjectLiteral;
-            dataFactory?: (aggregate: OAuthRefreshToken) => ObjectLiteral;
+            insertOptions?: LiteralObject;
+            dataFactory?: (aggregate: OAuthRefreshToken) => LiteralObject;
         }
     ): Promise<void>;
 
@@ -80,12 +81,12 @@ export abstract class IRefreshTokenRepository implements IRepository<OAuthRefres
     abstract update(
         refreshToken: OAuthRefreshToken,
         options?: {
-            updateOptions?: ObjectLiteral;
+            updateOptions?: LiteralObject;
             constraint?: QueryStatement;
             cQMetadata?: CQMetadata;
-            dataFactory?: (aggregate: OAuthRefreshToken) => ObjectLiteral;
+            dataFactory?: (aggregate: OAuthRefreshToken) => LiteralObject;
             // arguments to find object to update, with i18n we use langId and id relationship with parent entity
-            findArguments?: ObjectLiteral;
+            findArguments?: LiteralObject;
         }
     ): Promise<void>;
 
@@ -93,7 +94,7 @@ export abstract class IRefreshTokenRepository implements IRepository<OAuthRefres
     abstract deleteById(
         id: RefreshTokenId,
         options?: {
-            deleteOptions?: ObjectLiteral;
+            deleteOptions?: LiteralObject;
             constraint?: QueryStatement;
             cQMetadata?: CQMetadata;
         }
@@ -102,7 +103,7 @@ export abstract class IRefreshTokenRepository implements IRepository<OAuthRefres
     // delete records
     abstract delete(
         options?: {
-            deleteOptions?: ObjectLiteral;
+            deleteOptions?: LiteralObject;
             queryStatement?: QueryStatement;
             constraint?: QueryStatement;
             cQMetadata?: CQMetadata;

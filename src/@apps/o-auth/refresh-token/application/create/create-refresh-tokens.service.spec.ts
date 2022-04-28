@@ -26,7 +26,7 @@ describe('CreateRefreshTokensService', () =>
                     provide : IRefreshTokenRepository,
                     useValue: {
                         insert: (items) => { /**/ },
-                    }
+                    },
                 },
             ]
         }).compile();
@@ -46,7 +46,7 @@ describe('CreateRefreshTokensService', () =>
         test('should create refreshTokens and emit event', async () =>
         {
             expect(await service.main(
-                mockRepository.collectionSource
+                mockRepository.collectionSource,
             )).toBe(undefined);
         });
     });

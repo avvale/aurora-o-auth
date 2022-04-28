@@ -12,25 +12,26 @@ export class OAuthUpdateRefreshTokenDto
     @ApiProperty({
         type       : String,
         description: 'accessTokenId [input here api field description]',
+        example    : '86027d79-2234-4f3b-af78-49e341a092ac',
     })
-    accessTokenId: string;
+    accessTokenId?: string;
 
     @ApiProperty({
         type       : String,
         description: 'token [input here api field description]',
     })
-    token: string;
+    token?: string;
 
     @ApiProperty({
         type       : Boolean,
         description: 'isRevoked [input here api field description]',
     })
-    isRevoked: boolean;
+    isRevoked?: boolean;
 
     @ApiProperty({
         type       : String,
         description: 'expiresAt [input here api field description]',
     })
-    expiresAt: string;
+    expiresAt?: string;
 
 }

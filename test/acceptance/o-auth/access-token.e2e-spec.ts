@@ -350,7 +350,7 @@ describe('access-token', () =>
                 {
                     where:
                     {
-                        id: '026b327b-45a3-4157-8fe1-4a2d677858c7',
+                        id: '1c7320be-be91-4b35-8593-6e2aace3144e',
                     },
                 },
             })
@@ -393,7 +393,7 @@ describe('access-token', () =>
     test('/REST:GET o-auth/access-token/find/{id} - Got 404 Not Found', () =>
     {
         return request(app.getHttpServer())
-            .get('/o-auth/access-token/find/8d9d3f77-a1a5-4936-bdc0-406774ba9595')
+            .get('/o-auth/access-token/find/c67e1311-a244-450e-b7c3-088e382d5c51')
             .set('Accept', 'application/json')
             .expect(404);
     });
@@ -417,7 +417,7 @@ describe('access-token', () =>
             .set('Accept', 'application/json')
             .send({
                 ...mockData[0],
-                ...{ id: 'c59f4eea-81df-4ad3-a8e4-b2d142c3b5e7' },
+                ...{ id: '034097bd-bb12-4d76-a89d-9404d8f163c7' },
             })
             .expect(404);
     });
@@ -428,13 +428,8 @@ describe('access-token', () =>
             .put('/o-auth/access-token/update')
             .set('Accept', 'application/json')
             .send({
-                id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
-                clientId: '5b19d6ac-4081-573b-96b3-56964d5326a8',
-                accountId: '5b19d6ac-4081-573b-96b3-56964d5326a8',
-                token: 'Rerum suscipit sed repellendus quo. Sed quam vel voluptas quis consequatur. Velit aliquam neque doloribus. Molestiae veritatis numquam blanditiis ab recusandae ullam commodi expedita.',
-                name: 'Intelligent Plastic Ball',
-                isRevoked: true,
-                expiresAt: '2022-04-24 19:37:34',
+                ...mockData[0],
+                ...{ id: '5b19d6ac-4081-573b-96b3-56964d5326a8' },
             })
             .expect(200)
             .then(res =>
@@ -446,7 +441,7 @@ describe('access-token', () =>
     test('/REST:DELETE o-auth/access-token/delete/{id} - Got 404 Not Found', () =>
     {
         return request(app.getHttpServer())
-            .delete('/o-auth/access-token/delete/b578fbb9-38ac-47db-8bba-8ae560df6171')
+            .delete('/o-auth/access-token/delete/f30b756f-07b5-40a5-a520-5a81b4d4b7e4')
             .set('Accept', 'application/json')
             .expect(404);
     });
@@ -588,13 +583,8 @@ describe('access-token', () =>
                 `,
                 variables: {
                     payload: {
-                        id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
-                        clientId: '5b19d6ac-4081-573b-96b3-56964d5326a8',
-                        accountId: '5b19d6ac-4081-573b-96b3-56964d5326a8',
-                        token: 'Pariatur ut suscipit atque sed aliquid delectus animi molestiae quis. Quia harum illum aut quos perferendis quibusdam corrupti. Veritatis officia necessitatibus sed. Aliquid voluptatibus quia a ut vel.',
-                        name: 'Ergonomic Plastic Pants',
-                        isRevoked: false,
-                        expiresAt: '2022-04-25 06:20:10',
+                        ...mockData[0],
+                        ...{ id: '5b19d6ac-4081-573b-96b3-56964d5326a8' },
                     },
                 },
             })
@@ -633,7 +623,7 @@ describe('access-token', () =>
                     {
                         where:
                         {
-                            id: '2763a129-7f2c-48bc-ba0d-e09e815efff0',
+                            id: 'fbbb268f-6aa0-4ff4-83ab-b8423a6e54f2',
                         },
                     },
                 },
@@ -710,7 +700,7 @@ describe('access-token', () =>
                     }
                 `,
                 variables: {
-                    id: 'ae809bc6-35f3-4959-b2c6-9ef2eaafe5b3',
+                    id: '1ea8862a-1729-41c2-b1ef-832855ca4722',
                 },
             })
             .expect(200)
@@ -780,7 +770,7 @@ describe('access-token', () =>
                 variables: {
                     payload: {
                         ...mockData[0],
-                        ...{ id: '07a0c0f3-8e09-4dab-93ec-2935451ac67e' },
+                        ...{ id: '3c75b694-91ad-45c1-b5d8-a7202c6fa4cd' },
                     },
                 },
             })
@@ -817,13 +807,8 @@ describe('access-token', () =>
                 `,
                 variables: {
                     payload: {
-                        id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
-                        clientId: '5b19d6ac-4081-573b-96b3-56964d5326a8',
-                        accountId: '5b19d6ac-4081-573b-96b3-56964d5326a8',
-                        token: 'Porro architecto voluptatem omnis animi at. Rerum quos veniam ipsum aliquid placeat. Expedita voluptatem repellat dolorem. Aut alias recusandae tempora perspiciatis ducimus similique non nam. Eligendi adipisci vel eum qui ea et eveniet esse. Aliquid voluptatem nobis blanditiis asperiores beatae non.',
-                        name: 'Handcrafted Soft Chair',
-                        isRevoked: false,
-                        expiresAt: '2022-04-25 04:50:35',
+                        ...mockData[0],
+                        ...{ id: '5b19d6ac-4081-573b-96b3-56964d5326a8' },
                     },
                 },
             })
@@ -857,7 +842,7 @@ describe('access-token', () =>
                     }
                 `,
                 variables: {
-                    id: 'e63eb164-0dd3-4658-9de5-0f82e85a3280',
+                    id: '5dae1711-e6f5-4b22-ac0d-2b6f8ae18998',
                 },
             })
             .expect(200)

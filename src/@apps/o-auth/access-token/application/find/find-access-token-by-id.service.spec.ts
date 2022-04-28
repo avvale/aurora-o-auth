@@ -24,13 +24,14 @@ describe('FindAccessTokenByIdService', () =>
                 FindAccessTokenByIdService,
                 MockAccessTokenRepository,
                 {
-                    provide: IAccessTokenRepository,
+                    provide : IAccessTokenRepository,
                     useValue: {
-                        findById: id => { /**/ }
-                    }
-                }
-            ]
-        }).compile();
+                        findById: id => { /**/ },
+                    },
+                },
+            ],
+        })
+            .compile();
 
         service         = module.get(FindAccessTokenByIdService);
         repository      = module.get(IAccessTokenRepository);
@@ -48,7 +49,7 @@ describe('FindAccessTokenByIdService', () =>
         {
             jest.spyOn(repository, 'findById').mockImplementation(() => new Promise(resolve => resolve(mockRepository.collectionSource[0])));
             expect(await service.main(
-                new AccessTokenId(accessTokens[0].id)
+                new AccessTokenId(accessTokens[0].id),
             )).toBe(mockRepository.collectionSource[0]);
         });
     });

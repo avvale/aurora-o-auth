@@ -23,17 +23,17 @@ describe('PaginateClientsQueryHandler', () =>
                 PaginateClientsQueryHandler,
                 {
                     provide : IClientRepository,
-                    useClass: MockClientRepository
+                    useClass: MockClientRepository,
                 },
                 {
                     provide : PaginateClientsService,
                     useValue: {
-                        main: () => {},
-                    }
-                }
-            ]
+                        main: () => { /**/ },
+                    },
+                },
+            ],
         })
-        .compile();
+            .compile();
 
         queryHandler    = module.get<PaginateClientsQueryHandler>(PaginateClientsQueryHandler);
         service         = module.get<PaginateClientsService>(PaginateClientsService);
@@ -54,22 +54,22 @@ describe('PaginateClientsQueryHandler', () =>
                 {
                     count: 10,
                     total: 100,
-                    rows: repository.collectionSource.slice(0,10)
-                }
+                    rows : repository.collectionSource.slice(0,10),
+                },
             )));
             expect(await queryHandler.execute(
                 new PaginateClientsQuery(
                     {
                         offset: 0,
-                        limit: 10
-                    }
-                )
+                        limit : 10,
+                    },
+                ),
             )).toStrictEqual(
                 new PaginationResponse(
                     100,
                     10,
-                    repository.collectionSource.slice(0,10).map(item => item.toDTO())
-                )
+                    repository.collectionSource.slice(0,10).map(item => item.toDTO()),
+                ),
             );
         });
     });

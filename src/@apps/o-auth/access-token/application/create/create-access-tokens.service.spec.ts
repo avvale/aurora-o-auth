@@ -25,8 +25,8 @@ describe('CreateAccessTokensService', () =>
                 {
                     provide : IAccessTokenRepository,
                     useValue: {
-                        insert: (items) => { /**/ },
-                    }
+                        insert: () => { /**/ },
+                    },
                 },
             ]
         }).compile();
@@ -46,7 +46,7 @@ describe('CreateAccessTokensService', () =>
         test('should create accessTokens and emit event', async () =>
         {
             expect(await service.main(
-                mockRepository.collectionSource
+                mockRepository.collectionSource,
             )).toBe(undefined);
         });
     });

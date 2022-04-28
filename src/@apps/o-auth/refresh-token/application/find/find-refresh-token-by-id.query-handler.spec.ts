@@ -23,17 +23,17 @@ describe('FindRefreshTokenByIdQueryHandler', () =>
                 FindRefreshTokenByIdQueryHandler,
                 {
                     provide : IRefreshTokenRepository,
-                    useClass: MockRefreshTokenRepository
+                    useClass: MockRefreshTokenRepository,
                 },
                 {
                     provide : FindRefreshTokenByIdService,
                     useValue: {
-                        main: () => {},
-                    }
-                }
-            ]
+                        main: () => { /**/ },
+                    },
+                },
+            ],
         })
-        .compile();
+            .compile();
 
         queryHandler    = module.get<FindRefreshTokenByIdQueryHandler>(FindRefreshTokenByIdQueryHandler);
         service         = module.get<FindRefreshTokenByIdService>(FindRefreshTokenByIdService);
@@ -55,7 +55,7 @@ describe('FindRefreshTokenByIdQueryHandler', () =>
                 new FindRefreshTokenByIdQuery(
                     refreshTokens[0].id,
 
-                )
+                ),
             )).toStrictEqual(mapper.mapAggregateToResponse(repository.collectionSource[0]));
         });
     });

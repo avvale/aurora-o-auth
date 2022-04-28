@@ -24,13 +24,14 @@ describe('FindApplicationByIdService', () =>
                 FindApplicationByIdService,
                 MockApplicationRepository,
                 {
-                    provide: IApplicationRepository,
+                    provide : IApplicationRepository,
                     useValue: {
-                        findById: id => { /**/ }
-                    }
-                }
-            ]
-        }).compile();
+                        findById: id => { /**/ },
+                    },
+                },
+            ],
+        })
+            .compile();
 
         service         = module.get(FindApplicationByIdService);
         repository      = module.get(IApplicationRepository);
@@ -48,7 +49,7 @@ describe('FindApplicationByIdService', () =>
         {
             jest.spyOn(repository, 'findById').mockImplementation(() => new Promise(resolve => resolve(mockRepository.collectionSource[0])));
             expect(await service.main(
-                new ApplicationId(applications[0].id)
+                new ApplicationId(applications[0].id),
             )).toBe(mockRepository.collectionSource[0]);
         });
     });

@@ -26,7 +26,7 @@ describe('CreateClientsService', () =>
                     provide : IClientRepository,
                     useValue: {
                         insert: (items) => { /**/ },
-                    }
+                    },
                 },
             ]
         }).compile();
@@ -46,7 +46,7 @@ describe('CreateClientsService', () =>
         test('should create clients and emit event', async () =>
         {
             expect(await service.main(
-                mockRepository.collectionSource
+                mockRepository.collectionSource,
             )).toBe(undefined);
         });
     });

@@ -22,17 +22,17 @@ describe('GetRefreshTokensQueryHandler', () =>
                 GetRefreshTokensQueryHandler,
                 {
                     provide : IRefreshTokenRepository,
-                    useClass: MockRefreshTokenRepository
+                    useClass: MockRefreshTokenRepository,
                 },
                 {
                     provide : GetRefreshTokensService,
                     useValue: {
-                        main: () => {},
-                    }
-                }
-            ]
+                        main: () => { /**/ },
+                    },
+                },
+            ],
         })
-        .compile();
+            .compile();
 
         queryHandler    = module.get<GetRefreshTokensQueryHandler>(GetRefreshTokensQueryHandler);
         service         = module.get<GetRefreshTokensService>(GetRefreshTokensService);

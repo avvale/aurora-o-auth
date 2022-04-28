@@ -36,12 +36,12 @@ describe('UpdateAccessTokenService', () =>
                 UpdateAccessTokenService,
                 MockAccessTokenRepository,
                 {
-                    provide: IAccessTokenRepository,
+                    provide : IAccessTokenRepository,
                     useValue: {
-                        update: (item) => { /**/ }
-                    }
+                        update: () => { /**/ },
+                    },
                 },
-            ]
+            ],
         }).compile();
 
         service         = module.get(UpdateAccessTokenService);

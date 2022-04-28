@@ -24,7 +24,8 @@ describe('CreateAccessTokensCommandHandler', () =>
                     },
                 },
             ],
-        }).compile();
+        })
+            .compile();
 
         commandHandler  = module.get<CreateAccessTokensCommandHandler>(CreateAccessTokensCommandHandler);
         service         = module.get<CreateAccessTokensService>(CreateAccessTokensService);

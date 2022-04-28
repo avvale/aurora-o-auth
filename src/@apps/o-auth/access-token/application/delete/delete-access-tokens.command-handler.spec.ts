@@ -16,12 +16,12 @@ describe('DeleteAccessTokensCommandHandler', () =>
             providers: [
                 DeleteAccessTokensCommandHandler,
                 {
-                    provide: DeleteAccessTokensService,
+                    provide : DeleteAccessTokensService,
                     useValue: {
-                        main: () => {},
-                    }
-                }
-            ]
+                        main: () => { /**/ },
+                    },
+                },
+            ],
         }).compile();
 
         commandHandler  = module.get<DeleteAccessTokensCommandHandler>(DeleteAccessTokensCommandHandler);
@@ -38,7 +38,7 @@ describe('DeleteAccessTokensCommandHandler', () =>
         test('should return void', async () =>
         {
             expect(await commandHandler.execute(
-                new DeleteAccessTokensCommand()
+                new DeleteAccessTokensCommand(),
             )).toBe(undefined);
         });
     });

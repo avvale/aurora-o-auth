@@ -25,9 +25,9 @@ describe('DeleteAccessTokensService', () =>
                 {
                     provide : IAccessTokenRepository,
                     useValue: {
-                        get   : (queryStatement) => { /**/ },
-                        delete: (queryStatement) => { /**/ },
-                    }
+                        get   : () => { /**/ },
+                        delete: () => { /**/ },
+                    },
                 },
             ],
         }).compile();

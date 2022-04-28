@@ -16,12 +16,12 @@ describe('DeleteRefreshTokensCommandHandler', () =>
             providers: [
                 DeleteRefreshTokensCommandHandler,
                 {
-                    provide: DeleteRefreshTokensService,
+                    provide : DeleteRefreshTokensService,
                     useValue: {
-                        main: () => {},
-                    }
-                }
-            ]
+                        main: () => { /**/ },
+                    },
+                },
+            ],
         }).compile();
 
         commandHandler  = module.get<DeleteRefreshTokensCommandHandler>(DeleteRefreshTokensCommandHandler);
@@ -38,7 +38,7 @@ describe('DeleteRefreshTokensCommandHandler', () =>
         test('should return void', async () =>
         {
             expect(await commandHandler.execute(
-                new DeleteRefreshTokensCommand()
+                new DeleteRefreshTokensCommand(),
             )).toBe(undefined);
         });
     });

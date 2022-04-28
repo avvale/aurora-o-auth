@@ -20,7 +20,7 @@ describe('DeleteApplicationByIdCommandHandler', () =>
                     provide: DeleteApplicationByIdService,
                     useValue: {
                         main: () => {},
-                    }
+                    },
                 },
             ],
         }).compile();

@@ -23,17 +23,17 @@ describe('FindClientByIdQueryHandler', () =>
                 FindClientByIdQueryHandler,
                 {
                     provide : IClientRepository,
-                    useClass: MockClientRepository
+                    useClass: MockClientRepository,
                 },
                 {
                     provide : FindClientByIdService,
                     useValue: {
-                        main: () => {},
-                    }
-                }
-            ]
+                        main: () => { /**/ },
+                    },
+                },
+            ],
         })
-        .compile();
+            .compile();
 
         queryHandler    = module.get<FindClientByIdQueryHandler>(FindClientByIdQueryHandler);
         service         = module.get<FindClientByIdService>(FindClientByIdService);
@@ -55,7 +55,7 @@ describe('FindClientByIdQueryHandler', () =>
                 new FindClientByIdQuery(
                     clients[0].id,
 
-                )
+                ),
             )).toStrictEqual(mapper.mapAggregateToResponse(repository.collectionSource[0]));
         });
     });

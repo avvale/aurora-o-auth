@@ -13,30 +13,30 @@ export class OAuthUpdateApplicationDto
         type       : String,
         description: 'name [input here api field description]',
     })
-    name: string;
+    name?: string;
 
     @ApiProperty({
         type       : String,
         description: 'code [input here api field description]',
     })
-    code: string;
+    code?: string;
 
     @ApiProperty({
         type       : String,
         description: 'secret [input here api field description]',
     })
-    secret: string;
+    secret?: string;
 
     @ApiProperty({
         type       : Boolean,
         description: 'isMaster [input here api field description]',
     })
-    isMaster: boolean;
+    isMaster?: boolean;
 
     @ApiProperty({
         type       : [String],
-        description: 'clientIds [input here api field description]',
+        description: 'clients [input here api field description]',
     })
-    clientIds: string[];
+    clientIds?: string[];
 
 }

@@ -1,5 +1,6 @@
 /* eslint-disable indent */
 import { ApiProperty } from '@nestjs/swagger';
+import { OAuthClientGrantType } from '../../../../graphql';
 
 export class OAuthUpdateClientDto
 {
@@ -10,64 +11,64 @@ export class OAuthUpdateClientDto
     id: string;
 
     @ApiProperty({
-        type       : String,
+        type       : OAuthClientGrantType,
         enum       : ['AUTHORIZATION_CODE','CLIENT_CREDENTIALS','PASSWORD'],
         description: 'grantType [input here api field description]',
     })
-    grantType: string;
+    grantType?: OAuthClientGrantType;
 
     @ApiProperty({
         type       : String,
         description: 'name [input here api field description]',
     })
-    name: string;
+    name?: string;
 
     @ApiProperty({
         type       : String,
         description: 'secret [input here api field description]',
     })
-    secret: string;
+    secret?: string;
 
     @ApiProperty({
         type       : String,
         description: 'authUrl [input here api field description]',
     })
-    authUrl: string;
+    authUrl?: string;
 
     @ApiProperty({
         type       : String,
         description: 'redirect [input here api field description]',
     })
-    redirect: string;
+    redirect?: string;
 
     @ApiProperty({
         type       : Number,
         description: 'expiredAccessToken [input here api field description]',
     })
-    expiredAccessToken: number;
+    expiredAccessToken?: number;
 
     @ApiProperty({
         type       : Number,
         description: 'expiredRefreshToken [input here api field description]',
     })
-    expiredRefreshToken: number;
+    expiredRefreshToken?: number;
 
     @ApiProperty({
         type       : Boolean,
         description: 'isActive [input here api field description]',
     })
-    isActive: boolean;
+    isActive?: boolean;
 
     @ApiProperty({
         type       : Boolean,
         description: 'isMaster [input here api field description]',
     })
-    isMaster: boolean;
+    isMaster?: boolean;
 
     @ApiProperty({
         type       : [String],
-        description: 'applicationIds [input here api field description]',
+        description: 'applications [input here api field description]',
     })
-    applicationIds: string[];
+    applicationIds?: string[];
 
 }

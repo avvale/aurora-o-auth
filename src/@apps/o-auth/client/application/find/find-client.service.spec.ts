@@ -22,13 +22,14 @@ describe('FindClientService', () =>
                 FindClientService,
                 MockClientRepository,
                 {
-                    provide: IClientRepository,
+                    provide : IClientRepository,
                     useValue: {
-                        find: (queryStatement) => {}
-                    }
-                }
-            ]
-        }).compile();
+                        find: () => { /**/ },
+                    },
+                },
+            ],
+        })
+            .compile();
 
         service         = module.get(FindClientService);
         repository      = module.get(IClientRepository);

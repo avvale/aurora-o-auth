@@ -318,7 +318,7 @@ describe('refresh-token', () =>
                 {
                     where:
                     {
-                        id: '5fa51b10-cac5-4cff-9207-d38b41c848b8',
+                        id: '029ec867-4b3a-41d3-9022-70af50bf7d3b',
                     },
                 },
             })
@@ -361,7 +361,7 @@ describe('refresh-token', () =>
     test('/REST:GET o-auth/refresh-token/find/{id} - Got 404 Not Found', () =>
     {
         return request(app.getHttpServer())
-            .get('/o-auth/refresh-token/find/0a2a682e-cb9a-4024-a6d3-c4ee798aaa9b')
+            .get('/o-auth/refresh-token/find/a2db7b63-2a97-4e5b-944e-d22f35d405e6')
             .set('Accept', 'application/json')
             .expect(404);
     });
@@ -385,7 +385,7 @@ describe('refresh-token', () =>
             .set('Accept', 'application/json')
             .send({
                 ...mockData[0],
-                ...{ id: 'f6bb34b4-9135-4440-aeb4-3ec09c4f20ac' },
+                ...{ id: '51473c26-6a4e-4275-8926-a9fdd8b4000f' },
             })
             .expect(404);
     });
@@ -396,11 +396,8 @@ describe('refresh-token', () =>
             .put('/o-auth/refresh-token/update')
             .set('Accept', 'application/json')
             .send({
-                id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
-                accessTokenId: '5b19d6ac-4081-573b-96b3-56964d5326a8',
-                token: 'Minima delectus dolor non iste. Dolor quod sed magni aut est. Eligendi consequatur eum. Neque quo iusto praesentium enim non deserunt. Qui et omnis.',
-                isRevoked: true,
-                expiresAt: '2022-04-25 01:45:17',
+                ...mockData[0],
+                ...{ id: '5b19d6ac-4081-573b-96b3-56964d5326a8' },
             })
             .expect(200)
             .then(res =>
@@ -412,7 +409,7 @@ describe('refresh-token', () =>
     test('/REST:DELETE o-auth/refresh-token/delete/{id} - Got 404 Not Found', () =>
     {
         return request(app.getHttpServer())
-            .delete('/o-auth/refresh-token/delete/964cdd10-b839-4b9b-8cab-fabbc64d8a5b')
+            .delete('/o-auth/refresh-token/delete/a8cdfba9-53d7-4981-b157-6505853fb7d1')
             .set('Accept', 'application/json')
             .expect(404);
     });
@@ -549,11 +546,8 @@ describe('refresh-token', () =>
                 `,
                 variables: {
                     payload: {
-                        id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
-                        accessTokenId: '5b19d6ac-4081-573b-96b3-56964d5326a8',
-                        token: 'Non facilis nisi rem possimus veritatis qui et et. Ea incidunt ab aliquid. Alias temporibus qui alias quisquam dolorum repellat.',
-                        isRevoked: false,
-                        expiresAt: '2022-04-25 14:32:54',
+                        ...mockData[0],
+                        ...{ id: '5b19d6ac-4081-573b-96b3-56964d5326a8' },
                     },
                 },
             })
@@ -591,7 +585,7 @@ describe('refresh-token', () =>
                     {
                         where:
                         {
-                            id: 'd0d88ad6-091a-4e3f-bac9-9d67d0d2640c',
+                            id: 'a0b164b4-8e2d-47ba-a780-7dd5cbb5ce50',
                         },
                     },
                 },
@@ -666,7 +660,7 @@ describe('refresh-token', () =>
                     }
                 `,
                 variables: {
-                    id: '257f8eee-524e-468b-bb0a-0ebd02adde7d',
+                    id: '608b6b44-e1d5-41d6-b454-2dafe60e8bef',
                 },
             })
             .expect(200)
@@ -734,7 +728,7 @@ describe('refresh-token', () =>
                 variables: {
                     payload: {
                         ...mockData[0],
-                        ...{ id: '5c61ddbb-fa72-40e5-9fa2-cd1dbb99370e' },
+                        ...{ id: '4ec9a7f3-0b7c-4ca6-b56d-fb527560811f' },
                     },
                 },
             })
@@ -770,11 +764,8 @@ describe('refresh-token', () =>
                 `,
                 variables: {
                     payload: {
-                        id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
-                        accessTokenId: '5b19d6ac-4081-573b-96b3-56964d5326a8',
-                        token: 'Et occaecati hic tempora et molestias ut blanditiis quam ad. Nemo autem perspiciatis quis perspiciatis enim sunt repellat reiciendis. Id eveniet laudantium expedita facilis libero. Animi sed cumque. Consequatur numquam repellat fugit possimus error eum. Eum qui omnis quam et eligendi labore atque.',
-                        isRevoked: true,
-                        expiresAt: '2022-04-25 03:03:23',
+                        ...mockData[0],
+                        ...{ id: '5b19d6ac-4081-573b-96b3-56964d5326a8' },
                     },
                 },
             })
@@ -807,7 +798,7 @@ describe('refresh-token', () =>
                     }
                 `,
                 variables: {
-                    id: '2f205f47-91b9-4153-b831-d44d4c0bb03c',
+                    id: 'bd33c480-6b60-442d-9528-61ff13caf151',
                 },
             })
             .expect(200)

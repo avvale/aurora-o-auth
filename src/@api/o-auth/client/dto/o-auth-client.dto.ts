@@ -69,7 +69,7 @@ export class OAuthClientDto
 
     @ApiProperty({
         type       : [OAuthApplicationDto],
-        description: 'applicationIds [input here api field description]',
+        description: 'applications [input here api field description]',
     })
     applications?: OAuthApplicationDto[];
 

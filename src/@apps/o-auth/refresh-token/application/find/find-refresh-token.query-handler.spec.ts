@@ -22,17 +22,17 @@ describe('FindRefreshTokenQueryHandler', () =>
                 FindRefreshTokenQueryHandler,
                 {
                     provide : IRefreshTokenRepository,
-                    useClass: MockRefreshTokenRepository
+                    useClass: MockRefreshTokenRepository,
                 },
                 {
                     provide : FindRefreshTokenService,
                     useValue: {
-                        main: () => {},
-                    }
-                }
-            ]
+                        main: () => { /**/ },
+                    },
+                },
+            ],
         })
-        .compile();
+            .compile();
 
         queryHandler    = module.get<FindRefreshTokenQueryHandler>(FindRefreshTokenQueryHandler);
         service         = module.get<FindRefreshTokenService>(FindRefreshTokenService);
@@ -51,7 +51,7 @@ describe('FindRefreshTokenQueryHandler', () =>
         {
             jest.spyOn(service, 'main').mockImplementation(() => new Promise(resolve => resolve(repository.collectionSource[0])));
             expect(await queryHandler.execute(
-                new FindRefreshTokenQuery()
+                new FindRefreshTokenQuery(),
             )).toStrictEqual(mapper.mapAggregateToResponse(repository.collectionSource[0]));
         });
     });

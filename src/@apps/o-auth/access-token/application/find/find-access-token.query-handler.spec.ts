@@ -22,17 +22,17 @@ describe('FindAccessTokenQueryHandler', () =>
                 FindAccessTokenQueryHandler,
                 {
                     provide : IAccessTokenRepository,
-                    useClass: MockAccessTokenRepository
+                    useClass: MockAccessTokenRepository,
                 },
                 {
                     provide : FindAccessTokenService,
                     useValue: {
-                        main: () => {},
-                    }
-                }
-            ]
+                        main: () => { /**/ },
+                    },
+                },
+            ],
         })
-        .compile();
+            .compile();
 
         queryHandler    = module.get<FindAccessTokenQueryHandler>(FindAccessTokenQueryHandler);
         service         = module.get<FindAccessTokenService>(FindAccessTokenService);
@@ -51,7 +51,7 @@ describe('FindAccessTokenQueryHandler', () =>
         {
             jest.spyOn(service, 'main').mockImplementation(() => new Promise(resolve => resolve(repository.collectionSource[0])));
             expect(await queryHandler.execute(
-                new FindAccessTokenQuery()
+                new FindAccessTokenQuery(),
             )).toStrictEqual(mapper.mapAggregateToResponse(repository.collectionSource[0]));
         });
     });

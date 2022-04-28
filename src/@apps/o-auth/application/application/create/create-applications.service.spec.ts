@@ -26,7 +26,7 @@ describe('CreateApplicationsService', () =>
                     provide : IApplicationRepository,
                     useValue: {
                         insert: (items) => { /**/ },
-                    }
+                    },
                 },
             ]
         }).compile();
@@ -46,7 +46,7 @@ describe('CreateApplicationsService', () =>
         test('should create applications and emit event', async () =>
         {
             expect(await service.main(
-                mockRepository.collectionSource
+                mockRepository.collectionSource,
             )).toBe(undefined);
         });
     });

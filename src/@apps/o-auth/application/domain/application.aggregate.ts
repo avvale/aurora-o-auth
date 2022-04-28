@@ -1,6 +1,7 @@
 /* eslint-disable key-spacing */
+import { LiteralObject } from '@nestjs/common';
 import { AggregateRoot } from '@nestjs/cqrs';
-import { ObjectLiteral, Utils } from 'aurora-ts-core';
+import { Utils } from 'aurora-ts-core';
 import {
     ApplicationId,
     ApplicationName,
@@ -141,7 +142,7 @@ export class OAuthApplication extends AggregateRoot
         );
     }
 
-    toDTO(): ObjectLiteral
+    toDTO(): LiteralObject
     {
         return {
             id: this.id.value,
@@ -160,7 +161,7 @@ export class OAuthApplication extends AggregateRoot
     }
 
 
-    toI18nDTO(): ObjectLiteral
+    toI18nDTO(): LiteralObject
     {
         return {
         };

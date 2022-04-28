@@ -24,13 +24,14 @@ describe('FindRefreshTokenByIdService', () =>
                 FindRefreshTokenByIdService,
                 MockRefreshTokenRepository,
                 {
-                    provide: IRefreshTokenRepository,
+                    provide : IRefreshTokenRepository,
                     useValue: {
-                        findById: id => { /**/ }
-                    }
-                }
-            ]
-        }).compile();
+                        findById: id => { /**/ },
+                    },
+                },
+            ],
+        })
+            .compile();
 
         service         = module.get(FindRefreshTokenByIdService);
         repository      = module.get(IRefreshTokenRepository);
@@ -48,7 +49,7 @@ describe('FindRefreshTokenByIdService', () =>
         {
             jest.spyOn(repository, 'findById').mockImplementation(() => new Promise(resolve => resolve(mockRepository.collectionSource[0])));
             expect(await service.main(
-                new RefreshTokenId(refreshTokens[0].id)
+                new RefreshTokenId(refreshTokens[0].id),
             )).toBe(mockRepository.collectionSource[0]);
         });
     });

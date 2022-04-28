@@ -1,5 +1,6 @@
 /* eslint-disable indent */
 import { ApiProperty } from '@nestjs/swagger';
+import { OAuthUpdateRefreshTokenDto } from '../../../o-auth/refresh-token/dto/o-auth-update-refresh-token.dto';
 
 export class OAuthUpdateAccessTokenDto
 {
@@ -12,37 +13,44 @@ export class OAuthUpdateAccessTokenDto
     @ApiProperty({
         type       : String,
         description: 'clientId [input here api field description]',
+        example    : '8a175a45-dc66-48c4-8c4d-67d77553e8b2',
     })
-    clientId: string;
+    clientId?: string;
 
     @ApiProperty({
         type       : String,
         description: 'accountId [input here api field description]',
     })
-    accountId: string;
+    accountId?: string;
 
     @ApiProperty({
         type       : String,
         description: 'token [input here api field description]',
     })
-    token: string;
+    token?: string;
 
     @ApiProperty({
         type       : String,
         description: 'name [input here api field description]',
     })
-    name: string;
+    name?: string;
 
     @ApiProperty({
         type       : Boolean,
         description: 'isRevoked [input here api field description]',
     })
-    isRevoked: boolean;
+    isRevoked?: boolean;
 
     @ApiProperty({
         type       : String,
         description: 'expiresAt [input here api field description]',
     })
-    expiresAt: string;
+    expiresAt?: string;
+
+    @ApiProperty({
+        type       : OAuthUpdateRefreshTokenDto,
+        description: 'refreshToken [input here api field description]',
+    })
+    refreshToken?: OAuthUpdateRefreshTokenDto;
 
 }

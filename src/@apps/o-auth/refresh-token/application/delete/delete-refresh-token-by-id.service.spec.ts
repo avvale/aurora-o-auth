@@ -29,9 +29,9 @@ describe('DeleteRefreshTokenByIdService', () =>
                     useValue: {
                         deleteById: id => { /**/ },
                         findById  : id => { /**/ },
-                    }
+                    },
                 },
-            ]
+            ],
         }).compile();
 
         service         = module.get(DeleteRefreshTokenByIdService);
@@ -50,7 +50,7 @@ describe('DeleteRefreshTokenByIdService', () =>
         {
             jest.spyOn(repository, 'findById').mockImplementation(() => new Promise(resolve => resolve(mockRepository.collectionSource[0])));
             expect(await service.main(
-                new RefreshTokenId(refreshTokens[0].id)
+                new RefreshTokenId(refreshTokens[0].id),
             )).toBe(undefined);
         });
     });

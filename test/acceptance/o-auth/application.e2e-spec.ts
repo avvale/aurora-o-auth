@@ -367,7 +367,7 @@ describe('application', () =>
                 {
                     where:
                     {
-                        id: 'b49d1090-553f-472f-891b-3173fc032b6c',
+                        id: '2f0000b5-9f6e-4e6a-8759-8989c07e066c',
                     },
                 },
             })
@@ -410,7 +410,7 @@ describe('application', () =>
     test('/REST:GET o-auth/application/find/{id} - Got 404 Not Found', () =>
     {
         return request(app.getHttpServer())
-            .get('/o-auth/application/find/64bfd7e2-bf5b-4472-8431-1e57f446ff36')
+            .get('/o-auth/application/find/7796b4a9-ba58-4411-b24c-9a7a64da628a')
             .set('Accept', 'application/json')
             .expect(404);
     });
@@ -434,7 +434,7 @@ describe('application', () =>
             .set('Accept', 'application/json')
             .send({
                 ...mockData[0],
-                ...{ id: '8d0517e4-c249-42f1-b25f-a932e76dcaa1' },
+                ...{ id: '4705ee55-5f80-4668-bd42-33382c939474' },
             })
             .expect(404);
     });
@@ -445,12 +445,8 @@ describe('application', () =>
             .put('/o-auth/application/update')
             .set('Accept', 'application/json')
             .send({
-                id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
-                name: 'Rustic Plastic Fish',
-                code: 'he0npeu1ywimhv21k6csgvtr8ewcdnymcnb7fmw7g9iypl6st',
-                secret: 'coa601qlskav9grd8fa5z0h0ijzl7u43mj4dvu8yf39dgcwcgdukei0mhusqasyng17myhyfheqfub79qxbjs2ukz',
-                isMaster: false,
-                clientIds: [],
+                ...mockData[0],
+                ...{ id: '5b19d6ac-4081-573b-96b3-56964d5326a8' },
             })
             .expect(200)
             .then(res =>
@@ -462,7 +458,7 @@ describe('application', () =>
     test('/REST:DELETE o-auth/application/delete/{id} - Got 404 Not Found', () =>
     {
         return request(app.getHttpServer())
-            .delete('/o-auth/application/delete/365fe52f-742b-46e3-b418-d5495942113d')
+            .delete('/o-auth/application/delete/8bcb4c46-cc38-4dd3-88ed-563ad0d939bc')
             .set('Accept', 'application/json')
             .expect(404);
     });
@@ -599,11 +595,8 @@ describe('application', () =>
                 `,
                 variables: {
                     payload: {
-                        id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
-                        name: 'Generic Metal Cheese',
-                        code: 'o4wfna51z43ebjitwdpw0c32sl05kyka5k5omh660imgocrb7',
-                        secret: 'z16ggayr8tmpkvxnmyeymi27dh5wzj1ysv1d4okr5l7pfiirz3kddz3x8ws5vlwver9ih0p5jqg7mj7b7hs4ctbw3',
-                        isMaster: true,
+                        ...mockData[0],
+                        ...{ id: '5b19d6ac-4081-573b-96b3-56964d5326a8' },
                     },
                 },
             })
@@ -641,7 +634,7 @@ describe('application', () =>
                     {
                         where:
                         {
-                            id: '0b90f910-93b0-409b-af4f-521738caf7de',
+                            id: 'f2446350-ddc9-48c9-b65f-26f6feac89c9',
                         },
                     },
                 },
@@ -716,7 +709,7 @@ describe('application', () =>
                     }
                 `,
                 variables: {
-                    id: 'b2881250-f43d-40f4-84a5-2bca5b49cebe',
+                    id: 'ca608296-72d2-40c9-b6ab-c9aacf7425b3',
                 },
             })
             .expect(200)
@@ -784,7 +777,7 @@ describe('application', () =>
                 variables: {
                     payload: {
                         ...mockData[0],
-                        ...{ id: 'efc28b92-b1f7-413c-883b-e03f5607bd28' },
+                        ...{ id: 'dc9a57ce-526c-4eaf-bc6f-2070080dc65a' },
                     },
                 },
             })
@@ -820,12 +813,8 @@ describe('application', () =>
                 `,
                 variables: {
                     payload: {
-                        id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
-                        name: 'Small Fresh Chicken',
-                        code: 'dkie6uk6wbkd4kjneky693wz6v9jr7cypfpck57a27n6d8ise',
-                        secret: 'sbolyn42dhon5nhhtskmxdkkcsxr3t16vbo3iv2pd7el5qwl1zbozo4v1up31jynv3ethaxrsxaz0iavcnq8mhk3y',
-                        isMaster: true,
-                        clientIds: [],
+                        ...mockData[0],
+                        ...{ id: '5b19d6ac-4081-573b-96b3-56964d5326a8' },
                     },
                 },
             })
@@ -858,7 +847,7 @@ describe('application', () =>
                     }
                 `,
                 variables: {
-                    id: 'b93f92fb-02fe-4dd4-abd5-5db06bd49617',
+                    id: '73c96575-a39b-45a6-a4af-6ee4377901f0',
                 },
             })
             .expect(200)

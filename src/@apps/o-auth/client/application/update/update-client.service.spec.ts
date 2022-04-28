@@ -40,12 +40,12 @@ describe('UpdateClientService', () =>
                 UpdateClientService,
                 MockClientRepository,
                 {
-                    provide: IClientRepository,
+                    provide : IClientRepository,
                     useValue: {
-                        update: (item) => { /**/ }
-                    }
+                        update: () => { /**/ },
+                    },
                 },
-            ]
+            ],
         }).compile();
 
         service         = module.get(UpdateClientService);

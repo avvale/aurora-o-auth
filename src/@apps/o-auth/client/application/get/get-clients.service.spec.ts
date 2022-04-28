@@ -22,12 +22,12 @@ describe('GetClientsService', () =>
                 GetClientsService,
                 MockClientRepository,
                 {
-                    provide: IClientRepository,
+                    provide : IClientRepository,
                     useValue: {
-                        get: (queryStatement) => {}
-                    }
-                }
-            ]
+                        get: () => { /**/ },
+                    },
+                },
+            ],
         }).compile();
 
         service         = module.get(GetClientsService);

@@ -16,12 +16,12 @@ describe('DeleteApplicationsCommandHandler', () =>
             providers: [
                 DeleteApplicationsCommandHandler,
                 {
-                    provide: DeleteApplicationsService,
+                    provide : DeleteApplicationsService,
                     useValue: {
-                        main: () => {},
-                    }
-                }
-            ]
+                        main: () => { /**/ },
+                    },
+                },
+            ],
         }).compile();
 
         commandHandler  = module.get<DeleteApplicationsCommandHandler>(DeleteApplicationsCommandHandler);
@@ -38,7 +38,7 @@ describe('DeleteApplicationsCommandHandler', () =>
         test('should return void', async () =>
         {
             expect(await commandHandler.execute(
-                new DeleteApplicationsCommand()
+                new DeleteApplicationsCommand(),
             )).toBe(undefined);
         });
     });

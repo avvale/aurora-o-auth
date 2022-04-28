@@ -1,5 +1,6 @@
 /* eslint-disable indent */
 import { ApiProperty } from '@nestjs/swagger';
+import { OAuthClientGrantType } from '../../../../graphql';
 
 export class OAuthCreateClientDto
 {
@@ -10,11 +11,11 @@ export class OAuthCreateClientDto
     id: string;
 
     @ApiProperty({
-        type       : String,
+        type       : OAuthClientGrantType,
         enum       : ['AUTHORIZATION_CODE','CLIENT_CREDENTIALS','PASSWORD'],
         description: 'grantType [input here api field description]',
     })
-    grantType: string;
+    grantType: OAuthClientGrantType;
 
     @ApiProperty({
         type       : String,
@@ -66,7 +67,7 @@ export class OAuthCreateClientDto
 
     @ApiProperty({
         type       : [String],
-        description: 'applicationIds [input here api field description]',
+        description: 'applications [input here api field description]',
     })
     applicationIds?: string[];
 

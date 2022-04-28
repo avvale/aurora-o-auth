@@ -22,12 +22,12 @@ describe('GetAccessTokensService', () =>
                 GetAccessTokensService,
                 MockAccessTokenRepository,
                 {
-                    provide: IAccessTokenRepository,
+                    provide : IAccessTokenRepository,
                     useValue: {
-                        get: (queryStatement) => {}
-                    }
-                }
-            ]
+                        get: () => { /**/ },
+                    },
+                },
+            ],
         }).compile();
 
         service         = module.get(GetAccessTokensService);

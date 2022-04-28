@@ -39,7 +39,7 @@ describe('CreateAccessTokenService', () =>
                 {
                     provide : IAccessTokenRepository,
                     useValue: {
-                        create: (item) => { /**/ },
+                        create: () => { /**/ },
                     },
                 },
             ],
