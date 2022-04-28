@@ -9,7 +9,8 @@ export class AddAccessTokensContextEvent extends AggregateRoot
 {
     constructor(
         public readonly aggregateRoots: OAuthAccessToken[] = [],
-    ) {
+    )
+    {
         super();
     }
 
@@ -18,7 +19,7 @@ export class AddAccessTokensContextEvent extends AggregateRoot
         for (const aggregateRoot of this.aggregateRoots) yield aggregateRoot;
     }
 
-    created()
+    created(): void
     {
         this.apply(
             new CreatedAccessTokensEvent(
@@ -34,13 +35,13 @@ export class AddAccessTokensContextEvent extends AggregateRoot
                         accessToken.createdAt?.value,
                         accessToken.updatedAt?.value,
                         accessToken.deletedAt?.value,
-                    )
-                )
-            )
+                    ),
+                ),
+            ),
         );
     }
 
-    deleted()
+    deleted(): void
     {
         this.apply(
             new DeletedAccessTokensEvent(
@@ -56,9 +57,9 @@ export class AddAccessTokensContextEvent extends AggregateRoot
                         accessToken.createdAt?.value,
                         accessToken.updatedAt?.value,
                         accessToken.deletedAt?.value,
-                    )
-                )
-            )
+                    ),
+                ),
+            ),
         );
     }
 }

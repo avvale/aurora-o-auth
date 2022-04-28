@@ -17,9 +17,9 @@ describe('DeleteAccessTokenByIdCommandHandler', () =>
             providers: [
                 DeleteAccessTokenByIdCommandHandler,
                 {
-                    provide: DeleteAccessTokenByIdService,
+                    provide : DeleteAccessTokenByIdService,
                     useValue: {
-                        main: () => {},
+                        main: () => { /**/ },
                     },
                 },
             ],
@@ -41,7 +41,7 @@ describe('DeleteAccessTokenByIdCommandHandler', () =>
             expect(await commandHandler.execute(
                 new DeleteAccessTokenByIdCommand(
                     accessTokens[0].id,
-                )
+                ),
             )).toBe(undefined);
         });
     });

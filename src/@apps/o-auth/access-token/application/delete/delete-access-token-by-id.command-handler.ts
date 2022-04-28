@@ -18,7 +18,7 @@ export class DeleteAccessTokenByIdCommandHandler implements ICommandHandler<Dele
         await this.deleteAccessTokenByIdService.main(
             new AccessTokenId(command.id),
             command.constraint,
-            command.cQMetadata
+            command.cQMetadata,
         );
     }
 }
