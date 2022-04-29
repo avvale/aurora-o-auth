@@ -7,10 +7,8 @@ export class CreateAccessTokenCommand
             id: string;
             clientId: string;
             accountId?: string;
-            token: string;
             name?: string;
-            isRevoked: boolean;
-            expiresAt?: string;
+            expiredAccessToken: number;
         },
         public readonly cQMetadata?: CQMetadata,
     ) {}

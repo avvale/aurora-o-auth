@@ -8,3 +8,4 @@ export { AccessTokenExpiresAt } from './access-token-expires-at';
 export { AccessTokenCreatedAt } from './access-token-created-at';
 export { AccessTokenUpdatedAt } from './access-token-updated-at';
 export { AccessTokenDeletedAt } from './access-token-deleted-at';
+export { AccessTokenExpiredAccessToken } from './access-token-expired-access-token';

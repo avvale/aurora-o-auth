@@ -1,17 +1,18 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { EventPublisher } from '@nestjs/cqrs';
-import { CQMetadata } from 'aurora-ts-core';
+import { JwtService } from '@nestjs/jwt';
+import { CQMetadata, Jwt, Utils } from 'aurora-ts-core';
 import {
-    AccessTokenId,
-    AccessTokenClientId,
     AccessTokenAccountId,
-    AccessTokenToken,
-    AccessTokenName,
-    AccessTokenIsRevoked,
-    AccessTokenExpiresAt,
+    AccessTokenClientId,
     AccessTokenCreatedAt,
+    AccessTokenExpiredAccessToken,
+    AccessTokenExpiresAt,
+    AccessTokenId,
+    AccessTokenIsRevoked,
+    AccessTokenName,
+    AccessTokenToken,
     AccessTokenUpdatedAt,
-    AccessTokenDeletedAt,
 } from '../../domain/value-objects';
 import { IAccessTokenRepository } from '../../domain/access-token.repository';
 import { OAuthAccessToken } from '../../domain/access-token.aggregate';
@@ -22,6 +23,7 @@ export class CreateAccessTokenService
     constructor(
         private readonly publisher: EventPublisher,
         private readonly repository: IAccessTokenRepository,
+        private readonly jwtService: JwtService,
     ) {}
 
     async main(
@@ -29,26 +31,37 @@ export class CreateAccessTokenService
             id: AccessTokenId;
             clientId: AccessTokenClientId;
             accountId: AccessTokenAccountId;
-            token: AccessTokenToken;
             name: AccessTokenName;
-            isRevoked: AccessTokenIsRevoked;
-            expiresAt: AccessTokenExpiresAt;
+            expiredAccessToken: AccessTokenExpiredAccessToken;
         },
         cQMetadata?: CQMetadata,
     ): Promise<void>
     {
+        // compose access token
+        const momentExpiredAccessToken = payload.expiredAccessToken.value ? Utils.now().add(payload.expiredAccessToken.value, 'seconds') : null;
+        const accessTokenPayload: Jwt = {
+            jit: payload.id.value,
+            aci: payload.accountId.value,
+            iss: 'Aurora OAuth',
+            iat: parseInt(Utils.now().format('X')),
+            nbf: parseInt(Utils.now().format('X')),
+            exp: momentExpiredAccessToken ? parseInt(momentExpiredAccessToken.format('X')) : null,
+        };
+
+        const accessTokenValueObject = new AccessTokenToken(this.jwtService.sign(accessTokenPayload));
+
         // create aggregate with factory pattern
         const accessToken = OAuthAccessToken.register(
             payload.id,
             payload.clientId,
             payload.accountId,
-            payload.token,
+            accessTokenValueObject,
             payload.name,
-            payload.isRevoked,
-            payload.expiresAt,
-            new AccessTokenCreatedAt({ currentTimestamp: true }),
-            new AccessTokenUpdatedAt({ currentTimestamp: true }),
-            null, // deletedAt
+            new AccessTokenIsRevoked(false),
+            new AccessTokenExpiresAt(momentExpiredAccessToken ? momentExpiredAccessToken.format('YYYY-MM-DD H:mm:ss') : null),
+            new AccessTokenCreatedAt({currentTimestamp: true}),
+            new AccessTokenUpdatedAt({currentTimestamp: true}),
+            null,
         );
 
         await this.repository.create(accessToken, { createOptions: cQMetadata?.repositoryOptions });

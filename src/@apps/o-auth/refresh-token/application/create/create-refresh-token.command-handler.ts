@@ -8,9 +8,6 @@ import {
     RefreshTokenToken,
     RefreshTokenIsRevoked,
     RefreshTokenExpiresAt,
-    RefreshTokenCreatedAt,
-    RefreshTokenUpdatedAt,
-    RefreshTokenDeletedAt,
 } from '../../domain/value-objects';
 
 @CommandHandler(CreateRefreshTokenCommand)
@@ -27,9 +24,7 @@ export class CreateRefreshTokenCommandHandler implements ICommandHandler<CreateR
             {
                 id: new RefreshTokenId(command.payload.id),
                 accessTokenId: new RefreshTokenAccessTokenId(command.payload.accessTokenId),
-                token: new RefreshTokenToken(command.payload.token),
-                isRevoked: new RefreshTokenIsRevoked(command.payload.isRevoked),
-                expiresAt: new RefreshTokenExpiresAt(command.payload.expiresAt, {}, { removeTimezone: command.cQMetadata.timezone }),
+                expiredRefreshToken: new RefreshTokenExpiredRefreshToken(command.payload.expiredRefreshToken),
             },
             command.cQMetadata,
         );
