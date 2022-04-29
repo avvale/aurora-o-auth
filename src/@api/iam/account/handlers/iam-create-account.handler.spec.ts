@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Test, TestingModule } from '@nestjs/testing';
 import { JwtModule } from '@nestjs/jwt';
-import { clients, ICommandBus, IQueryBus, OAuthFindClientByIdQuery } from 'aurora-ts-core';
+import { ICommandBus, IQueryBus, OAuthFindClientByIdQuery } from 'aurora-ts-core';
 
 // ---- customizations ----
 import { IamCreateAccountHandler } from './iam-create-account.handler';
@@ -11,6 +11,7 @@ import { FindAccountByIdQuery } from '../../../../@apps/iam/account/application/
 // sources
 import { accounts } from '../../../../@apps/iam/account/infrastructure/seeds/account.seed';
 import { roles } from '../../../../@apps/iam/role/infrastructure/seeds/role.seed';
+import { clients } from '../../../../@apps/o-auth/client/infrastructure/seeds/client.seed';
 
 describe('IamCreateAccountHandler', () =>
 {

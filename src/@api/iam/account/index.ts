@@ -10,7 +10,6 @@ import { IamDeleteAccountsController } from './controllers/iam-delete-accounts.c
 
 // resolvers
 import { IamCreateAccountResolver } from './resolvers/iam-create-account.resolver';
-import { IamCreateAccountsResolver } from './resolvers/iam-create-accounts.resolver';
 import { IamPaginateAccountsResolver } from './resolvers/iam-paginate-accounts.resolver';
 import { IamGetAccountsResolver } from './resolvers/iam-get-accounts.resolver';
 import { IamFindAccountByIdResolver } from './resolvers/iam-find-account-by-id.resolver';
@@ -42,7 +41,6 @@ export const IamAccountControllers = [
 
 export const IamAccountResolvers = [
     IamCreateAccountResolver,
-    IamCreateAccountsResolver,
     IamPaginateAccountsResolver,
     IamGetAccountsResolver,
     IamFindAccountByIdResolver,
