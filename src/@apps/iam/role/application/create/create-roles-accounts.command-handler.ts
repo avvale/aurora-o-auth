@@ -5,7 +5,7 @@ import {
     RoleRoleId,
     RoleAccountId,
 
-} from './../../domain/value-objects';
+} from '../../domain/value-objects';
 
 @CommandHandler(CreateRolesAccountsCommand)
 export class CreateRolesAccountsCommandHandler implements ICommandHandler<CreateRolesAccountsCommand>

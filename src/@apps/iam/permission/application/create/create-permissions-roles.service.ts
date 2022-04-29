@@ -3,9 +3,9 @@ import { EventPublisher } from '@nestjs/cqrs';
 import {
     PermissionPermissionId,
     PermissionRoleId,
-} from './../../domain/value-objects';
-import { IPermissionRoleRepository } from './../../domain/permission-role.repository';
-import { IamPermissionRole } from './../../domain/permission-role.aggregate';
+} from '../../domain/value-objects';
+import { IPermissionRoleRepository } from '../../domain/permission-role.repository';
+import { IamPermissionRole } from '../../domain/permission-role.aggregate';
 
 @Injectable()
 export class CreatePermissionsRolesService

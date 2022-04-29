@@ -4,9 +4,9 @@ import {
     RoleRoleId,
     RoleAccountId,
 
-} from './../../domain/value-objects';
-import { IRoleAccountRepository } from './../../domain/role-account.repository';
-import { IamRoleAccount } from './../../domain/role-account.aggregate';
+} from '../../domain/value-objects';
+import { IRoleAccountRepository } from '../../domain/role-account.repository';
+import { IamRoleAccount } from '../../domain/role-account.aggregate';
 
 @Injectable()
 export class CreateRolesAccountsService

@@ -12,6 +12,8 @@ import { JwtService } from '@nestjs/jwt';
 import { GetRolesQuery } from '../../../../@apps/iam/role/application/get/get-roles.query';
 import { CreateUserCommand } from '../../../../@apps/iam/user/application/create/create-user.command';
 import { AccountHelper } from '../../../../@apps/iam/account/domain/account.helper';
+import { OAuthApplicationModel } from '../../../../@apps/o-auth/application/infrastructure/sequelize/sequelize-application.model';
+import { IamPermissionModel } from '../../../../@apps/iam/permission/infrastructure/sequelize/sequelize-permission.model';
 
 @Injectable()
 export class IamCreateAccountHandler
@@ -37,7 +39,12 @@ export class IamCreateAccountHandler
         // get client to get applications related OAuthFindClientByIdQuery
         const client = await this.queryBus.ask(new OAuthFindClientByIdQuery(payload.type === IamAccountType.SERVICE ? payload.clientId : accessToken.clientId,
             {
-                include: ['applications'],
+                include: [
+                    {
+                        model: OAuthApplicationModel,
+                        as   : 'applications',
+                    },
+                ],
             },
         ));
 
@@ -46,7 +53,12 @@ export class IamCreateAccountHandler
             where: {
                 id: payload.roleIds,
             },
-            include: ['permissions'],
+            include: [
+                {
+                    model: IamPermissionModel,
+                    as   : 'permissions',
+                },
+            ],
         }));
 
         await this.commandBus.dispatch(new CreateAccountCommand(

@@ -7,6 +7,9 @@ import { CreateAccessTokenCommand } from '../../../../@apps/o-auth/access-token/
 import { CreateRefreshTokenCommand } from '../../../../@apps/o-auth/refresh-token/application/create/create-refresh-token.command';
 import { FindAccessTokenQuery } from '../../../../@apps/o-auth/access-token/application/find/find-access-token.query';
 import { FindAccountQuery } from '../../../../@apps/iam/account/application/find/find-account.query';
+import { OAuthRefreshTokenModel } from '../../../../@apps/o-auth/refresh-token/infrastructure/sequelize/sequelize-refresh-token.model';
+import { FindUserByUsernamePasswordQuery } from '../../../../@apps/iam/user/application/find/find-user-by-username-password.query';
+import { FindApplicationByAuthorizationHeaderQuery } from '../../../../@apps/o-auth/application/application/find/find-application-by-authorization-header.query';
 import { OAuthClientGrantType, OAuthCredential, OAuthCreateCredentialInput, IamAccountType } from '../../../../graphql';
 import { OAuthCreateCredentialDto, OAuthCredentialDto } from '../dto';
 
@@ -80,7 +83,12 @@ export class OAuthCreateCredentialHandler
                     where: {
                         id: accessTokenId,
                     },
-                    include: ['refreshToken'],
+                    include: [
+                        {
+                            model: OAuthRefreshTokenModel,
+                            as   : 'refreshToken',
+                        },
+                    ],
                 },
             ));
 
@@ -138,7 +146,12 @@ export class OAuthCreateCredentialHandler
                     where: {
                         id: accessTokenId,
                     },
-                    include: ['refreshToken'],
+                    include: [
+                        {
+                            model: OAuthRefreshTokenModel,
+                            as   : 'refreshToken',
+                        },
+                    ],
                 },
             ));
 

@@ -3,9 +3,9 @@ import { InjectModel } from '@nestjs/sequelize';
 import { ICriteria, SequelizeRepository } from 'aurora-ts-core';
 
 
-import { IPermissionRoleRepository } from './../../domain/permission-role.repository';
-import { IamPermissionRole } from './../../domain/permission-role.aggregate';
-import { PermissionRoleMapper } from './../../domain/permission-role.mapper';
+import { IPermissionRoleRepository } from '../../domain/permission-role.repository';
+import { IamPermissionRole } from '../../domain/permission-role.aggregate';
+import { PermissionRoleMapper } from '../../domain/permission-role.mapper';
 import { IamPermissionsRolesModel } from './sequelize-permissions-roles.model';
 
 @Injectable()

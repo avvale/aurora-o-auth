@@ -4,7 +4,7 @@ import { CreatePermissionsRolesService } from './create-permissions-roles.servic
 import {
     PermissionPermissionId,
     PermissionRoleId,
-} from './../../domain/value-objects';
+} from '../../domain/value-objects';
 
 @CommandHandler(CreatePermissionsRolesCommand)
 export class CreatePermissionsRolesCommandHandler implements ICommandHandler<CreatePermissionsRolesCommand>

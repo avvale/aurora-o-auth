@@ -10,6 +10,7 @@ import { PaginateUsersQueryHandler } from './application/paginate/paginate-users
 import { GetUsersQueryHandler } from './application/get/get-users.query-handler';
 import { FindUserQueryHandler } from './application/find/find-user.query-handler';
 import { FindUserByIdQueryHandler } from './application/find/find-user-by-id.query-handler';
+import { FindUserByUsernamePasswordQueryHandler } from './application/find/find-user-by-username-password.query-handler';
 
 // events
 import { CreatedUserEventHandler } from './application/events/created-user.event-handler';
@@ -28,6 +29,7 @@ import { FindUserByIdService } from './application/find/find-user-by-id.service'
 import { UpdateUserService } from './application/update/update-user.service';
 import { DeleteUserByIdService } from './application/delete/delete-user-by-id.service';
 import { DeleteUsersService } from './application/delete/delete-users.service';
+import { FindUserByUsernamePasswordService } from './application/find/find-user-by-username-password.service';
 
 // models
 export { IamUserModel } from './infrastructure/sequelize/sequelize-user.model';
@@ -52,6 +54,7 @@ export const IamUserHandlers = [
     GetUsersQueryHandler,
     FindUserQueryHandler,
     FindUserByIdQueryHandler,
+    FindUserByUsernamePasswordQueryHandler,
 
     // events
     CreatedUserEventHandler,
@@ -71,4 +74,5 @@ export const IamUserServices = [
     UpdateUserService,
     DeleteUserByIdService,
     DeleteUsersService,
+    FindUserByUsernamePasswordService,
 ];
