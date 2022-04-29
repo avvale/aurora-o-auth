@@ -6,6 +6,7 @@ import { OAuthApplicationControllers, OAuthApplicationResolvers, OAuthApplicatio
 import { OAuthClientControllers, OAuthClientResolvers, OAuthClientApiHandlers } from './client';
 import { OAuthAccessTokenControllers, OAuthAccessTokenResolvers, OAuthAccessTokenApiHandlers } from './access-token';
 import { OAuthRefreshTokenControllers, OAuthRefreshTokenResolvers, OAuthRefreshTokenApiHandlers } from './refresh-token';
+import { OAuthCredentialControllers, OAuthCredentialResolvers, OAuthCredentialApiHandlers } from './credential';
 
 @Module({
     imports: [
@@ -18,7 +19,8 @@ import { OAuthRefreshTokenControllers, OAuthRefreshTokenResolvers, OAuthRefreshT
         ...OAuthApplicationControllers,
         ...OAuthClientControllers,
         ...OAuthAccessTokenControllers,
-        ...OAuthRefreshTokenControllers
+        ...OAuthRefreshTokenControllers,
+        ...OAuthCredentialControllers,
     ],
     providers: [
         ...OAuthHandlers,
@@ -32,7 +34,9 @@ import { OAuthRefreshTokenControllers, OAuthRefreshTokenResolvers, OAuthRefreshT
         ...OAuthAccessTokenResolvers,
         ...OAuthAccessTokenApiHandlers,
         ...OAuthRefreshTokenResolvers,
-        ...OAuthRefreshTokenApiHandlers
+        ...OAuthRefreshTokenApiHandlers,
+        ...OAuthCredentialResolvers,
+        ...OAuthCredentialApiHandlers,
     ],
 })
 export class OAuthModule {}

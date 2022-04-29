@@ -15,6 +15,6 @@ export const OAuthCredentialResolvers = [
     OAuthCreateCredentialResolver,
 ];
 
-export const OAuthAccessTokenApiHandlers = [
+export const OAuthCredentialApiHandlers = [
     OAuthCreateCredentialHandler,
 ];

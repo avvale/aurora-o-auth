@@ -81,6 +81,17 @@ export interface OAuthUpdateClientInput {
     applicationIds?: Nullable<Nullable<string>[]>;
 }
 
+export interface OAuthCreateCredentialInput {
+    grantType: OAuthClientGrantType;
+    username?: Nullable<GraphQLString>;
+    password?: Nullable<GraphQLString>;
+    email?: Nullable<GraphQLString>;
+    clientSecret?: Nullable<GraphQLString>;
+    accessTokenId?: Nullable<string>;
+    refreshToken?: Nullable<GraphQLString>;
+    redirect?: Nullable<GraphQLString>;
+}
+
 export interface OAuthCreateRefreshTokenInput {
     id: string;
     accessTokenId: string;
@@ -156,6 +167,7 @@ export interface IMutation {
     oAuthUpdateClient(payload: OAuthUpdateClientInput, constraint?: Nullable<QueryStatement>): Nullable<OAuthClient> | Promise<Nullable<OAuthClient>>;
     oAuthDeleteClientById(id: string, constraint?: Nullable<QueryStatement>): Nullable<OAuthClient> | Promise<Nullable<OAuthClient>>;
     oAuthDeleteClients(query?: Nullable<QueryStatement>, constraint?: Nullable<QueryStatement>): Nullable<OAuthClient>[] | Promise<Nullable<OAuthClient>[]>;
+    oAuthCreateCredential(payload: OAuthCreateCredentialInput): OAuthCredential | Promise<OAuthCredential>;
     oAuthCreateRefreshToken(payload: OAuthCreateRefreshTokenInput): Nullable<OAuthRefreshToken> | Promise<Nullable<OAuthRefreshToken>>;
     oAuthCreateRefreshTokens(payload: Nullable<OAuthCreateRefreshTokenInput>[]): boolean | Promise<boolean>;
     oAuthUpdateRefreshToken(payload: OAuthUpdateRefreshTokenInput, constraint?: Nullable<QueryStatement>): Nullable<OAuthRefreshToken> | Promise<Nullable<OAuthRefreshToken>>;
@@ -191,6 +203,11 @@ export interface OAuthClient {
     createdAt?: Nullable<GraphQLTimestamp>;
     updatedAt?: Nullable<GraphQLTimestamp>;
     deletedAt?: Nullable<GraphQLTimestamp>;
+}
+
+export interface OAuthCredential {
+    accessToken: GraphQLString;
+    refreshToken: GraphQLString;
 }
 
 export interface OAuthRefreshToken {

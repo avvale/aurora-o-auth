@@ -36,12 +36,12 @@ export class OAuthCreateCredentialHandler
 
              // if not exist user throw error
             if (!account) throw new UnauthorizedException();
-            return this.clientClientGrantService.getCredential(payload);
+            //return this.clientClientGrantService.getCredential(payload);
         }
 
         if (payload.grantType === OAuthClientGrantType.PASSWORD)
         {
-            return this.passwordGrantService.getCredential(payload, authorization);
+           // return this.passwordGrantService.getCredential(payload, authorization);
         }
     }
 }
