@@ -19,7 +19,8 @@
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
-    "graphql:types": "ts-node generate-typings"
+    "graphql:types": "ts-node generate-typings",
+    "publish:package": "cp -r src/@api ../aurora-cli/src/templates/packages/o-auth/src && cp -r src/@apps ../aurora-cli/src/templates/packages/o-auth/src && cp -r cliter ../aurora-cli/src/templates/packages/o-auth && cp -r postman ../aurora-cli/src/templates/packages/o-auth && cp -r test/acceptance/o-auth ../aurora-cli/src/templates/packages/o-auth/test/acceptance"
   },
   "dependencies": {
     "@nestjs/apollo": "^10.0.2",
