@@ -6,7 +6,7 @@ export const clients = [
     {
         id: '333910d9-394b-42d7-b3e0-0c7ae7a54478',
         grantType: OAuthClientGrantType.PASSWORD,
-        name: 'Quasar - Password Grant',
+        name: 'Aurora - Password Grant',
         secret: 'om9QPNdkNJc09JgzTTwvcL4897E5EhbAGWqwkwtA',
         authUrl: null,
         redirect: null,
