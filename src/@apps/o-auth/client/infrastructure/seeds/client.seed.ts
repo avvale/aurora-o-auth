@@ -1,4 +1,5 @@
 import { OAuthClientGrantType } from '../../../../../graphql';
+import { applications } from '../../../../../@apps/o-auth/application/infrastructure/seeds/application.seed';
 
 export const clients = [
     {
@@ -13,5 +14,6 @@ export const clients = [
         isActive           : true,
         isMaster           : true,
         applicationIds     : ['8bb03dc8-c97b-4e06-b1b0-3c62e108fd80'],
+        applications, // mock related applications
     },
 ];

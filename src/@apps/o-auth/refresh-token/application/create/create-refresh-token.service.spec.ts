@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Test, TestingModule } from '@nestjs/testing';
 import { EventPublisher, EventBus, CommandBus } from '@nestjs/cqrs';
+import { JwtModule } from '@nestjs/jwt';
 
 // custom items
 import { refreshTokensToCreate as refreshTokens } from '../../../../../@apps/o-auth/refresh-token/infrastructure/seeds/refresh-token.seed';
@@ -29,6 +30,11 @@ describe('CreateRefreshTokenService', () =>
     beforeAll(async () =>
     {
         const module: TestingModule = await Test.createTestingModule({
+            imports: [
+                JwtModule.register({
+                    secret: '1234567890',
+                }),
+            ],
             providers: [
                 CommandBus,
                 EventBus,
