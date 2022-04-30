@@ -10,13 +10,7 @@ import { IamModule } from './@api/iam/iam.module';
     imports: [
         CoreModule,
         OAuthModule,
-        IamModule.forRoot({
-            privateKey : fs.readFileSync('src/oauth-private.key', 'utf8'),
-            publicKey  : fs.readFileSync('src/oauth-public.key', 'utf8'),
-            signOptions: {
-                algorithm: 'RS256',
-            },
-        }),
+        IamModule,
     ],
     controllers: [
         AppController,

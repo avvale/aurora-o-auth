@@ -5,9 +5,7 @@ import { CreateRefreshTokenService } from './create-refresh-token.service';
 import {
     RefreshTokenId,
     RefreshTokenAccessTokenId,
-    RefreshTokenToken,
-    RefreshTokenIsRevoked,
-    RefreshTokenExpiresAt,
+    RefreshTokenExpiredRefreshToken,
 } from '../../domain/value-objects';
 
 @CommandHandler(CreateRefreshTokenCommand)
