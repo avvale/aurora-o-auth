@@ -1,12 +1,13 @@
 /* eslint-disable indent */
 import { ApiProperty } from '@nestjs/swagger';
+import { OAuthClientGrantType } from '../../../../../src/graphql';
 
 export class OAuthCreateCredentialDto
 {
     @ApiProperty({
         type       : String,
         description: 'grantType [input here api field description]',
-        example    : 'PASSWORD',
+        example    : OAuthClientGrantType.PASSWORD,
         enum       : ['AUTHORIZATION_CODE','CLIENT_CREDENTIALS','PASSWORD'],
     })
     grantType: string;
@@ -16,30 +17,30 @@ export class OAuthCreateCredentialDto
         description: 'username [input here api field description]',
         example    : 'john@gmail.com',
     })
-    username: string;
+    username?: string;
 
     @ApiProperty({
         type       : String,
         description: 'password [input here api field description]',
         example    : '123456',
     })
-    password: string;
+    password?: string;
 
     @ApiProperty({
         type       : String,
         description: 'email [input here api field description]',
         example    : 'john@gmail.com',
     })
-    email: string;
+    email?: string;
 
     @ApiProperty({
         type       : String,
         description: 'clientSecret [input here api field description]',
         example    : 'ktjfde3ibcxglzz7glw6ehoibcn4olk8yitqaqtlvpaot7n0514wdzayzmss7cd15abiohcfwzjh4i3a7q48ss8vfk',
     })
-    clientSecret: string;
+    clientSecret?: string;
 
-    @ApiProperty({
+    /* @ApiProperty({
         type       : String,
         description: 'accessTokenId [input here api field description]',
         example    : '077e099f-2640-4f12-b1d8-eef80ee8cff9',
@@ -58,5 +59,5 @@ export class OAuthCreateCredentialDto
         description: 'redirect [input here api field description]',
         example    : 'https://contoso.com/redirect',
     })
-    redirect: string;
+    redirect: string; */
 }
