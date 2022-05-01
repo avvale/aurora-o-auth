@@ -1,11 +1,12 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Test, TestingModule } from '@nestjs/testing';
 import { JwtModule } from '@nestjs/jwt';
-import { ICommandBus, IQueryBus, OAuthFindClientByIdQuery } from 'aurora-ts-core';
+import { ICommandBus, IQueryBus } from 'aurora-ts-core';
 
 // ---- customizations ----
 import { IamCreateAccountHandler } from './iam-create-account.handler';
 import { GetRolesQuery } from '../../../../@apps/iam/role/application/get/get-roles.query';
+import { FindClientByIdQuery } from '../../../../@apps/o-auth/client/application/find/find-client-by-id.query';
 import { FindAccountByIdQuery } from '../../../../@apps/iam/account/application/find/find-account-by-id.query';
 
 // sources
@@ -62,7 +63,7 @@ describe('IamCreateAccountHandler', () =>
             {
                 return new Promise(resolve =>
                 {
-                    if (query instanceof OAuthFindClientByIdQuery) resolve(clients[0]); // return client
+                    if (query instanceof FindClientByIdQuery) resolve(clients[0]); // return client
                     if (query instanceof GetRolesQuery) resolve(roles); // return roles
                     if (query instanceof FindAccountByIdQuery) resolve(accounts[0]); // return account created
 

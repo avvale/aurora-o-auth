@@ -5,7 +5,7 @@ import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { JwtModule, JwtModuleOptions } from '@nestjs/jwt';
+import { JwtModuleOptions } from '@nestjs/jwt';
 import { IAccountRepository } from '../../../src/@apps/iam/account/domain/account.repository';
 import { MockAccountSeeder } from '../../../src/@apps/iam/account/infrastructure/mock/mock-account.seeder';
 import { accounts } from '../../../src/@apps/iam/account/infrastructure/seeds/account.seed';
@@ -17,7 +17,19 @@ import * as _ from 'lodash';
 
 // ---- customizations ----
 import { MockJwtService } from '../../../src/@apps/o-auth/access-token/infrastructure/mock/mock-jwt.service';
-
+import { AuthModule } from '../../../src/@apps/o-auth/shared/modules/auth.module';
+import { OAuthModule } from '../../../src/@api/o-auth/o-auth.module';
+import { MockApplicationSeeder } from '../../../src/@apps/o-auth/application/infrastructure/mock/mock-application.seeder';
+import { IApplicationRepository } from '../../../src/@apps/o-auth/application/domain/application.repository';
+import { MockAccessTokenSeeder } from '../../../src/@apps/o-auth/access-token/infrastructure/mock/mock-access-token.seeder';
+import { IAccessTokenRepository } from '../../../src/@apps/o-auth/access-token';
+import { MockClientSeeder } from '../../../src/@apps/o-auth/client/infrastructure/mock/mock-client.seeder';
+import { IClientRepository } from '../../../src/@apps/o-auth/client';
+import { MockAccessTokenRepository } from '../../../src/@apps/o-auth/access-token/infrastructure/mock/mock-access-token.repository';
+import { MockAccountRepository } from '../../../src/@apps/iam/account/infrastructure/mock/mock-account.repository';
+import { IRoleRepository } from '../../../src/@apps/iam/role';
+import { MockRoleRepository } from '../../../src/@apps/iam/role/infrastructure/mock/mock-role.repository';
+import { MockClientRepository } from '../../../src/@apps/o-auth/client/infrastructure/mock/mock-client.repository';
 
 // disable import foreign modules, can be micro-services
 const importForeignModules = [];
@@ -27,6 +39,12 @@ describe('account', () =>
     let app: INestApplication;
     let repository: IAccountRepository;
     let seeder: MockAccountSeeder;
+    let applicationRepository: IApplicationRepository;
+    let applicationSeeder: MockApplicationSeeder;
+    let accessTokenRepository: IAccessTokenRepository;
+    let accessTokenSeeder: MockAccessTokenSeeder;
+    let clientRepository: IClientRepository;
+    let clientSeeder: MockClientSeeder;
     let mockJwt: string;
     const jwtOptions: JwtModuleOptions = {
         privateKey: fs.readFileSync('src/oauth-private.key', 'utf8'),
@@ -44,8 +62,9 @@ describe('account', () =>
         const module: TestingModule = await Test.createTestingModule({
             imports: [
                 ...importForeignModules,
-                IamModule.forRoot(jwtOptions),
-                JwtModule.register(jwtOptions),
+                IamModule,
+                OAuthModule,
+                AuthModule.forRoot(jwtOptions),
                 GraphQLConfigModule,
                 SequelizeModule.forRootAsync({
                     imports   : [ConfigModule],
@@ -69,20 +88,40 @@ describe('account', () =>
                 }),
             ],
             providers: [
+                MockApplicationSeeder,
+                MockAccessTokenSeeder,
                 MockAccountSeeder,
+                MockClientSeeder,
                 MockJwtService,
             ],
         })
+            /* .overrideProvider(IAccessTokenRepository)
+            .useClass(MockAccessTokenRepository)
+            .overrideProvider(IClientRepository)
+            .useClass(MockClientRepository)
+            .overrideProvider(IRoleRepository)
+            .useClass(MockRoleRepository)
+            .overrideProvider(IAccountRepository)
+            .useClass(MockAccountRepository) */
             .compile();
 
-        mockData    = accounts;
-        app         = module.createNestApplication();
-        repository  = module.get<IAccountRepository>(IAccountRepository);
-        seeder      = module.get<MockAccountSeeder>(MockAccountSeeder);
-        mockJwt     = module.get(MockJwtService).getJwt();
+        mockData                = accounts;
+        app                     = module.createNestApplication();
+        repository              = module.get<IAccountRepository>(IAccountRepository);
+        applicationRepository   = module.get<IApplicationRepository>(IApplicationRepository);
+        accessTokenRepository   = module.get<IAccessTokenRepository>(IAccessTokenRepository);
+        clientRepository        = module.get<IClientRepository>(IClientRepository);
+        seeder                  = module.get<MockAccountSeeder>(MockAccountSeeder);
+        applicationSeeder       = module.get<MockApplicationSeeder>(MockApplicationSeeder);
+        accessTokenSeeder       = module.get<MockAccessTokenSeeder>(MockAccessTokenSeeder);
+        clientSeeder            = module.get<MockClientSeeder>(MockClientSeeder);
+        mockJwt                 = module.get(MockJwtService).getJwt();
 
         // seed mock data in memory database
         await repository.insert(seeder.collectionSource);
+        await applicationRepository.insert(applicationSeeder.collectionSource);
+        await accessTokenRepository.insert(accessTokenSeeder.collectionSource);
+        await clientRepository.insert(clientSeeder.collectionSource);
 
         await app.init();
     });
@@ -169,7 +208,7 @@ describe('account', () =>
             .then(res =>
             {
                 // try get client from null and get a undefined instance of null
-                expect(res.body.message).toContain('Value for AccountClientId must be defined, can not be undefined');
+                expect(res.body.message).toContain('Value for ClientId must be defined, can not be null');
             });
     });
 
@@ -254,7 +293,7 @@ describe('account', () =>
             .expect(400)
             .then(res =>
             {
-                expect(res.body.message).toContain('Value for AccountClientId must be defined, can not be undefined');
+                expect(res.body.message).toContain('Value for ClientId must be defined, can not be null');
             });
     });
 
@@ -288,8 +327,7 @@ describe('account', () =>
             .expect(400)
             .then(res =>
             {
-                // try get client from null and get a undefined instance of null
-                expect(res.body.message).toContain('Value for AccountClientId must be defined, can not be undefined');
+                expect(res.body.message).toContain('Value for ClientId is not allowed, must be a length of 36');
             });
     });
 

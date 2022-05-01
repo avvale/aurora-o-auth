@@ -16,7 +16,7 @@ export class MockJwtService
         const accessTokenPayload: Jwt = {
             jit: accessTokens[0].id,
             aci: accounts[0].id,
-            iss: 'Hades Testing OAuth',
+            iss: 'Aurora Testing OAuth',
             iat: parseInt(Utils.now().format('X')),
             nbf: parseInt(Utils.now().format('X')),
             exp: parseInt(Utils.now().add(600, 'seconds').format('X')),

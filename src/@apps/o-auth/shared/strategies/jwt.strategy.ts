@@ -25,7 +25,7 @@ export class JwtStrategy extends PassportStrategy(Strategy)
 
     async validate(payload: Jwt): Promise<IamAccount | IamAccountDto>
     {
-        const user = await this.queryBus.ask(new FindAccountQuery({
+        return await this.queryBus.ask(new FindAccountQuery({
             where: {
                 id: payload.aci,
             },
@@ -36,7 +36,5 @@ export class JwtStrategy extends PassportStrategy(Strategy)
                 },
             ],
         }));
-
-        return user;
     }
 }

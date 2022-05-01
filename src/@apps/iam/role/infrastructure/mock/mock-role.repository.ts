@@ -53,6 +53,8 @@ export class MockRoleRepository extends MockRepository<IamRole> implements IRole
                 new RoleCreatedAt(itemCollection.createdAt),
                 new RoleUpdatedAt(itemCollection.updatedAt),
                 new RoleDeletedAt(itemCollection.deletedAt),
+                [],
+                [],
             ));
         }
     }

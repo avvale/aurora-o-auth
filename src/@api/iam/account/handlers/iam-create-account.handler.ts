@@ -1,5 +1,5 @@
 import { Injectable, LiteralObject } from '@nestjs/common';
-import { ICommandBus, IQueryBus, Jwt, OAuthFindAccessTokenByIdQuery, OAuthFindClientByIdQuery, Utils } from 'aurora-ts-core';
+import { ICommandBus, IQueryBus, Jwt, Utils } from 'aurora-ts-core';
 
 // @apps
 import { FindAccountByIdQuery } from '../../../../@apps/iam/account/application/find/find-account-by-id.query';
@@ -10,6 +10,8 @@ import { IamAccountDto, IamCreateAccountDto } from '../dto';
 // ---- customizations ----
 import { JwtService } from '@nestjs/jwt';
 import { GetRolesQuery } from '../../../../@apps/iam/role/application/get/get-roles.query';
+import { FindClientByIdQuery } from '../../../../@apps/o-auth/client/application/find/find-client-by-id.query';
+import { FindAccessTokenByIdQuery } from '../../../../@apps/o-auth/access-token/application/find/find-access-token-by-id.query';
 import { CreateUserCommand } from '../../../../@apps/iam/user/application/create/create-user.command';
 import { AccountHelper } from '../../../../@apps/iam/account/domain/account.helper';
 import { OAuthApplicationModel } from '../../../../@apps/o-auth/application/infrastructure/sequelize/sequelize-application.model';
@@ -34,10 +36,10 @@ export class IamCreateAccountHandler
         const jwt = <Jwt>this.jwtService.decode(headers.authorization.replace('Bearer ', ''));
 
         // get access token from database
-        const accessToken = await this.queryBus.ask(new OAuthFindAccessTokenByIdQuery(jwt.jit));
+        const accessToken = await this.queryBus.ask(new FindAccessTokenByIdQuery(jwt.jit));
 
-        // get client to get applications related OAuthFindClientByIdQuery
-        const client = await this.queryBus.ask(new OAuthFindClientByIdQuery(payload.type === IamAccountType.SERVICE ? payload.clientId : accessToken.clientId,
+        // get client to get applications related FindClientByIdQuery
+        const client = await this.queryBus.ask(new FindClientByIdQuery(payload.type === IamAccountType.SERVICE ? payload.clientId : accessToken.clientId,
             {
                 include: [
                     {
