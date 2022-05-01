@@ -94,6 +94,43 @@ describe('refresh-token', () =>
             });
     });
 
+    test('/GraphQL oAuthPaginateRefreshTokens', () =>
+    {
+        return request(app.getHttpServer())
+            .post('/graphql')
+            .set('Accept', 'application/json')
+            .send({
+                query: `
+                    query ($query:QueryStatement $constraint:QueryStatement)
+                    {
+                        oAuthPaginateRefreshTokens (query:$query constraint:$constraint)
+                        {
+                            total
+                            count
+                            rows
+                        }
+                    }
+                `,
+                variables:
+                {
+                    query:
+                    {
+                        offset: 0,
+                        limit: 5,
+                    },
+                },
+            })
+            .expect(200)
+            .then(res =>
+            {
+                expect(res.body.data.oAuthPaginateRefreshTokens).toEqual({
+                    total: seeder.collectionResponse.length,
+                    count: seeder.collectionResponse.length,
+                    rows : seeder.collectionResponse.map(item => expect.objectContaining(_.omit(item, ['createdAt', 'updatedAt', 'deletedAt']))).slice(0, 5),
+                });
+            });
+    });
+
     test('/REST:POST o-auth/refresh-tokens/get', () =>
     {
         return request(app.getHttpServer())
@@ -135,14 +172,14 @@ describe('refresh-token', () =>
                 {
                     where:
                     {
-                        id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
+                        id: 'f710edae-c011-4b7d-acfa-65cead5771cd',
                     },
                 },
             })
             .expect(200)
             .then(res =>
             {
-                expect(res.body).toHaveProperty('id', '5b19d6ac-4081-573b-96b3-56964d5326a8');
+                expect(res.body).toHaveProperty('id', 'f710edae-c011-4b7d-acfa-65cead5771cd');
             });
     });
 
@@ -157,12 +194,12 @@ describe('refresh-token', () =>
     test('/REST:GET o-auth/refresh-token/find/{id}', () =>
     {
         return request(app.getHttpServer())
-            .get('/o-auth/refresh-token/find/5b19d6ac-4081-573b-96b3-56964d5326a8')
+            .get('/o-auth/refresh-token/find/f710edae-c011-4b7d-acfa-65cead5771cd')
             .set('Accept', 'application/json')
             .expect(200)
             .then(res =>
             {
-                expect(res.body).toHaveProperty('id', '5b19d6ac-4081-573b-96b3-56964d5326a8');
+                expect(res.body).toHaveProperty('id', 'f710edae-c011-4b7d-acfa-65cead5771cd');
             });
     });
 
@@ -177,46 +214,9 @@ describe('refresh-token', () =>
     test('/REST:DELETE o-auth/refresh-token/delete/{id}', () =>
     {
         return request(app.getHttpServer())
-            .delete('/o-auth/refresh-token/delete/5b19d6ac-4081-573b-96b3-56964d5326a8')
+            .delete('/o-auth/refresh-token/delete/f710edae-c011-4b7d-acfa-65cead5771cd')
             .set('Accept', 'application/json')
             .expect(200);
-    });
-
-    test('/GraphQL oAuthPaginateRefreshTokens', () =>
-    {
-        return request(app.getHttpServer())
-            .post('/graphql')
-            .set('Accept', 'application/json')
-            .send({
-                query: `
-                    query ($query:QueryStatement $constraint:QueryStatement)
-                    {
-                        oAuthPaginateRefreshTokens (query:$query constraint:$constraint)
-                        {
-                            total
-                            count
-                            rows
-                        }
-                    }
-                `,
-                variables:
-                {
-                    query:
-                    {
-                        offset: 0,
-                        limit: 5,
-                    },
-                },
-            })
-            .expect(200)
-            .then(res =>
-            {
-                expect(res.body.data.oAuthPaginateRefreshTokens).toEqual({
-                    total: seeder.collectionResponse.length,
-                    count: seeder.collectionResponse.length,
-                    rows : seeder.collectionResponse.map(item => expect.objectContaining(_.omit(item, ['createdAt', 'updatedAt', 'deletedAt']))).slice(0, 5),
-                });
-            });
     });
 
     test('/GraphQL oAuthGetRefreshTokens', () =>
@@ -320,7 +320,7 @@ describe('refresh-token', () =>
                     {
                         where:
                         {
-                            id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
+                            id: '527ebfe3-e017-4831-aeaa-c8e9a4018161',
                         },
                     },
                 },
@@ -328,7 +328,7 @@ describe('refresh-token', () =>
             .expect(200)
             .then(res =>
             {
-                expect(res.body.data.oAuthFindRefreshToken.id).toStrictEqual('5b19d6ac-4081-573b-96b3-56964d5326a8');
+                expect(res.body.data.oAuthFindRefreshToken.id).toStrictEqual('527ebfe3-e017-4831-aeaa-c8e9a4018161');
             });
     });
 
@@ -388,13 +388,13 @@ describe('refresh-token', () =>
                     }
                 `,
                 variables: {
-                    id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
+                    id: '527ebfe3-e017-4831-aeaa-c8e9a4018161',
                 },
             })
             .expect(200)
             .then(res =>
             {
-                expect(res.body.data.oAuthFindRefreshTokenById.id).toStrictEqual('5b19d6ac-4081-573b-96b3-56964d5326a8');
+                expect(res.body.data.oAuthFindRefreshTokenById.id).toStrictEqual('527ebfe3-e017-4831-aeaa-c8e9a4018161');
             });
     });
 
@@ -454,13 +454,13 @@ describe('refresh-token', () =>
                     }
                 `,
                 variables: {
-                    id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
+                    id: '527ebfe3-e017-4831-aeaa-c8e9a4018161',
                 },
             })
             .expect(200)
             .then(res =>
             {
-                expect(res.body.data.oAuthDeleteRefreshTokenById.id).toStrictEqual('5b19d6ac-4081-573b-96b3-56964d5326a8');
+                expect(res.body.data.oAuthDeleteRefreshTokenById.id).toStrictEqual('527ebfe3-e017-4831-aeaa-c8e9a4018161');
             });
     });
 
