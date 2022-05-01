@@ -9,7 +9,6 @@ import { MockClientSeeder } from '../../../src/@apps/o-auth/client/infrastructur
 import { clients } from '../../../src/@apps/o-auth/client/infrastructure/seeds/client.seed';
 import { GraphQLConfigModule } from '../../../src/@aurora/graphql/graphql-config.module';
 import { OAuthModule } from '../../../src/@api/o-auth/o-auth.module';
-import { OAuthClientGrantType } from '../../../src/graphql';
 import * as request from 'supertest';
 import * as _ from 'lodash';
 
@@ -638,7 +637,7 @@ describe('client', () =>
                 `,
                 variables:
                 {
-                    payload: _.omit(mockData[0], ['createdAt','updatedAt','deletedAt']),
+                    payload: _.omit(mockData[0], ['applications', 'createdAt','updatedAt','deletedAt']),
                 },
             })
             .expect(200)
@@ -751,7 +750,7 @@ describe('client', () =>
                 `,
                 variables: {
                     payload: {
-                        ...mockData[0],
+                        ..._.omit(mockData[0], ['applications', 'createdAt','updatedAt','deletedAt']),
                         ...{ id: '5b19d6ac-4081-573b-96b3-56964d5326a8' },
                     },
                 },
@@ -957,7 +956,7 @@ describe('client', () =>
                 `,
                 variables: {
                     payload: {
-                        ...mockData[0],
+                        ..._.omit(mockData[0], ['applications', 'createdAt','updatedAt','deletedAt']),
                         ...{ id: '11390578-6994-491b-952a-59ab477a644c' },
                     },
                 },
@@ -999,7 +998,7 @@ describe('client', () =>
                 `,
                 variables: {
                     payload: {
-                        ...mockData[0],
+                        ..._.omit(mockData[0], ['applications', 'createdAt','updatedAt','deletedAt']),
                         ...{ id: '5b19d6ac-4081-573b-96b3-56964d5326a8' },
                     },
                 },
