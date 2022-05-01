@@ -16,7 +16,9 @@ import { IamModule } from '../../../src/@api/iam/iam.module';
 import * as request from 'supertest';
 import * as _ from 'lodash';
 
-
+// ---- customizations ----
+import { AuthModule } from '../../../src/@apps/o-auth/shared/modules/auth.module';
+import { OAuthModule } from '../../../src/@api/o-auth/o-auth.module';
 
 // disable import foreign modules, can be micro-services
 const importForeignModules = [];
@@ -44,7 +46,9 @@ describe('user', () =>
         const module: TestingModule = await Test.createTestingModule({
             imports: [
                 ...importForeignModules,
-                IamModule.forRoot(jwtOptions),
+                IamModule,
+                OAuthModule,
+                AuthModule.forRoot(jwtOptions),
                 GraphQLConfigModule,
                 SequelizeModule.forRootAsync({
                     imports   : [ConfigModule],
