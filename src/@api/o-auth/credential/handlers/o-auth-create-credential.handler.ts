@@ -1,4 +1,4 @@
-import { Injectable, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException, BadRequestException } from '@nestjs/common';
 import { ICommandBus, IQueryBus, Utils } from 'aurora-ts-core';
 
 // @apps
@@ -26,6 +26,8 @@ export class OAuthCreateCredentialHandler
         authorization: string,
     ): Promise<OAuthCredential | OAuthCredentialDto>
     {
+        if (!payload.grantType) throw new BadRequestException('Value for grantType property must be defined, can not be undefined');
+
         if (payload.grantType === OAuthClientGrantType.AUTHORIZATION_CODE)
         {
         }

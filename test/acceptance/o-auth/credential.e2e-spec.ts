@@ -154,6 +154,129 @@ describe('credential', () =>
             });
     });
 
+    test('/REST:POST o-auth/credential - Got 404, wrong application code', () =>
+    {
+        return request(app.getHttpServer())
+            .post('/o-auth/credential')
+            .set('Accept', 'application/json')
+            .set('Authorization', `Basic YXVyb3JhMjokMnkkMTAkRU9BL1NLRXdLUmdIUHc2NGtPNExaLjZveTViOGtsNkp6Vy9tQ1JPTWZTcTZTMzgvSWl5d0c=`)
+            .send({
+                grantType: OAuthClientGrantType.PASSWORD,
+                username : 'john.doe@gmail.com',
+                password : '1111',
+            })
+            .expect(404)
+            .then(res =>
+            {
+                expect(res.body.message).toContain('OAuthApplication not found');
+            });
+    });
+
+    test('/REST:POST o-auth/credential - Got 404, wrong application secret', () =>
+    {
+        return request(app.getHttpServer())
+            .post('/o-auth/credential')
+            .set('Accept', 'application/json')
+            .set('Authorization', `Basic YXVyb3JhOiQyeSQxMCRFT0EvU0tFd0tSZ0hQdzY0a080TFouNm95NWI4a2w2SnpXL21DUk9NZlNxNlMzOC9JaXl3`)
+            .send({
+                grantType: OAuthClientGrantType.PASSWORD,
+                username : 'john.doe@gmail.com',
+                password : '1111',
+            })
+            .expect(404)
+            .then(res =>
+            {
+                expect(res.body.message).toContain('OAuthApplication not found');
+            });
+    });
+
+    test('/REST:POST o-auth/credential - Got 400, wrong Authorization header', () =>
+    {
+        return request(app.getHttpServer())
+            .post('/o-auth/credential')
+            .set('Accept', 'application/json')
+            .set('Authorization', `Basic ***************`)
+            .send({
+                grantType: OAuthClientGrantType.PASSWORD,
+                username : 'john.doe@gmail.com',
+                password : '1111',
+            })
+            .expect(400)
+            .then(res =>
+            {
+                expect(res.body.message).toContain('Authorization header has not a valid value, current decode value is: ');
+            });
+    });
+
+    test('/REST:POST o-auth/credential - Got 400, ApplicationAuthorizationHeader not defined', () =>
+    {
+        return request(app.getHttpServer())
+            .post('/o-auth/credential')
+            .set('Accept', 'application/json')
+            .send({
+                grantType: OAuthClientGrantType.PASSWORD,
+                username : 'john.doe@gmail.com',
+                password : '1111',
+            })
+            .expect(400)
+            .then(res =>
+            {
+                expect(res.body.message).toContain('Value for ApplicationAuthorizationHeader must be defined, can not be undefined');
+            });
+    });
+
+    test('/REST:POST o-auth/credential - Got 400, grantType property not defined', () =>
+    {
+        return request(app.getHttpServer())
+            .post('/o-auth/credential')
+            .set('Accept', 'application/json')
+            .set('Authorization', `Basic YXVyb3JhOiQyeSQxMCRFT0EvU0tFd0tSZ0hQdzY0a080TFouNm95NWI4a2w2SnpXL21DUk9NZlNxNlMzOC9JaXl3Rw==`)
+            .send({
+                username: 'john.doe@gmail.com',
+                password: '1111',
+            })
+            .expect(400)
+            .then(res =>
+            {
+                expect(res.body.message).toContain('Value for grantType property must be defined, can not be undefined');
+            });
+    });
+
+    test('/REST:POST o-auth/credential - Got 400, username property not defined', () =>
+    {
+        return request(app.getHttpServer())
+            .post('/o-auth/credential')
+            .set('Accept', 'application/json')
+            .set('Authorization', `Basic YXVyb3JhOiQyeSQxMCRFT0EvU0tFd0tSZ0hQdzY0a080TFouNm95NWI4a2w2SnpXL21DUk9NZlNxNlMzOC9JaXl3Rw==`)
+            .send({
+                grantType: OAuthClientGrantType.PASSWORD,
+                password : '1111',
+            })
+            .expect(400)
+            .then(res =>
+            {
+                expect(res.body.message).toContain('Value for UserUsername must be defined, can not be undefined');
+            });
+    });
+
+    test('/REST:POST o-auth/credential - Got 400, password property not defined', () =>
+    {
+        return request(app.getHttpServer())
+            .post('/o-auth/credential')
+            .set('Accept', 'application/json')
+            .set('Authorization', `Basic YXVyb3JhOiQyeSQxMCRFT0EvU0tFd0tSZ0hQdzY0a080TFouNm95NWI4a2w2SnpXL21DUk9NZlNxNlMzOC9JaXl3Rw==`)
+            .send({
+                grantType: OAuthClientGrantType.PASSWORD,
+                username : 'john.doe@gmail.com',
+            })
+            .expect(400)
+            .then(res =>
+            {
+                expect(res.body.message).toContain('Value for UserPassword must be defined, can not be undefined');
+            });
+    });
+
+
     test('/GraphQL oAuthCreateCredential - Got 201, accessToken and refreshToken obtained', () =>
     {
         return request(app.getHttpServer())
@@ -253,6 +376,239 @@ describe('credential', () =>
             {
                 expect(res.body.errors[0].extensions.response.statusCode).toBe(404);
                 expect(res.body.errors[0].extensions.response.message).toContain('IamUser not found');
+            });
+    });
+
+    test('/GraphQL oAuthCreateCredential - Got 404, wrong application code', () =>
+    {
+        return request(app.getHttpServer())
+            .post('/graphql')
+            .set('Accept', 'application/json')
+            .set('Authorization', `Basic YXVyb3JhMjokMnkkMTAkRU9BL1NLRXdLUmdIUHc2NGtPNExaLjZveTViOGtsNkp6Vy9tQ1JPTWZTcTZTMzgvSWl5d0c=`)
+            .send({
+                query: `
+                    mutation ($payload:OAuthCreateCredentialInput!)
+                    {
+                        oAuthCreateCredential (payload:$payload)
+                        {
+                            accessToken
+                            refreshToken
+                        }
+                    }
+                `,
+                variables:
+                {
+                    payload: {
+                        grantType: OAuthClientGrantType.PASSWORD,
+                        username : 'john.doe@gmail.com',
+                        password : '1111',
+                    },
+                },
+            })
+            .expect(200)
+            .then(res =>
+            {
+                expect(res.body.errors[0].extensions.response.statusCode).toBe(404);
+                expect(res.body.errors[0].extensions.response.message).toContain('OAuthApplication not found');
+            });
+    });
+
+    test('/GraphQL oAuthCreateCredential - Got 404, wrong application secret', () =>
+    {
+        return request(app.getHttpServer())
+            .post('/graphql')
+            .set('Accept', 'application/json')
+            .set('Authorization', `Basic YXVyb3JhOiQyeSQxMCRFT0EvU0tFd0tSZ0hQdzY0a080TFouNm95NWI4a2w2SnpXL21DUk9NZlNxNlMzOC9JaXl3`)
+            .send({
+                query: `
+                    mutation ($payload:OAuthCreateCredentialInput!)
+                    {
+                        oAuthCreateCredential (payload:$payload)
+                        {
+                            accessToken
+                            refreshToken
+                        }
+                    }
+                `,
+                variables:
+                {
+                    payload: {
+                        grantType: OAuthClientGrantType.PASSWORD,
+                        username : 'john.doe@gmail.com',
+                        password : '1111',
+                    },
+                },
+            })
+            .expect(200)
+            .then(res =>
+            {
+                expect(res.body.errors[0].extensions.response.statusCode).toBe(404);
+                expect(res.body.errors[0].extensions.response.message).toContain('OAuthApplication not found');
+            });
+    });
+
+    test('/GraphQL oAuthCreateCredential - Got 400, wrong Authorization header', () =>
+    {
+        return request(app.getHttpServer())
+            .post('/graphql')
+            .set('Accept', 'application/json')
+            .set('Authorization', `Basic ***************`)
+            .send({
+                query: `
+                    mutation ($payload:OAuthCreateCredentialInput!)
+                    {
+                        oAuthCreateCredential (payload:$payload)
+                        {
+                            accessToken
+                            refreshToken
+                        }
+                    }
+                `,
+                variables:
+                {
+                    payload: {
+                        grantType: OAuthClientGrantType.PASSWORD,
+                        username : 'john.doe@gmail.com',
+                        password : '1111',
+                    },
+                },
+            })
+            .expect(200)
+            .then(res =>
+            {
+                expect(res.body.errors[0].extensions.response.statusCode).toBe(400);
+                expect(res.body.errors[0].extensions.response.message).toContain('Authorization header has not a valid value, current decode value is: ');
+            });
+    });
+
+    test('/GraphQL oAuthCreateCredential - Got 400, ApplicationAuthorizationHeader not defined', () =>
+    {
+        return request(app.getHttpServer())
+            .post('/graphql')
+            .set('Accept', 'application/json')
+            .send({
+                query: `
+                    mutation ($payload:OAuthCreateCredentialInput!)
+                    {
+                        oAuthCreateCredential (payload:$payload)
+                        {
+                            accessToken
+                            refreshToken
+                        }
+                    }
+                `,
+                variables:
+                {
+                    payload: {
+                        grantType: OAuthClientGrantType.PASSWORD,
+                        username : 'john.doe@gmail.com',
+                        password : '1111',
+                    },
+                },
+            })
+            .expect(200)
+            .then(res =>
+            {
+                expect(res.body.errors[0].extensions.response.statusCode).toBe(400);
+                expect(res.body.errors[0].extensions.response.message).toContain('Value for ApplicationAuthorizationHeader must be defined, can not be undefined');
+            });
+    });
+
+    test('/GraphQL oAuthCreateCredential - Got 400, grantType property not defined', () =>
+    {
+        return request(app.getHttpServer())
+            .post('/graphql')
+            .set('Accept', 'application/json')
+            .set('Authorization', `Basic YXVyb3JhOiQyeSQxMCRFT0EvU0tFd0tSZ0hQdzY0a080TFouNm95NWI4a2w2SnpXL21DUk9NZlNxNlMzOC9JaXl3Rw==`)
+            .send({
+                query: `
+                    mutation ($payload:OAuthCreateCredentialInput!)
+                    {
+                        oAuthCreateCredential (payload:$payload)
+                        {
+                            accessToken
+                            refreshToken
+                        }
+                    }
+                `,
+                variables:
+                {
+                    payload: {
+                        username: 'john.doe@gmail.com',
+                        password: '1111',
+                    },
+                },
+            })
+            .expect(400)
+            .then(res =>
+            {
+                expect(res.body.errors[0].message).toContain('Variable "$payload" got invalid value');
+            });
+    });
+
+    test('/GraphQL oAuthCreateCredential - Got 400, username property not defined', () =>
+    {
+        return request(app.getHttpServer())
+            .post('/graphql')
+            .set('Accept', 'application/json')
+            .set('Authorization', `Basic YXVyb3JhOiQyeSQxMCRFT0EvU0tFd0tSZ0hQdzY0a080TFouNm95NWI4a2w2SnpXL21DUk9NZlNxNlMzOC9JaXl3Rw==`)
+            .send({
+                query: `
+                    mutation ($payload:OAuthCreateCredentialInput!)
+                    {
+                        oAuthCreateCredential (payload:$payload)
+                        {
+                            accessToken
+                            refreshToken
+                        }
+                    }
+                `,
+                variables:
+                {
+                    payload: {
+                        grantType: OAuthClientGrantType.PASSWORD,
+                        password : '1111',
+                    },
+                },
+            })
+            .expect(200)
+            .then(res =>
+            {
+                expect(res.body.errors[0].extensions.response.statusCode).toBe(400);
+                expect(res.body.errors[0].extensions.response.message).toContain('Value for UserUsername must be defined, can not be undefined');
+            });
+    });
+
+    test('/GraphQL oAuthCreateCredential - Got 400, password property not defined', () =>
+    {
+        return request(app.getHttpServer())
+            .post('/graphql')
+            .set('Accept', 'application/json')
+            .set('Authorization', `Basic YXVyb3JhOiQyeSQxMCRFT0EvU0tFd0tSZ0hQdzY0a080TFouNm95NWI4a2w2SnpXL21DUk9NZlNxNlMzOC9JaXl3Rw==`)
+            .send({
+                query: `
+                    mutation ($payload:OAuthCreateCredentialInput!)
+                    {
+                        oAuthCreateCredential (payload:$payload)
+                        {
+                            accessToken
+                            refreshToken
+                        }
+                    }
+                `,
+                variables:
+                {
+                    payload: {
+                        grantType: OAuthClientGrantType.PASSWORD,
+                        username : 'john.doe@gmail.com',
+                    },
+                },
+            })
+            .expect(200)
+            .then(res =>
+            {
+                expect(res.body.errors[0].extensions.response.statusCode).toBe(400);
+                expect(res.body.errors[0].extensions.response.message).toContain('Value for UserPassword must be defined, can not be undefined');
             });
     });
 
