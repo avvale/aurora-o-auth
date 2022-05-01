@@ -6,8 +6,8 @@ import { OAuthCreateCredentialDto } from '../dto';
 // @apps
 import { OAuthCreateCredentialHandler } from '../handlers/o-auth-create-credential.handler';
 
-@ApiTags('[o-auth] access-token')
-@Controller('o-auth/access-token/create')
+@ApiTags('[o-auth] credential')
+@Controller('o-auth/credential')
 export class OAuthCreateCredentialController
 {
     constructor(
@@ -15,8 +15,8 @@ export class OAuthCreateCredentialController
     ) {}
 
     @Post()
-    @ApiOperation({ summary: 'Create access-token' })
-    @ApiCreatedResponse({ description: 'The record has been successfully created.', type: OAuthCreateCredentialDto })
+    @ApiOperation({ summary: 'Create credential' })
+    @ApiCreatedResponse({ description: 'The credential obtained after login.', type: OAuthCreateCredentialDto })
     async main(
         @Body() payload: OAuthCreateCredentialDto,
         @Headers('Authorization') authorization: string,

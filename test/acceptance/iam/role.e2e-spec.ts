@@ -27,11 +27,7 @@ describe('role', () =>
     let repository: IRoleRepository;
     let seeder: MockRoleSeeder;
     const jwtOptions: JwtModuleOptions = {
-        privateKey: fs.readFileSync('src/oauth-private.key', 'utf8'),
-        publicKey: fs.readFileSync('src/oauth-public.key', 'utf8'),
-        signOptions: {
-            algorithm: 'RS256',
-        },
+        secret: '1234567890',
     };
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

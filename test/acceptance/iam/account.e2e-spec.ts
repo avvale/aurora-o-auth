@@ -42,11 +42,7 @@ describe('account', () =>
     let clientSeeder: MockClientSeeder;
     let mockJwt: string;
     const jwtOptions: JwtModuleOptions = {
-        privateKey: fs.readFileSync('src/oauth-private.key', 'utf8'),
-        publicKey: fs.readFileSync('src/oauth-public.key', 'utf8'),
-        signOptions: {
-            algorithm: 'RS256',
-        },
+        secret: '1234567890',
     };
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -95,12 +91,12 @@ describe('account', () =>
         mockData                = accounts;
         app                     = module.createNestApplication();
         repository              = module.get<IAccountRepository>(IAccountRepository);
-        applicationRepository   = module.get<IApplicationRepository>(IApplicationRepository);
-        accessTokenRepository   = module.get<IAccessTokenRepository>(IAccessTokenRepository);
-        clientRepository        = module.get<IClientRepository>(IClientRepository);
         seeder                  = module.get<MockAccountSeeder>(MockAccountSeeder);
+        applicationRepository   = module.get<IApplicationRepository>(IApplicationRepository);
         applicationSeeder       = module.get<MockApplicationSeeder>(MockApplicationSeeder);
+        accessTokenRepository   = module.get<IAccessTokenRepository>(IAccessTokenRepository);
         accessTokenSeeder       = module.get<MockAccessTokenSeeder>(MockAccessTokenSeeder);
+        clientRepository        = module.get<IClientRepository>(IClientRepository);
         clientSeeder            = module.get<MockClientSeeder>(MockClientSeeder);
         mockJwt                 = module.get(MockJwtService).getJwt();
 
