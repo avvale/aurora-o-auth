@@ -25,11 +25,6 @@ import { MockAccessTokenSeeder } from '../../../src/@apps/o-auth/access-token/in
 import { IAccessTokenRepository } from '../../../src/@apps/o-auth/access-token';
 import { MockClientSeeder } from '../../../src/@apps/o-auth/client/infrastructure/mock/mock-client.seeder';
 import { IClientRepository } from '../../../src/@apps/o-auth/client';
-import { MockAccessTokenRepository } from '../../../src/@apps/o-auth/access-token/infrastructure/mock/mock-access-token.repository';
-import { MockAccountRepository } from '../../../src/@apps/iam/account/infrastructure/mock/mock-account.repository';
-import { IRoleRepository } from '../../../src/@apps/iam/role';
-import { MockRoleRepository } from '../../../src/@apps/iam/role/infrastructure/mock/mock-role.repository';
-import { MockClientRepository } from '../../../src/@apps/o-auth/client/infrastructure/mock/mock-client.repository';
 
 // disable import foreign modules, can be micro-services
 const importForeignModules = [];
@@ -95,14 +90,6 @@ describe('account', () =>
                 MockJwtService,
             ],
         })
-            /* .overrideProvider(IAccessTokenRepository)
-            .useClass(MockAccessTokenRepository)
-            .overrideProvider(IClientRepository)
-            .useClass(MockClientRepository)
-            .overrideProvider(IRoleRepository)
-            .useClass(MockRoleRepository)
-            .overrideProvider(IAccountRepository)
-            .useClass(MockAccountRepository) */
             .compile();
 
         mockData                = accounts;
