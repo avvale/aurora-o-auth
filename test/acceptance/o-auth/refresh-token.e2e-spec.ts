@@ -71,206 +71,6 @@ describe('refresh-token', () =>
         await app.init();
     });
 
-    test('/REST:POST o-auth/refresh-token/create - Got 400 Conflict, RefreshTokenId property can not to be null', () =>
-    {
-        return request(app.getHttpServer())
-            .post('/o-auth/refresh-token/create')
-            .set('Accept', 'application/json')
-            .send({
-                ...mockData[0],
-                ...{ id: null },
-            })
-            .expect(400)
-            .then(res =>
-            {
-                expect(res.body.message).toContain('Value for RefreshTokenId must be defined, can not be null');
-            });
-    });
-
-    test('/REST:POST o-auth/refresh-token/create - Got 400 Conflict, RefreshTokenAccessTokenId property can not to be null', () =>
-    {
-        return request(app.getHttpServer())
-            .post('/o-auth/refresh-token/create')
-            .set('Accept', 'application/json')
-            .send({
-                ...mockData[0],
-                ...{ accessTokenId: null },
-            })
-            .expect(400)
-            .then(res =>
-            {
-                expect(res.body.message).toContain('Value for RefreshTokenAccessTokenId must be defined, can not be null');
-            });
-    });
-
-    test('/REST:POST o-auth/refresh-token/create - Got 400 Conflict, RefreshTokenToken property can not to be null', () =>
-    {
-        return request(app.getHttpServer())
-            .post('/o-auth/refresh-token/create')
-            .set('Accept', 'application/json')
-            .send({
-                ...mockData[0],
-                ...{ token: null },
-            })
-            .expect(400)
-            .then(res =>
-            {
-                expect(res.body.message).toContain('Value for RefreshTokenToken must be defined, can not be null');
-            });
-    });
-
-    test('/REST:POST o-auth/refresh-token/create - Got 400 Conflict, RefreshTokenIsRevoked property can not to be null', () =>
-    {
-        return request(app.getHttpServer())
-            .post('/o-auth/refresh-token/create')
-            .set('Accept', 'application/json')
-            .send({
-                ...mockData[0],
-                ...{ isRevoked: null },
-            })
-            .expect(400)
-            .then(res =>
-            {
-                expect(res.body.message).toContain('Value for RefreshTokenIsRevoked must be defined, can not be null');
-            });
-    });
-
-    test('/REST:POST o-auth/refresh-token/create - Got 400 Conflict, RefreshTokenId property can not to be undefined', () =>
-    {
-        return request(app.getHttpServer())
-            .post('/o-auth/refresh-token/create')
-            .set('Accept', 'application/json')
-            .send({
-                ...mockData[0],
-                ...{ id: undefined },
-            })
-            .expect(400)
-            .then(res =>
-            {
-                expect(res.body.message).toContain('Value for RefreshTokenId must be defined, can not be undefined');
-            });
-    });
-
-    test('/REST:POST o-auth/refresh-token/create - Got 400 Conflict, RefreshTokenAccessTokenId property can not to be undefined', () =>
-    {
-        return request(app.getHttpServer())
-            .post('/o-auth/refresh-token/create')
-            .set('Accept', 'application/json')
-            .send({
-                ...mockData[0],
-                ...{ accessTokenId: undefined },
-            })
-            .expect(400)
-            .then(res =>
-            {
-                expect(res.body.message).toContain('Value for RefreshTokenAccessTokenId must be defined, can not be undefined');
-            });
-    });
-
-    test('/REST:POST o-auth/refresh-token/create - Got 400 Conflict, RefreshTokenToken property can not to be undefined', () =>
-    {
-        return request(app.getHttpServer())
-            .post('/o-auth/refresh-token/create')
-            .set('Accept', 'application/json')
-            .send({
-                ...mockData[0],
-                ...{ token: undefined },
-            })
-            .expect(400)
-            .then(res =>
-            {
-                expect(res.body.message).toContain('Value for RefreshTokenToken must be defined, can not be undefined');
-            });
-    });
-
-    test('/REST:POST o-auth/refresh-token/create - Got 400 Conflict, RefreshTokenIsRevoked property can not to be undefined', () =>
-    {
-        return request(app.getHttpServer())
-            .post('/o-auth/refresh-token/create')
-            .set('Accept', 'application/json')
-            .send({
-                ...mockData[0],
-                ...{ isRevoked: undefined },
-            })
-            .expect(400)
-            .then(res =>
-            {
-                expect(res.body.message).toContain('Value for RefreshTokenIsRevoked must be defined, can not be undefined');
-            });
-    });
-
-    test('/REST:POST o-auth/refresh-token/create - Got 400 Conflict, RefreshTokenId is not allowed, must be a length of 36', () =>
-    {
-        return request(app.getHttpServer())
-            .post('/o-auth/refresh-token/create')
-            .set('Accept', 'application/json')
-            .send({
-                ...mockData[0],
-                ...{ id: '*************************************' },
-            })
-            .expect(400)
-            .then(res =>
-            {
-                expect(res.body.message).toContain('Value for RefreshTokenId is not allowed, must be a length of 36');
-            });
-    });
-
-    test('/REST:POST o-auth/refresh-token/create - Got 400 Conflict, RefreshTokenAccessTokenId is not allowed, must be a length of 36', () =>
-    {
-        return request(app.getHttpServer())
-            .post('/o-auth/refresh-token/create')
-            .set('Accept', 'application/json')
-            .send({
-                ...mockData[0],
-                ...{ accessTokenId: '*************************************' },
-            })
-            .expect(400)
-            .then(res =>
-            {
-                expect(res.body.message).toContain('Value for RefreshTokenAccessTokenId is not allowed, must be a length of 36');
-            });
-    });
-
-    test('/REST:POST o-auth/refresh-token/create - Got 400 Conflict, RefreshTokenIsRevoked has to be a boolean value', () =>
-    {
-        return request(app.getHttpServer())
-            .post('/o-auth/refresh-token/create')
-            .set('Accept', 'application/json')
-            .send({
-                ...mockData[0],
-                ...{ isRevoked: 'true' },
-            })
-            .expect(400)
-            .then(res =>
-            {
-                expect(res.body.message).toContain('Value for RefreshTokenIsRevoked has to be a boolean value');
-            });
-    });
-    test('/REST:POST o-auth/refresh-token/create - Got 400 Conflict, RefreshTokenExpiresAt has to be a timestamp value', () =>
-    {
-        return request(app.getHttpServer())
-            .post('/o-auth/refresh-token/create')
-            .set('Accept', 'application/json')
-            .send({
-                ...mockData[0],
-                ...{ expiresAt: '****' },
-            })
-            .expect(400)
-            .then(res =>
-            {
-                expect(res.body.message).toContain('Value for RefreshTokenExpiresAt has to be a timestamp value');
-            });
-    });
-
-    test('/REST:POST o-auth/refresh-token/create - Got 409 Conflict, item already exist in database', () =>
-    {
-        return request(app.getHttpServer())
-            .post('/o-auth/refresh-token/create')
-            .set('Accept', 'application/json')
-            .send(mockData[0])
-            .expect(409);
-    });
-
     test('/REST:POST o-auth/refresh-tokens/paginate', () =>
     {
         return request(app.getHttpServer())
@@ -325,18 +125,6 @@ describe('refresh-token', () =>
             .expect(404);
     });
 
-    test('/REST:POST o-auth/refresh-token/create', () =>
-    {
-        return request(app.getHttpServer())
-            .post('/o-auth/refresh-token/create')
-            .set('Accept', 'application/json')
-            .send({
-                ...mockData[0],
-                ...{ id: '5b19d6ac-4081-573b-96b3-56964d5326a8' },
-            })
-            .expect(201);
-    });
-
     test('/REST:POST o-auth/refresh-token/find', () =>
     {
         return request(app.getHttpServer())
@@ -378,34 +166,6 @@ describe('refresh-token', () =>
             });
     });
 
-    test('/REST:PUT o-auth/refresh-token/update - Got 404 Not Found', () =>
-    {
-        return request(app.getHttpServer())
-            .put('/o-auth/refresh-token/update')
-            .set('Accept', 'application/json')
-            .send({
-                ...mockData[0],
-                ...{ id: 'c408c7f1-c9a9-48fa-b8be-fc86ddbbd34d' },
-            })
-            .expect(404);
-    });
-
-    test('/REST:PUT o-auth/refresh-token/update', () =>
-    {
-        return request(app.getHttpServer())
-            .put('/o-auth/refresh-token/update')
-            .set('Accept', 'application/json')
-            .send({
-                ...mockData[0],
-                ...{ id: '5b19d6ac-4081-573b-96b3-56964d5326a8' },
-            })
-            .expect(200)
-            .then(res =>
-            {
-                expect(res.body).toHaveProperty('id', '5b19d6ac-4081-573b-96b3-56964d5326a8');
-            });
-    });
-
     test('/REST:DELETE o-auth/refresh-token/delete/{id} - Got 404 Not Found', () =>
     {
         return request(app.getHttpServer())
@@ -420,39 +180,6 @@ describe('refresh-token', () =>
             .delete('/o-auth/refresh-token/delete/5b19d6ac-4081-573b-96b3-56964d5326a8')
             .set('Accept', 'application/json')
             .expect(200);
-    });
-
-    test('/GraphQL oAuthCreateRefreshToken - Got 409 Conflict, item already exist in database', () =>
-    {
-        return request(app.getHttpServer())
-            .post('/graphql')
-            .set('Accept', 'application/json')
-            .send({
-                query: `
-                    mutation ($payload:OAuthCreateRefreshTokenInput!)
-                    {
-                        oAuthCreateRefreshToken (payload:$payload)
-                        {
-                            id
-                            accessTokenId
-                            token
-                            isRevoked
-                            expiresAt
-                        }
-                    }
-                `,
-                variables:
-                {
-                    payload: _.omit(mockData[0], ['createdAt','updatedAt','deletedAt']),
-                },
-            })
-            .expect(200)
-            .then(res =>
-            {
-                expect(res.body).toHaveProperty('errors');
-                expect(res.body.errors[0].extensions.response.statusCode).toBe(409);
-                expect(res.body.errors[0].extensions.response.message).toContain('already exist in database');
-            });
     });
 
     test('/GraphQL oAuthPaginateRefreshTokens', () =>
@@ -522,39 +249,6 @@ describe('refresh-token', () =>
                 {
                     expect(seeder.collectionResponse[index]).toEqual(expect.objectContaining(_.omit(value, ['createdAt', 'updatedAt', 'deletedAt'])));
                 }
-            });
-    });
-
-    test('/GraphQL oAuthCreateRefreshToken', () =>
-    {
-        return request(app.getHttpServer())
-            .post('/graphql')
-            .set('Accept', 'application/json')
-            .send({
-                query: `
-                    mutation ($payload:OAuthCreateRefreshTokenInput!)
-                    {
-                        oAuthCreateRefreshToken (payload:$payload)
-                        {
-                            id
-                            accessTokenId
-                            token
-                            isRevoked
-                            expiresAt
-                        }
-                    }
-                `,
-                variables: {
-                    payload: {
-                        ...mockData[0],
-                        ...{ id: '5b19d6ac-4081-573b-96b3-56964d5326a8' },
-                    },
-                },
-            })
-            .expect(200)
-            .then(res =>
-            {
-                expect(res.body.data.oAuthCreateRefreshToken).toHaveProperty('id', '5b19d6ac-4081-573b-96b3-56964d5326a8');
             });
     });
 

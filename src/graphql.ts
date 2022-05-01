@@ -351,9 +351,6 @@ export interface IMutation {
     oAuthDeleteClientById(id: string, constraint?: Nullable<QueryStatement>): Nullable<OAuthClient> | Promise<Nullable<OAuthClient>>;
     oAuthDeleteClients(query?: Nullable<QueryStatement>, constraint?: Nullable<QueryStatement>): Nullable<OAuthClient>[] | Promise<Nullable<OAuthClient>[]>;
     oAuthCreateCredential(payload: OAuthCreateCredentialInput): OAuthCredential | Promise<OAuthCredential>;
-    oAuthCreateRefreshToken(payload: OAuthCreateRefreshTokenInput): Nullable<OAuthRefreshToken> | Promise<Nullable<OAuthRefreshToken>>;
-    oAuthCreateRefreshTokens(payload: Nullable<OAuthCreateRefreshTokenInput>[]): boolean | Promise<boolean>;
-    oAuthUpdateRefreshToken(payload: OAuthUpdateRefreshTokenInput, constraint?: Nullable<QueryStatement>): Nullable<OAuthRefreshToken> | Promise<Nullable<OAuthRefreshToken>>;
     oAuthDeleteRefreshTokenById(id: string, constraint?: Nullable<QueryStatement>): Nullable<OAuthRefreshToken> | Promise<Nullable<OAuthRefreshToken>>;
     oAuthDeleteRefreshTokens(query?: Nullable<QueryStatement>, constraint?: Nullable<QueryStatement>): Nullable<OAuthRefreshToken>[] | Promise<Nullable<OAuthRefreshToken>[]>;
 }
