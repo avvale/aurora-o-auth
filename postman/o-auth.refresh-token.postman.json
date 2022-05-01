@@ -106,31 +106,6 @@
 			"response": []
         },
         {
-			"name": "GraphQL - oAuthUpdateRefreshToken",
-			"request": {
-				"method": "POST",
-				"header": [
-                ],
-				"body": {
-					"mode": "graphql",
-					"graphql": {
-						"query": "mutation ($payload:OAuthUpdateRefreshTokenInput!)\n{\n\toAuthUpdateRefreshToken (payload:$payload)\n\t{\n\t\tid\n\t\taccessTokenId\n\t\ttoken\n\t\tisRevoked\n\t\texpiresAt\n\t\tcreatedAt\n\t\tupdatedAt\n\t}\n}",
-						"variables": "{\n\t\"payload\":\n\t{\n\t\t\"id\": \"5b19d6ac-4081-573b-96b3-56964d5326a8\", \n\t\t\"accessTokenId\": \"5b19d6ac-4081-573b-96b3-56964d5326a8\", \n\t\t\"token\": \"Voluptas qui fuga officia error temporibus et officia officiis culpa. Id in temporibus laboriosam sunt perferendis et doloribus occaecati sed. Et rerum maiores. Quod dolor facilis earum quibusdam modi. Corporis et molestias provident nihil quo corporis hic. Praesentium fugit tenetur veritatis ut aspernatur sit expedita qui.\", \n\t\t\"isRevoked\": true, \n\t\t\"expiresAt\": \"2022-04-29 15:31:58\"\n\t}\n}"
-					}
-				},
-				"url": {
-					"raw": "{{URL}}/graphql",
-					"host": [
-						"{{URL}}"
-					],
-					"path": [
-						"graphql"
-					]
-				}
-			},
-			"response": []
-        },
-        {
 			"name": "GraphQL - oAuthDeleteRefreshTokenById",
 			"request": {
 				"method": "POST",
