@@ -108,6 +108,43 @@ describe('access-token', () =>
             });
     });
 
+    test('/GraphQL oAuthPaginateAccessTokens', () =>
+    {
+        return request(app.getHttpServer())
+            .post('/graphql')
+            .set('Accept', 'application/json')
+            .send({
+                query: `
+                    query ($query:QueryStatement $constraint:QueryStatement)
+                    {
+                        oAuthPaginateAccessTokens (query:$query constraint:$constraint)
+                        {
+                            total
+                            count
+                            rows
+                        }
+                    }
+                `,
+                variables:
+                {
+                    query:
+                    {
+                        offset: 0,
+                        limit: 5,
+                    },
+                },
+            })
+            .expect(200)
+            .then(res =>
+            {
+                expect(res.body.data.oAuthPaginateAccessTokens).toEqual({
+                    total: seeder.collectionResponse.length,
+                    count: seeder.collectionResponse.length,
+                    rows : seeder.collectionResponse.map(item => expect.objectContaining(_.omit(item, ['createdAt', 'updatedAt', 'deletedAt']))).slice(0, 5),
+                });
+            });
+    });
+
     test('/REST:POST o-auth/access-tokens/get', () =>
     {
         return request(app.getHttpServer())
@@ -119,6 +156,40 @@ describe('access-token', () =>
                 expect(res.body).toEqual(
                     seeder.collectionResponse.map(item => expect.objectContaining(_.omit(item, ['createdAt', 'updatedAt', 'deletedAt']))),
                 );
+            });
+    });
+
+    test('/GraphQL oAuthGetAccessTokens', () =>
+    {
+        return request(app.getHttpServer())
+            .post('/graphql')
+            .set('Accept', 'application/json')
+            .send({
+                query: `
+                    query ($query:QueryStatement)
+                    {
+                        oAuthGetAccessTokens (query:$query)
+                        {
+                            id
+                            accountId
+                            token
+                            name
+                            isRevoked
+                            expiresAt
+                            createdAt
+                            updatedAt
+                        }
+                    }
+                `,
+                variables: {},
+            })
+            .expect(200)
+            .then(res =>
+            {
+                for (const [index, value] of res.body.data.oAuthGetAccessTokens.entries())
+                {
+                    expect(seeder.collectionResponse[index]).toEqual(expect.objectContaining(_.omit(value, ['createdAt', 'updatedAt', 'deletedAt'])));
+                }
             });
     });
 
@@ -196,77 +267,6 @@ describe('access-token', () =>
             .expect(200);
     });
 
-    test('/GraphQL oAuthPaginateAccessTokens', () =>
-    {
-        return request(app.getHttpServer())
-            .post('/graphql')
-            .set('Accept', 'application/json')
-            .send({
-                query: `
-                    query ($query:QueryStatement $constraint:QueryStatement)
-                    {
-                        oAuthPaginateAccessTokens (query:$query constraint:$constraint)
-                        {
-                            total
-                            count
-                            rows
-                        }
-                    }
-                `,
-                variables:
-                {
-                    query:
-                    {
-                        offset: 0,
-                        limit: 5,
-                    },
-                },
-            })
-            .expect(200)
-            .then(res =>
-            {
-                expect(res.body.data.oAuthPaginateAccessTokens).toEqual({
-                    total: seeder.collectionResponse.length,
-                    count: seeder.collectionResponse.length,
-                    rows : seeder.collectionResponse.map(item => expect.objectContaining(_.omit(item, ['createdAt', 'updatedAt', 'deletedAt']))).slice(0, 5),
-                });
-            });
-    });
-
-    test('/GraphQL oAuthGetAccessTokens', () =>
-    {
-        return request(app.getHttpServer())
-            .post('/graphql')
-            .set('Accept', 'application/json')
-            .send({
-                query: `
-                    query ($query:QueryStatement)
-                    {
-                        oAuthGetAccessTokens (query:$query)
-                        {
-                            id
-                            accountId
-                            token
-                            name
-                            isRevoked
-                            expiresAt
-                            createdAt
-                            updatedAt
-                        }
-                    }
-                `,
-                variables: {},
-            })
-            .expect(200)
-            .then(res =>
-            {
-                for (const [index, value] of res.body.data.oAuthGetAccessTokens.entries())
-                {
-                    expect(seeder.collectionResponse[index]).toEqual(expect.objectContaining(_.omit(value, ['createdAt', 'updatedAt', 'deletedAt'])));
-                }
-            });
-    });
-
     test('/GraphQL oAuthFindAccessToken - Got 404 Not Found', () =>
     {
         return request(app.getHttpServer())
@@ -337,7 +337,7 @@ describe('access-token', () =>
                     {
                         where:
                         {
-                            id: 'c2bdb79b-033e-4751-a740-a989e8e580fc',
+                            id: '86d096bf-7fbb-41e3-971d-207a7b4d232f',
                         },
                     },
                 },
@@ -345,7 +345,7 @@ describe('access-token', () =>
             .expect(200)
             .then(res =>
             {
-                expect(res.body.data.oAuthFindAccessToken.id).toStrictEqual('c2bdb79b-033e-4751-a740-a989e8e580fc');
+                expect(res.body.data.oAuthFindAccessToken.id).toStrictEqual('86d096bf-7fbb-41e3-971d-207a7b4d232f');
             });
     });
 
@@ -407,13 +407,13 @@ describe('access-token', () =>
                     }
                 `,
                 variables: {
-                    id: 'c2bdb79b-033e-4751-a740-a989e8e580fc',
+                    id: '86d096bf-7fbb-41e3-971d-207a7b4d232f',
                 },
             })
             .expect(200)
             .then(res =>
             {
-                expect(res.body.data.oAuthFindAccessTokenById.id).toStrictEqual('c2bdb79b-033e-4751-a740-a989e8e580fc');
+                expect(res.body.data.oAuthFindAccessTokenById.id).toStrictEqual('86d096bf-7fbb-41e3-971d-207a7b4d232f');
             });
     });
 
@@ -475,13 +475,13 @@ describe('access-token', () =>
                     }
                 `,
                 variables: {
-                    id: 'c2bdb79b-033e-4751-a740-a989e8e580fc',
+                    id: '86d096bf-7fbb-41e3-971d-207a7b4d232f',
                 },
             })
             .expect(200)
             .then(res =>
             {
-                expect(res.body.data.oAuthDeleteAccessTokenById.id).toStrictEqual('c2bdb79b-033e-4751-a740-a989e8e580fc');
+                expect(res.body.data.oAuthDeleteAccessTokenById.id).toStrictEqual('86d096bf-7fbb-41e3-971d-207a7b4d232f');
             });
     });
 
