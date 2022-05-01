@@ -47,7 +47,7 @@ export class MockUserSeeder extends MockSeeder<IamUser>
                     new UserMobile(user.mobile),
                     new UserLangId(user.langId),
                     new UserUsername(user.username),
-                    new UserPassword(user.password),
+                    new UserPassword(user.password, {}, { haveToEncrypt: true }),
                     new UserRememberToken(user.rememberToken),
                     new UserData(user.data),
                     new UserCreatedAt({ currentTimestamp: true }),

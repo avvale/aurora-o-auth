@@ -39,7 +39,7 @@ export class CreateUserCommandHandler implements ICommandHandler<CreateUserComma
                 mobile: new UserMobile(command.payload.mobile),
                 langId: new UserLangId(command.payload.langId),
                 username: new UserUsername(command.payload.username),
-                password: new UserPassword(command.payload.password),
+                password: new UserPassword(command.payload.password, {}, { haveToEncrypt: true }),
                 rememberToken: new UserRememberToken(command.payload.rememberToken),
                 data: new UserData(command.payload.data),
             },

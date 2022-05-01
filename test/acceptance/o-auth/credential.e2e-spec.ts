@@ -9,15 +9,32 @@ import * as request from 'supertest';
 import * as _ from 'lodash';
 
 // ---- customizations ----
-import { MockJwtService } from '../../../src/@apps/o-auth/access-token/infrastructure/mock/mock-jwt.service';
 import { AuthModule } from '../../../src/@apps/o-auth/shared/modules/auth.module';
+import { IamModule } from '../../../src/@api/iam/iam.module';
+import { MockJwtService } from '../../../src/@apps/o-auth/access-token/infrastructure/mock/mock-jwt.service';
 import { OAuthClientGrantType } from '../../../src/graphql';
+import { IApplicationRepository } from '../../../src/@apps/o-auth/application';
+import { MockApplicationSeeder } from '../../../src/@apps/o-auth/application/infrastructure/mock/mock-application.seeder';
+import { IClientRepository } from '../../../src/@apps/o-auth/client';
+import { MockClientSeeder } from '../../../src/@apps/o-auth/client/infrastructure/mock/mock-client.seeder';
+import { IAccountRepository } from '../../../src/@apps/iam/account';
+import { MockAccountSeeder } from '../../../src/@apps/iam/account/infrastructure/mock/mock-account.seeder';
+import { IUserRepository } from '../../../src/@apps/iam/user';
+import { MockUserSeeder } from '../../../src/@apps/iam/user/infrastructure/mock/mock-user.seeder';
 
 const importForeignModules = [];
 
 describe('credential', () =>
 {
     let app: INestApplication;
+    let applicationRepository: IApplicationRepository;
+    let applicationSeeder: MockApplicationSeeder;
+    let clientRepository: IClientRepository;
+    let clientSeeder: MockClientSeeder;
+    let accountRepository: IAccountRepository;
+    let accountSeeder: MockAccountSeeder;
+    let userRepository: IUserRepository;
+    let userSeeder: MockUserSeeder;
     let mockJwt: string;
     const jwtOptions: JwtModuleOptions = {
         secret: '1234567890',
@@ -30,6 +47,7 @@ describe('credential', () =>
             imports: [
                 ...importForeignModules,
                 OAuthModule,
+                IamModule,
                 AuthModule.forRoot(jwtOptions),
                 GraphQLConfigModule,
                 SequelizeModule.forRootAsync({
@@ -54,38 +72,190 @@ describe('credential', () =>
                 }),
             ],
             providers: [
+                MockApplicationSeeder,
+                MockClientSeeder,
+                MockAccountSeeder,
+                MockUserSeeder,
                 MockJwtService,
             ],
         })
             .compile();
 
-        app         = module.createNestApplication();
-        mockJwt     = module.get(MockJwtService).getJwt();
-        //repository  = <MockCredentialRepository>module.get<ICredentialRepository>(ICredentialRepository);
+        app                     = module.createNestApplication();
+        applicationRepository   = module.get<IApplicationRepository>(IApplicationRepository);
+        applicationSeeder       = module.get<MockApplicationSeeder>(MockApplicationSeeder);
+        clientRepository        = module.get<IClientRepository>(IClientRepository);
+        clientSeeder            = module.get<MockClientSeeder>(MockClientSeeder);
+        accountRepository       = module.get<IAccountRepository>(IAccountRepository);
+        accountSeeder           = module.get<MockAccountSeeder>(MockAccountSeeder);
+        userRepository          = module.get<IUserRepository>(IUserRepository);
+        userSeeder              = module.get<MockUserSeeder>(MockUserSeeder);
+        mockJwt                 = module.get(MockJwtService).getJwt();
+
+        // poblate database
+        await applicationRepository.insert(applicationSeeder.collectionSource);
+        await clientRepository.insert(clientSeeder.collectionSource);
+        await accountRepository.insert(accountSeeder.collectionSource);
+        await userRepository.insert(userSeeder.collectionSource);
 
         await app.init();
     });
 
-    test('/REST:POST iam/account/create - Got 400 Conflict, AccountId property can not to be null', () =>
+    test('/REST:POST o-auth/credential - Got 201, accessToken and refreshToken obtained', () =>
     {
         return request(app.getHttpServer())
             .post('/o-auth/credential')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${mockJwt}`)
+            .set('Authorization', `Basic YXVyb3JhOiQyeSQxMCRFT0EvU0tFd0tSZ0hQdzY0a080TFouNm95NWI4a2w2SnpXL21DUk9NZlNxNlMzOC9JaXl3Rw==`)
             .send({
                 grantType: OAuthClientGrantType.PASSWORD,
-                username : '',
-                password : '',
-
+                username : 'john.doe@gmail.com',
+                password : '1111',
             })
-           // .expect(400)
+            .expect(201)
             .then(res =>
             {
-                console.log(res.body);
+                expect(res.body).toHaveProperty('accessToken');
+                expect(res.body).toHaveProperty('refreshToken');
             });
     });
 
-    
+    test('/REST:POST o-auth/credential - Got 401, Unauthorized to access by wrong password', () =>
+    {
+        return request(app.getHttpServer())
+            .post('/o-auth/credential')
+            .set('Accept', 'application/json')
+            .set('Authorization', `Basic YXVyb3JhOiQyeSQxMCRFT0EvU0tFd0tSZ0hQdzY0a080TFouNm95NWI4a2w2SnpXL21DUk9NZlNxNlMzOC9JaXl3Rw==`)
+            .send({
+                grantType: OAuthClientGrantType.PASSWORD,
+                username : 'john.doe@gmail.com',
+                password : '2222',
+
+            })
+            .expect(401);
+    });
+
+    test('/REST:POST o-auth/credential - Got 401 user not found', () =>
+    {
+        return request(app.getHttpServer())
+            .post('/o-auth/credential')
+            .set('Accept', 'application/json')
+            .set('Authorization', `Basic YXVyb3JhOiQyeSQxMCRFT0EvU0tFd0tSZ0hQdzY0a080TFouNm95NWI4a2w2SnpXL21DUk9NZlNxNlMzOC9JaXl3Rw==`)
+            .send({
+                grantType: OAuthClientGrantType.PASSWORD,
+                username : '*****@gmail.com',
+                password : '1111',
+
+            })
+            .expect(404)
+            .then(res =>
+            {
+                expect(res.body.message).toContain('IamUser not found');
+            });
+    });
+
+    test('/GraphQL oAuthCreateCredential - Got 201, accessToken and refreshToken obtained', () =>
+    {
+        return request(app.getHttpServer())
+            .post('/graphql')
+            .set('Accept', 'application/json')
+            .set('Authorization', `Basic YXVyb3JhOiQyeSQxMCRFT0EvU0tFd0tSZ0hQdzY0a080TFouNm95NWI4a2w2SnpXL21DUk9NZlNxNlMzOC9JaXl3Rw==`)
+            .send({
+                query: `
+                    mutation ($payload:OAuthCreateCredentialInput!)
+                    {
+                        oAuthCreateCredential (payload:$payload)
+                        {
+                            accessToken
+                            refreshToken
+                        }
+                    }
+                `,
+                variables:
+                {
+                    payload: {
+                        grantType: OAuthClientGrantType.PASSWORD,
+                        username : 'john.doe@gmail.com',
+                        password : '1111',
+                    },
+                },
+            })
+            .expect(200)
+            .then(res =>
+            {
+                expect(res.body.data.oAuthCreateCredential).toHaveProperty('accessToken');
+                expect(res.body.data.oAuthCreateCredential).toHaveProperty('refreshToken');
+            });
+    });
+
+    test('/GraphQL oAuthCreateCredential - Got 401, Unauthorized to access by wrong password', () =>
+    {
+        return request(app.getHttpServer())
+            .post('/graphql')
+            .set('Accept', 'application/json')
+            .set('Authorization', `Basic YXVyb3JhOiQyeSQxMCRFT0EvU0tFd0tSZ0hQdzY0a080TFouNm95NWI4a2w2SnpXL21DUk9NZlNxNlMzOC9JaXl3Rw==`)
+            .send({
+                query: `
+                    mutation ($payload:OAuthCreateCredentialInput!)
+                    {
+                        oAuthCreateCredential (payload:$payload)
+                        {
+                            accessToken
+                            refreshToken
+                        }
+                    }
+                `,
+                variables:
+                {
+                    payload: {
+                        grantType: OAuthClientGrantType.PASSWORD,
+                        username : 'john.doe@gmail.com',
+                        password : '2222',
+                    },
+                },
+            })
+            .expect(200)
+            .then(res =>
+            {
+                expect(res.body.errors[0].extensions.response.statusCode).toBe(401);
+                expect(res.body.errors[0].extensions.response.message).toContain('Unauthorized');
+            });
+    });
+
+    test('/GraphQL oAuthCreateCredential - Got 401, Unauthorized to access by wrong password', () =>
+    {
+        return request(app.getHttpServer())
+            .post('/graphql')
+            .set('Accept', 'application/json')
+            .set('Authorization', `Basic YXVyb3JhOiQyeSQxMCRFT0EvU0tFd0tSZ0hQdzY0a080TFouNm95NWI4a2w2SnpXL21DUk9NZlNxNlMzOC9JaXl3Rw==`)
+            .send({
+                query: `
+                    mutation ($payload:OAuthCreateCredentialInput!)
+                    {
+                        oAuthCreateCredential (payload:$payload)
+                        {
+                            accessToken
+                            refreshToken
+                        }
+                    }
+                `,
+                variables:
+                {
+                    payload: {
+                        grantType: OAuthClientGrantType.PASSWORD,
+                        username : '*****@gmail.com',
+                        password : '1111',
+                    },
+                },
+            })
+            .expect(200)
+            .then(res =>
+            {
+                expect(res.body.errors[0].extensions.response.statusCode).toBe(404);
+                expect(res.body.errors[0].extensions.response.message).toContain('IamUser not found');
+            });
+    });
+
     afterAll(async () =>
     {
         await app.close();
