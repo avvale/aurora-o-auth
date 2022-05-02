@@ -23,6 +23,7 @@ export class JwtStrategy extends PassportStrategy(Strategy)
         });
     }
 
+    // set user variable in request with return object
     async validate(payload: Jwt): Promise<IamAccount | IamAccountDto>
     {
         return await this.queryBus.ask(new FindAccountQuery({

@@ -1,14 +1,21 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-import { Controller, Post, Body, Headers, LiteralObject } from '@nestjs/common';
+import { Controller, Post, Body, Headers, LiteralObject, UseGuards } from '@nestjs/common';
 import { ApiTags, ApiCreatedResponse, ApiOperation } from '@nestjs/swagger';
 import { Timezone } from 'aurora-ts-core';
 import { IamAccountDto, IamCreateAccountDto } from '../dto';
+
+// authorization
+import { Permissions } from '../../../../@api/iam/shared/decorators/permissions.decorator';
+import { AuthenticationJwtGuard } from '../../../../@api/o-auth/shared/guards/authentication-jwt.guard';
+import { AuthorizationGuard } from '../../../../@api/iam/shared/guards/authorization.guard';
 
 // @apps
 import { IamCreateAccountHandler } from '../handlers/iam-create-account.handler';
 
 @ApiTags('[iam] account')
 @Controller('iam/account/create')
+@Permissions('iam.account.create')
+@UseGuards(AuthenticationJwtGuard, AuthorizationGuard)
 export class IamCreateAccountController
 {
     constructor(

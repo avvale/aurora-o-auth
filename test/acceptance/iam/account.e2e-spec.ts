@@ -1,11 +1,9 @@
 /* eslint-disable quotes */
 /* eslint-disable key-spacing */
-import * as fs from 'fs';
 import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { JwtModuleOptions } from '@nestjs/jwt';
 import { IAccountRepository } from '../../../src/@apps/iam/account/domain/account.repository';
 import { MockAccountSeeder } from '../../../src/@apps/iam/account/infrastructure/mock/mock-account.seeder';
 import { accounts } from '../../../src/@apps/iam/account/infrastructure/seeds/account.seed';
@@ -16,6 +14,8 @@ import * as request from 'supertest';
 import * as _ from 'lodash';
 
 // ---- customizations ----
+import { jwtConfig } from '../../../src/@apps/o-auth/shared/jwt-config';
+import { AuthorizationGuard } from '../../../src/@api/iam/shared/guards/authorization.guard';
 import { MockJwtService } from '../../../src/@apps/o-auth/access-token/infrastructure/mock/mock-jwt.service';
 import { AuthModule } from '../../../src/@apps/o-auth/shared/modules/auth.module';
 import { OAuthModule } from '../../../src/@api/o-auth/o-auth.module';
@@ -41,9 +41,6 @@ describe('account', () =>
     let clientRepository: IClientRepository;
     let clientSeeder: MockClientSeeder;
     let mockJwt: string;
-    const jwtOptions: JwtModuleOptions = {
-        secret: '1234567890',
-    };
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let mockData: any;
@@ -55,7 +52,7 @@ describe('account', () =>
                 ...importForeignModules,
                 IamModule,
                 OAuthModule,
-                AuthModule.forRoot(jwtOptions),
+                AuthModule.forRoot(jwtConfig),
                 GraphQLConfigModule,
                 SequelizeModule.forRootAsync({
                     imports   : [ConfigModule],
@@ -86,6 +83,8 @@ describe('account', () =>
                 MockJwtService,
             ],
         })
+            .overrideGuard(AuthorizationGuard)
+            .useValue({ canActivate: () => true })
             .compile();
 
         mockData                = accounts;
