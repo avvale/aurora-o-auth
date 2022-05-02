@@ -9,7 +9,7 @@ import { MockAccountSeeder } from '../../../src/@apps/iam/account/infrastructure
 import { accounts } from '../../../src/@apps/iam/account/infrastructure/seeds/account.seed';
 import { GraphQLConfigModule } from '../../../src/@aurora/graphql/graphql-config.module';
 import { IamModule } from '../../../src/@api/iam/iam.module';
-import { IamAccountType } from '../../../src/graphql';
+import { IamAccountType, OAuthClientGrantType, OAuthCredential } from '../../../src/graphql';
 import * as request from 'supertest';
 import * as _ from 'lodash';
 
@@ -20,11 +20,14 @@ import { MockJwtService } from '../../../src/@apps/o-auth/access-token/infrastru
 import { AuthModule } from '../../../src/@apps/o-auth/shared/modules/auth.module';
 import { OAuthModule } from '../../../src/@api/o-auth/o-auth.module';
 import { MockApplicationSeeder } from '../../../src/@apps/o-auth/application/infrastructure/mock/mock-application.seeder';
+import { OAuthCreateCredentialHandler } from '../../../src/@api/o-auth/credential/handlers/o-auth-create-credential.handler';
 import { IApplicationRepository } from '../../../src/@apps/o-auth/application/domain/application.repository';
 import { MockAccessTokenSeeder } from '../../../src/@apps/o-auth/access-token/infrastructure/mock/mock-access-token.seeder';
 import { IAccessTokenRepository } from '../../../src/@apps/o-auth/access-token';
 import { MockClientSeeder } from '../../../src/@apps/o-auth/client/infrastructure/mock/mock-client.seeder';
 import { IClientRepository } from '../../../src/@apps/o-auth/client';
+import { MockUserSeeder } from '../../../src/@apps/iam/user/infrastructure/mock/mock-user.seeder';
+import { IUserRepository } from '../../../src/@apps/iam/user/domain/user.repository';
 
 // disable import foreign modules, can be micro-services
 const importForeignModules = [];
@@ -32,15 +35,18 @@ const importForeignModules = [];
 describe('account', () =>
 {
     let app: INestApplication;
-    let repository: IAccountRepository;
-    let seeder: MockAccountSeeder;
+    let credential: OAuthCredential;
+    let oAuthCreateCredentialHandler: OAuthCreateCredentialHandler;
     let applicationRepository: IApplicationRepository;
     let applicationSeeder: MockApplicationSeeder;
     let accessTokenRepository: IAccessTokenRepository;
     let accessTokenSeeder: MockAccessTokenSeeder;
     let clientRepository: IClientRepository;
     let clientSeeder: MockClientSeeder;
-    let mockJwt: string;
+    let accountRepository: IAccountRepository;
+    let accountSeeder: MockAccountSeeder;
+    let userRepository: IUserRepository;
+    let userSeeder: MockUserSeeder;
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let mockData: any;
@@ -81,31 +87,44 @@ describe('account', () =>
                 MockAccountSeeder,
                 MockClientSeeder,
                 MockJwtService,
+                MockUserSeeder,
             ],
         })
             .overrideGuard(AuthorizationGuard)
             .useValue({ canActivate: () => true })
             .compile();
 
-        mockData                = accounts;
-        app                     = module.createNestApplication();
-        repository              = module.get<IAccountRepository>(IAccountRepository);
-        seeder                  = module.get<MockAccountSeeder>(MockAccountSeeder);
-        applicationRepository   = module.get<IApplicationRepository>(IApplicationRepository);
-        applicationSeeder       = module.get<MockApplicationSeeder>(MockApplicationSeeder);
-        accessTokenRepository   = module.get<IAccessTokenRepository>(IAccessTokenRepository);
-        accessTokenSeeder       = module.get<MockAccessTokenSeeder>(MockAccessTokenSeeder);
-        clientRepository        = module.get<IClientRepository>(IClientRepository);
-        clientSeeder            = module.get<MockClientSeeder>(MockClientSeeder);
-        mockJwt                 = module.get(MockJwtService).getJwt();
+        mockData                        = accounts;
+        app                             = module.createNestApplication();
+        oAuthCreateCredentialHandler    = module.get<OAuthCreateCredentialHandler>(OAuthCreateCredentialHandler);
+        accountRepository               = module.get<IAccountRepository>(IAccountRepository);
+        accountSeeder                   = module.get<MockAccountSeeder>(MockAccountSeeder);
+        applicationRepository           = module.get<IApplicationRepository>(IApplicationRepository);
+        applicationSeeder               = module.get<MockApplicationSeeder>(MockApplicationSeeder);
+        clientRepository                = module.get<IClientRepository>(IClientRepository);
+        clientSeeder                    = module.get<MockClientSeeder>(MockClientSeeder);
+        accessTokenRepository           = module.get<IAccessTokenRepository>(IAccessTokenRepository);
+        accessTokenSeeder               = module.get<MockAccessTokenSeeder>(MockAccessTokenSeeder);
+        userRepository                  = module.get<IUserRepository>(IUserRepository);
+        userSeeder                      = module.get<MockUserSeeder>(MockUserSeeder);
 
         // seed mock data in memory database
-        await repository.insert(seeder.collectionSource);
         await applicationRepository.insert(applicationSeeder.collectionSource);
-        await accessTokenRepository.insert(accessTokenSeeder.collectionSource);
         await clientRepository.insert(clientSeeder.collectionSource);
+        await accountRepository.insert(accountSeeder.collectionSource);
+        await accessTokenRepository.insert(accessTokenSeeder.collectionSource);
+        await userRepository.insert(userSeeder.collectionSource);
 
         await app.init();
+
+        credential = await oAuthCreateCredentialHandler.main(
+            {
+                username: 'john.doe@gmail.com',
+                password: '1111',
+                grantType: OAuthClientGrantType.PASSWORD,
+            },
+            'Basic YXVyb3JhOiQyeSQxMCRFT0EvU0tFd0tSZ0hQdzY0a080TFouNm95NWI4a2w2SnpXL21DUk9NZlNxNlMzOC9JaXl3Rw==',
+        );
     });
 
     test('/REST:POST iam/account/create - Got 400 Conflict, AccountId property can not to be null', () =>
@@ -113,7 +132,7 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/iam/account/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${mockJwt}`)
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
                 ...{ id: null },
@@ -130,7 +149,7 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/iam/account/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${mockJwt}`)
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
                 ...{ type: null },
@@ -147,7 +166,7 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/iam/account/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${mockJwt}`)
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
                 ...{ email: null },
@@ -164,7 +183,7 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/iam/account/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${mockJwt}`)
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
                 ...{ isActive: null },
@@ -181,7 +200,7 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/iam/account/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${mockJwt}`)
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
                 ...{ clientId: null, type: IamAccountType.SERVICE },
@@ -199,7 +218,7 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/iam/account/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${mockJwt}`)
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
                 ...{ id: undefined },
@@ -216,7 +235,7 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/iam/account/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${mockJwt}`)
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
                 ...{ type: undefined },
@@ -233,7 +252,7 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/iam/account/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${mockJwt}`)
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
                 ...{ email: undefined },
@@ -250,7 +269,7 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/iam/account/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${mockJwt}`)
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
                 ...{ isActive: undefined },
@@ -267,7 +286,7 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/iam/account/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${mockJwt}`)
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
                 ...{ clientId: null, type: IamAccountType.SERVICE },
@@ -284,7 +303,7 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/iam/account/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${mockJwt}`)
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
                 ...{ id: '*************************************' },
@@ -301,7 +320,7 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/iam/account/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${mockJwt}`)
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
                 ...{ clientId: '*************************************', type: IamAccountType.SERVICE },
@@ -318,7 +337,7 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/iam/account/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${mockJwt}`)
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
                 ...{ email: '*************************************************************************************************************************' },
@@ -335,7 +354,7 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/iam/account/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${mockJwt}`)
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
                 ...{ isActive: 'true' },
@@ -351,7 +370,7 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/iam/account/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${mockJwt}`)
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
                 ...{ type: '****' },
@@ -368,7 +387,7 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/iam/account/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${mockJwt}`)
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send(mockData[0])
             .expect(409);
     });
@@ -378,7 +397,7 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/iam/account/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${mockJwt}`)
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
                 ...{ id: '5b19d6ac-4081-573b-96b3-56964d5326a8', type: IamAccountType.SERVICE },
@@ -391,7 +410,7 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/iam/accounts/paginate')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${mockJwt}`)
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 query:
                 {
@@ -403,9 +422,9 @@ describe('account', () =>
             .then(res =>
             {
                 expect(res.body).toEqual({
-                    total: seeder.collectionResponse.length,
-                    count: seeder.collectionResponse.length,
-                    rows : seeder.collectionResponse.map(item => expect.objectContaining(_.omit(item, ['createdAt', 'updatedAt', 'deletedAt', 'roleIds', 'tenantIds']))).slice(0, 5),
+                    total: accountSeeder.collectionResponse.length,
+                    count: accountSeeder.collectionResponse.length,
+                    rows : accountSeeder.collectionResponse.map(item => expect.objectContaining(_.omit(item, ['createdAt', 'updatedAt', 'deletedAt', 'roleIds', 'tenantIds']))).slice(0, 5),
                 });
             });
     });
@@ -415,12 +434,12 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/iam/accounts/get')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${mockJwt}`)
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .expect(200)
             .then(res =>
             {
                 expect(res.body).toEqual(
-                    seeder.collectionResponse.map(item => expect.objectContaining(_.omit(item, ['createdAt', 'updatedAt', 'deletedAt', 'roleIds', 'tenantIds']))),
+                    accountSeeder.collectionResponse.map(item => expect.objectContaining(_.omit(item, ['createdAt', 'updatedAt', 'deletedAt', 'roleIds', 'tenantIds']))),
                 );
             });
     });
@@ -430,7 +449,7 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/iam/account/find')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${mockJwt}`)
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 query:
                 {
@@ -448,7 +467,7 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/iam/account/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${mockJwt}`)
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
                 ...{ id: '5b19d6ac-4081-573b-96b3-56964d5326a8', type: IamAccountType.SERVICE, email: 'john.***@gmail.com' },
@@ -461,7 +480,7 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/iam/account/find')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${mockJwt}`)
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 query:
                 {
@@ -483,7 +502,7 @@ describe('account', () =>
         return request(app.getHttpServer())
             .get('/iam/account/find/e259e743-d7b2-462d-81b8-9738ec4cf8e3')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${mockJwt}`)
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .expect(404);
     });
 
@@ -492,7 +511,7 @@ describe('account', () =>
         return request(app.getHttpServer())
             .get('/iam/account/find/5b19d6ac-4081-573b-96b3-56964d5326a8')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${mockJwt}`)
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .expect(200)
             .then(res =>
             {
@@ -505,7 +524,7 @@ describe('account', () =>
         return request(app.getHttpServer())
             .put('/iam/account/update')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${mockJwt}`)
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
                 ...{ id: '5d4ce994-0f65-4758-abb8-dc57280eae50' },
@@ -518,7 +537,7 @@ describe('account', () =>
         return request(app.getHttpServer())
             .put('/iam/account/update')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${mockJwt}`)
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
                 type: IamAccountType.USER,
@@ -544,7 +563,7 @@ describe('account', () =>
         return request(app.getHttpServer())
             .delete('/iam/account/delete/028e1feb-bf33-4ac2-8fb7-865d099eb143')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${mockJwt}`)
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .expect(404);
     });
 
@@ -553,8 +572,21 @@ describe('account', () =>
         return request(app.getHttpServer())
             .delete('/iam/account/delete/5b19d6ac-4081-573b-96b3-56964d5326a8')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${mockJwt}`)
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .expect(200);
+    });
+
+    test('/REST:GET iam/account/me - Got 200, AccountId belong to JWT', () =>
+    {
+        return request(app.getHttpServer())
+            .get('/iam/account/me')
+            .set('Accept', 'application/json')
+            .set('Authorization', `Bearer ${credential.accessToken}`)
+            .expect(200)
+            .then(res =>
+            {
+                expect(res.body).toHaveProperty('email', 'john.doe@gmail.com');
+            });
     });
 
     test('/GraphQL iamCreateAccount - Got 409 Conflict, item already exist in database', () =>
@@ -562,7 +594,7 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${mockJwt}`)
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 query: `
                     mutation ($payload:IamCreateAccountInput!)
@@ -600,7 +632,7 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${mockJwt}`)
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 query: `
                     query ($query:QueryStatement $constraint:QueryStatement)
@@ -626,9 +658,9 @@ describe('account', () =>
             .then(res =>
             {
                 expect(res.body.data.iamPaginateAccounts).toEqual({
-                    total: seeder.collectionResponse.length,
-                    count: seeder.collectionResponse.length,
-                    rows : seeder.collectionResponse.map(item => expect.objectContaining(_.omit(item, ['createdAt', 'updatedAt', 'deletedAt', 'roleIds', 'tenantIds']))).slice(0, 5),
+                    total: accountSeeder.collectionResponse.length,
+                    count: accountSeeder.collectionResponse.length,
+                    rows : accountSeeder.collectionResponse.map(item => expect.objectContaining(_.omit(item, ['createdAt', 'updatedAt', 'deletedAt', 'roleIds', 'tenantIds']))).slice(0, 5),
                 });
             });
     });
@@ -638,7 +670,7 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${mockJwt}`)
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 query: `
                     query ($query:QueryStatement)
@@ -666,7 +698,7 @@ describe('account', () =>
             {
                 for (const [index, value] of res.body.data.iamGetAccounts.entries())
                 {
-                    expect(seeder.collectionResponse[index]).toEqual(expect.objectContaining(_.omit(value, ['createdAt', 'updatedAt', 'deletedAt'])));
+                    expect(accountSeeder.collectionResponse[index]).toEqual(expect.objectContaining(_.omit(value, ['createdAt', 'updatedAt', 'deletedAt'])));
                 }
             });
     });
@@ -676,7 +708,7 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${mockJwt}`)
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 query: `
                     mutation ($payload:IamCreateAccountInput!)
@@ -714,7 +746,7 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${mockJwt}`)
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 query: `
                     query ($query:QueryStatement)
@@ -760,7 +792,7 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${mockJwt}`)
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 query: `
                     query ($query:QueryStatement)
@@ -804,7 +836,7 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${mockJwt}`)
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 query: `
                     query ($id:ID!)
@@ -843,7 +875,7 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${mockJwt}`)
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 query: `
                     query ($id:ID!)
@@ -880,7 +912,7 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${mockJwt}`)
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 query: `
                     mutation ($payload:IamUpdateAccountInput!)
@@ -922,7 +954,7 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${mockJwt}`)
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 query: `
                     mutation ($payload:IamUpdateAccountInput!)
@@ -971,7 +1003,7 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${mockJwt}`)
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 query: `
                     mutation ($id:ID!)
@@ -1010,7 +1042,7 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${mockJwt}`)
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 query: `
                     mutation ($id:ID!)
@@ -1042,9 +1074,43 @@ describe('account', () =>
             });
     });
 
+    test('/GraphQL iamFindMeAccount', () =>
+    {
+        return request(app.getHttpServer())
+            .post('/graphql')
+            .set('Accept', 'application/json')
+            .set('Authorization', `Bearer ${credential.accessToken}`)
+            .send({
+                query: `
+                    query
+                    {
+                        iamMeAccount
+                        {
+                            id
+                            type
+                            email
+                            isActive
+                            clientId
+                            dApplicationCodes
+                            dPermissions
+                            dTenants
+                            data
+                            createdAt
+                            updatedAt
+                        }
+                    }
+                `,
+            })
+            .expect(200)
+            .then(res =>
+            {
+                expect(res.body.data.iamMeAccount).toHaveProperty('email', 'john.doe@gmail.com');
+            });
+    });
+
     afterAll(async () =>
     {
-        await repository.delete({
+        await accountRepository.delete({
             queryStatement: {
                 where: {},
             },

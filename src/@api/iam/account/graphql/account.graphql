@@ -56,7 +56,7 @@ input IamUpdateAccountInput
 
 type Query
 {
-    iamFindMeAccount: IamAccount
+    iamMeAccount: IamAccount
     iamFindAccount(query: QueryStatement constraint: QueryStatement): IamAccount
     iamFindAccountById(id: ID constraint: QueryStatement): IamAccount
     iamGetAccounts(query: QueryStatement constraint: QueryStatement): [IamAccount]!

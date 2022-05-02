@@ -264,7 +264,7 @@ export interface IamAccount {
 }
 
 export interface IQuery {
-    iamFindMeAccount(): Nullable<IamAccount> | Promise<Nullable<IamAccount>>;
+    iamMeAccount(): Nullable<IamAccount> | Promise<Nullable<IamAccount>>;
     iamFindAccount(query?: Nullable<QueryStatement>, constraint?: Nullable<QueryStatement>): Nullable<IamAccount> | Promise<Nullable<IamAccount>>;
     iamFindAccountById(id?: Nullable<string>, constraint?: Nullable<QueryStatement>): Nullable<IamAccount> | Promise<Nullable<IamAccount>>;
     iamGetAccounts(query?: Nullable<QueryStatement>, constraint?: Nullable<QueryStatement>): Nullable<IamAccount>[] | Promise<Nullable<IamAccount>[]>;

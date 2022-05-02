@@ -1,17 +1,21 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
-import { Controller, HttpCode, Headers, Get } from '@nestjs/common';
+import { Controller, HttpCode, Headers, Get, UseGuards } from '@nestjs/common';
 import { ApiTags, ApiOkResponse, ApiOperation } from '@nestjs/swagger';
 import { IamAccountDto } from '../dto';
 
+// authorization
+import { AuthenticationJwtGuard } from '../../../o-auth/shared/guards/authentication-jwt.guard';
+
 // @apps
-import { IamFindMeAccountHandler } from '../handlers/iam-find-me-account.handler';
+import { IamMeAccountHandler } from '../handlers/iam-me-account.handler';
 
 @ApiTags('[iam] account')
-@Controller('iam/account/find/me')
-export class IamFindMeAccountController
+@Controller('iam/account/me')
+@UseGuards(AuthenticationJwtGuard)
+export class IamMeAccountController
 {
     constructor(
-        private readonly handler: IamFindMeAccountHandler,
+        private readonly handler: IamMeAccountHandler,
     ) {}
 
     @Get()

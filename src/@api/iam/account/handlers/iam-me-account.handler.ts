@@ -11,7 +11,7 @@ import { IamAccount } from '../../../../graphql';
 import { IamAccountDto } from '../dto';
 
 @Injectable()
-export class IamFindMeAccountHandler
+export class IamMeAccountHandler
 {
     constructor(
         private readonly queryBus: IQueryBus,

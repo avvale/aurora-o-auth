@@ -1,11 +1,19 @@
+import { UseGuards } from '@nestjs/common';
 import { Resolver, Args, Mutation } from '@nestjs/graphql';
 import { Constraint, QueryStatement, Timezone } from 'aurora-ts-core';
+
+// authorization
+import { Permissions } from '../../../../@api/iam/shared/decorators/permissions.decorator';
+import { AuthenticationJwtGuard } from '../../../../@api/o-auth/shared/guards/authentication-jwt.guard';
+import { AuthorizationGuard } from '../../../../@api/iam/shared/guards/authorization.guard';
 
 // @apps
 import { IamDeleteAccountsHandler } from '../handlers/iam-delete-accounts.handler';
 import { IamAccount } from '../../../../graphql';
 
 @Resolver()
+@Permissions('iam.account.delete')
+@UseGuards(AuthenticationJwtGuard, AuthorizationGuard)
 export class IamDeleteAccountsResolver
 {
     constructor(
