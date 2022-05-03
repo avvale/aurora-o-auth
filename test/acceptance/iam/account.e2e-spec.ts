@@ -16,7 +16,6 @@ import * as _ from 'lodash';
 // ---- customizations ----
 import { jwtConfig } from '../../../src/@apps/o-auth/shared/jwt-config';
 import { AuthorizationGuard } from '../../../src/@api/iam/shared/guards/authorization.guard';
-import { MockJwtService } from '../../../src/@apps/o-auth/access-token/infrastructure/mock/mock-jwt.service';
 import { AuthModule } from '../../../src/@apps/o-auth/shared/modules/auth.module';
 import { OAuthModule } from '../../../src/@api/o-auth/o-auth.module';
 import { MockApplicationSeeder } from '../../../src/@apps/o-auth/application/infrastructure/mock/mock-application.seeder';
@@ -86,7 +85,6 @@ describe('account', () =>
                 MockAccessTokenSeeder,
                 MockAccountSeeder,
                 MockClientSeeder,
-                MockJwtService,
                 MockUserSeeder,
             ],
         })
