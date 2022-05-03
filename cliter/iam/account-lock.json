@@ -3,7 +3,7 @@
     "files": [
         {
             "path": "src/@apps/iam/account/application/create/create-account.command-handler.spec.ts",
-            "integrity": "sha1:a7ab39ad24ce8ca2e214fdd75b23903be515b5f7"
+            "integrity": "sha1:4b8d44824bd4c1ec25d6caef5b1711ca2a56b3fd"
         },
         {
             "path": "src/@apps/iam/account/application/create/create-account.command-handler.ts",
@@ -15,7 +15,7 @@
         },
         {
             "path": "src/@apps/iam/account/application/create/create-account.service.spec.ts",
-            "integrity": "sha1:0f205497ef55965aebb7798a60179be46e3fb94d"
+            "integrity": "sha1:cb30d0da38813c45fec66eb6ae7318ebb852d9b2"
         },
         {
             "path": "src/@apps/iam/account/application/create/create-account.service.ts",
@@ -23,7 +23,7 @@
         },
         {
             "path": "src/@apps/iam/account/application/create/create-accounts.command-handler.spec.ts",
-            "integrity": "sha1:a11dab23b94afd0a2dcd646d09ec1c52c83b1d27"
+            "integrity": "sha1:7d0bdc351eeeafac5a5527699ac813704a8e2bf3"
         },
         {
             "path": "src/@apps/iam/account/application/create/create-accounts.command-handler.ts",
@@ -35,7 +35,7 @@
         },
         {
             "path": "src/@apps/iam/account/application/create/create-accounts.service.spec.ts",
-            "integrity": "sha1:acc65cf3e3b09bd830fc681c5eaa50d7776f8939"
+            "integrity": "sha1:469938082e7a83be0503d886dcf7b79ec934a6dc"
         },
         {
             "path": "src/@apps/iam/account/application/create/create-accounts.service.ts",
@@ -43,11 +43,11 @@
         },
         {
             "path": "src/@apps/iam/account/application/delete/delete-account-by-id.command-handler.spec.ts",
-            "integrity": "sha1:b79b6f523308df01c3228f3bba009497cce9d740"
+            "integrity": "sha1:6f4ebef2a8879fc99feb3be84c7b2f82d603936b"
         },
         {
             "path": "src/@apps/iam/account/application/delete/delete-account-by-id.command-handler.ts",
-            "integrity": "sha1:075db02394645859f6846df557ac1c8e12040f89"
+            "integrity": "sha1:5e2984be3dfd5f0ca1f340904bb4a867410c7a61"
         },
         {
             "path": "src/@apps/iam/account/application/delete/delete-account-by-id.command.ts",
@@ -55,7 +55,7 @@
         },
         {
             "path": "src/@apps/iam/account/application/delete/delete-account-by-id.service.spec.ts",
-            "integrity": "sha1:ec9e9273f18c6e70ca611737d3100527a4082bb5"
+            "integrity": "sha1:c72c8440b56c65e2844ffe8a28b52b7e52363893"
         },
         {
             "path": "src/@apps/iam/account/application/delete/delete-account-by-id.service.ts",
@@ -63,7 +63,7 @@
         },
         {
             "path": "src/@apps/iam/account/application/delete/delete-accounts.command-handler.spec.ts",
-            "integrity": "sha1:3736d67c36e81dcdbdafa618e24f2e68d71e59c9"
+            "integrity": "sha1:6de1c53cbb05ad2da7d7c6685d7910a03f9eb002"
         },
         {
             "path": "src/@apps/iam/account/application/delete/delete-accounts.command-handler.ts",
@@ -75,7 +75,7 @@
         },
         {
             "path": "src/@apps/iam/account/application/delete/delete-accounts.service.spec.ts",
-            "integrity": "sha1:8f9efbe27153723288d96198d56c2ef7083b08d4"
+            "integrity": "sha1:228d5651b07b71581b1abdddc6f402d1a3cb64b9"
         },
         {
             "path": "src/@apps/iam/account/application/delete/delete-accounts.service.ts",
@@ -83,11 +83,11 @@
         },
         {
             "path": "src/@apps/iam/account/application/events/add-accounts-context.event.ts",
-            "integrity": "sha1:3be1128d99d91221b1d9e38fb9adbb67af11a947"
+            "integrity": "sha1:a42c97a7159e1b1ae1c9c8ead1d4c5a933f18290"
         },
         {
             "path": "src/@apps/iam/account/application/events/created-account.event-handler.ts",
-            "integrity": "sha1:34690042bbdaaa6219eddfa899621fd4443ee9a5"
+            "integrity": "sha1:d40db08e37569b31f6e57ab3b54d24822645f31b"
         },
         {
             "path": "src/@apps/iam/account/application/events/created-account.event.ts",
@@ -95,7 +95,7 @@
         },
         {
             "path": "src/@apps/iam/account/application/events/created-accounts.event-handler.ts",
-            "integrity": "sha1:34c175083741935ba55de6e779405c61d942747d"
+            "integrity": "sha1:3c5e8040e2bcf0d39fdb620e0b4a6ee81f027f53"
         },
         {
             "path": "src/@apps/iam/account/application/events/created-accounts.event.ts",
@@ -103,7 +103,7 @@
         },
         {
             "path": "src/@apps/iam/account/application/events/deleted-account.event-handler.ts",
-            "integrity": "sha1:5cdf31b79e6e2b488278a5db7f6d6aaaf1cd66f9"
+            "integrity": "sha1:9e49b6e4e7b07ace7e572bb945cf3bdae24d81a8"
         },
         {
             "path": "src/@apps/iam/account/application/events/deleted-account.event.ts",
@@ -111,7 +111,7 @@
         },
         {
             "path": "src/@apps/iam/account/application/events/deleted-accounts.event-handler.ts",
-            "integrity": "sha1:6c72aec2e8e71037e0f938875d89d253efaf339f"
+            "integrity": "sha1:6d5a8e5b303902e7ce0992229052d7b4adf2d2f9"
         },
         {
             "path": "src/@apps/iam/account/application/events/deleted-accounts.event.ts",
@@ -119,7 +119,7 @@
         },
         {
             "path": "src/@apps/iam/account/application/events/updated-account.event-handler.ts",
-            "integrity": "sha1:bbe95affeb017988730d79c59fadcba10c1244c0"
+            "integrity": "sha1:8e7ada12797a4483fa7196c6c3622d2d2e1fbcec"
         },
         {
             "path": "src/@apps/iam/account/application/events/updated-account.event.ts",
@@ -127,7 +127,7 @@
         },
         {
             "path": "src/@apps/iam/account/application/find/find-account-by-id.query-handler.spec.ts",
-            "integrity": "sha1:3d6156e020dc655fb69ed111e881cd8c8114ad34"
+            "integrity": "sha1:92fb9f67dbdb545abb57eb96e520c8efb6505e47"
         },
         {
             "path": "src/@apps/iam/account/application/find/find-account-by-id.query-handler.ts",
@@ -139,7 +139,7 @@
         },
         {
             "path": "src/@apps/iam/account/application/find/find-account-by-id.service.spec.ts",
-            "integrity": "sha1:4e1b077c48972401b92c176869e5e4d61001538c"
+            "integrity": "sha1:da83ebcdc1bc88f43fcaf2c02cdbe84a1a69ca61"
         },
         {
             "path": "src/@apps/iam/account/application/find/find-account-by-id.service.ts",
@@ -147,7 +147,7 @@
         },
         {
             "path": "src/@apps/iam/account/application/find/find-account.query-handler.spec.ts",
-            "integrity": "sha1:52c671d78c194be24080749a9e03a21a7eb894dc"
+            "integrity": "sha1:e2c0fae34b6fb98aceb24389e68120d987daa6f0"
         },
         {
             "path": "src/@apps/iam/account/application/find/find-account.query-handler.ts",
@@ -159,7 +159,7 @@
         },
         {
             "path": "src/@apps/iam/account/application/find/find-account.service.spec.ts",
-            "integrity": "sha1:42f28b2a69df39ad5f602eca3363aaa9ef150d6a"
+            "integrity": "sha1:8a9331df625e2b388eca5f4fcf0b62a770e9ddb2"
         },
         {
             "path": "src/@apps/iam/account/application/find/find-account.service.ts",
@@ -167,7 +167,7 @@
         },
         {
             "path": "src/@apps/iam/account/application/get/get-accounts.query-handler.spec.ts",
-            "integrity": "sha1:347ebe2ac6945ee482fa9895704c091468d80105"
+            "integrity": "sha1:f3c28d86102d82b123baf00d7fa4031444fe7d2f"
         },
         {
             "path": "src/@apps/iam/account/application/get/get-accounts.query-handler.ts",
@@ -179,7 +179,7 @@
         },
         {
             "path": "src/@apps/iam/account/application/get/get-accounts.service.spec.ts",
-            "integrity": "sha1:32ebe389a2a524124f6cfb0d7c741366b8ba435e"
+            "integrity": "sha1:d411055ed76951059c2d48b282d0c3c6ff93f370"
         },
         {
             "path": "src/@apps/iam/account/application/get/get-accounts.service.ts",
@@ -187,11 +187,11 @@
         },
         {
             "path": "src/@apps/iam/account/application/paginate/paginate-accounts.query-handler.spec.ts",
-            "integrity": "sha1:4537f8c4c47bf86329378a433689189ed8360468"
+            "integrity": "sha1:f5c6ecddb559a9d8eb451f63d9a705ace6b2d920"
         },
         {
             "path": "src/@apps/iam/account/application/paginate/paginate-accounts.query-handler.ts",
-            "integrity": "sha1:4bbc0f70b237f5e8404fc667130260230aaf0b11"
+            "integrity": "sha1:8259901334d8107954097b2069c8e794bf7afd0a"
         },
         {
             "path": "src/@apps/iam/account/application/paginate/paginate-accounts.query.ts",
@@ -199,7 +199,7 @@
         },
         {
             "path": "src/@apps/iam/account/application/paginate/paginate-accounts.service.spec.ts",
-            "integrity": "sha1:28bfb8370bc5dea390b9d0d5fb16d8d1303bf81b"
+            "integrity": "sha1:a92287438376b73a8986d87b1179fc0379fd0f9d"
         },
         {
             "path": "src/@apps/iam/account/application/paginate/paginate-accounts.service.ts",
@@ -223,7 +223,7 @@
         },
         {
             "path": "src/@apps/iam/account/application/update/update-account.service.spec.ts",
-            "integrity": "sha1:8d12f5d6d4255de8cae30fc5d2c6a99cdfa7d8bb"
+            "integrity": "sha1:25ba276a99a09aa212ff68e60e9b2d3ab5f71c64"
         },
         {
             "path": "src/@apps/iam/account/application/update/update-account.service.ts",
@@ -231,11 +231,11 @@
         },
         {
             "path": "src/@apps/iam/account/domain/account.aggregate.ts",
-            "integrity": "sha1:7cefeefebf07bed7c4c82a52d11b79cf795318e7"
+            "integrity": "sha1:a5821e2300409d2ddd676956a5ebf124d40f1daa"
         },
         {
             "path": "src/@apps/iam/account/domain/account.mapper.ts",
-            "integrity": "sha1:8bb75f69cc8fb0a257614fd41dcdea8b42d3b3f3"
+            "integrity": "sha1:c6b4881d058af7e59dee60c78dd08ce214588bdd"
         },
         {
             "path": "src/@apps/iam/account/domain/account.repository.ts",
@@ -243,7 +243,7 @@
         },
         {
             "path": "src/@apps/iam/account/domain/account.response.ts",
-            "integrity": "sha1:5c44bc39be025bd666b94d578726aabddb914a7c"
+            "integrity": "sha1:92635895dbb3da2c33dfc3705cfc96ffa716acb0"
         },
         {
             "path": "src/@apps/iam/account/domain/value-objects/index.ts",
@@ -263,11 +263,11 @@
         },
         {
             "path": "src/@apps/iam/account/infrastructure/seeds/account.seed.ts",
-            "integrity": "sha1:7f9fff684333022020cd231bfd6072097d20e11e"
+            "integrity": "sha1:656f9df9c94303f63075fec5efdb61a058e4220e"
         },
         {
             "path": "src/@apps/iam/account/infrastructure/sequelize/sequelize-account.model.ts",
-            "integrity": "sha1:72d588ee14fa376710fbfa3e8cd4acff0cd1e257"
+            "integrity": "sha1:2fb3e8bd80d227d7df9b8b4d208c5b43bbfced70"
         },
         {
             "path": "src/@apps/iam/account/infrastructure/sequelize/sequelize-account.repository.ts",
@@ -338,14 +338,6 @@
             "integrity": "sha1:5474fb16b254e7f15fe2d29f75f1ce9cc1b61a96"
         },
         {
-            "path": "src/@api/iam/account/controllers/iam-create-accounts.controller.spec.ts",
-            "integrity": "sha1:ac4125824e5e18c6cac28609e80609d7df8d95f5"
-        },
-        {
-            "path": "src/@api/iam/account/controllers/iam-create-accounts.controller.ts",
-            "integrity": "sha1:b6225512b90830de2e829b7118380cf86cd0adcd"
-        },
-        {
             "path": "src/@api/iam/account/controllers/iam-delete-account-by-id.controller.spec.ts",
             "integrity": "sha1:148ece9dc7d774fb72ac0f6df8dfbe668eaf2437"
         },
@@ -403,15 +395,15 @@
         },
         {
             "path": "src/@api/iam/account/dto/iam-account.dto.ts",
-            "integrity": "sha1:f0b7e60e3a9c10b5db9e096ab13723e34ccda3ee"
+            "integrity": "sha1:8d3b8f2ba89f3c038aa28d327b44b94b52eab3a4"
         },
         {
             "path": "src/@api/iam/account/dto/iam-create-account.dto.ts",
-            "integrity": "sha1:55bb1523e0993b528a2e6307ab1ff41d5c0c7516"
+            "integrity": "sha1:5fe3992e67918bb738ccffedbb8543a95717dff0"
         },
         {
             "path": "src/@api/iam/account/dto/iam-update-account.dto.ts",
-            "integrity": "sha1:be158eb66264e21f45ae09fbe594055f9b985787"
+            "integrity": "sha1:0f59639b528180235c417acd34bd6d4675da720d"
         },
         {
             "path": "src/@api/iam/account/dto/index.ts",
@@ -419,7 +411,7 @@
         },
         {
             "path": "src/@api/iam/account/graphql/account.graphql",
-            "integrity": "sha1:7288ddbe9c632f415c988337cf130fb34967f206"
+            "integrity": "sha1:c6ba28f7827d5241f38e90212c4c61ff66129302"
         },
         {
             "path": "src/@api/iam/account/handlers/iam-create-account.handler.spec.ts",
@@ -428,14 +420,6 @@
         {
             "path": "src/@api/iam/account/handlers/iam-create-account.handler.ts",
             "integrity": "sha1:42f4db54cddf062d72548938e356bd9936d27db4"
-        },
-        {
-            "path": "src/@api/iam/account/handlers/iam-create-accounts.handler.spec.ts",
-            "integrity": "sha1:96c56f7925ab5bac1a19f89e010bb892c017d2c9"
-        },
-        {
-            "path": "src/@api/iam/account/handlers/iam-create-accounts.handler.ts",
-            "integrity": "sha1:c60dc2582b1a9f32785a792365f811a536ad1c8e"
         },
         {
             "path": "src/@api/iam/account/handlers/iam-delete-account-by-id.handler.spec.ts",
@@ -506,14 +490,6 @@
             "integrity": "sha1:2b5e7f5a04d6666f463f3865df6656627bbacc65"
         },
         {
-            "path": "src/@api/iam/account/resolvers/iam-create-accounts.resolver.spec.ts",
-            "integrity": "sha1:9da29a0006d0a1dbc6a5c1669d40232f0335d011"
-        },
-        {
-            "path": "src/@api/iam/account/resolvers/iam-create-accounts.resolver.ts",
-            "integrity": "sha1:eeb09c88620471275bcb1d42a38b7435c437615f"
-        },
-        {
             "path": "src/@api/iam/account/resolvers/iam-delete-account-by-id.resolver.spec.ts",
             "integrity": "sha1:693e892be3b3c3f5fd401397f020c63ee66a705c"
         },
@@ -579,11 +555,11 @@
         },
         {
             "path": "test/acceptance/iam/account.e2e-spec.ts",
-            "integrity": "sha1:119ebfa16c40be4bdcdd7b4a3973998113b4e557"
+            "integrity": "sha1:851a1aa17b817a57200fadea9e57875fc70ca10a"
         },
         {
             "path": "postman/iam.account.postman.json",
-            "integrity": "sha1:120d66833caef3e6f307698dc10f7874bc03cbed"
+            "integrity": "sha1:1125337b5afce34924253d489adc29f0034956d9"
         }
     ]
 }

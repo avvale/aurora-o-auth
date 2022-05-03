@@ -18,7 +18,7 @@ export class DeleteAccountByIdCommandHandler implements ICommandHandler<DeleteAc
         await this.deleteAccountByIdService.main(
             new AccountId(command.id),
             command.constraint,
-            command.cQMetadata
+            command.cQMetadata,
         );
     }
 }

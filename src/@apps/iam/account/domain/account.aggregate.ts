@@ -22,6 +22,7 @@ import { CreatedAccountEvent } from '../application/events/created-account.event
 import { UpdatedAccountEvent } from '../application/events/updated-account.event';
 import { DeletedAccountEvent } from '../application/events/deleted-account.event';
 import { IamUser } from '../../../../@apps/iam/user/domain/user.aggregate';
+import { OAuthClient } from '../../../../@apps/o-auth/client/domain/client.aggregate';
 import { IamRole } from '../../../../@apps/iam/role/domain/role.aggregate';
 import { IamTenant } from '../../../../@apps/iam/tenant/domain/tenant.aggregate';
 
@@ -44,6 +45,7 @@ export class IamAccount extends AggregateRoot
 
     // eager relationship
     user: IamUser;
+    client: OAuthClient;
     roles: IamRole[];
     tenants: IamTenant[];
 
@@ -64,6 +66,7 @@ export class IamAccount extends AggregateRoot
         deletedAt: AccountDeletedAt,
 
         user?: IamUser,
+        client?: OAuthClient,
         roles?: IamRole[],
         tenants?: IamTenant[],
     )
@@ -86,6 +89,7 @@ export class IamAccount extends AggregateRoot
 
         // eager relationship
         this.user = user;
+        this.client = client;
         this.roles = roles;
         this.tenants = tenants;
     }
@@ -107,6 +111,7 @@ export class IamAccount extends AggregateRoot
         deletedAt: AccountDeletedAt,
 
         user?: IamUser,
+        client?: OAuthClient,
         roles?: IamRole[],
         tenants?: IamTenant[],
     ): IamAccount
@@ -128,6 +133,7 @@ export class IamAccount extends AggregateRoot
             deletedAt,
 
             user,
+            client,
             roles,
             tenants,
         );
@@ -219,6 +225,7 @@ export class IamAccount extends AggregateRoot
 
             // eager relationship
             user: this.user?.toDTO(),
+            client: this.client?.toDTO(),
             roles: this.roles?.map(item => item.toDTO()),
             tenants: this.tenants?.map(item => item.toDTO()),
         };

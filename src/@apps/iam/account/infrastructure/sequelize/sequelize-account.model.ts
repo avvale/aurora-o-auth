@@ -2,6 +2,7 @@
 import { Column, Model, Table, ForeignKey, BelongsTo, HasMany, BelongsToMany, HasOne, Unique, Index } from 'sequelize-typescript';
 import { DataTypes } from 'sequelize';
 import { IamUserModel } from '../../../../../@apps/iam/user/infrastructure/sequelize/sequelize-user.model';
+import { OAuthClientModel } from '../../../../../@apps/o-auth/client/infrastructure/sequelize/sequelize-client.model';
 import { IamRoleModel } from '../../../../../@apps/iam/role/infrastructure/sequelize/sequelize-role.model';
 import { IamRolesAccountsModel } from '../../../../../@apps/iam/role/infrastructure/sequelize/sequelize-roles-accounts.model';
 import { IamTenantModel } from '../../../../../@apps/iam/tenant/infrastructure/sequelize/sequelize-tenant.model';
@@ -40,13 +41,18 @@ export class IamAccountModel extends Model<IamAccountModel>
     })
     isActive: boolean;
 
-    @Index
+    @ForeignKey(() => OAuthClientModel)
     @Column({
         field: 'clientId',
         allowNull: false,
         type: DataTypes.UUID,
     })
     clientId: string;
+
+    @BelongsTo(() => OAuthClientModel, {
+        constraints: false,
+    })
+    client: OAuthClientModel;
 
     @Column({
         field: 'dApplicationCodes',

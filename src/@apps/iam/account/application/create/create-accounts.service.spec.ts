@@ -25,8 +25,8 @@ describe('CreateAccountsService', () =>
                 {
                     provide : IAccountRepository,
                     useValue: {
-                        insert: (items) => { /**/ },
-                    }
+                        insert: () => { /**/ },
+                    },
                 },
             ]
         }).compile();
@@ -46,7 +46,7 @@ describe('CreateAccountsService', () =>
         test('should create accounts and emit event', async () =>
         {
             expect(await service.main(
-                mockRepository.collectionSource
+                mockRepository.collectionSource,
             )).toBe(undefined);
         });
     });

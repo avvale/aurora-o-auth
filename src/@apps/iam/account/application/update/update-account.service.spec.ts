@@ -40,12 +40,12 @@ describe('UpdateAccountService', () =>
                 UpdateAccountService,
                 MockAccountRepository,
                 {
-                    provide: IAccountRepository,
+                    provide : IAccountRepository,
                     useValue: {
-                        update: (item) => { /**/ }
-                    }
+                        update: () => { /**/ },
+                    },
                 },
-            ]
+            ],
         }).compile();
 
         service         = module.get(UpdateAccountService);

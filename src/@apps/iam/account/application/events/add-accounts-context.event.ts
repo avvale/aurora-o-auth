@@ -9,7 +9,8 @@ export class AddAccountsContextEvent extends AggregateRoot
 {
     constructor(
         public readonly aggregateRoots: IamAccount[] = [],
-    ) {
+    )
+    {
         super();
     }
 
@@ -18,7 +19,7 @@ export class AddAccountsContextEvent extends AggregateRoot
         for (const aggregateRoot of this.aggregateRoots) yield aggregateRoot;
     }
 
-    created()
+    created(): void
     {
         this.apply(
             new CreatedAccountsEvent(
@@ -38,13 +39,13 @@ export class AddAccountsContextEvent extends AggregateRoot
                         account.createdAt?.value,
                         account.updatedAt?.value,
                         account.deletedAt?.value,
-                    )
-                )
-            )
+                    ),
+                ),
+            ),
         );
     }
 
-    deleted()
+    deleted(): void
     {
         this.apply(
             new DeletedAccountsEvent(
@@ -64,9 +65,9 @@ export class AddAccountsContextEvent extends AggregateRoot
                         account.createdAt?.value,
                         account.updatedAt?.value,
                         account.deletedAt?.value,
-                    )
-                )
-            )
+                    ),
+                ),
+            ),
         );
     }
 }

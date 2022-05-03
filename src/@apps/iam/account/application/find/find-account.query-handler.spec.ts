@@ -22,17 +22,17 @@ describe('FindAccountQueryHandler', () =>
                 FindAccountQueryHandler,
                 {
                     provide : IAccountRepository,
-                    useClass: MockAccountRepository
+                    useClass: MockAccountRepository,
                 },
                 {
                     provide : FindAccountService,
                     useValue: {
-                        main: () => {},
-                    }
-                }
-            ]
+                        main: () => { /**/ },
+                    },
+                },
+            ],
         })
-        .compile();
+            .compile();
 
         queryHandler    = module.get<FindAccountQueryHandler>(FindAccountQueryHandler);
         service         = module.get<FindAccountService>(FindAccountService);
@@ -51,7 +51,7 @@ describe('FindAccountQueryHandler', () =>
         {
             jest.spyOn(service, 'main').mockImplementation(() => new Promise(resolve => resolve(repository.collectionSource[0])));
             expect(await queryHandler.execute(
-                new FindAccountQuery()
+                new FindAccountQuery(),
             )).toStrictEqual(mapper.mapAggregateToResponse(repository.collectionSource[0]));
         });
     });

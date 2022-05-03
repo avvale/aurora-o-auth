@@ -19,6 +19,7 @@ import {
     AccountDeletedAt,
 } from './value-objects';
 import { UserMapper } from '../../../../@apps/iam/user/domain/user.mapper';
+import { ClientMapper } from '../../../../@apps/o-auth/client/domain/client.mapper';
 import { RoleMapper } from '../../../../@apps/iam/role/domain/role.mapper';
 import { TenantMapper } from '../../../../@apps/iam/tenant/domain/tenant.mapper';
 
@@ -88,6 +89,7 @@ export class AccountMapper implements IMapper
             new AccountUpdatedAt(account.updatedAt, { undefinable: true }, { addTimezone: cQMetadata?.timezone }),
             new AccountDeletedAt(account.deletedAt, { undefinable: true }, { addTimezone: cQMetadata?.timezone }),
             this.options.eagerLoading ? new UserMapper({ eagerLoading: true }).mapModelToAggregate(account.user) : undefined,
+            this.options.eagerLoading ? new ClientMapper({ eagerLoading: true }).mapModelToAggregate(account.client) : undefined,
             this.options.eagerLoading ? new RoleMapper({ eagerLoading: true }).mapModelsToAggregates(account.roles) : undefined,
             this.options.eagerLoading ? new TenantMapper({ eagerLoading: true }).mapModelsToAggregates(account.tenants) : undefined,
         );
@@ -113,6 +115,7 @@ export class AccountMapper implements IMapper
             account.updatedAt.value,
             account.deletedAt.value,
             this.options.eagerLoading ? new UserMapper({ eagerLoading: true }).mapAggregateToResponse(account.user) : undefined,
+            this.options.eagerLoading ? new ClientMapper({ eagerLoading: true }).mapAggregateToResponse(account.client) : undefined,
             this.options.eagerLoading ? new RoleMapper({ eagerLoading: true }).mapAggregatesToResponses(account.roles) : undefined,
             this.options.eagerLoading ? new TenantMapper({ eagerLoading: true }).mapAggregatesToResponses(account.tenants) : undefined,
         );

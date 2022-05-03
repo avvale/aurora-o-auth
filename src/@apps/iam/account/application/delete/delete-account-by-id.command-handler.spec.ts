@@ -17,10 +17,10 @@ describe('DeleteAccountByIdCommandHandler', () =>
             providers: [
                 DeleteAccountByIdCommandHandler,
                 {
-                    provide: DeleteAccountByIdService,
+                    provide : DeleteAccountByIdService,
                     useValue: {
-                        main: () => {},
-                    }
+                        main: () => { /**/ },
+                    },
                 },
             ],
         }).compile();
@@ -41,7 +41,7 @@ describe('DeleteAccountByIdCommandHandler', () =>
             expect(await commandHandler.execute(
                 new DeleteAccountByIdCommand(
                     accounts[0].id,
-                )
+                ),
             )).toBe(undefined);
         });
     });

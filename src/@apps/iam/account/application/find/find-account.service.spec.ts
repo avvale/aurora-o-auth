@@ -22,13 +22,14 @@ describe('FindAccountService', () =>
                 FindAccountService,
                 MockAccountRepository,
                 {
-                    provide: IAccountRepository,
+                    provide : IAccountRepository,
                     useValue: {
-                        find: (queryStatement) => {}
-                    }
-                }
-            ]
-        }).compile();
+                        find: () => { /**/ },
+                    },
+                },
+            ],
+        })
+            .compile();
 
         service         = module.get(FindAccountService);
         repository      = module.get(IAccountRepository);

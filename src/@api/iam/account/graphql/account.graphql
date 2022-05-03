@@ -10,6 +10,7 @@ type IamAccount
     email: GraphQLString!
     isActive: GraphQLBoolean!
     clientId: ID!
+    client: OAuthClient
     dApplicationCodes: JSON!
     dPermissions: JSON!
     dTenants: JSON!

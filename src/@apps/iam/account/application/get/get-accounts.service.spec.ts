@@ -22,12 +22,12 @@ describe('GetAccountsService', () =>
                 GetAccountsService,
                 MockAccountRepository,
                 {
-                    provide: IAccountRepository,
+                    provide : IAccountRepository,
                     useValue: {
-                        get: (queryStatement) => {}
-                    }
-                }
-            ]
+                        get: () => { /**/ },
+                    },
+                },
+            ],
         }).compile();
 
         service         = module.get(GetAccountsService);

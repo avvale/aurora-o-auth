@@ -24,7 +24,8 @@ describe('CreateAccountsCommandHandler', () =>
                     },
                 },
             ],
-        }).compile();
+        })
+            .compile();
 
         commandHandler  = module.get<CreateAccountsCommandHandler>(CreateAccountsCommandHandler);
         service         = module.get<CreateAccountsService>(CreateAccountsService);

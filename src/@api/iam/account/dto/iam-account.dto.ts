@@ -2,6 +2,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IamRoleDto } from '../../../iam/role/dto/iam-role.dto';
 import { IamTenantDto } from '../../../iam/tenant/dto/iam-tenant.dto';
+import { OAuthClientDto } from '../../../o-auth/client/dto/o-auth-client.dto';
 import { IamUserDto } from '../../../iam/user/dto/iam-user.dto';
 import { IamAccountType } from '../../../../graphql';
 
@@ -38,8 +39,15 @@ export class IamAccountDto
     @ApiProperty({
         type       : String,
         description: 'clientId [input here api field description]',
+        example    : '6672bfd7-0fdc-4c6c-b74f-769ff8c8ba37',
     })
     clientId: string;
+
+    @ApiProperty({
+        type       : () => OAuthClientDto,
+        description: 'OAuthClient [input here api field description]',
+    })
+    client?: OAuthClientDto;
 
     @ApiProperty({
         type       : Object,
@@ -66,19 +74,19 @@ export class IamAccountDto
     data?: any;
 
     @ApiProperty({
-        type       : [IamRoleDto],
+        type       : () => [IamRoleDto],
         description: 'roles [input here api field description]',
     })
     roles?: IamRoleDto[];
 
     @ApiProperty({
-        type       : [IamTenantDto],
+        type       : () => [IamTenantDto],
         description: 'tenants [input here api field description]',
     })
     tenants?: IamTenantDto[];
 
     @ApiProperty({
-        type       : IamUserDto,
+        type       : () => IamUserDto,
         description: 'user [input here api field description]',
     })
     user?: IamUserDto;

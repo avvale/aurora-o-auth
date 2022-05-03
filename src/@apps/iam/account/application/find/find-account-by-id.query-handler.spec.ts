@@ -23,17 +23,17 @@ describe('FindAccountByIdQueryHandler', () =>
                 FindAccountByIdQueryHandler,
                 {
                     provide : IAccountRepository,
-                    useClass: MockAccountRepository
+                    useClass: MockAccountRepository,
                 },
                 {
                     provide : FindAccountByIdService,
                     useValue: {
-                        main: () => {},
-                    }
-                }
-            ]
+                        main: () => { /**/ },
+                    },
+                },
+            ],
         })
-        .compile();
+            .compile();
 
         queryHandler    = module.get<FindAccountByIdQueryHandler>(FindAccountByIdQueryHandler);
         service         = module.get<FindAccountByIdService>(FindAccountByIdService);
@@ -55,7 +55,7 @@ describe('FindAccountByIdQueryHandler', () =>
                 new FindAccountByIdQuery(
                     accounts[0].id,
 
-                )
+                ),
             )).toStrictEqual(mapper.mapAggregateToResponse(repository.collectionSource[0]));
         });
     });

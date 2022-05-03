@@ -22,17 +22,17 @@ describe('GetAccountsQueryHandler', () =>
                 GetAccountsQueryHandler,
                 {
                     provide : IAccountRepository,
-                    useClass: MockAccountRepository
+                    useClass: MockAccountRepository,
                 },
                 {
                     provide : GetAccountsService,
                     useValue: {
-                        main: () => {},
-                    }
-                }
-            ]
+                        main: () => { /**/ },
+                    },
+                },
+            ],
         })
-        .compile();
+            .compile();
 
         queryHandler    = module.get<GetAccountsQueryHandler>(GetAccountsQueryHandler);
         service         = module.get<GetAccountsService>(GetAccountsService);
@@ -51,7 +51,7 @@ describe('GetAccountsQueryHandler', () =>
         {
             jest.spyOn(service, 'main').mockImplementation(() => new Promise(resolve => resolve(repository.collectionSource)));
             expect(await queryHandler.execute(
-                new GetAccountsQuery()
+                new GetAccountsQuery(),
             )).toStrictEqual(mapper.mapAggregatesToResponses(repository.collectionSource));
         });
     });

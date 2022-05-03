@@ -43,7 +43,7 @@ describe('CreateAccountService', () =>
                 {
                     provide : IAccountRepository,
                     useValue: {
-                        create: (item) => { /**/ },
+                        create: () => { /**/ },
                     },
                 },
             ],

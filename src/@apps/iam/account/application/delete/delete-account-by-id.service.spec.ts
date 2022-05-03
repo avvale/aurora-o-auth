@@ -29,9 +29,9 @@ describe('DeleteAccountByIdService', () =>
                     useValue: {
                         deleteById: id => { /**/ },
                         findById  : id => { /**/ },
-                    }
+                    },
                 },
-            ]
+            ],
         }).compile();
 
         service         = module.get(DeleteAccountByIdService);
@@ -50,7 +50,7 @@ describe('DeleteAccountByIdService', () =>
         {
             jest.spyOn(repository, 'findById').mockImplementation(() => new Promise(resolve => resolve(mockRepository.collectionSource[0])));
             expect(await service.main(
-                new AccountId(accounts[0].id)
+                new AccountId(accounts[0].id),
             )).toBe(undefined);
         });
     });

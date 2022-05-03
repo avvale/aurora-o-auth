@@ -265,6 +265,7 @@ export interface IamAccount {
     createdAt?: Nullable<GraphQLTimestamp>;
     updatedAt?: Nullable<GraphQLTimestamp>;
     deletedAt?: Nullable<GraphQLTimestamp>;
+    client?: Nullable<OAuthClient>;
 }
 
 export interface IQuery {
