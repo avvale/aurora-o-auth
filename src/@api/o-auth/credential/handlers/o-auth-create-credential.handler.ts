@@ -64,6 +64,7 @@ export class OAuthCreateCredentialHandler
                 {
                     id                : accessTokenId,
                     clientId          : client.id,
+                    scopes            : client.scopes,
                     accountId         : account.id,
                     name              : client.name,
                     expiredAccessToken: client.expiredAccessToken,
@@ -128,6 +129,7 @@ export class OAuthCreateCredentialHandler
                 {
                     id                : accessTokenId,
                     clientId          : client.id,
+                    scopes            : client.scopes,
                     accountId         : user.account.id,
                     name              : client.name,
                     expiredAccessToken: client.expiredAccessToken,

@@ -6,6 +6,7 @@ export class CreateAccessTokenCommand
         public readonly payload: {
             id: string;
             clientId: string;
+            scopes?: string[];
             accountId?: string;
             name?: string;
             expiredAccessToken: number;

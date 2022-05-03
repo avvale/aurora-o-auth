@@ -255,6 +255,7 @@ export interface IamAccount {
     email: GraphQLString;
     isActive: GraphQLBoolean;
     clientId: string;
+    client?: Nullable<OAuthClient>;
     dApplicationCodes: JSON;
     dPermissions: JSON;
     dTenants: JSON;
@@ -265,7 +266,6 @@ export interface IamAccount {
     createdAt?: Nullable<GraphQLTimestamp>;
     updatedAt?: Nullable<GraphQLTimestamp>;
     deletedAt?: Nullable<GraphQLTimestamp>;
-    client?: Nullable<OAuthClient>;
 }
 
 export interface IQuery {

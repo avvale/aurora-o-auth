@@ -1,5 +1,6 @@
 export { AccessTokenId } from './access-token-id';
 export { AccessTokenClientId } from './access-token-client-id';
+export { AccessTokenScopes } from './access-token-scopes';
 export { AccessTokenAccountId } from './access-token-account-id';
 export { AccessTokenToken } from './access-token-token';
 export { AccessTokenName } from './access-token-name';

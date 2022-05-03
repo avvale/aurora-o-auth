@@ -44,6 +44,7 @@ describe('CreateAccessTokenCommandHandler', () =>
                     {
                         id                : accessTokens[0].id,
                         clientId          : accessTokens[0].clientId,
+                        scopes            : accessTokens[0].scopes,
                         accountId         : accessTokens[0].accountId,
                         name              : accessTokens[0].name,
                         expiredAccessToken: accessTokens[0].expiredAccessToken,

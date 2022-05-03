@@ -5,6 +5,7 @@ import { CQMetadata, Jwt, Utils } from 'aurora-ts-core';
 import {
     AccessTokenAccountId,
     AccessTokenClientId,
+    AccessTokenScopes,
     AccessTokenCreatedAt,
     AccessTokenExpiredAccessToken,
     AccessTokenExpiresAt,
@@ -30,6 +31,7 @@ export class CreateAccessTokenService
         payload: {
             id: AccessTokenId;
             clientId: AccessTokenClientId;
+            scopes: AccessTokenScopes;
             accountId: AccessTokenAccountId;
             name: AccessTokenName;
             expiredAccessToken: AccessTokenExpiredAccessToken;
@@ -40,12 +42,13 @@ export class CreateAccessTokenService
         // compose access token
         const momentExpiredAccessToken = payload.expiredAccessToken.value ? Utils.now().add(payload.expiredAccessToken.value, 'seconds') : null;
         const accessTokenPayload: Jwt = {
-            jit: payload.id.value,
-            aci: payload.accountId.value,
-            iss: 'Aurora OAuth',
-            iat: parseInt(Utils.now().format('X')),
-            nbf: parseInt(Utils.now().format('X')),
-            exp: momentExpiredAccessToken ? parseInt(momentExpiredAccessToken.format('X')) : null,
+            jit   : payload.id.value,
+            aci   : payload.accountId.value,
+            iss   : 'Aurora OAuth',
+            iat   : parseInt(Utils.now().format('X')),
+            nbf   : parseInt(Utils.now().format('X')),
+            exp   : momentExpiredAccessToken ? parseInt(momentExpiredAccessToken.format('X')) : null,
+            scopes: Array.isArray(payload.scopes.value) ? payload.scopes.value.join(' ') : undefined,
         };
 
         const accessTokenValueObject = new AccessTokenToken(this.jwtService.sign(accessTokenPayload));
@@ -59,8 +62,8 @@ export class CreateAccessTokenService
             payload.name,
             new AccessTokenIsRevoked(false),
             new AccessTokenExpiresAt(momentExpiredAccessToken ? momentExpiredAccessToken.format('YYYY-MM-DD H:mm:ss') : null),
-            new AccessTokenCreatedAt({currentTimestamp: true}),
-            new AccessTokenUpdatedAt({currentTimestamp: true}),
+            new AccessTokenCreatedAt({ currentTimestamp: true }),
+            new AccessTokenUpdatedAt({ currentTimestamp: true }),
             null,
         );
 

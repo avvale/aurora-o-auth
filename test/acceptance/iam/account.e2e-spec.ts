@@ -123,6 +123,7 @@ describe('account', () =>
             },
             'Basic YXVyb3JhOiQyeSQxMCRFT0EvU0tFd0tSZ0hQdzY0a080TFouNm95NWI4a2w2SnpXL21DUk9NZlNxNlMzOC9JaXl3Rw==',
         );
+        console.log(credential);
     });
 
     test('/REST:POST iam/account/create - Got 400 Conflict, AccountId property can not to be null', () =>
