@@ -10,6 +10,7 @@ import {
     UserAccountId,
     UserName,
     UserSurname,
+    UserCode,
     UserAvatar,
     UserMobile,
     UserLangId,
@@ -43,7 +44,7 @@ describe('CreateUserService', () =>
                 {
                     provide : IUserRepository,
                     useValue: {
-                        create: (item) => { /**/ },
+                        create: () => { /**/ },
                     },
                 },
             ],
@@ -69,6 +70,7 @@ describe('CreateUserService', () =>
                     accountId: new UserAccountId(users[0].accountId),
                     name: new UserName(users[0].name),
                     surname: new UserSurname(users[0].surname),
+                    code: new UserCode(users[0].code),
                     avatar: new UserAvatar(users[0].avatar),
                     mobile: new UserMobile(users[0].mobile),
                     langId: new UserLangId(users[0].langId),

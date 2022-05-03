@@ -23,7 +23,8 @@ describe('CreateUserCommandHandler', () =>
                     },
                 },
             ],
-        }).compile();
+        })
+            .compile();
 
         commandHandler  = module.get<CreateUserCommandHandler>(CreateUserCommandHandler);
         service         = module.get<CreateUserService>(CreateUserService);
@@ -45,6 +46,7 @@ describe('CreateUserCommandHandler', () =>
                         accountId: users[0].accountId,
                         name: users[0].name,
                         surname: users[0].surname,
+                        code: users[0].code,
                         avatar: users[0].avatar,
                         mobile: users[0].mobile,
                         langId: users[0].langId,

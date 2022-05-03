@@ -23,17 +23,17 @@ describe('FindUserByIdQueryHandler', () =>
                 FindUserByIdQueryHandler,
                 {
                     provide : IUserRepository,
-                    useClass: MockUserRepository
+                    useClass: MockUserRepository,
                 },
                 {
                     provide : FindUserByIdService,
                     useValue: {
-                        main: () => {},
-                    }
-                }
-            ]
+                        main: () => { /**/ },
+                    },
+                },
+            ],
         })
-        .compile();
+            .compile();
 
         queryHandler    = module.get<FindUserByIdQueryHandler>(FindUserByIdQueryHandler);
         service         = module.get<FindUserByIdService>(FindUserByIdService);
@@ -55,7 +55,7 @@ describe('FindUserByIdQueryHandler', () =>
                 new FindUserByIdQuery(
                     users[0].id,
 
-                )
+                ),
             )).toStrictEqual(mapper.mapAggregateToResponse(repository.collectionSource[0]));
         });
     });

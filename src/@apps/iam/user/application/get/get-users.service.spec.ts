@@ -22,12 +22,12 @@ describe('GetUsersService', () =>
                 GetUsersService,
                 MockUserRepository,
                 {
-                    provide: IUserRepository,
+                    provide : IUserRepository,
                     useValue: {
-                        get: (queryStatement) => {}
-                    }
-                }
-            ]
+                        get: () => { /**/ },
+                    },
+                },
+            ],
         }).compile();
 
         service         = module.get(GetUsersService);

@@ -628,6 +628,7 @@ describe('client', () =>
                             secret
                             authUrl
                             redirect
+                            scopes
                             expiredAccessToken
                             expiredRefreshToken
                             isActive
@@ -703,6 +704,7 @@ describe('client', () =>
                             secret
                             authUrl
                             redirect
+                            scopes
                             expiredAccessToken
                             expiredRefreshToken
                             isActive
@@ -741,6 +743,7 @@ describe('client', () =>
                             secret
                             authUrl
                             redirect
+                            scopes
                             expiredAccessToken
                             expiredRefreshToken
                             isActive
@@ -779,6 +782,7 @@ describe('client', () =>
                             secret
                             authUrl
                             redirect
+                            scopes
                             expiredAccessToken
                             expiredRefreshToken
                             isActive
@@ -825,6 +829,7 @@ describe('client', () =>
                             secret
                             authUrl
                             redirect
+                            scopes
                             expiredAccessToken
                             expiredRefreshToken
                             isActive
@@ -869,6 +874,7 @@ describe('client', () =>
                             secret
                             authUrl
                             redirect
+                            scopes
                             expiredAccessToken
                             expiredRefreshToken
                             isActive
@@ -908,6 +914,7 @@ describe('client', () =>
                             secret
                             authUrl
                             redirect
+                            scopes
                             expiredAccessToken
                             expiredRefreshToken
                             isActive
@@ -945,6 +952,7 @@ describe('client', () =>
                             secret
                             authUrl
                             redirect
+                            scopes
                             expiredAccessToken
                             expiredRefreshToken
                             isActive
@@ -987,6 +995,7 @@ describe('client', () =>
                             secret
                             authUrl
                             redirect
+                            scopes
                             expiredAccessToken
                             expiredRefreshToken
                             isActive
@@ -1027,6 +1036,7 @@ describe('client', () =>
                             secret
                             authUrl
                             redirect
+                            scopes
                             expiredAccessToken
                             expiredRefreshToken
                             isActive
@@ -1066,6 +1076,7 @@ describe('client', () =>
                             secret
                             authUrl
                             redirect
+                            scopes
                             expiredAccessToken
                             expiredRefreshToken
                             isActive

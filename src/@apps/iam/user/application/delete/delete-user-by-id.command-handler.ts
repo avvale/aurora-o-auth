@@ -18,7 +18,7 @@ export class DeleteUserByIdCommandHandler implements ICommandHandler<DeleteUserB
         await this.deleteUserByIdService.main(
             new UserId(command.id),
             command.constraint,
-            command.cQMetadata
+            command.cQMetadata,
         );
     }
 }

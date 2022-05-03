@@ -119,6 +119,7 @@ export interface IamCreateUserInput {
     accountId: string;
     name: GraphQLString;
     surname?: Nullable<GraphQLString>;
+    code?: Nullable<GraphQLString>;
     avatar?: Nullable<GraphQLString>;
     mobile?: Nullable<GraphQLString>;
     langId?: Nullable<string>;
@@ -133,6 +134,7 @@ export interface IamUpdateUserInput {
     accountId?: Nullable<string>;
     name?: Nullable<GraphQLString>;
     surname?: Nullable<GraphQLString>;
+    code?: Nullable<GraphQLString>;
     avatar?: Nullable<GraphQLString>;
     mobile?: Nullable<GraphQLString>;
     langId?: Nullable<string>;
@@ -189,6 +191,7 @@ export interface OAuthCreateClientInput {
     secret: GraphQLString;
     authUrl?: Nullable<GraphQLString>;
     redirect?: Nullable<GraphQLString>;
+    scopes?: Nullable<JSON>;
     expiredAccessToken?: Nullable<GraphQLInt>;
     expiredRefreshToken?: Nullable<GraphQLInt>;
     isActive: GraphQLBoolean;
@@ -203,6 +206,7 @@ export interface OAuthUpdateClientInput {
     secret?: Nullable<GraphQLString>;
     authUrl?: Nullable<GraphQLString>;
     redirect?: Nullable<GraphQLString>;
+    scopes?: Nullable<JSON>;
     expiredAccessToken?: Nullable<GraphQLInt>;
     expiredRefreshToken?: Nullable<GraphQLInt>;
     isActive?: Nullable<GraphQLBoolean>;
@@ -409,6 +413,7 @@ export interface IamUser {
     account?: Nullable<IamAccount>;
     name: GraphQLString;
     surname?: Nullable<GraphQLString>;
+    code?: Nullable<GraphQLString>;
     avatar?: Nullable<GraphQLString>;
     mobile?: Nullable<GraphQLString>;
     langId?: Nullable<string>;
@@ -455,6 +460,7 @@ export interface OAuthClient {
     secret: GraphQLString;
     authUrl?: Nullable<GraphQLString>;
     redirect?: Nullable<GraphQLString>;
+    scopes?: Nullable<JSON>;
     expiredAccessToken?: Nullable<GraphQLInt>;
     expiredRefreshToken?: Nullable<GraphQLInt>;
     isActive: GraphQLBoolean;

@@ -17,7 +17,7 @@ export class PaginateUsersQueryHandler implements IQueryHandler<PaginateUsersQue
         return new PaginationResponse(
             total,
             count,
-            rows.map(item => item.toDTO())
+            rows.map(item => item.toDTO()),
         );
     }
 }

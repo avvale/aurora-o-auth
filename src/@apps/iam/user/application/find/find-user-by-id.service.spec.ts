@@ -24,13 +24,14 @@ describe('FindUserByIdService', () =>
                 FindUserByIdService,
                 MockUserRepository,
                 {
-                    provide: IUserRepository,
+                    provide : IUserRepository,
                     useValue: {
-                        findById: id => { /**/ }
-                    }
-                }
-            ]
-        }).compile();
+                        findById: id => { /**/ },
+                    },
+                },
+            ],
+        })
+            .compile();
 
         service         = module.get(FindUserByIdService);
         repository      = module.get(IUserRepository);
@@ -48,7 +49,7 @@ describe('FindUserByIdService', () =>
         {
             jest.spyOn(repository, 'findById').mockImplementation(() => new Promise(resolve => resolve(mockRepository.collectionSource[0])));
             expect(await service.main(
-                new UserId(users[0].id)
+                new UserId(users[0].id),
             )).toBe(mockRepository.collectionSource[0]);
         });
     });

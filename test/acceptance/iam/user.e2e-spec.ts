@@ -1,6 +1,5 @@
 /* eslint-disable quotes */
 /* eslint-disable key-spacing */
-import * as fs from 'fs';
 import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -584,6 +583,7 @@ describe('user', () =>
                             accountId
                             name
                             surname
+                            code
                             avatar
                             mobile
                             langId
@@ -660,6 +660,7 @@ describe('user', () =>
                             accountId
                             name
                             surname
+                            code
                             avatar
                             mobile
                             langId
@@ -699,6 +700,7 @@ describe('user', () =>
                             accountId
                             name
                             surname
+                            code
                             avatar
                             mobile
                             langId
@@ -738,6 +740,7 @@ describe('user', () =>
                             accountId
                             name
                             surname
+                            code
                             avatar
                             mobile
                             langId
@@ -785,6 +788,7 @@ describe('user', () =>
                             accountId
                             name
                             surname
+                            code
                             avatar
                             mobile
                             langId
@@ -830,6 +834,7 @@ describe('user', () =>
                             accountId
                             name
                             surname
+                            code
                             avatar
                             mobile
                             langId
@@ -870,6 +875,7 @@ describe('user', () =>
                             accountId
                             name
                             surname
+                            code
                             avatar
                             mobile
                             langId
@@ -908,6 +914,7 @@ describe('user', () =>
                             accountId
                             name
                             surname
+                            code
                             avatar
                             mobile
                             langId
@@ -951,6 +958,7 @@ describe('user', () =>
                             accountId
                             name
                             surname
+                            code
                             avatar
                             mobile
                             langId
@@ -992,6 +1000,7 @@ describe('user', () =>
                             accountId
                             name
                             surname
+                            code
                             avatar
                             mobile
                             langId
@@ -1032,6 +1041,7 @@ describe('user', () =>
                             accountId
                             name
                             surname
+                            code
                             avatar
                             mobile
                             langId

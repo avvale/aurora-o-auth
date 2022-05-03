@@ -13,12 +13,12 @@ export class IamUserDto
     @ApiProperty({
         type       : String,
         description: 'accountId [input here api field description]',
-        example    : '6cf3d665-db85-4536-9867-d13c97d1145b',
+        example    : 'f1ea8201-5152-4604-bc7b-023ed8d8e85d',
     })
     accountId: string;
 
     @ApiProperty({
-        type       : IamAccountDto,
+        type       : () => IamAccountDto,
         description: 'accountId [input here api field description]',
     })
     account?: IamAccountDto;
@@ -34,6 +34,12 @@ export class IamUserDto
         description: 'surname [input here api field description]',
     })
     surname?: string;
+
+    @ApiProperty({
+        type       : String,
+        description: 'code [input here api field description]',
+    })
+    code?: string;
 
     @ApiProperty({
         type       : String,

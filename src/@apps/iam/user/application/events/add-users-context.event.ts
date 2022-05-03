@@ -9,7 +9,8 @@ export class AddUsersContextEvent extends AggregateRoot
 {
     constructor(
         public readonly aggregateRoots: IamUser[] = [],
-    ) {
+    )
+    {
         super();
     }
 
@@ -18,7 +19,7 @@ export class AddUsersContextEvent extends AggregateRoot
         for (const aggregateRoot of this.aggregateRoots) yield aggregateRoot;
     }
 
-    created()
+    created(): void
     {
         this.apply(
             new CreatedUsersEvent(
@@ -28,6 +29,7 @@ export class AddUsersContextEvent extends AggregateRoot
                         user.accountId.value,
                         user.name.value,
                         user.surname?.value,
+                        user.code?.value,
                         user.avatar?.value,
                         user.mobile?.value,
                         user.langId?.value,
@@ -38,13 +40,13 @@ export class AddUsersContextEvent extends AggregateRoot
                         user.createdAt?.value,
                         user.updatedAt?.value,
                         user.deletedAt?.value,
-                    )
-                )
-            )
+                    ),
+                ),
+            ),
         );
     }
 
-    deleted()
+    deleted(): void
     {
         this.apply(
             new DeletedUsersEvent(
@@ -54,6 +56,7 @@ export class AddUsersContextEvent extends AggregateRoot
                         user.accountId.value,
                         user.name.value,
                         user.surname?.value,
+                        user.code?.value,
                         user.avatar?.value,
                         user.mobile?.value,
                         user.langId?.value,
@@ -64,9 +67,9 @@ export class AddUsersContextEvent extends AggregateRoot
                         user.createdAt?.value,
                         user.updatedAt?.value,
                         user.deletedAt?.value,
-                    )
-                )
-            )
+                    ),
+                ),
+            ),
         );
     }
 }

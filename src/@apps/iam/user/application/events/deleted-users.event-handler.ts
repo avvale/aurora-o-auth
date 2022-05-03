@@ -4,7 +4,7 @@ import { DeletedUsersEvent } from './deleted-users.event';
 @EventsHandler(DeletedUsersEvent)
 export class DeletedUsersEventHandler implements IEventHandler<DeletedUsersEvent>
 {
-    handle(event: DeletedUsersEvent)
+    handle(event: DeletedUsersEvent): void
     {
         // console.log('DeletedUsersEvent: ', event);
     }

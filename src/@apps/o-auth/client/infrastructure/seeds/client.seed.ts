@@ -9,6 +9,7 @@ export const clients = [
         secret             : 'om9QPNdkNJc09JgzTTwvcL4897E5EhbAGWqwkwtA',
         authUrl            : null,
         redirect           : null,
+        scopes             : ['write', 'read'],
         expiredAccessToken : 3600,
         expiredRefreshToken: 7200,
         isActive           : true,

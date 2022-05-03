@@ -22,17 +22,17 @@ describe('FindUserQueryHandler', () =>
                 FindUserQueryHandler,
                 {
                     provide : IUserRepository,
-                    useClass: MockUserRepository
+                    useClass: MockUserRepository,
                 },
                 {
                     provide : FindUserService,
                     useValue: {
-                        main: () => {},
-                    }
-                }
-            ]
+                        main: () => { /**/ },
+                    },
+                },
+            ],
         })
-        .compile();
+            .compile();
 
         queryHandler    = module.get<FindUserQueryHandler>(FindUserQueryHandler);
         service         = module.get<FindUserService>(FindUserService);
@@ -51,7 +51,7 @@ describe('FindUserQueryHandler', () =>
         {
             jest.spyOn(service, 'main').mockImplementation(() => new Promise(resolve => resolve(repository.collectionSource[0])));
             expect(await queryHandler.execute(
-                new FindUserQuery()
+                new FindUserQuery(),
             )).toStrictEqual(mapper.mapAggregateToResponse(repository.collectionSource[0]));
         });
     });

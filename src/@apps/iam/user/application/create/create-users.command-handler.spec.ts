@@ -24,7 +24,8 @@ describe('CreateUsersCommandHandler', () =>
                     },
                 },
             ],
-        }).compile();
+        })
+            .compile();
 
         commandHandler  = module.get<CreateUsersCommandHandler>(CreateUsersCommandHandler);
         service         = module.get<CreateUsersService>(CreateUsersService);

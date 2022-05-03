@@ -7,6 +7,7 @@ import {
     UserAccountId,
     UserName,
     UserSurname,
+    UserCode,
     UserAvatar,
     UserMobile,
     UserLangId,
@@ -29,6 +30,7 @@ export class IamUser extends AggregateRoot
     accountId: UserAccountId;
     name: UserName;
     surname: UserSurname;
+    code: UserCode;
     avatar: UserAvatar;
     mobile: UserMobile;
     langId: UserLangId;
@@ -48,6 +50,7 @@ export class IamUser extends AggregateRoot
         accountId: UserAccountId,
         name: UserName,
         surname: UserSurname,
+        code: UserCode,
         avatar: UserAvatar,
         mobile: UserMobile,
         langId: UserLangId,
@@ -67,6 +70,7 @@ export class IamUser extends AggregateRoot
         this.accountId = accountId;
         this.name = name;
         this.surname = surname;
+        this.code = code;
         this.avatar = avatar;
         this.mobile = mobile;
         this.langId = langId;
@@ -87,6 +91,7 @@ export class IamUser extends AggregateRoot
         accountId: UserAccountId,
         name: UserName,
         surname: UserSurname,
+        code: UserCode,
         avatar: UserAvatar,
         mobile: UserMobile,
         langId: UserLangId,
@@ -106,6 +111,7 @@ export class IamUser extends AggregateRoot
             accountId,
             name,
             surname,
+            code,
             avatar,
             mobile,
             langId,
@@ -129,6 +135,7 @@ export class IamUser extends AggregateRoot
                 user.accountId.value,
                 user.name.value,
                 user.surname?.value,
+                user.code?.value,
                 user.avatar?.value,
                 user.mobile?.value,
                 user.langId?.value,
@@ -151,6 +158,7 @@ export class IamUser extends AggregateRoot
                 user.accountId?.value,
                 user.name?.value,
                 user.surname?.value,
+                user.code?.value,
                 user.avatar?.value,
                 user.mobile?.value,
                 user.langId?.value,
@@ -173,6 +181,7 @@ export class IamUser extends AggregateRoot
                 user.accountId.value,
                 user.name.value,
                 user.surname?.value,
+                user.code?.value,
                 user.avatar?.value,
                 user.mobile?.value,
                 user.langId?.value,
@@ -194,6 +203,7 @@ export class IamUser extends AggregateRoot
             accountId: this.accountId.value,
             name: this.name.value,
             surname: this.surname?.value,
+            code: this.code?.value,
             avatar: this.avatar?.value,
             mobile: this.mobile?.value,
             langId: this.langId?.value,

@@ -22,13 +22,14 @@ describe('FindUserService', () =>
                 FindUserService,
                 MockUserRepository,
                 {
-                    provide: IUserRepository,
+                    provide : IUserRepository,
                     useValue: {
-                        find: (queryStatement) => {}
-                    }
-                }
-            ]
-        }).compile();
+                        find: () => { /**/ },
+                    },
+                },
+            ],
+        })
+            .compile();
 
         service         = module.get(FindUserService);
         repository      = module.get(IUserRepository);

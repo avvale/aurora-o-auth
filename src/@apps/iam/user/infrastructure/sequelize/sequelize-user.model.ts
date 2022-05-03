@@ -40,6 +40,14 @@ export class IamUserModel extends Model<IamUserModel>
     })
     surname: string;
 
+    @Index
+    @Column({
+        field: 'code',
+        allowNull: true,
+        type: DataTypes.STRING(50),
+    })
+    code: string;
+
     @Column({
         field: 'avatar',
         allowNull: true,
