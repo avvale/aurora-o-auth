@@ -1,22 +1,34 @@
 /* eslint-disable quotes */
 /* eslint-disable key-spacing */
-import * as fs from 'fs';
 import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { JwtModuleOptions } from '@nestjs/jwt';
 import { IBoundedContextRepository } from '../../../src/@apps/iam/bounded-context/domain/bounded-context.repository';
 import { MockBoundedContextSeeder } from '../../../src/@apps/iam/bounded-context/infrastructure/mock/mock-bounded-context.seeder';
 import { boundedContexts } from '../../../src/@apps/iam/bounded-context/infrastructure/seeds/bounded-context.seed';
 import { GraphQLConfigModule } from '../../../src/@aurora/graphql/graphql-config.module';
 import { IamModule } from '../../../src/@api/iam/iam.module';
+import { OAuthClientGrantType, OAuthCredential } from '../../../src/graphql';
 import * as request from 'supertest';
 import * as _ from 'lodash';
 
 // ---- customizations ----
+import { jwtConfig } from '../../../src/@apps/o-auth/shared/jwt-config';
+import { AuthorizationGuard } from '../../../src/@api/iam/shared/guards/authorization.guard';
 import { AuthModule } from '../../../src/@apps/o-auth/shared/modules/auth.module';
 import { OAuthModule } from '../../../src/@api/o-auth/o-auth.module';
+import { MockApplicationSeeder } from '../../../src/@apps/o-auth/application/infrastructure/mock/mock-application.seeder';
+import { OAuthCreateCredentialHandler } from '../../../src/@api/o-auth/credential/handlers/o-auth-create-credential.handler';
+import { IApplicationRepository } from '../../../src/@apps/o-auth/application/domain/application.repository';
+import { MockAccessTokenSeeder } from '../../../src/@apps/o-auth/access-token/infrastructure/mock/mock-access-token.seeder';
+import { IAccessTokenRepository } from '../../../src/@apps/o-auth/access-token';
+import { MockClientSeeder } from '../../../src/@apps/o-auth/client/infrastructure/mock/mock-client.seeder';
+import { IClientRepository } from '../../../src/@apps/o-auth/client';
+import { MockAccountSeeder } from '../../../src/@apps/iam/account/infrastructure/mock/mock-account.seeder';
+import { IAccountRepository } from '../../../src/@apps/iam/account/domain/account.repository';
+import { MockUserSeeder } from '../../../src/@apps/iam/user/infrastructure/mock/mock-user.seeder';
+import { IUserRepository } from '../../../src/@apps/iam/user/domain/user.repository';
 
 // disable import foreign modules, can be micro-services
 const importForeignModules = [];
@@ -24,11 +36,20 @@ const importForeignModules = [];
 describe('bounded-context', () =>
 {
     let app: INestApplication;
-    let repository: IBoundedContextRepository;
-    let seeder: MockBoundedContextSeeder;
-    const jwtOptions: JwtModuleOptions = {
-        secret: '1234567890',
-    };
+    let credential: OAuthCredential;
+    let boundedContextRepository: IBoundedContextRepository;
+    let boundedContextSeeder: MockBoundedContextSeeder;
+    let oAuthCreateCredentialHandler: OAuthCreateCredentialHandler;
+    let applicationRepository: IApplicationRepository;
+    let applicationSeeder: MockApplicationSeeder;
+    let accessTokenRepository: IAccessTokenRepository;
+    let accessTokenSeeder: MockAccessTokenSeeder;
+    let clientRepository: IClientRepository;
+    let clientSeeder: MockClientSeeder;
+    let accountRepository: IAccountRepository;
+    let accountSeeder: MockAccountSeeder;
+    let userRepository: IUserRepository;
+    let userSeeder: MockUserSeeder;
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let mockData: any;
@@ -40,7 +61,7 @@ describe('bounded-context', () =>
                 ...importForeignModules,
                 IamModule,
                 OAuthModule,
-                AuthModule.forRoot(jwtOptions),
+                AuthModule.forRoot(jwtConfig),
                 GraphQLConfigModule,
                 SequelizeModule.forRootAsync({
                     imports   : [ConfigModule],
@@ -65,19 +86,51 @@ describe('bounded-context', () =>
             ],
             providers: [
                 MockBoundedContextSeeder,
+                MockApplicationSeeder,
+                MockAccessTokenSeeder,
+                MockAccountSeeder,
+                MockClientSeeder,
+                MockUserSeeder,
             ],
         })
+            .overrideGuard(AuthorizationGuard)
+            .useValue({ canActivate: () => true })
             .compile();
 
-        mockData        = boundedContexts;
-        app             = module.createNestApplication();
-        repository      = module.get<IBoundedContextRepository>(IBoundedContextRepository);
-        seeder          = module.get<MockBoundedContextSeeder>(MockBoundedContextSeeder);
+        mockData                        = boundedContexts;
+        app                             = module.createNestApplication();
+        boundedContextRepository        = module.get<IBoundedContextRepository>(IBoundedContextRepository);
+        boundedContextSeeder            = module.get<MockBoundedContextSeeder>(MockBoundedContextSeeder);
+        oAuthCreateCredentialHandler    = module.get<OAuthCreateCredentialHandler>(OAuthCreateCredentialHandler);
+        accountRepository               = module.get<IAccountRepository>(IAccountRepository);
+        accountSeeder                   = module.get<MockAccountSeeder>(MockAccountSeeder);
+        applicationRepository           = module.get<IApplicationRepository>(IApplicationRepository);
+        applicationSeeder               = module.get<MockApplicationSeeder>(MockApplicationSeeder);
+        clientRepository                = module.get<IClientRepository>(IClientRepository);
+        clientSeeder                    = module.get<MockClientSeeder>(MockClientSeeder);
+        accessTokenRepository           = module.get<IAccessTokenRepository>(IAccessTokenRepository);
+        accessTokenSeeder               = module.get<MockAccessTokenSeeder>(MockAccessTokenSeeder);
+        userRepository                  = module.get<IUserRepository>(IUserRepository);
+        userSeeder                      = module.get<MockUserSeeder>(MockUserSeeder);
 
         // seed mock data in memory database
-        await repository.insert(seeder.collectionSource);
+        await boundedContextRepository.insert(boundedContextSeeder.collectionSource);
+        await applicationRepository.insert(applicationSeeder.collectionSource);
+        await clientRepository.insert(clientSeeder.collectionSource);
+        await accountRepository.insert(accountSeeder.collectionSource);
+        await accessTokenRepository.insert(accessTokenSeeder.collectionSource);
+        await userRepository.insert(userSeeder.collectionSource);
 
         await app.init();
+
+        credential = await oAuthCreateCredentialHandler.main(
+            {
+                username: 'john.doe@gmail.com',
+                password: '1111',
+                grantType: OAuthClientGrantType.PASSWORD,
+            },
+            'Basic YXVyb3JhOiQyeSQxMCRFT0EvU0tFd0tSZ0hQdzY0a080TFouNm95NWI4a2w2SnpXL21DUk9NZlNxNlMzOC9JaXl3Rw==',
+        );
     });
 
     test('/REST:POST iam/bounded-context/create - Got 400 Conflict, BoundedContextId property can not to be null', () =>
@@ -85,6 +138,7 @@ describe('bounded-context', () =>
         return request(app.getHttpServer())
             .post('/iam/bounded-context/create')
             .set('Accept', 'application/json')
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
                 ...{ id: null },
@@ -101,6 +155,7 @@ describe('bounded-context', () =>
         return request(app.getHttpServer())
             .post('/iam/bounded-context/create')
             .set('Accept', 'application/json')
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
                 ...{ name: null },
@@ -117,6 +172,7 @@ describe('bounded-context', () =>
         return request(app.getHttpServer())
             .post('/iam/bounded-context/create')
             .set('Accept', 'application/json')
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
                 ...{ root: null },
@@ -133,6 +189,7 @@ describe('bounded-context', () =>
         return request(app.getHttpServer())
             .post('/iam/bounded-context/create')
             .set('Accept', 'application/json')
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
                 ...{ isActive: null },
@@ -149,6 +206,7 @@ describe('bounded-context', () =>
         return request(app.getHttpServer())
             .post('/iam/bounded-context/create')
             .set('Accept', 'application/json')
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
                 ...{ id: undefined },
@@ -165,6 +223,7 @@ describe('bounded-context', () =>
         return request(app.getHttpServer())
             .post('/iam/bounded-context/create')
             .set('Accept', 'application/json')
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
                 ...{ name: undefined },
@@ -181,6 +240,7 @@ describe('bounded-context', () =>
         return request(app.getHttpServer())
             .post('/iam/bounded-context/create')
             .set('Accept', 'application/json')
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
                 ...{ root: undefined },
@@ -197,6 +257,7 @@ describe('bounded-context', () =>
         return request(app.getHttpServer())
             .post('/iam/bounded-context/create')
             .set('Accept', 'application/json')
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
                 ...{ isActive: undefined },
@@ -213,6 +274,7 @@ describe('bounded-context', () =>
         return request(app.getHttpServer())
             .post('/iam/bounded-context/create')
             .set('Accept', 'application/json')
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
                 ...{ id: '*************************************' },
@@ -229,6 +291,7 @@ describe('bounded-context', () =>
         return request(app.getHttpServer())
             .post('/iam/bounded-context/create')
             .set('Accept', 'application/json')
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
                 ...{ name: '****************************************************************************************************************************************************************************************************************************************************************' },
@@ -245,6 +308,7 @@ describe('bounded-context', () =>
         return request(app.getHttpServer())
             .post('/iam/bounded-context/create')
             .set('Accept', 'application/json')
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
                 ...{ root: '*******************************' },
@@ -261,6 +325,7 @@ describe('bounded-context', () =>
         return request(app.getHttpServer())
             .post('/iam/bounded-context/create')
             .set('Accept', 'application/json')
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
                 ...{ sort: 1111111 },
@@ -277,6 +342,7 @@ describe('bounded-context', () =>
         return request(app.getHttpServer())
             .post('/iam/bounded-context/create')
             .set('Accept', 'application/json')
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
                 ...{ isActive: 'true' },
@@ -293,6 +359,7 @@ describe('bounded-context', () =>
         return request(app.getHttpServer())
             .post('/iam/bounded-context/create')
             .set('Accept', 'application/json')
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send(mockData[0])
             .expect(409);
     });
@@ -302,6 +369,7 @@ describe('bounded-context', () =>
         return request(app.getHttpServer())
             .post('/iam/bounded-contexts/paginate')
             .set('Accept', 'application/json')
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 query:
                 {
@@ -313,9 +381,9 @@ describe('bounded-context', () =>
             .then(res =>
             {
                 expect(res.body).toEqual({
-                    total: seeder.collectionResponse.length,
-                    count: seeder.collectionResponse.length,
-                    rows : seeder.collectionResponse.map(item => expect.objectContaining(_.omit(item, ['createdAt', 'updatedAt', 'deletedAt']))).slice(0, 5),
+                    total: boundedContextSeeder.collectionResponse.length,
+                    count: boundedContextSeeder.collectionResponse.length,
+                    rows : boundedContextSeeder.collectionResponse.map(item => expect.objectContaining(_.omit(item, ['createdAt', 'updatedAt', 'deletedAt']))).slice(0, 5),
                 });
             });
     });
@@ -325,11 +393,12 @@ describe('bounded-context', () =>
         return request(app.getHttpServer())
             .post('/iam/bounded-contexts/get')
             .set('Accept', 'application/json')
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .expect(200)
             .then(res =>
             {
                 expect(res.body).toEqual(
-                    seeder.collectionResponse.map(item => expect.objectContaining(_.omit(item, ['createdAt', 'updatedAt', 'deletedAt']))),
+                    boundedContextSeeder.collectionResponse.map(item => expect.objectContaining(_.omit(item, ['createdAt', 'updatedAt', 'deletedAt']))),
                 );
             });
     });
@@ -339,6 +408,7 @@ describe('bounded-context', () =>
         return request(app.getHttpServer())
             .post('/iam/bounded-context/find')
             .set('Accept', 'application/json')
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 query:
                 {
@@ -356,6 +426,7 @@ describe('bounded-context', () =>
         return request(app.getHttpServer())
             .post('/iam/bounded-context/create')
             .set('Accept', 'application/json')
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
                 ...{ id: '5b19d6ac-4081-573b-96b3-56964d5326a8' },
@@ -368,6 +439,7 @@ describe('bounded-context', () =>
         return request(app.getHttpServer())
             .post('/iam/bounded-context/find')
             .set('Accept', 'application/json')
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 query:
                 {
@@ -389,6 +461,7 @@ describe('bounded-context', () =>
         return request(app.getHttpServer())
             .get('/iam/bounded-context/find/512ad7c1-477e-4db8-b880-de3838959211')
             .set('Accept', 'application/json')
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .expect(404);
     });
 
@@ -397,6 +470,7 @@ describe('bounded-context', () =>
         return request(app.getHttpServer())
             .get('/iam/bounded-context/find/5b19d6ac-4081-573b-96b3-56964d5326a8')
             .set('Accept', 'application/json')
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .expect(200)
             .then(res =>
             {
@@ -409,6 +483,7 @@ describe('bounded-context', () =>
         return request(app.getHttpServer())
             .put('/iam/bounded-context/update')
             .set('Accept', 'application/json')
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
                 ...{ id: '4bfe3bb2-be1f-4ec5-ad74-7550d7ffb13e' },
@@ -421,6 +496,7 @@ describe('bounded-context', () =>
         return request(app.getHttpServer())
             .put('/iam/bounded-context/update')
             .set('Accept', 'application/json')
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
                 name: 'Ergonomic Fresh Car',
@@ -440,6 +516,7 @@ describe('bounded-context', () =>
         return request(app.getHttpServer())
             .delete('/iam/bounded-context/delete/bb579b73-7b8f-4ab0-9fab-d892e95d2374')
             .set('Accept', 'application/json')
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .expect(404);
     });
 
@@ -448,6 +525,7 @@ describe('bounded-context', () =>
         return request(app.getHttpServer())
             .delete('/iam/bounded-context/delete/5b19d6ac-4081-573b-96b3-56964d5326a8')
             .set('Accept', 'application/json')
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .expect(200);
     });
 
@@ -456,6 +534,7 @@ describe('bounded-context', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 query: `
                     mutation ($payload:IamCreateBoundedContextInput!)
@@ -489,6 +568,7 @@ describe('bounded-context', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 query: `
                     query ($query:QueryStatement $constraint:QueryStatement)
@@ -514,9 +594,9 @@ describe('bounded-context', () =>
             .then(res =>
             {
                 expect(res.body.data.iamPaginateBoundedContexts).toEqual({
-                    total: seeder.collectionResponse.length,
-                    count: seeder.collectionResponse.length,
-                    rows : seeder.collectionResponse.map(item => expect.objectContaining(_.omit(item, ['createdAt', 'updatedAt', 'deletedAt']))).slice(0, 5),
+                    total: boundedContextSeeder.collectionResponse.length,
+                    count: boundedContextSeeder.collectionResponse.length,
+                    rows : boundedContextSeeder.collectionResponse.map(item => expect.objectContaining(_.omit(item, ['createdAt', 'updatedAt', 'deletedAt']))).slice(0, 5),
                 });
             });
     });
@@ -526,6 +606,7 @@ describe('bounded-context', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 query: `
                     query ($query:QueryStatement)
@@ -549,7 +630,7 @@ describe('bounded-context', () =>
             {
                 for (const [index, value] of res.body.data.iamGetBoundedContexts.entries())
                 {
-                    expect(seeder.collectionResponse[index]).toEqual(expect.objectContaining(_.omit(value, ['createdAt', 'updatedAt', 'deletedAt'])));
+                    expect(boundedContextSeeder.collectionResponse[index]).toEqual(expect.objectContaining(_.omit(value, ['createdAt', 'updatedAt', 'deletedAt'])));
                 }
             });
     });
@@ -559,6 +640,7 @@ describe('bounded-context', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 query: `
                     mutation ($payload:IamCreateBoundedContextInput!)
@@ -595,6 +677,7 @@ describe('bounded-context', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 query: `
                     query ($query:QueryStatement)
@@ -636,6 +719,7 @@ describe('bounded-context', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 query: `
                     query ($query:QueryStatement)
@@ -675,6 +759,7 @@ describe('bounded-context', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 query: `
                     query ($id:ID!)
@@ -709,6 +794,7 @@ describe('bounded-context', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 query: `
                     query ($id:ID!)
@@ -741,6 +827,7 @@ describe('bounded-context', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 query: `
                     mutation ($payload:IamUpdateBoundedContextInput!)
@@ -778,6 +865,7 @@ describe('bounded-context', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 query: `
                     mutation ($payload:IamUpdateBoundedContextInput!)
@@ -816,6 +904,7 @@ describe('bounded-context', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 query: `
                     mutation ($id:ID!)
@@ -850,6 +939,7 @@ describe('bounded-context', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
+            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 query: `
                     mutation ($id:ID!)
@@ -879,7 +969,7 @@ describe('bounded-context', () =>
 
     afterAll(async () =>
     {
-        await repository.delete({
+        await boundedContextRepository.delete({
             queryStatement: {
                 where: {},
             },
