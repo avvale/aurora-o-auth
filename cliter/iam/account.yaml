@@ -32,7 +32,12 @@ aggregateProperties:
     type: id
     length: 36
     nullable: false
-    index: index
+    relationship: many-to-one
+    relationshipAggregate: OAuthClient
+    relationshipModulePath: o-auth/client
+    relationshipKey: id
+    relationshipField: client
+    relationshipAvoidConstraint: true
   - name: dApplicationCodes
     type: json
     nullable: false
