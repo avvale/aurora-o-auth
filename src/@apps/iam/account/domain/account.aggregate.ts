@@ -11,6 +11,7 @@ import {
     AccountDApplicationCodes,
     AccountDPermissions,
     AccountDTenants,
+    AccountDScopes,
     AccountData,
     AccountRoleIds,
     AccountTenantIds,
@@ -36,6 +37,7 @@ export class IamAccount extends AggregateRoot
     dApplicationCodes: AccountDApplicationCodes;
     dPermissions: AccountDPermissions;
     dTenants: AccountDTenants;
+    dScopes: AccountDScopes;
     data: AccountData;
     roleIds: AccountRoleIds;
     tenantIds: AccountTenantIds;
@@ -58,6 +60,7 @@ export class IamAccount extends AggregateRoot
         dApplicationCodes: AccountDApplicationCodes,
         dPermissions: AccountDPermissions,
         dTenants: AccountDTenants,
+        dScopes: AccountDScopes,
         data: AccountData,
         roleIds: AccountRoleIds,
         tenantIds: AccountTenantIds,
@@ -80,6 +83,7 @@ export class IamAccount extends AggregateRoot
         this.dApplicationCodes = dApplicationCodes;
         this.dPermissions = dPermissions;
         this.dTenants = dTenants;
+        this.dScopes = dScopes;
         this.data = data;
         this.roleIds = roleIds;
         this.tenantIds = tenantIds;
@@ -103,6 +107,7 @@ export class IamAccount extends AggregateRoot
         dApplicationCodes: AccountDApplicationCodes,
         dPermissions: AccountDPermissions,
         dTenants: AccountDTenants,
+        dScopes: AccountDScopes,
         data: AccountData,
         roleIds: AccountRoleIds,
         tenantIds: AccountTenantIds,
@@ -125,6 +130,7 @@ export class IamAccount extends AggregateRoot
             dApplicationCodes,
             dPermissions,
             dTenants,
+            dScopes,
             data,
             roleIds,
             tenantIds,
@@ -151,13 +157,14 @@ export class IamAccount extends AggregateRoot
                 account.dApplicationCodes.value,
                 account.dPermissions.value,
                 account.dTenants.value,
+                account.dScopes?.value,
                 account.data?.value,
                 account.roleIds?.value,
                 account.tenantIds?.value,
                 account.createdAt?.value,
                 account.updatedAt?.value,
                 account.deletedAt?.value,
-            )
+            ),
         );
     }
 
@@ -173,13 +180,14 @@ export class IamAccount extends AggregateRoot
                 account.dApplicationCodes?.value,
                 account.dPermissions?.value,
                 account.dTenants?.value,
+                account.dScopes?.value,
                 account.data?.value,
                 account.roleIds?.value,
                 account.tenantIds?.value,
                 account.createdAt?.value,
                 account.updatedAt?.value,
                 account.deletedAt?.value,
-            )
+            ),
         );
     }
 
@@ -195,13 +203,14 @@ export class IamAccount extends AggregateRoot
                 account.dApplicationCodes.value,
                 account.dPermissions.value,
                 account.dTenants.value,
+                account.dScopes?.value,
                 account.data?.value,
                 account.roleIds?.value,
                 account.tenantIds?.value,
                 account.createdAt?.value,
                 account.updatedAt?.value,
                 account.deletedAt?.value,
-            )
+            ),
         );
     }
 
@@ -216,6 +225,7 @@ export class IamAccount extends AggregateRoot
             dApplicationCodes: this.dApplicationCodes.value,
             dPermissions: this.dPermissions.value,
             dTenants: this.dTenants.value,
+            dScopes: this.dScopes?.value,
             data: this.data?.value,
             roleIds: this.roleIds?.value,
             tenantIds: this.tenantIds?.value,

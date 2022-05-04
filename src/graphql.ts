@@ -27,6 +27,7 @@ export interface IamCreateAccountInput {
     dApplicationCodes: JSON;
     dPermissions: JSON;
     dTenants: JSON;
+    dScopes?: Nullable<JSON>;
     data?: Nullable<JSON>;
     roleIds?: Nullable<Nullable<string>[]>;
     tenantIds?: Nullable<Nullable<string>[]>;
@@ -42,6 +43,7 @@ export interface IamUpdateAccountInput {
     dApplicationCodes?: Nullable<JSON>;
     dPermissions?: Nullable<JSON>;
     dTenants?: Nullable<JSON>;
+    dScopes?: Nullable<JSON>;
     data?: Nullable<JSON>;
     roleIds?: Nullable<Nullable<string>[]>;
     tenantIds?: Nullable<Nullable<string>[]>;
@@ -271,6 +273,7 @@ export interface IamAccount {
     dApplicationCodes: JSON;
     dPermissions: JSON;
     dTenants: JSON;
+    dScopes?: Nullable<JSON>;
     data?: Nullable<JSON>;
     roles?: Nullable<Nullable<IamRole>[]>;
     tenants?: Nullable<Nullable<IamTenant>[]>;

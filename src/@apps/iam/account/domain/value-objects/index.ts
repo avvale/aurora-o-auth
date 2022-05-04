@@ -6,6 +6,7 @@ export { AccountClientId } from './account-client-id';
 export { AccountDApplicationCodes } from './account-d-application-codes';
 export { AccountDPermissions } from './account-d-permissions';
 export { AccountDTenants } from './account-d-tenants';
+export { AccountDScopes } from './account-d-scopes';
 export { AccountData } from './account-data';
 export { AccountRoleIds } from './account-role-ids';
 export { AccountTenantIds } from './account-tenant-ids';

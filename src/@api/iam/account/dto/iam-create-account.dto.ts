@@ -36,7 +36,7 @@ export class IamCreateAccountDto
     @ApiProperty({
         type       : String,
         description: 'clientId [input here api field description]',
-        example    : 'd62079e3-cf01-4ea5-9591-9e047e97aa95',
+        example    : '6554fa5c-4ccb-4179-9f10-83bb10577936',
     })
     clientId: string;
 
@@ -57,6 +57,12 @@ export class IamCreateAccountDto
         description: 'dTenants [input here api field description]',
     })
     dTenants: any;
+
+    @ApiProperty({
+        type       : Object,
+        description: 'dScopes [input here api field description]',
+    })
+    dScopes?: any;
 
     @ApiProperty({
         type       : Object,

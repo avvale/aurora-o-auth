@@ -23,7 +23,8 @@ describe('CreateAccountCommandHandler', () =>
                     },
                 },
             ],
-        }).compile();
+        })
+            .compile();
 
         commandHandler  = module.get<CreateAccountCommandHandler>(CreateAccountCommandHandler);
         service         = module.get<CreateAccountService>(CreateAccountService);
@@ -48,6 +49,7 @@ describe('CreateAccountCommandHandler', () =>
                         clientId         : accounts[0].clientId,
                         dApplicationCodes: accounts[0].dApplicationCodes,
                         dPermissions     : accounts[0].dPermissions,
+                        dScopes          : accounts[0].dScopes,
                         data             : accounts[0].data,
                         roleIds          : accounts[0].roleIds,
                         tenantIds        : accounts[0].tenantIds,

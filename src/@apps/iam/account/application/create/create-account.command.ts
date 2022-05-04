@@ -11,6 +11,7 @@ export class CreateAccountCommand
             clientId: string;
             dApplicationCodes: any;
             dPermissions: any;
+            dScopes: any;
             data: any,
             roleIds?: string[];
             tenantIds?: string[];

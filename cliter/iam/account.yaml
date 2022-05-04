@@ -47,6 +47,9 @@ aggregateProperties:
   - name: dTenants
     type: json
     nullable: false
+  - name: dScopes
+    type: json
+    nullable: true
   - name: data
     type: json
     nullable: true

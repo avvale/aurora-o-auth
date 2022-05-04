@@ -14,6 +14,7 @@ type IamAccount
     dApplicationCodes: JSON!
     dPermissions: JSON!
     dTenants: JSON!
+    dScopes: JSON
     data: JSON
     roles: [IamRole]
     tenants: [IamTenant]
@@ -33,6 +34,7 @@ input IamCreateAccountInput
     dApplicationCodes: JSON!
     dPermissions: JSON!
     dTenants: JSON!
+    dScopes: JSON
     data: JSON
     roleIds: [ID]
     tenantIds: [ID]
@@ -49,6 +51,7 @@ input IamUpdateAccountInput
     dApplicationCodes: JSON
     dPermissions: JSON
     dTenants: JSON
+    dScopes: JSON
     data: JSON
     roleIds: [ID]
     tenantIds: [ID]

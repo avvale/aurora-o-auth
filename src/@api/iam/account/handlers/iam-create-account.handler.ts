@@ -72,6 +72,7 @@ export class IamCreateAccountHandler
                 clientId         : client?.id,
                 dApplicationCodes: client?.applications.map(application => application.code),
                 dPermissions     : AccountHelper.createPermissions(roles),
+                dScopes          : client?.scopes,
                 data             : payload.data,
                 roleIds          : payload.roleIds,
                 tenantIds        : payload.tenantIds,

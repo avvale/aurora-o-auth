@@ -9,6 +9,7 @@ export class UpdatedAccountEvent
         public readonly dApplicationCodes: any,
         public readonly dPermissions: any,
         public readonly dTenants: any,
+        public readonly dScopes: any,
         public readonly data: any,
         public readonly roleIds: string[],
         public readonly tenantIds: string[],

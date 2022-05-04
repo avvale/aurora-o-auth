@@ -10,6 +10,7 @@ import {
     AccountDApplicationCodes,
     AccountDPermissions,
     AccountDTenants,
+    AccountDScopes,
     AccountData,
     AccountRoleIds,
     AccountTenantIds,
@@ -38,6 +39,7 @@ export class CreateAccountService
             dApplicationCodes: AccountDApplicationCodes;
             dPermissions: AccountDPermissions;
             dTenants: AccountDTenants;
+            dScopes: AccountDScopes;
             data: AccountData;
             roleIds: AccountRoleIds;
             tenantIds: AccountTenantIds;
@@ -55,6 +57,7 @@ export class CreateAccountService
             payload.dApplicationCodes,
             payload.dPermissions,
             payload.dTenants,
+            payload.dScopes,
             payload.data,
             payload.roleIds,
             payload.tenantIds,

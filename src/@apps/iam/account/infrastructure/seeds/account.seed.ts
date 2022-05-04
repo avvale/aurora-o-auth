@@ -14,6 +14,7 @@ export const accounts = [
         dApplicationCodes: ['aurora'],
         dPermissions: {},
         dTenants: [],
+        dScopes: [],
         data: null,
         roleIds: [],
         tenantIds: [],

@@ -12,6 +12,7 @@ export class CreateAccountsCommand
             dApplicationCodes: any;
             dPermissions: any;
             dTenants: any;
+            dScopes?: any;
             data?: any;
             roleIds?: string[];
             tenantIds?: string[];

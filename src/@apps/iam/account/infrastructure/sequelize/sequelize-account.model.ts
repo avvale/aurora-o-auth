@@ -76,6 +76,13 @@ export class IamAccountModel extends Model<IamAccountModel>
     dTenants: any;
 
     @Column({
+        field: 'dScopes',
+        allowNull: true,
+        type: DataTypes.JSON,
+    })
+    dScopes: any;
+
+    @Column({
         field: 'data',
         allowNull: true,
         type: DataTypes.JSON,
