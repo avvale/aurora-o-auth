@@ -9,6 +9,7 @@ import { CreateAccessTokenService } from './create-access-token.service';
 import {
     AccessTokenId,
     AccessTokenClientId,
+    AccessTokenScopes,
     AccessTokenAccountId,
     AccessTokenName,
     AccessTokenExpiredAccessToken,
@@ -64,6 +65,7 @@ describe('CreateAccessTokenService', () =>
                 {
                     id                : new AccessTokenId(accessTokens[0].id),
                     clientId          : new AccessTokenClientId(accessTokens[0].clientId),
+                    scopes            : new AccessTokenScopes(accessTokens[0].scopes),
                     accountId         : new AccessTokenAccountId(accessTokens[0].accountId),
                     name              : new AccessTokenName(accessTokens[0].name),
                     expiredAccessToken: new AccessTokenExpiredAccessToken(accessTokens[0].expiredAccessToken),
