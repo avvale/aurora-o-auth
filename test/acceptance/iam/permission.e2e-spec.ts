@@ -97,8 +97,8 @@ describe('permission', () =>
             .useValue({ canActivate: () => true })
             .compile();
 
-        mockData        = permissions;
-        app             = module.createNestApplication();
+        mockData                        = permissions;
+        app                             = module.createNestApplication();
         permissionRepository            = module.get<IPermissionRepository>(IPermissionRepository);
         permissionSeeder                = module.get<MockPermissionSeeder>(MockPermissionSeeder);
         oAuthCreateCredentialHandler    = module.get<OAuthCreateCredentialHandler>(OAuthCreateCredentialHandler);
