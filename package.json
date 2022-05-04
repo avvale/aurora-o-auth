@@ -20,7 +20,7 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "graphql:types": "ts-node generate-typings",
-    "publish:package": "rm -rf ../aurora-cli/src/templates/packages/o-auth && mkdir ../aurora-cli/src/templates/packages/o-auth && cp -r src/ ../aurora-cli/src/templates/packages/o-auth/ && rm ../aurora-cli/src/templates/packages/o-auth/oauth-public.key && rm ../aurora-cli/src/templates/packages/o-auth/oauth-private.key"
+    "publish:package": "rm -rf ../aurora-cli/src/templates/packages/o-auth && mkdir ../aurora-cli/src/templates/packages/o-auth && mkdir ../aurora-cli/src/templates/packages/o-auth/src && mkdir ../aurora-cli/src/templates/packages/o-auth/src/@api && mkdir ../aurora-cli/src/templates/packages/o-auth/src/@apps && cp -r src/@api/ ../aurora-cli/src/templates/packages/o-auth/src/@api/ && cp -r src/@apps/ ../aurora-cli/src/templates/packages/o-auth/src/@apps/ && cp -r cliter/ ../aurora-cli/src/templates/packages/o-auth/cliter/ && cp -r postman/ ../aurora-cli/src/templates/packages/o-auth/postman/ && cp -r test/ ../aurora-cli/src/templates/packages/o-auth/test/ && cd ../aurora-cli && npm run build"
   },
   "dependencies": {
     "@nestjs/apollo": "^10.0.2",
