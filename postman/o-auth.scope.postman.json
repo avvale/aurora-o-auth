@@ -1,0 +1,561 @@
+{
+    "info": {
+		"_postman_id"   : "79ed7ce7-bcce-4f40-af86-e7b7123042ca",
+		"name"          : "@apps - o-auth/scope",
+		"schema"        : "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+    },
+    "item": [
+        {
+			"name": "GraphQL - oAuthCreateScope",
+			"request": {
+				"method": "POST",
+				"header": [
+                ],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation ($payload:OAuthCreateScopeInput!)\n{\n\toAuthCreateScope (payload:$payload)\n\t{\n\t\tid\n\t\tcode\n\t\tname\n\t}\n}",
+                        "variables": "{\n\t\"payload\":\n\t{\n\t\t\"id\": \"5b19d6ac-4081-573b-96b3-56964d5326a8\", \n\t\t\"code\": \"psoi05vvnwzxpeuy4ed\", \n\t\t\"name\": \"Intelligent Fresh Chicken\"\n\t}\n}"
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/graphql",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+        },
+        {
+			"name": "GraphQL - oAuthCreateScopes",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation ($payload:[OAuthCreateScopeInput]!)\n{\n\toAuthCreateScopes (payload:$payload)\n}",
+						"variables": "{\n\t\"payload\":\n\t[\n\t\t{\n\t\t\t\"id\": \"2c57597f-7855-4ba1-9be1-9e208007b3ff\", \n\t\t\t\"code\": \"xrj6so85q4xdazugi4o\", \n\t\t\t\"name\": \"Fantastic Cotton Cheese\"\n\t\t}, \n\t\t{\n\t\t\t\"id\": \"12b05250-0d4c-4c4c-80c9-d7d019d87c33\", \n\t\t\t\"code\": \"emj6vu9wmqwu4fvrzl1\", \n\t\t\t\"name\": \"Ergonomic Frozen Salad\"\n\t\t}, \n\t\t{\n\t\t\t\"id\": \"c5d7265f-a922-4e1e-8516-3e20e67e23d2\", \n\t\t\t\"code\": \"zeaeqir2vmjvoyo3goc\", \n\t\t\t\"name\": \"Generic Granite Pizza\"\n\t\t}, \n\t\t{\n\t\t\t\"id\": \"0b0f8639-c187-40fc-9429-5bcfed1502d5\", \n\t\t\t\"code\": \"46bb0qke8us2kjj9pwa\", \n\t\t\t\"name\": \"Generic Cotton Bacon\"\n\t\t}, \n\t\t{\n\t\t\t\"id\": \"f68cca4c-7756-4dd5-a6bb-a89d6741d1ff\", \n\t\t\t\"code\": \"3cqni44vip5veh2pag6\", \n\t\t\t\"name\": \"Sleek Fresh Car\"\n\t\t}, \n\t\t{\n\t\t\t\"id\": \"7b37b473-39db-46db-b7e2-7e758c3b5236\", \n\t\t\t\"code\": \"9zot4uxk5syrw9gctp9\", \n\t\t\t\"name\": \"Rustic Fresh Soap\"\n\t\t}, \n\t\t{\n\t\t\t\"id\": \"fea54799-c72c-4d46-bef1-6f4664cb7409\", \n\t\t\t\"code\": \"ebj1daog2sofk0pflpv\", \n\t\t\t\"name\": \"Rustic Metal Tuna\"\n\t\t}, \n\t\t{\n\t\t\t\"id\": \"305659c2-40bd-4237-8aed-a30d842107fb\", \n\t\t\t\"code\": \"2veykt9zjyjh7bnkitd\", \n\t\t\t\"name\": \"Gorgeous Fresh Sausages\"\n\t\t}, \n\t\t{\n\t\t\t\"id\": \"e1a2638a-ddac-4741-9405-587439ee3efe\", \n\t\t\t\"code\": \"eltcgo4u1dyhn7q5iqj\", \n\t\t\t\"name\": \"Licensed Steel Chair\"\n\t\t}, \n\t\t{\n\t\t\t\"id\": \"dd5c0d43-c3c3-4b9f-bdd2-54d8989b5f24\", \n\t\t\t\"code\": \"8ntifz9rc79z1rpz0s4\", \n\t\t\t\"name\": \"Handcrafted Soft Chair\"\n\t\t}\n\t]\n}"
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/graphql",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+        },
+        {
+			"name": "GraphQL - oAuthPaginateScopes",
+			"request": {
+				"method": "POST",
+				"header": [
+                ],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query ($query:QueryStatement $constraint:QueryStatement)\n{\n\toAuthPaginateScopes (query:$query constraint:$constraint)\n\t{\n\t\ttotal\n\t\tcount\n\t\trows\n\t}\n}",
+						"variables": "{\n\t\"query\":\n\t{\n\t\t\"offset\": 0,\n\t\t\"limit\": 10\n\t}\n}"
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/graphql",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+        },
+        {
+			"name": "GraphQL - oAuthGetScopes",
+			"request": {
+				"method": "POST",
+				"header": [
+                ],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query ($query:QueryStatement)\n{\n\toAuthGetScopes (query: $query)\n\t{\n\t\tid\n\t\tcode\n\t\tname\n\t\tcreatedAt\n\t\tupdatedAt\n\t}\n}",
+						"variables": "{\n\t\"query\":\n\t{\n\t\t\"where\":\n\t\t{ \n\t\t\t\"id\": \"5b19d6ac-4081-573b-96b3-56964d5326a8\"\n\t\t}\n\t}\n}"
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/graphql",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+        },
+        {
+			"name": "GraphQL - oAuthFindScope",
+			"request": {
+				"method": "POST",
+				"header": [
+                ],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query ($query:QueryStatement)\n{\n\toAuthFindScope (query: $query)\n\t{\n\t\tid\n\t\tcode\n\t\tname\n\t\tcreatedAt\n\t\tupdatedAt\n\t}\n}",
+						"variables": "{\n\t\"query\":\n\t{\n\t\t\"where\":\n\t\t{\n\t\t\t\"id\": \"5b19d6ac-4081-573b-96b3-56964d5326a8\"\n\t\t}\n\t}\n}"
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/graphql",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+        },
+        {
+			"name": "GraphQL - oAuthFindScopeById",
+			"request": {
+				"method": "POST",
+				"header": [
+                ],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query ($id:ID)\n{\n\toAuthFindScopeById (id:$id)\n\t{\n\t\tid\n\t\tcode\n\t\tname\n\t\tcreatedAt\n\t\tupdatedAt\n\t}\n}",
+						"variables": "{\n\t\"id\": \"5b19d6ac-4081-573b-96b3-56964d5326a8\"\n}"
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/graphql",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+        },
+        {
+			"name": "GraphQL - oAuthUpdateScope",
+			"request": {
+				"method": "POST",
+				"header": [
+                ],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation ($payload:OAuthUpdateScopeInput!)\n{\n\toAuthUpdateScope (payload:$payload)\n\t{\n\t\tid\n\t\tcode\n\t\tname\n\t\tcreatedAt\n\t\tupdatedAt\n\t}\n}",
+						"variables": "{\n\t\"payload\":\n\t{\n\t\t\"id\": \"5b19d6ac-4081-573b-96b3-56964d5326a8\", \n\t\t\"code\": \"206ic4zq6zsuswxxofp\", \n\t\t\"name\": \"Ergonomic Concrete Ball\"\n\t}\n}"
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/graphql",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+        },
+        {
+			"name": "GraphQL - oAuthDeleteScopeById",
+			"request": {
+				"method": "POST",
+				"header": [
+                ],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation ($id:ID!)\n{\n\toAuthDeleteScopeById (id:$id)\n\t{\n\t\tid\n\t\tcode\n\t\tname\n\t\tcreatedAt\n\t\tupdatedAt\n\t}\n}",
+						"variables": "{\n\t\"id\": \"5b19d6ac-4081-573b-96b3-56964d5326a8\"\n}"
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/graphql",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+        },
+        {
+			"name": "GraphQL - oAuthDeleteScopes",
+			"request": {
+				"method": "POST",
+				"header": [
+                ],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation ($query:QueryStatement)\n{\n\toAuthDeleteScopes (query: $query)\n\t{\n\t\tid\n\t\tcode\n\t\tname\n\t\tcreatedAt\n\t\tupdatedAt\n\t}\n}",
+						"variables": "{\n\t\"query\":\n\t{\n\t\t\"where\":\n\t\t{\n\t\t\t\"id\":\n\t\t\t{\n\t\t\t\t\"[substring]\": \"\"\n\t\t\t}\n\t\t}\n\t}\n}"
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/graphql",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"graphql"
+					]
+				}
+			},
+			"response": []
+        },
+        {
+			"name": "REST - o-auth/scope/create",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key"   : "Content-Type",
+						"name"  : "Content-Type",
+						"type"  : "text",
+						"value" : "application/json"
+					}				],
+				"body": {
+					"mode"  : "raw",
+					"raw"   : "{\n\t\"id\": \"5b19d6ac-4081-573b-96b3-56964d5326a8\", \n\t\"code\": \"lsslwls8hxsjuqy1dzf\", \n\t\"name\": \"Gorgeous Rubber Car\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/o-auth/scope/create",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"o-auth",
+						"scope",
+                        "create"
+					]
+				}
+			},
+			"response": []
+        },
+        {
+			"name": "REST - o-auth/scopes/create",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key"   : "Content-Type",
+						"name"  : "Content-Type",
+						"type"  : "text",
+						"value" : "application/json"
+					}				],
+				"body": {
+					"mode"  : "raw",
+					"raw"   : "[\n\t{\n\t\t\"id\": \"f223c442-0e28-4d21-b8f1-4c7aeebdc996\", \n\t\t\"code\": \"7566gwd6qn4i5vqiab2\", \n\t\t\"name\": \"Refined Fresh Keyboard\"\n\t}, \n\t{\n\t\t\"id\": \"ec2606e6-7b1f-498c-923b-b24814b70670\", \n\t\t\"code\": \"u92igg4qjcfn17tgdlv\", \n\t\t\"name\": \"Unbranded Metal Computer\"\n\t}, \n\t{\n\t\t\"id\": \"fbbaff62-d772-4fc6-978c-5e31c29458f3\", \n\t\t\"code\": \"ansoxj07exst5dc635p\", \n\t\t\"name\": \"Intelligent Fresh Car\"\n\t}, \n\t{\n\t\t\"id\": \"6c551faa-7123-4fb3-9de4-699f9ec24aba\", \n\t\t\"code\": \"xtlnf0jfqf2x8i8dhfk\", \n\t\t\"name\": \"Handcrafted Metal Gloves\"\n\t}, \n\t{\n\t\t\"id\": \"cffcfe23-8a47-4e00-a583-3b88e2e9fb75\", \n\t\t\"code\": \"u88w78l8xmd4w3llton\", \n\t\t\"name\": \"Ergonomic Fresh Ball\"\n\t}, \n\t{\n\t\t\"id\": \"7fe809a1-7758-43d4-8796-b441f9b0af2f\", \n\t\t\"code\": \"lj2f78h9en7jxr1gzfd\", \n\t\t\"name\": \"Small Rubber Hat\"\n\t}, \n\t{\n\t\t\"id\": \"0cb0136c-6e22-4c98-9dd3-91623c4349bd\", \n\t\t\"code\": \"z6bju3akvro7laej12j\", \n\t\t\"name\": \"Incredible Rubber Table\"\n\t}, \n\t{\n\t\t\"id\": \"c332d86d-ed30-4a2f-b2f3-5ce4b17fe2bf\", \n\t\t\"code\": \"wglr50vsugbbrdhvpew\", \n\t\t\"name\": \"Handcrafted Concrete Shirt\"\n\t}, \n\t{\n\t\t\"id\": \"e4b90fc3-b1e5-4b9a-86ee-4bd55d5eaf4a\", \n\t\t\"code\": \"si38h02xk8kfbliopp5\", \n\t\t\"name\": \"Intelligent Rubber Sausages\"\n\t}, \n\t{\n\t\t\"id\": \"52c0328e-d86d-4a89-9efd-a85fe9a50f42\", \n\t\t\"code\": \"pmc4a63crw662am7xi5\", \n\t\t\"name\": \"Sleek Soft Shoes\"\n\t}\n]",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/o-auth/scopes/create",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"o-auth",
+						"scopes",
+                        "create"
+					]
+				}
+			},
+			"response": []
+        },
+        {
+			"name": "REST - o-auth/scopes/paginate",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"query\":\n\t{\n\t\t\"offset\": 0,\n\t\t\"limit\": 10\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/o-auth/scopes/paginate",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"o-auth",
+                        "scopes",
+                        "paginate"
+					]
+				}
+			},
+			"response": []
+        },
+        {
+			"name": "REST - o-auth/scopes/get",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"query\":\n\t{\n\t\t\"where\":\n\t\t{ \n\t\t\t\"id\": \"5b19d6ac-4081-573b-96b3-56964d5326a8\"\n\t\t}\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/o-auth/scopes/get",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"o-auth",
+						"scopes",
+                        "get"
+					]
+				}
+			},
+			"response": []
+        },
+        {
+			"name": "REST - o-auth/scope/find",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"query\":\n\t{\n\t\t\"where\":\n\t\t{\n\t\t\t\"id\": \"5b19d6ac-4081-573b-96b3-56964d5326a8\"\n\t\t}\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/o-auth/scope/find",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"o-auth",
+						"scope",
+                        "find"
+					]
+				}
+			},
+			"response": []
+        },
+        {
+			"name": "REST - o-auth/scope/find/{id}",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/o-auth/scope/find/5b19d6ac-4081-573b-96b3-56964d5326a8",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"o-auth",
+						"scope",
+                        "find",
+						"5b19d6ac-4081-573b-96b3-56964d5326a8"
+					]
+				}
+			},
+			"response": []
+        },
+        {
+			"name": "REST - o-auth/scope/update",
+			"request": {
+				"method": "PUT",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}				],
+				"body": {
+					"mode": "raw",
+					"raw"   : "{\n\t\"id\": \"5b19d6ac-4081-573b-96b3-56964d5326a8\", \n\t\"code\": \"dz6lnpc1ra2b7w007kk\", \n\t\"name\": \"Incredible Metal Chair\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/o-auth/scope/update",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"o-auth",
+						"scope",
+                        "update"
+					]
+				}
+			},
+			"response": []
+        },
+        {
+			"name": "REST - o-auth/scope/delete/{id}",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/o-auth/scope/delete/5b19d6ac-4081-573b-96b3-56964d5326a8",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"o-auth",
+						"scope",
+                        "delete",
+						"5b19d6ac-4081-573b-96b3-56964d5326a8"
+					]
+				}
+			},
+			"response": []
+		},
+        {
+			"name": "REST - o-auth/scopes/delete",
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"name": "Content-Type",
+						"type": "text",
+						"value": "application/json"
+					}				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"query\":\n\t{\n\t\t\"where\":\n\t\t{\n\t\t\t\"id\":\n\t\t\t{\n\t\t\t\t\"[substring]\": \"\"\n\t\t\t}\n\t\t}\n\t}\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{URL}}/o-auth/scopes/delete",
+					"host": [
+						"{{URL}}"
+					],
+					"path": [
+						"o-auth",
+						"scopes",
+                        "delete"
+					]
+				}
+			},
+			"response": []
+		}
+    ],
+    "variable": [
+		{
+			"id": "3e4c8232-ed32-4c80-93be-555ee5853e4c",
+			"key": "URL",
+			"value": "http://localhost:8080",
+			"type": "string"
+		}
+	]
+}
