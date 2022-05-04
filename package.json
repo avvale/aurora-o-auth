@@ -20,7 +20,7 @@
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
     "test:e2e": "jest --config ./test/jest-e2e.json",
     "graphql:types": "ts-node generate-typings",
-    "publish:package": "cp -r src/@api ../aurora-cli/src/templates/packages/o-auth/src && cp -r src/@apps ../aurora-cli/src/templates/packages/o-auth/src && cp -r cliter ../aurora-cli/src/templates/packages/o-auth && cp -r postman ../aurora-cli/src/templates/packages/o-auth && cp -r test/acceptance/o-auth ../aurora-cli/src/templates/packages/o-auth/test/acceptance"
+    "publish:package": "rm -rf ../aurora-cli/src/templates/packages/o-auth && mkdir ../aurora-cli/src/templates/packages/o-auth && cp -r src/ ../aurora-cli/src/templates/packages/o-auth/ && rm ../aurora-cli/src/templates/packages/o-auth/oauth-public.key && rm ../aurora-cli/src/templates/packages/o-auth/oauth-private.key"
   },
   "dependencies": {
     "@nestjs/apollo": "^10.0.2",
