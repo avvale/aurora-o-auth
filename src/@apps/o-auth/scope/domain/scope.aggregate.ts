@@ -77,7 +77,7 @@ export class OAuthScope extends AggregateRoot
                 scope.createdAt?.value,
                 scope.updatedAt?.value,
                 scope.deletedAt?.value,
-            )
+            ),
         );
     }
 
@@ -91,7 +91,7 @@ export class OAuthScope extends AggregateRoot
                 scope.createdAt?.value,
                 scope.updatedAt?.value,
                 scope.deletedAt?.value,
-            )
+            ),
         );
     }
 
@@ -105,7 +105,7 @@ export class OAuthScope extends AggregateRoot
                 scope.createdAt?.value,
                 scope.updatedAt?.value,
                 scope.deletedAt?.value,
-            )
+            ),
         );
     }
 

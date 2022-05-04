@@ -143,7 +143,7 @@
         },
         {
             "path": "src/@apps/o-auth/scope/application/find/find-scope-by-id.service.ts",
-            "integrity": "sha1:3576b22f52a6a04113b607b2845bdddbf1af46ad"
+            "integrity": "sha1:ebd4bc7288ab5b5bc1fee194240272d96a27d47e"
         },
         {
             "path": "src/@apps/o-auth/scope/application/find/find-scope.query-handler.spec.ts",
@@ -231,7 +231,7 @@
         },
         {
             "path": "src/@apps/o-auth/scope/domain/scope.aggregate.ts",
-            "integrity": "sha1:8590c5dc2da8653b4ded6d7f53102c16eefc458c"
+            "integrity": "sha1:d9407ce3a2084bad736394fb9f3ab455e9935740"
         },
         {
             "path": "src/@apps/o-auth/scope/domain/scope.mapper.ts",
@@ -263,7 +263,7 @@
         },
         {
             "path": "src/@apps/o-auth/scope/infrastructure/seeds/scope.seed.ts",
-            "integrity": "sha1:63618389262597a7eeef2ed365933b9ebc2d4eed"
+            "integrity": "sha1:a457185fa81edce8c8ab1a4d5ba95d8a6917598b"
         },
         {
             "path": "src/@apps/o-auth/scope/infrastructure/sequelize/sequelize-scope.model.ts",
@@ -547,11 +547,11 @@
         },
         {
             "path": "test/acceptance/o-auth/scope.e2e-spec.ts",
-            "integrity": "sha1:0d66825c95aa13aa3ba7a3aa2efc509523466cd3"
+            "integrity": "sha1:af2cab6396de3a66fc5b7074ef0866f3b4e60555"
         },
         {
             "path": "postman/o-auth.scope.postman.json",
-            "integrity": "sha1:da3b7243c91b1ea489c43e63c30532d7d70a4683"
+            "integrity": "sha1:055a0811f5659c8ec6cf556e87cddc862f8cd265"
         }
     ]
 }

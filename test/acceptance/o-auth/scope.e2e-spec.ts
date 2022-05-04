@@ -78,7 +78,7 @@ describe('scope', () =>
             .set('Accept', 'application/json')
             .send({
                 ...mockData[0],
-                ...{ id: null },
+                id: null,
             })
             .expect(400)
             .then(res =>
@@ -94,7 +94,7 @@ describe('scope', () =>
             .set('Accept', 'application/json')
             .send({
                 ...mockData[0],
-                ...{ code: null },
+                code: null,
             })
             .expect(400)
             .then(res =>
@@ -110,7 +110,7 @@ describe('scope', () =>
             .set('Accept', 'application/json')
             .send({
                 ...mockData[0],
-                ...{ name: null },
+                name: null,
             })
             .expect(400)
             .then(res =>
@@ -126,7 +126,7 @@ describe('scope', () =>
             .set('Accept', 'application/json')
             .send({
                 ...mockData[0],
-                ...{ id: undefined },
+                id: undefined,
             })
             .expect(400)
             .then(res =>
@@ -142,7 +142,7 @@ describe('scope', () =>
             .set('Accept', 'application/json')
             .send({
                 ...mockData[0],
-                ...{ code: undefined },
+                code: undefined,
             })
             .expect(400)
             .then(res =>
@@ -158,7 +158,7 @@ describe('scope', () =>
             .set('Accept', 'application/json')
             .send({
                 ...mockData[0],
-                ...{ name: undefined },
+                name: undefined,
             })
             .expect(400)
             .then(res =>
@@ -174,7 +174,7 @@ describe('scope', () =>
             .set('Accept', 'application/json')
             .send({
                 ...mockData[0],
-                ...{ id: '*************************************' },
+                id: '*************************************',
             })
             .expect(400)
             .then(res =>
@@ -190,7 +190,7 @@ describe('scope', () =>
             .set('Accept', 'application/json')
             .send({
                 ...mockData[0],
-                ...{ code: '*********************' },
+                code: '*********************',
             })
             .expect(400)
             .then(res =>
@@ -206,7 +206,7 @@ describe('scope', () =>
             .set('Accept', 'application/json')
             .send({
                 ...mockData[0],
-                ...{ name: '****************************************************************************************************************************************************************************************************************************************************************' },
+                name: '****************************************************************************************************************************************************************************************************************************************************************',
             })
             .expect(400)
             .then(res =>
@@ -272,7 +272,7 @@ describe('scope', () =>
                 {
                     where:
                     {
-                        id: '6da7d6bd-a552-40e8-b284-ceef548c0072',
+                        id: '4eb237a0-19b1-414a-90e1-83409c57e7de',
                     },
                 },
             })
@@ -286,7 +286,8 @@ describe('scope', () =>
             .set('Accept', 'application/json')
             .send({
                 ...mockData[0],
-                ...{ id: '5b19d6ac-4081-573b-96b3-56964d5326a8' },
+                id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
+                code: 'TEST:E2E',
             })
             .expect(201);
     });
@@ -315,7 +316,7 @@ describe('scope', () =>
     test('/REST:GET o-auth/scope/find/{id} - Got 404 Not Found', () =>
     {
         return request(app.getHttpServer())
-            .get('/o-auth/scope/find/90f6d630-dc0b-4983-b783-d6b7efecfa32')
+            .get('/o-auth/scope/find/acdbef90-0fdb-4a56-b892-e1fbce10d2cf')
             .set('Accept', 'application/json')
             .expect(404);
     });
@@ -339,7 +340,7 @@ describe('scope', () =>
             .set('Accept', 'application/json')
             .send({
                 ...mockData[0],
-                ...{ id: '60c03d55-6d04-4053-873e-4450d7221b84' },
+                id: '8b3f4d2d-a0ff-4ecb-8d44-d17c25427c8c',
             })
             .expect(404);
     });
@@ -351,7 +352,8 @@ describe('scope', () =>
             .set('Accept', 'application/json')
             .send({
                 ...mockData[0],
-                ...{ id: '5b19d6ac-4081-573b-96b3-56964d5326a8' },
+                id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
+                code: 'TEST:E2E',
             })
             .expect(200)
             .then(res =>
@@ -363,7 +365,7 @@ describe('scope', () =>
     test('/REST:DELETE o-auth/scope/delete/{id} - Got 404 Not Found', () =>
     {
         return request(app.getHttpServer())
-            .delete('/o-auth/scope/delete/efc0a96b-5dd8-4100-9a02-8be0ba2e1e74')
+            .delete('/o-auth/scope/delete/44f2844a-04d1-429c-96ff-50764a0d7a7d')
             .set('Accept', 'application/json')
             .expect(404);
     });
@@ -495,7 +497,8 @@ describe('scope', () =>
                 variables: {
                     payload: {
                         ...mockData[0],
-                        ...{ id: '5b19d6ac-4081-573b-96b3-56964d5326a8' },
+                        id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
+                        code: 'TEST:E2E',
                     },
                 },
             })
@@ -531,7 +534,7 @@ describe('scope', () =>
                     {
                         where:
                         {
-                            id: 'f35e88e4-79ba-4911-a145-225ff6d18a5d',
+                            id: '6dd68558-00ad-4416-a13f-4feb93708c08',
                         },
                     },
                 },
@@ -602,7 +605,7 @@ describe('scope', () =>
                     }
                 `,
                 variables: {
-                    id: 'ee93c436-fe14-4af0-a056-9e47922f5028',
+                    id: 'e89d4209-1824-4f9b-bfb0-7a6d13190c81',
                 },
             })
             .expect(200)
@@ -666,7 +669,7 @@ describe('scope', () =>
                 variables: {
                     payload: {
                         ...mockData[0],
-                        ...{ id: 'eed651f2-cc34-4ff2-ae64-854498499383' },
+                        id: 'd72847bc-64b9-4948-9deb-31b02837e5b8',
                     },
                 },
             })
@@ -701,7 +704,8 @@ describe('scope', () =>
                 variables: {
                     payload: {
                         ...mockData[0],
-                        ...{ id: '5b19d6ac-4081-573b-96b3-56964d5326a8' },
+                        id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
+                        code: 'TEST:E2E',
                     },
                 },
             })
@@ -732,7 +736,7 @@ describe('scope', () =>
                     }
                 `,
                 variables: {
-                    id: '66b1396b-6516-4f0c-9cdd-b5784df3cade',
+                    id: 'f5d2b42c-9a2f-447d-bb5d-9be27ac2693a',
                 },
             })
             .expect(200)
