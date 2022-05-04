@@ -23,17 +23,17 @@ describe('FindBoundedContextByIdQueryHandler', () =>
                 FindBoundedContextByIdQueryHandler,
                 {
                     provide : IBoundedContextRepository,
-                    useClass: MockBoundedContextRepository
+                    useClass: MockBoundedContextRepository,
                 },
                 {
                     provide : FindBoundedContextByIdService,
                     useValue: {
-                        main: () => {},
-                    }
-                }
-            ]
+                        main: () => { /**/ },
+                    },
+                },
+            ],
         })
-        .compile();
+            .compile();
 
         queryHandler    = module.get<FindBoundedContextByIdQueryHandler>(FindBoundedContextByIdQueryHandler);
         service         = module.get<FindBoundedContextByIdService>(FindBoundedContextByIdService);
@@ -55,7 +55,7 @@ describe('FindBoundedContextByIdQueryHandler', () =>
                 new FindBoundedContextByIdQuery(
                     boundedContexts[0].id,
 
-                )
+                ),
             )).toStrictEqual(mapper.mapAggregateToResponse(repository.collectionSource[0]));
         });
     });

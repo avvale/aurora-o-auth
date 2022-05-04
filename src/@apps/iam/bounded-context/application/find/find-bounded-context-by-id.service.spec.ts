@@ -24,13 +24,14 @@ describe('FindBoundedContextByIdService', () =>
                 FindBoundedContextByIdService,
                 MockBoundedContextRepository,
                 {
-                    provide: IBoundedContextRepository,
+                    provide : IBoundedContextRepository,
                     useValue: {
-                        findById: id => { /**/ }
-                    }
-                }
-            ]
-        }).compile();
+                        findById: id => { /**/ },
+                    },
+                },
+            ],
+        })
+            .compile();
 
         service         = module.get(FindBoundedContextByIdService);
         repository      = module.get(IBoundedContextRepository);
@@ -48,7 +49,7 @@ describe('FindBoundedContextByIdService', () =>
         {
             jest.spyOn(repository, 'findById').mockImplementation(() => new Promise(resolve => resolve(mockRepository.collectionSource[0])));
             expect(await service.main(
-                new BoundedContextId(boundedContexts[0].id)
+                new BoundedContextId(boundedContexts[0].id),
             )).toBe(mockRepository.collectionSource[0]);
         });
     });

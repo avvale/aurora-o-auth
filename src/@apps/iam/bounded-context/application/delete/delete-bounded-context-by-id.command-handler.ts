@@ -18,7 +18,7 @@ export class DeleteBoundedContextByIdCommandHandler implements ICommandHandler<D
         await this.deleteBoundedContextByIdService.main(
             new BoundedContextId(command.id),
             command.constraint,
-            command.cQMetadata
+            command.cQMetadata,
         );
     }
 }

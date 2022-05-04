@@ -3,7 +3,7 @@ boundedContextName: iam
 moduleName: bounded-context
 moduleNames: bounded-contexts
 aggregateName: IamBoundedContext
-hasOAuth: false
+hasOAuth: true
 hasTenant: false
 aggregateProperties:
   - name: id

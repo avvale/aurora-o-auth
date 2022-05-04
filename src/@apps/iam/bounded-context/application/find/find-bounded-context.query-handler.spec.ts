@@ -22,17 +22,17 @@ describe('FindBoundedContextQueryHandler', () =>
                 FindBoundedContextQueryHandler,
                 {
                     provide : IBoundedContextRepository,
-                    useClass: MockBoundedContextRepository
+                    useClass: MockBoundedContextRepository,
                 },
                 {
                     provide : FindBoundedContextService,
                     useValue: {
-                        main: () => {},
-                    }
-                }
-            ]
+                        main: () => { /**/ },
+                    },
+                },
+            ],
         })
-        .compile();
+            .compile();
 
         queryHandler    = module.get<FindBoundedContextQueryHandler>(FindBoundedContextQueryHandler);
         service         = module.get<FindBoundedContextService>(FindBoundedContextService);
@@ -51,7 +51,7 @@ describe('FindBoundedContextQueryHandler', () =>
         {
             jest.spyOn(service, 'main').mockImplementation(() => new Promise(resolve => resolve(repository.collectionSource[0])));
             expect(await queryHandler.execute(
-                new FindBoundedContextQuery()
+                new FindBoundedContextQuery(),
             )).toStrictEqual(mapper.mapAggregateToResponse(repository.collectionSource[0]));
         });
     });

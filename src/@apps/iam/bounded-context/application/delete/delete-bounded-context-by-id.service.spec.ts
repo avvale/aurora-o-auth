@@ -29,9 +29,9 @@ describe('DeleteBoundedContextByIdService', () =>
                     useValue: {
                         deleteById: id => { /**/ },
                         findById  : id => { /**/ },
-                    }
+                    },
                 },
-            ]
+            ],
         }).compile();
 
         service         = module.get(DeleteBoundedContextByIdService);
@@ -50,7 +50,7 @@ describe('DeleteBoundedContextByIdService', () =>
         {
             jest.spyOn(repository, 'findById').mockImplementation(() => new Promise(resolve => resolve(mockRepository.collectionSource[0])));
             expect(await service.main(
-                new BoundedContextId(boundedContexts[0].id)
+                new BoundedContextId(boundedContexts[0].id),
             )).toBe(undefined);
         });
     });

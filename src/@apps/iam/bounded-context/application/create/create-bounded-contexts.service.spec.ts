@@ -25,8 +25,8 @@ describe('CreateBoundedContextsService', () =>
                 {
                     provide : IBoundedContextRepository,
                     useValue: {
-                        insert: (items) => { /**/ },
-                    }
+                        insert: () => { /**/ },
+                    },
                 },
             ]
         }).compile();
@@ -46,7 +46,7 @@ describe('CreateBoundedContextsService', () =>
         test('should create boundedContexts and emit event', async () =>
         {
             expect(await service.main(
-                mockRepository.collectionSource
+                mockRepository.collectionSource,
             )).toBe(undefined);
         });
     });

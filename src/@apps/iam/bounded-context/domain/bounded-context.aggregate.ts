@@ -97,7 +97,7 @@ export class IamBoundedContext extends AggregateRoot
                 boundedContext.createdAt?.value,
                 boundedContext.updatedAt?.value,
                 boundedContext.deletedAt?.value,
-            )
+            ),
         );
     }
 
@@ -113,7 +113,7 @@ export class IamBoundedContext extends AggregateRoot
                 boundedContext.createdAt?.value,
                 boundedContext.updatedAt?.value,
                 boundedContext.deletedAt?.value,
-            )
+            ),
         );
     }
 
@@ -129,7 +129,7 @@ export class IamBoundedContext extends AggregateRoot
                 boundedContext.createdAt?.value,
                 boundedContext.updatedAt?.value,
                 boundedContext.deletedAt?.value,
-            )
+            ),
         );
     }
 

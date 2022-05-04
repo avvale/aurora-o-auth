@@ -35,7 +35,7 @@ export class IamBoundedContextDto
     isActive: boolean;
 
     @ApiProperty({
-        type       : [IamPermissionDto],
+        type       : () => [IamPermissionDto],
         description: 'permissions [input here api field description]',
     })
     permissions?: IamPermissionDto[];

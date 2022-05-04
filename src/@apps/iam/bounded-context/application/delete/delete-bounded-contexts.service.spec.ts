@@ -25,9 +25,9 @@ describe('DeleteBoundedContextsService', () =>
                 {
                     provide : IBoundedContextRepository,
                     useValue: {
-                        get   : (queryStatement) => { /**/ },
-                        delete: (queryStatement) => { /**/ },
-                    }
+                        get   : () => { /**/ },
+                        delete: () => { /**/ },
+                    },
                 },
             ],
         }).compile();

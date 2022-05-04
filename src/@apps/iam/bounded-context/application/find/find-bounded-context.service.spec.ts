@@ -22,13 +22,14 @@ describe('FindBoundedContextService', () =>
                 FindBoundedContextService,
                 MockBoundedContextRepository,
                 {
-                    provide: IBoundedContextRepository,
+                    provide : IBoundedContextRepository,
                     useValue: {
-                        find: (queryStatement) => {}
-                    }
-                }
-            ]
-        }).compile();
+                        find: () => { /**/ },
+                    },
+                },
+            ],
+        })
+            .compile();
 
         service         = module.get(FindBoundedContextService);
         repository      = module.get(IBoundedContextRepository);

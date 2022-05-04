@@ -34,12 +34,12 @@ describe('UpdateBoundedContextService', () =>
                 UpdateBoundedContextService,
                 MockBoundedContextRepository,
                 {
-                    provide: IBoundedContextRepository,
+                    provide : IBoundedContextRepository,
                     useValue: {
-                        update: (item) => { /**/ }
-                    }
+                        update: () => { /**/ },
+                    },
                 },
-            ]
+            ],
         }).compile();
 
         service         = module.get(UpdateBoundedContextService);

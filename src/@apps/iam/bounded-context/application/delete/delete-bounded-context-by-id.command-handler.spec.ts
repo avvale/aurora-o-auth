@@ -17,10 +17,10 @@ describe('DeleteBoundedContextByIdCommandHandler', () =>
             providers: [
                 DeleteBoundedContextByIdCommandHandler,
                 {
-                    provide: DeleteBoundedContextByIdService,
+                    provide : DeleteBoundedContextByIdService,
                     useValue: {
-                        main: () => {},
-                    }
+                        main: () => { /**/ },
+                    },
                 },
             ],
         }).compile();
@@ -41,7 +41,7 @@ describe('DeleteBoundedContextByIdCommandHandler', () =>
             expect(await commandHandler.execute(
                 new DeleteBoundedContextByIdCommand(
                     boundedContexts[0].id,
-                )
+                ),
             )).toBe(undefined);
         });
     });

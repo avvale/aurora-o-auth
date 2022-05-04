@@ -16,12 +16,12 @@ describe('DeleteBoundedContextsCommandHandler', () =>
             providers: [
                 DeleteBoundedContextsCommandHandler,
                 {
-                    provide: DeleteBoundedContextsService,
+                    provide : DeleteBoundedContextsService,
                     useValue: {
-                        main: () => {},
-                    }
-                }
-            ]
+                        main: () => { /**/ },
+                    },
+                },
+            ],
         }).compile();
 
         commandHandler  = module.get<DeleteBoundedContextsCommandHandler>(DeleteBoundedContextsCommandHandler);
@@ -38,7 +38,7 @@ describe('DeleteBoundedContextsCommandHandler', () =>
         test('should return void', async () =>
         {
             expect(await commandHandler.execute(
-                new DeleteBoundedContextsCommand()
+                new DeleteBoundedContextsCommand(),
             )).toBe(undefined);
         });
     });

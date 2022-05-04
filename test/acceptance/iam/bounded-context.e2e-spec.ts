@@ -141,7 +141,7 @@ describe('bounded-context', () =>
             .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
-                ...{ id: null },
+                id: null,
             })
             .expect(400)
             .then(res =>
@@ -158,7 +158,7 @@ describe('bounded-context', () =>
             .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
-                ...{ name: null },
+                name: null,
             })
             .expect(400)
             .then(res =>
@@ -175,7 +175,7 @@ describe('bounded-context', () =>
             .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
-                ...{ root: null },
+                root: null,
             })
             .expect(400)
             .then(res =>
@@ -192,7 +192,7 @@ describe('bounded-context', () =>
             .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
-                ...{ isActive: null },
+                isActive: null,
             })
             .expect(400)
             .then(res =>
@@ -209,7 +209,7 @@ describe('bounded-context', () =>
             .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
-                ...{ id: undefined },
+                id: undefined,
             })
             .expect(400)
             .then(res =>
@@ -498,11 +498,8 @@ describe('bounded-context', () =>
             .set('Accept', 'application/json')
             .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
+                ...mockData[0],
                 id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
-                name: 'Ergonomic Fresh Car',
-                root: 'zv5b040kxt08gn0hq8wfiom9vkoa3',
-                sort: 95330,
-                isActive: false,
             })
             .expect(200)
             .then(res =>

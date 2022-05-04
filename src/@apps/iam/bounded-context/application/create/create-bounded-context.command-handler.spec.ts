@@ -23,7 +23,8 @@ describe('CreateBoundedContextCommandHandler', () =>
                     },
                 },
             ],
-        }).compile();
+        })
+            .compile();
 
         commandHandler  = module.get<CreateBoundedContextCommandHandler>(CreateBoundedContextCommandHandler);
         service         = module.get<CreateBoundedContextService>(CreateBoundedContextService);

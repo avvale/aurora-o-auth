@@ -9,7 +9,8 @@ export class AddBoundedContextsContextEvent extends AggregateRoot
 {
     constructor(
         public readonly aggregateRoots: IamBoundedContext[] = [],
-    ) {
+    )
+    {
         super();
     }
 
@@ -18,7 +19,7 @@ export class AddBoundedContextsContextEvent extends AggregateRoot
         for (const aggregateRoot of this.aggregateRoots) yield aggregateRoot;
     }
 
-    created()
+    created(): void
     {
         this.apply(
             new CreatedBoundedContextsEvent(
@@ -32,13 +33,13 @@ export class AddBoundedContextsContextEvent extends AggregateRoot
                         boundedContext.createdAt?.value,
                         boundedContext.updatedAt?.value,
                         boundedContext.deletedAt?.value,
-                    )
-                )
-            )
+                    ),
+                ),
+            ),
         );
     }
 
-    deleted()
+    deleted(): void
     {
         this.apply(
             new DeletedBoundedContextsEvent(
@@ -52,9 +53,9 @@ export class AddBoundedContextsContextEvent extends AggregateRoot
                         boundedContext.createdAt?.value,
                         boundedContext.updatedAt?.value,
                         boundedContext.deletedAt?.value,
-                    )
-                )
-            )
+                    ),
+                ),
+            ),
         );
     }
 }

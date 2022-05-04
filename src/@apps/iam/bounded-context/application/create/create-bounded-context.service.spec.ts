@@ -37,7 +37,7 @@ describe('CreateBoundedContextService', () =>
                 {
                     provide : IBoundedContextRepository,
                     useValue: {
-                        create: (item) => { /**/ },
+                        create: () => { /**/ },
                     },
                 },
             ],

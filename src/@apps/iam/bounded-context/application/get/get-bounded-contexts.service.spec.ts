@@ -22,12 +22,12 @@ describe('GetBoundedContextsService', () =>
                 GetBoundedContextsService,
                 MockBoundedContextRepository,
                 {
-                    provide: IBoundedContextRepository,
+                    provide : IBoundedContextRepository,
                     useValue: {
-                        get: (queryStatement) => {}
-                    }
-                }
-            ]
+                        get: () => { /**/ },
+                    },
+                },
+            ],
         }).compile();
 
         service         = module.get(GetBoundedContextsService);
