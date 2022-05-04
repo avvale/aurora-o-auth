@@ -1,4 +1,3 @@
-import * as fs from 'fs';
 import { Module } from '@nestjs/common';
 import { CoreModule } from './@aurora/core.module';
 import { AppController } from './app.controller';
