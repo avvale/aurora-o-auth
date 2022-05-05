@@ -1,6 +1,5 @@
 /* eslint-disable quotes */
 /* eslint-disable key-spacing */
-import * as fs from 'fs';
 import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigModule, ConfigService } from '@nestjs/config';
@@ -32,6 +31,9 @@ describe('role', () =>
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let mockData: any;
+
+    // set timeout to 15s by default are 5s
+    jest.setTimeout(15000);
 
     beforeAll(async () =>
     {
@@ -87,7 +89,7 @@ describe('role', () =>
             .set('Accept', 'application/json')
             .send({
                 ...mockData[0],
-                ...{ id: null },
+                id: null,
             })
             .expect(400)
             .then(res =>
@@ -103,7 +105,7 @@ describe('role', () =>
             .set('Accept', 'application/json')
             .send({
                 ...mockData[0],
-                ...{ name: null },
+                name: null,
             })
             .expect(400)
             .then(res =>
@@ -119,7 +121,7 @@ describe('role', () =>
             .set('Accept', 'application/json')
             .send({
                 ...mockData[0],
-                ...{ isMaster: null },
+                isMaster: null,
             })
             .expect(400)
             .then(res =>
@@ -135,7 +137,7 @@ describe('role', () =>
             .set('Accept', 'application/json')
             .send({
                 ...mockData[0],
-                ...{ id: undefined },
+                id: undefined,
             })
             .expect(400)
             .then(res =>
@@ -151,7 +153,7 @@ describe('role', () =>
             .set('Accept', 'application/json')
             .send({
                 ...mockData[0],
-                ...{ name: undefined },
+                name: undefined,
             })
             .expect(400)
             .then(res =>
@@ -167,7 +169,7 @@ describe('role', () =>
             .set('Accept', 'application/json')
             .send({
                 ...mockData[0],
-                ...{ isMaster: undefined },
+                isMaster: undefined,
             })
             .expect(400)
             .then(res =>
@@ -183,7 +185,7 @@ describe('role', () =>
             .set('Accept', 'application/json')
             .send({
                 ...mockData[0],
-                ...{ id: '*************************************' },
+                id: '*************************************',
             })
             .expect(400)
             .then(res =>
@@ -199,7 +201,7 @@ describe('role', () =>
             .set('Accept', 'application/json')
             .send({
                 ...mockData[0],
-                ...{ name: '****************************************************************************************************************************************************************************************************************************************************************' },
+                name: '****************************************************************************************************************************************************************************************************************************************************************',
             })
             .expect(400)
             .then(res =>
@@ -215,7 +217,7 @@ describe('role', () =>
             .set('Accept', 'application/json')
             .send({
                 ...mockData[0],
-                ...{ isMaster: 'true' },
+                isMaster: 'true',
             })
             .expect(400)
             .then(res =>
@@ -294,7 +296,7 @@ describe('role', () =>
             .set('Accept', 'application/json')
             .send({
                 ...mockData[0],
-                ...{ id: '5b19d6ac-4081-573b-96b3-56964d5326a8' },
+                id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
             })
             .expect(201);
     });
@@ -347,7 +349,7 @@ describe('role', () =>
             .set('Accept', 'application/json')
             .send({
                 ...mockData[0],
-                ...{ id: '16529b20-f6df-49e9-82e9-a9dc65be8c9e' },
+                id: '16529b20-f6df-49e9-82e9-a9dc65be8c9e',
             })
             .expect(404);
     });
@@ -358,11 +360,8 @@ describe('role', () =>
             .put('/iam/role/update')
             .set('Accept', 'application/json')
             .send({
+                ...mockData[0],
                 id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
-                name: 'Awesome Frozen Gloves',
-                isMaster: false,
-                permissionIds: [],
-                accountIds: [],
             })
             .expect(200)
             .then(res =>
@@ -505,9 +504,8 @@ describe('role', () =>
                 `,
                 variables: {
                     payload: {
+                        ...mockData[0],
                         id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
-                        name: 'Handmade Fresh Sausages',
-                        isMaster: false,
                     },
                 },
             })
@@ -678,7 +676,7 @@ describe('role', () =>
                 variables: {
                     payload: {
                         ..._.omit(mockData[0], ['permissions', 'createdAt','updatedAt','deletedAt']),
-                        ...{ id: 'e72379f5-fa88-46af-9bb9-aebb2bb31448' },
+                        id: 'e72379f5-fa88-46af-9bb9-aebb2bb31448',
                     },
                 },
             })
@@ -712,11 +710,8 @@ describe('role', () =>
                 `,
                 variables: {
                     payload: {
+                        ...mockData[0],
                         id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
-                        name: 'Rustic Soft Gloves',
-                        isMaster: false,
-                        permissionIds: [],
-                        accountIds: [],
                     },
                 },
             })

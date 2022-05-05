@@ -34,12 +34,12 @@ describe('UpdateRoleService', () =>
                 UpdateRoleService,
                 MockRoleRepository,
                 {
-                    provide: IRoleRepository,
+                    provide : IRoleRepository,
                     useValue: {
-                        update: (item) => { /**/ }
-                    }
+                        update: () => { /**/ },
+                    },
                 },
-            ]
+            ],
         }).compile();
 
         service         = module.get(UpdateRoleService);
