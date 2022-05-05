@@ -63,7 +63,7 @@ describe('UpdateRoleService', () =>
                     isMaster: new RoleIsMaster(roles[0].isMaster),
                     permissionIds: new RolePermissionIds(roles[0].permissionIds),
                     accountIds: new RoleAccountIds(roles[0].accountIds),
-                }
+                },
             )).toBe(undefined);
         });
     });
