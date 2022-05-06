@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
-import { Resolver, Args, Query } from '@nestjs/graphql';
-import { Constraint, QueryStatement, Timezone } from 'aurora-ts-core';
+import { Resolver, Args, Mutation } from '@nestjs/graphql';
+import { Timezone } from 'aurora-ts-core';
 
 // authorization
 import { Permissions } from '../../../../@api/iam/shared/decorators/permissions.decorator';
@@ -8,28 +8,26 @@ import { AuthenticationJwtGuard } from '../../../../@api/o-auth/shared/guards/au
 import { AuthorizationGuard } from '../../../../@api/iam/shared/guards/authorization.guard';
 
 // @apps
-import { IamFindAccountByIdHandler } from '../handlers/iam-find-account-by-id.handler';
-import { IamAccount } from '../../../../graphql';
+import { IamCreateAccountHandler } from '../handlers/iam-create-account.handler';
+import { IamAccount, IamCreateAccountInput } from '../../../../graphql';
 
 @Resolver()
-@Permissions('iam.account.get')
+@Permissions('iam.account.create')
 @UseGuards(AuthenticationJwtGuard, AuthorizationGuard)
-export class IamFindAccountByIdResolver
+export class IamCreateAccountResolver
 {
     constructor(
-        private readonly handler: IamFindAccountByIdHandler,
+        private readonly handler: IamCreateAccountHandler,
     ) {}
 
-    @Query('iamFindAccountById')
+    @Mutation('iamCreateAccount')
     async main(
-        @Args('id') id: string,
-        @Constraint() constraint?: QueryStatement,
+        @Args('payload') payload: IamCreateAccountInput,
         @Timezone() timezone?: string,
     ): Promise<IamAccount>
     {
         return await this.handler.main(
-            id,
-            constraint,
+            payload,
             timezone,
         );
     }

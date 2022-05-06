@@ -2,17 +2,17 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
 // custom items
-import { IamUpdateAccountResolver } from './iam-update-account.resolver';
-import { IamUpdateAccountHandler } from '../handlers/iam-update-account.handler';
-import { IamUpdateAccountInput } from '../../../../graphql';
+import { IamCreateAccountResolver } from './iam-create-account.resolver';
+import { IamCreateAccountHandler } from '../handlers/iam-create-account.handler';
+import { IamCreateAccountInput } from '../../../../graphql';
 
 // sources
 import { accounts } from '../../../../@apps/iam/account/infrastructure/seeds/account.seed';
 
-describe('IamUpdateAccountResolver', () =>
+describe('IamCreateAccountResolver', () =>
 {
-    let resolver: IamUpdateAccountResolver;
-    let handler: IamUpdateAccountHandler;
+    let resolver: IamCreateAccountResolver;
+    let handler: IamCreateAccountHandler;
 
     beforeAll(async () =>
     {
@@ -20,9 +20,9 @@ describe('IamUpdateAccountResolver', () =>
             imports: [
             ],
             providers: [
-                IamUpdateAccountResolver,
+                IamCreateAccountResolver,
                 {
-                    provide : IamUpdateAccountHandler,
+                    provide : IamCreateAccountHandler,
                     useValue: {
                         main: () => { /**/ },
                     },
@@ -31,26 +31,26 @@ describe('IamUpdateAccountResolver', () =>
         })
             .compile();
 
-        resolver = module.get<IamUpdateAccountResolver>(IamUpdateAccountResolver);
-        handler = module.get<IamUpdateAccountHandler>(IamUpdateAccountHandler);
+        resolver = module.get<IamCreateAccountResolver>(IamCreateAccountResolver);
+        handler = module.get<IamCreateAccountHandler>(IamCreateAccountHandler);
     });
 
-    test('IamUpdateAccountResolver should be defined', () =>
+    test('IamCreateAccountResolver should be defined', () =>
     {
         expect(resolver).toBeDefined();
     });
 
     describe('main', () =>
     {
-        test('IamUpdateAccountResolver should be defined', () =>
+        test('IamCreateAccountResolver should be defined', () =>
         {
             expect(resolver).toBeDefined();
         });
 
-        test('should return a account created', async () =>
+        test('should return an account created', async () =>
         {
             jest.spyOn(handler, 'main').mockImplementation(() => new Promise(resolve => resolve(accounts[0])));
-            expect(await resolver.main(<IamUpdateAccountInput>accounts[0])).toBe(accounts[0]);
+            expect(await resolver.main(<IamCreateAccountInput>accounts[0])).toBe(accounts[0]);
         });
     });
 });
