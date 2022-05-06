@@ -25,7 +25,8 @@ describe('IamCreateRolesResolver', () =>
                     },
                 },
             ],
-        }).compile();
+        })
+            .compile();
 
         resolver = module.get<IamCreateRolesResolver>(IamCreateRolesResolver);
         handler = module.get<IamCreateRolesHandler>(IamCreateRolesHandler);

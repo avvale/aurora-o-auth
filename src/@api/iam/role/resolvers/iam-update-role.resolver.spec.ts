@@ -28,7 +28,8 @@ describe('IamUpdateRoleResolver', () =>
                     },
                 },
             ],
-        }).compile();
+        })
+            .compile();
 
         resolver = module.get<IamUpdateRoleResolver>(IamUpdateRoleResolver);
         handler = module.get<IamUpdateRoleHandler>(IamUpdateRoleHandler);
