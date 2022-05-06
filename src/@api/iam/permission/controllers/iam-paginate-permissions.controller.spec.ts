@@ -29,7 +29,8 @@ describe('IamPaginatePermissionsController', () =>
                     },
                 },
             ]
-        }).compile();
+        })
+            .compile();
 
         controller = module.get<IamPaginatePermissionsController>(IamPaginatePermissionsController);
         handler = module.get<IamPaginatePermissionsHandler>(IamPaginatePermissionsHandler);

@@ -28,7 +28,7 @@ describe('IamPaginateAccountsController', () =>
                         main: () => { /**/ },
                     },
                 },
-            ]
+            ],
         })
             .compile();
 

@@ -28,7 +28,8 @@ describe('IamCreatePermissionResolver', () =>
                     },
                 },
             ],
-        }).compile();
+        })
+            .compile();
 
         resolver = module.get<IamCreatePermissionResolver>(IamCreatePermissionResolver);
         handler = module.get<IamCreatePermissionHandler>(IamCreatePermissionHandler);

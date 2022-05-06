@@ -35,7 +35,8 @@ describe('IamUpdatePermissionHandler', () =>
                     },
                 },
             ],
-        }).compile();
+        })
+            .compile();
 
         handler     = module.get<IamUpdatePermissionHandler>(IamUpdatePermissionHandler);
         queryBus    = module.get<IQueryBus>(IQueryBus);

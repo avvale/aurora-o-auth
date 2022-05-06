@@ -28,7 +28,8 @@ describe('IamUpdatePermissionResolver', () =>
                     },
                 },
             ],
-        }).compile();
+        })
+            .compile();
 
         resolver = module.get<IamUpdatePermissionResolver>(IamUpdatePermissionResolver);
         handler = module.get<IamUpdatePermissionHandler>(IamUpdatePermissionHandler);

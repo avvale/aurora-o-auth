@@ -54,6 +54,9 @@ describe('permission', () =>
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let mockData: any;
 
+    // set timeout to 15s by default are 5s
+    jest.setTimeout(15000);
+
     beforeAll(async () =>
     {
         const module: TestingModule = await Test.createTestingModule({
@@ -141,7 +144,7 @@ describe('permission', () =>
             .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
-                ...{ id: null },
+                id: null,
             })
             .expect(400)
             .then(res =>
@@ -158,7 +161,7 @@ describe('permission', () =>
             .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
-                ...{ name: null },
+                name: null,
             })
             .expect(400)
             .then(res =>
@@ -175,7 +178,7 @@ describe('permission', () =>
             .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
-                ...{ boundedContextId: null },
+                boundedContextId: null,
             })
             .expect(400)
             .then(res =>
@@ -192,7 +195,7 @@ describe('permission', () =>
             .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
-                ...{ id: undefined },
+                id: undefined,
             })
             .expect(400)
             .then(res =>
@@ -209,7 +212,7 @@ describe('permission', () =>
             .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
-                ...{ name: undefined },
+                name: undefined,
             })
             .expect(400)
             .then(res =>

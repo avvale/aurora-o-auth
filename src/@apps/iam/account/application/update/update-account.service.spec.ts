@@ -47,7 +47,8 @@ describe('UpdateAccountService', () =>
                     },
                 },
             ],
-        }).compile();
+        })
+            .compile();
 
         service         = module.get(UpdateAccountService);
         repository      = module.get(IAccountRepository);
