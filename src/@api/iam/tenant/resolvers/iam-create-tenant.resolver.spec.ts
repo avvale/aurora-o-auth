@@ -28,7 +28,8 @@ describe('IamCreateTenantResolver', () =>
                     },
                 },
             ],
-        }).compile();
+        })
+            .compile();
 
         resolver = module.get<IamCreateTenantResolver>(IamCreateTenantResolver);
         handler = module.get<IamCreateTenantHandler>(IamCreateTenantHandler);

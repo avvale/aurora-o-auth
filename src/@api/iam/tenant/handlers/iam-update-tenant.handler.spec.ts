@@ -35,7 +35,8 @@ describe('IamUpdateTenantHandler', () =>
                     },
                 },
             ],
-        }).compile();
+        })
+            .compile();
 
         handler     = module.get<IamUpdateTenantHandler>(IamUpdateTenantHandler);
         queryBus    = module.get<IQueryBus>(IQueryBus);
