@@ -365,6 +365,9 @@ export interface IMutation {
     iamDeleteUsers(query?: Nullable<QueryStatement>, constraint?: Nullable<QueryStatement>): Nullable<IamUser>[] | Promise<Nullable<IamUser>[]>;
     oAuthDeleteAccessTokenById(id: string, constraint?: Nullable<QueryStatement>): Nullable<OAuthAccessToken> | Promise<Nullable<OAuthAccessToken>>;
     oAuthDeleteAccessTokens(query?: Nullable<QueryStatement>, constraint?: Nullable<QueryStatement>): Nullable<OAuthAccessToken>[] | Promise<Nullable<OAuthAccessToken>[]>;
+    oAuthCreateAccessToken(payload: OAuthCreateAccessTokenInput): Nullable<OAuthAccessToken> | Promise<Nullable<OAuthAccessToken>>;
+    oAuthCreateAccessTokens(payload: Nullable<OAuthCreateAccessTokenInput>[]): boolean | Promise<boolean>;
+    oAuthUpdateAccessToken(payload: OAuthUpdateAccessTokenInput, constraint?: Nullable<QueryStatement>): Nullable<OAuthAccessToken> | Promise<Nullable<OAuthAccessToken>>;
     oAuthCreateApplication(payload: OAuthCreateApplicationInput): Nullable<OAuthApplication> | Promise<Nullable<OAuthApplication>>;
     oAuthCreateApplications(payload: Nullable<OAuthCreateApplicationInput>[]): boolean | Promise<boolean>;
     oAuthUpdateApplication(payload: OAuthUpdateApplicationInput, constraint?: Nullable<QueryStatement>): Nullable<OAuthApplication> | Promise<Nullable<OAuthApplication>>;
