@@ -15,7 +15,7 @@
         },
         {
             "path": "src/@apps/iam/permission/application/create/create-permission.service.spec.ts",
-            "integrity": "sha1:25f9e909c2061a7fe250f27c7670bbe952302ebe"
+            "integrity": "sha1:62d1c909f5da71e6523832d7c00de19542365ad9"
         },
         {
             "path": "src/@apps/iam/permission/application/create/create-permission.service.ts",
@@ -35,7 +35,7 @@
         },
         {
             "path": "src/@apps/iam/permission/application/create/create-permissions.service.spec.ts",
-            "integrity": "sha1:c8a5672e3d0fb96b94798228c3bea991dab823a9"
+            "integrity": "sha1:a4958ef55559264c664860d36467b71d27019b97"
         },
         {
             "path": "src/@apps/iam/permission/application/create/create-permissions.service.ts",
@@ -43,7 +43,7 @@
         },
         {
             "path": "src/@apps/iam/permission/application/delete/delete-permission-by-id.command-handler.spec.ts",
-            "integrity": "sha1:3e489060df7ae49b6b148720b0fc9aa1c5239155"
+            "integrity": "sha1:adc7eebe2f8da5ca069b5902a732d0a7e5fa6d8f"
         },
         {
             "path": "src/@apps/iam/permission/application/delete/delete-permission-by-id.command-handler.ts",
@@ -55,7 +55,7 @@
         },
         {
             "path": "src/@apps/iam/permission/application/delete/delete-permission-by-id.service.spec.ts",
-            "integrity": "sha1:cd17ea32845078642ef8dbc41fa38be292869109"
+            "integrity": "sha1:763c844eecf7a9ab892ffc8c6de02196143454ab"
         },
         {
             "path": "src/@apps/iam/permission/application/delete/delete-permission-by-id.service.ts",
@@ -63,7 +63,7 @@
         },
         {
             "path": "src/@apps/iam/permission/application/delete/delete-permissions.command-handler.spec.ts",
-            "integrity": "sha1:02c6624338c47b69880373a5ec9772e4dce987e3"
+            "integrity": "sha1:e1364ef725a1dd66e90ce7d50144f5e99c8bac35"
         },
         {
             "path": "src/@apps/iam/permission/application/delete/delete-permissions.command-handler.ts",
@@ -75,7 +75,7 @@
         },
         {
             "path": "src/@apps/iam/permission/application/delete/delete-permissions.service.spec.ts",
-            "integrity": "sha1:1a6406fb9334fa5bf9a8080707b6456de6286d76"
+            "integrity": "sha1:90f0ed2597b764d48651a93c1067cc52d949d54e"
         },
         {
             "path": "src/@apps/iam/permission/application/delete/delete-permissions.service.ts",
@@ -179,7 +179,7 @@
         },
         {
             "path": "src/@apps/iam/permission/application/get/get-permissions.service.spec.ts",
-            "integrity": "sha1:33bf7067c2e340571c28d14eb291e4bf871e50e5"
+            "integrity": "sha1:29923bd7f4b2599192217268024cdb9fbc02e9ff"
         },
         {
             "path": "src/@apps/iam/permission/application/get/get-permissions.service.ts",
@@ -199,7 +199,7 @@
         },
         {
             "path": "src/@apps/iam/permission/application/paginate/paginate-permissions.service.spec.ts",
-            "integrity": "sha1:1f56c6adb155c573006c92c3f2d714070df1dc60"
+            "integrity": "sha1:faa475c92f06ca7bde386f08fae9d8ed6d782297"
         },
         {
             "path": "src/@apps/iam/permission/application/paginate/paginate-permissions.service.ts",
@@ -211,7 +211,7 @@
         },
         {
             "path": "src/@apps/iam/permission/application/update/update-permission.command-handler.spec.ts",
-            "integrity": "sha1:8353a4aab8ee72f579156f1e6294f4d00719509b"
+            "integrity": "sha1:8b4377828052dc1f2bbc215f1aafc24cf6032355"
         },
         {
             "path": "src/@apps/iam/permission/application/update/update-permission.command-handler.ts",
@@ -223,7 +223,7 @@
         },
         {
             "path": "src/@apps/iam/permission/application/update/update-permission.service.spec.ts",
-            "integrity": "sha1:53611e3fbf6c5a66ca15ec1e20672894f86603d2"
+            "integrity": "sha1:20f3b420fdf422fe93e5bbf9486242bd60ad3b21"
         },
         {
             "path": "src/@apps/iam/permission/application/update/update-permission.service.ts",
@@ -263,7 +263,7 @@
         },
         {
             "path": "src/@apps/iam/permission/infrastructure/seeds/permission.seed.ts",
-            "integrity": "sha1:490ebd650a973831cdf71f18476cf63ad142e516"
+            "integrity": "sha1:05c370a99e3e7277e76a848cd9aaa4dd4df98c5e"
         },
         {
             "path": "src/@apps/iam/permission/infrastructure/sequelize/sequelize-permission.model.ts",
@@ -363,7 +363,7 @@
         },
         {
             "path": "src/@api/iam/permission/controllers/iam-paginate-permissions.controller.spec.ts",
-            "integrity": "sha1:a0e9b2cf0cbc701ff472849ca358b4a5547ac6dd"
+            "integrity": "sha1:7f03e4517e87f8e69c108a82676d67d0cb1a1354"
         },
         {
             "path": "src/@api/iam/permission/controllers/iam-paginate-permissions.controller.ts",
@@ -379,15 +379,15 @@
         },
         {
             "path": "src/@api/iam/permission/dto/iam-permission.dto.ts",
-            "integrity": "sha1:93874a0faa8000993f365f6561490d2fa1f7abfe"
+            "integrity": "sha1:6b121ad735de10d6c38fc993dc66338d8da95432"
         },
         {
             "path": "src/@api/iam/permission/dto/iam-create-permission.dto.ts",
-            "integrity": "sha1:e17003b74d50c8583cd62e7908a0b3fc483104d7"
+            "integrity": "sha1:c68eb8e5617a4d69bdced66f527e74245478e8e8"
         },
         {
             "path": "src/@api/iam/permission/dto/iam-update-permission.dto.ts",
-            "integrity": "sha1:10928f383ac6319960c6112ab2e4f7e6f8fd97c3"
+            "integrity": "sha1:4b16bd2bb5b6fdba0dfb85c004682dc5ed242028"
         },
         {
             "path": "src/@api/iam/permission/dto/index.ts",
@@ -555,11 +555,11 @@
         },
         {
             "path": "test/acceptance/iam/permission.e2e-spec.ts",
-            "integrity": "sha1:b038b114ac5cf9430e5af0fd508efde9f07475d6"
+            "integrity": "sha1:ec6c0c948c40d6626bde78ee89db3cd12ac5c989"
         },
         {
             "path": "postman/iam.permission.postman.json",
-            "integrity": "sha1:b92c79b1426a1b21f7fdd865528cd7561e85b213"
+            "integrity": "sha1:ee0c67ec1b3ab124dc192b98121b4f599105c284"
         }
     ]
 }

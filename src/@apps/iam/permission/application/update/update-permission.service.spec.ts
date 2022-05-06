@@ -39,7 +39,8 @@ describe('UpdatePermissionService', () =>
                     },
                 },
             ],
-        }).compile();
+        })
+            .compile();
 
         service         = module.get(UpdatePermissionService);
         repository      = module.get(IPermissionRepository);

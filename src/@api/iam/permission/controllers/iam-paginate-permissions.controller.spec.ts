@@ -28,7 +28,7 @@ describe('IamPaginatePermissionsController', () =>
                         main: () => { /**/ },
                     },
                 },
-            ]
+            ],
         })
             .compile();
 
