@@ -378,6 +378,9 @@ export interface IMutation {
     oAuthCreateCredential(payload: OAuthCreateCredentialInput): OAuthCredential | Promise<OAuthCredential>;
     oAuthDeleteRefreshTokenById(id: string, constraint?: Nullable<QueryStatement>): Nullable<OAuthRefreshToken> | Promise<Nullable<OAuthRefreshToken>>;
     oAuthDeleteRefreshTokens(query?: Nullable<QueryStatement>, constraint?: Nullable<QueryStatement>): Nullable<OAuthRefreshToken>[] | Promise<Nullable<OAuthRefreshToken>[]>;
+    oAuthCreateRefreshToken(payload: OAuthCreateRefreshTokenInput): Nullable<OAuthRefreshToken> | Promise<Nullable<OAuthRefreshToken>>;
+    oAuthCreateRefreshTokens(payload: Nullable<OAuthCreateRefreshTokenInput>[]): boolean | Promise<boolean>;
+    oAuthUpdateRefreshToken(payload: OAuthUpdateRefreshTokenInput, constraint?: Nullable<QueryStatement>): Nullable<OAuthRefreshToken> | Promise<Nullable<OAuthRefreshToken>>;
     oAuthCreateScope(payload: OAuthCreateScopeInput): Nullable<OAuthScope> | Promise<Nullable<OAuthScope>>;
     oAuthCreateScopes(payload: Nullable<OAuthCreateScopeInput>[]): boolean | Promise<boolean>;
     oAuthUpdateScope(payload: OAuthUpdateScopeInput, constraint?: Nullable<QueryStatement>): Nullable<OAuthScope> | Promise<Nullable<OAuthScope>>;
