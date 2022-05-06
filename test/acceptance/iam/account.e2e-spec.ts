@@ -8,7 +8,7 @@ import { IAccountRepository } from '@apps/iam/account/domain/account.repository'
 import { MockAccountSeeder } from '@apps/iam/account/infrastructure/mock/mock-account.seeder';
 import { accounts } from '@apps/iam/account/infrastructure/seeds/account.seed';
 import { GraphQLConfigModule } from '@aurora/graphql/graphql-config.module';
-import { IamModule } from '../../../src/@api/iam/iam.module';
+import { IamModule } from '@api/iam/iam.module';
 import { IamAccountType, OAuthClientGrantType, OAuthCredential } from '../../../src/graphql';
 import * as request from 'supertest';
 import * as _ from 'lodash';
