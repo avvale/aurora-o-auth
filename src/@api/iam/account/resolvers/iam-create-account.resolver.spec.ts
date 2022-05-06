@@ -28,7 +28,8 @@ describe('IamCreateAccountResolver', () =>
                     },
                 },
             ],
-        }).compile();
+        })
+            .compile();
 
         resolver = module.get<IamCreateAccountResolver>(IamCreateAccountResolver);
         handler = module.get<IamCreateAccountHandler>(IamCreateAccountHandler);

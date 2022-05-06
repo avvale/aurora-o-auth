@@ -9,24 +9,14 @@ import { MockAccountSeeder } from '../../../src/@apps/iam/account/infrastructure
 import { accounts } from '../../../src/@apps/iam/account/infrastructure/seeds/account.seed';
 import { GraphQLConfigModule } from '../../../src/@aurora/graphql/graphql-config.module';
 import { IamModule } from '../../../src/@api/iam/iam.module';
-import { IamAccountType, OAuthClientGrantType, OAuthCredential } from '../../../src/graphql';
+import { IamAccountType } from '../../../src/graphql';
 import * as request from 'supertest';
 import * as _ from 'lodash';
 
-// ---- customizations ----
-import { jwtConfig } from '../../../src/@apps/o-auth/shared/jwt-config';
+// has OAuth
+import { AuthenticationJwtGuard } from 'src/@api/o-auth/shared/guards/authentication-jwt.guard';
 import { AuthorizationGuard } from '../../../src/@api/iam/shared/guards/authorization.guard';
-import { AuthModule } from '../../../src/@apps/o-auth/shared/modules/auth.module';
-import { OAuthModule } from '../../../src/@api/o-auth/o-auth.module';
-import { MockApplicationSeeder } from '../../../src/@apps/o-auth/application/infrastructure/mock/mock-application.seeder';
-import { OAuthCreateCredentialHandler } from '../../../src/@api/o-auth/credential/handlers/o-auth-create-credential.handler';
-import { IApplicationRepository } from '../../../src/@apps/o-auth/application/domain/application.repository';
-import { MockAccessTokenSeeder } from '../../../src/@apps/o-auth/access-token/infrastructure/mock/mock-access-token.seeder';
-import { IAccessTokenRepository } from '../../../src/@apps/o-auth/access-token';
-import { MockClientSeeder } from '../../../src/@apps/o-auth/client/infrastructure/mock/mock-client.seeder';
-import { IClientRepository } from '../../../src/@apps/o-auth/client';
-import { MockUserSeeder } from '../../../src/@apps/iam/user/infrastructure/mock/mock-user.seeder';
-import { IUserRepository } from '../../../src/@apps/iam/user/domain/user.repository';
+import { OAuthModule } from './../../../src/@api/o-auth/o-auth.module';
 
 // disable import foreign modules, can be micro-services
 const importForeignModules = [];
@@ -34,21 +24,14 @@ const importForeignModules = [];
 describe('account', () =>
 {
     let app: INestApplication;
-    let credential: OAuthCredential;
-    let oAuthCreateCredentialHandler: OAuthCreateCredentialHandler;
-    let applicationRepository: IApplicationRepository;
-    let applicationSeeder: MockApplicationSeeder;
-    let accessTokenRepository: IAccessTokenRepository;
-    let accessTokenSeeder: MockAccessTokenSeeder;
-    let clientRepository: IClientRepository;
-    let clientSeeder: MockClientSeeder;
-    let accountRepository: IAccountRepository;
+    let repository: IAccountRepository;
     let accountSeeder: MockAccountSeeder;
-    let userRepository: IUserRepository;
-    let userSeeder: MockUserSeeder;
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     let mockData: any;
+
+    // set timeout to 15s by default are 5s
+    jest.setTimeout(15000);
 
     beforeAll(async () =>
     {
@@ -56,8 +39,6 @@ describe('account', () =>
             imports: [
                 ...importForeignModules,
                 IamModule,
-                OAuthModule,
-                AuthModule.forRoot(jwtConfig),
                 GraphQLConfigModule,
                 SequelizeModule.forRootAsync({
                     imports   : [ConfigModule],
@@ -81,48 +62,24 @@ describe('account', () =>
                 }),
             ],
             providers: [
-                MockApplicationSeeder,
-                MockAccessTokenSeeder,
                 MockAccountSeeder,
-                MockClientSeeder,
-                MockUserSeeder,
             ],
         })
+            .overrideGuard(AuthenticationJwtGuard)
+            .useValue({ canActivate: () => true })
             .overrideGuard(AuthorizationGuard)
             .useValue({ canActivate: () => true })
             .compile();
 
-        mockData                        = accounts;
-        app                             = module.createNestApplication();
-        oAuthCreateCredentialHandler    = module.get<OAuthCreateCredentialHandler>(OAuthCreateCredentialHandler);
-        accountRepository               = module.get<IAccountRepository>(IAccountRepository);
-        accountSeeder                   = module.get<MockAccountSeeder>(MockAccountSeeder);
-        applicationRepository           = module.get<IApplicationRepository>(IApplicationRepository);
-        applicationSeeder               = module.get<MockApplicationSeeder>(MockApplicationSeeder);
-        clientRepository                = module.get<IClientRepository>(IClientRepository);
-        clientSeeder                    = module.get<MockClientSeeder>(MockClientSeeder);
-        accessTokenRepository           = module.get<IAccessTokenRepository>(IAccessTokenRepository);
-        accessTokenSeeder               = module.get<MockAccessTokenSeeder>(MockAccessTokenSeeder);
-        userRepository                  = module.get<IUserRepository>(IUserRepository);
-        userSeeder                      = module.get<MockUserSeeder>(MockUserSeeder);
+        mockData        = accounts;
+        app             = module.createNestApplication();
+        repository      = module.get<IAccountRepository>(IAccountRepository);
+        accountSeeder = module.get<MockAccountSeeder>(MockAccountSeeder);
 
         // seed mock data in memory database
-        await applicationRepository.insert(applicationSeeder.collectionSource);
-        await clientRepository.insert(clientSeeder.collectionSource);
-        await accountRepository.insert(accountSeeder.collectionSource);
-        await accessTokenRepository.insert(accessTokenSeeder.collectionSource);
-        await userRepository.insert(userSeeder.collectionSource);
+        await repository.insert(accountSeeder.collectionSource);
 
         await app.init();
-
-        credential = await oAuthCreateCredentialHandler.main(
-            {
-                username: 'john.doe@gmail.com',
-                password: '1111',
-                grantType: OAuthClientGrantType.PASSWORD,
-            },
-            'Basic YXVyb3JhOiQyeSQxMCRFT0EvU0tFd0tSZ0hQdzY0a080TFouNm95NWI4a2w2SnpXL21DUk9NZlNxNlMzOC9JaXl3Rw==',
-        );
     });
 
     test('/REST:POST iam/account/create - Got 400 Conflict, AccountId property can not to be null', () =>
@@ -130,10 +87,9 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/iam/account/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
-                ...{ id: null },
+                id: null,
             })
             .expect(400)
             .then(res =>
@@ -147,10 +103,9 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/iam/account/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
-                ...{ type: null },
+                type: null,
             })
             .expect(400)
             .then(res =>
@@ -164,10 +119,9 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/iam/account/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
-                ...{ email: null },
+                email: null,
             })
             .expect(400)
             .then(res =>
@@ -181,10 +135,9 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/iam/account/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
-                ...{ isActive: null },
+                isActive: null,
             })
             .expect(400)
             .then(res =>
@@ -198,16 +151,62 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/iam/account/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
-                ...{ clientId: null, type: IamAccountType.SERVICE },
+                clientId: null,
             })
             .expect(400)
             .then(res =>
             {
-                // try get client from null and get a undefined instance of null
-                expect(res.body.message).toContain('Value for ClientId must be defined, can not be null');
+                expect(res.body.message).toContain('Value for AccountClientId must be defined, can not be null');
+            });
+    });
+
+    test('/REST:POST iam/account/create - Got 400 Conflict, AccountDApplicationCodes property can not to be null', () =>
+    {
+        return request(app.getHttpServer())
+            .post('/iam/account/create')
+            .set('Accept', 'application/json')
+            .send({
+                ...mockData[0],
+                dApplicationCodes: null,
+            })
+            .expect(400)
+            .then(res =>
+            {
+                expect(res.body.message).toContain('Value for AccountDApplicationCodes must be defined, can not be null');
+            });
+    });
+
+    test('/REST:POST iam/account/create - Got 400 Conflict, AccountDPermissions property can not to be null', () =>
+    {
+        return request(app.getHttpServer())
+            .post('/iam/account/create')
+            .set('Accept', 'application/json')
+            .send({
+                ...mockData[0],
+                dPermissions: null,
+            })
+            .expect(400)
+            .then(res =>
+            {
+                expect(res.body.message).toContain('Value for AccountDPermissions must be defined, can not be null');
+            });
+    });
+
+    test('/REST:POST iam/account/create - Got 400 Conflict, AccountDTenants property can not to be null', () =>
+    {
+        return request(app.getHttpServer())
+            .post('/iam/account/create')
+            .set('Accept', 'application/json')
+            .send({
+                ...mockData[0],
+                dTenants: null,
+            })
+            .expect(400)
+            .then(res =>
+            {
+                expect(res.body.message).toContain('Value for AccountDTenants must be defined, can not be null');
             });
     });
 
@@ -216,10 +215,9 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/iam/account/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
-                ...{ id: undefined },
+                id: undefined,
             })
             .expect(400)
             .then(res =>
@@ -233,10 +231,9 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/iam/account/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
-                ...{ type: undefined },
+                type: undefined,
             })
             .expect(400)
             .then(res =>
@@ -250,10 +247,9 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/iam/account/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
-                ...{ email: undefined },
+                email: undefined,
             })
             .expect(400)
             .then(res =>
@@ -267,10 +263,9 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/iam/account/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
-                ...{ isActive: undefined },
+                isActive: undefined,
             })
             .expect(400)
             .then(res =>
@@ -284,15 +279,62 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/iam/account/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
-                ...{ clientId: null, type: IamAccountType.SERVICE },
+                clientId: undefined,
             })
             .expect(400)
             .then(res =>
             {
-                expect(res.body.message).toContain('Value for ClientId must be defined, can not be null');
+                expect(res.body.message).toContain('Value for AccountClientId must be defined, can not be undefined');
+            });
+    });
+
+    test('/REST:POST iam/account/create - Got 400 Conflict, AccountDApplicationCodes property can not to be undefined', () =>
+    {
+        return request(app.getHttpServer())
+            .post('/iam/account/create')
+            .set('Accept', 'application/json')
+            .send({
+                ...mockData[0],
+                dApplicationCodes: undefined,
+            })
+            .expect(400)
+            .then(res =>
+            {
+                expect(res.body.message).toContain('Value for AccountDApplicationCodes must be defined, can not be undefined');
+            });
+    });
+
+    test('/REST:POST iam/account/create - Got 400 Conflict, AccountDPermissions property can not to be undefined', () =>
+    {
+        return request(app.getHttpServer())
+            .post('/iam/account/create')
+            .set('Accept', 'application/json')
+            .send({
+                ...mockData[0],
+                dPermissions: undefined,
+            })
+            .expect(400)
+            .then(res =>
+            {
+                expect(res.body.message).toContain('Value for AccountDPermissions must be defined, can not be undefined');
+            });
+    });
+
+    test('/REST:POST iam/account/create - Got 400 Conflict, AccountDTenants property can not to be undefined', () =>
+    {
+        return request(app.getHttpServer())
+            .post('/iam/account/create')
+            .set('Accept', 'application/json')
+            .send({
+                ...mockData[0],
+                dTenants: undefined,
+            })
+            .expect(400)
+            .then(res =>
+            {
+                expect(res.body.message).toContain('Value for AccountDTenants must be defined, can not be undefined');
             });
     });
 
@@ -301,10 +343,9 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/iam/account/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
-                ...{ id: '*************************************' },
+                id: '*************************************',
             })
             .expect(400)
             .then(res =>
@@ -318,15 +359,14 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/iam/account/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
-                ...{ clientId: '*************************************', type: IamAccountType.SERVICE },
+                clientId: '*************************************',
             })
             .expect(400)
             .then(res =>
             {
-                expect(res.body.message).toContain('Value for ClientId is not allowed, must be a length of 36');
+                expect(res.body.message).toContain('Value for AccountClientId is not allowed, must be a length of 36');
             });
     });
 
@@ -335,10 +375,9 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/iam/account/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
-                ...{ email: '*************************************************************************************************************************' },
+                email: '*************************************************************************************************************************',
             })
             .expect(400)
             .then(res =>
@@ -352,10 +391,9 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/iam/account/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
-                ...{ isActive: 'true' },
+                isActive: 'true',
             })
             .expect(400)
             .then(res =>
@@ -368,10 +406,9 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/iam/account/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
-                ...{ type: '****' },
+                type: '****',
             })
             .expect(400)
             .then(res =>
@@ -385,21 +422,7 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/iam/account/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send(mockData[0])
-            .expect(409);
-    });
-
-    test('/REST:POST iam/account/create - Got 409 Conflict, email already exist in database', () =>
-    {
-        return request(app.getHttpServer())
-            .post('/iam/account/create')
-            .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${credential.accessToken}`)
-            .send({
-                ...mockData[0],
-                ...{ id: '5b19d6ac-4081-573b-96b3-56964d5326a8', type: IamAccountType.SERVICE },
-            })
             .expect(409);
     });
 
@@ -408,7 +431,6 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/iam/accounts/paginate')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 query:
                 {
@@ -432,7 +454,6 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/iam/accounts/get')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${credential.accessToken}`)
             .expect(200)
             .then(res =>
             {
@@ -447,13 +468,12 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/iam/account/find')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 query:
                 {
                     where:
                     {
-                        id: '32e06919-59e5-4745-9f2b-1bc26443b037',
+                        id: 'a85ce966-a9ac-451d-9d62-a855c6a49b5a',
                     },
                 },
             })
@@ -465,10 +485,9 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/iam/account/create')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
-                ...{ id: '5b19d6ac-4081-573b-96b3-56964d5326a8', type: IamAccountType.SERVICE, email: 'john.***@gmail.com' },
+                id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
             })
             .expect(201);
     });
@@ -478,7 +497,6 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/iam/account/find')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 query:
                 {
@@ -498,9 +516,8 @@ describe('account', () =>
     test('/REST:GET iam/account/find/{id} - Got 404 Not Found', () =>
     {
         return request(app.getHttpServer())
-            .get('/iam/account/find/e259e743-d7b2-462d-81b8-9738ec4cf8e3')
+            .get('/iam/account/find/45356066-3d52-4b6f-a7b8-fe462f3daa23')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${credential.accessToken}`)
             .expect(404);
     });
 
@@ -509,7 +526,6 @@ describe('account', () =>
         return request(app.getHttpServer())
             .get('/iam/account/find/5b19d6ac-4081-573b-96b3-56964d5326a8')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${credential.accessToken}`)
             .expect(200)
             .then(res =>
             {
@@ -522,10 +538,9 @@ describe('account', () =>
         return request(app.getHttpServer())
             .put('/iam/account/update')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
-                ...{ id: '5d4ce994-0f65-4758-abb8-dc57280eae50' },
+                id: '9c285739-3cba-458d-a660-51f98bb13ed0',
             })
             .expect(404);
     });
@@ -535,19 +550,9 @@ describe('account', () =>
         return request(app.getHttpServer())
             .put('/iam/account/update')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
+                ...mockData[0],
                 id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
-                type: IamAccountType.USER,
-                email: 'a558ost6kja5lerwc4f8trkolsrrzmu512b30nyuu572sm0q1x8ld93uxw4cgov6f9uk0mb1fkbr3tlgb72itgmermf2ti4it7us1gk1l6z3edfj45ohhrr',
-                isActive: false,
-                clientId: '5b19d6ac-4081-573b-96b3-56964d5326a8',
-                dApplicationCodes: { "foo" : "bar" },
-                dPermissions: { "foo" : "bar" },
-                dTenants: { "foo" : "bar" },
-                data: { "foo" : "bar" },
-                roleIds: [],
-                tenantIds: [],
             })
             .expect(200)
             .then(res =>
@@ -559,9 +564,8 @@ describe('account', () =>
     test('/REST:DELETE iam/account/delete/{id} - Got 404 Not Found', () =>
     {
         return request(app.getHttpServer())
-            .delete('/iam/account/delete/028e1feb-bf33-4ac2-8fb7-865d099eb143')
+            .delete('/iam/account/delete/4015d307-5ada-47a9-800b-a1f869697ad0')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${credential.accessToken}`)
             .expect(404);
     });
 
@@ -570,21 +574,7 @@ describe('account', () =>
         return request(app.getHttpServer())
             .delete('/iam/account/delete/5b19d6ac-4081-573b-96b3-56964d5326a8')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${credential.accessToken}`)
             .expect(200);
-    });
-
-    test('/REST:GET iam/account/me - Got 200, AccountId belong to JWT', () =>
-    {
-        return request(app.getHttpServer())
-            .get('/iam/account/me')
-            .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${credential.accessToken}`)
-            .expect(200)
-            .then(res =>
-            {
-                expect(res.body).toHaveProperty('email', 'john.doe@gmail.com');
-            });
     });
 
     test('/GraphQL iamCreateAccount - Got 409 Conflict, item already exist in database', () =>
@@ -592,7 +582,6 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 query: `
                     mutation ($payload:IamCreateAccountInput!)
@@ -607,6 +596,7 @@ describe('account', () =>
                             dApplicationCodes
                             dPermissions
                             dTenants
+                            dScopes
                             data
                         }
                     }
@@ -630,7 +620,6 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 query: `
                     query ($query:QueryStatement $constraint:QueryStatement)
@@ -668,7 +657,6 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 query: `
                     query ($query:QueryStatement)
@@ -679,10 +667,10 @@ describe('account', () =>
                             type
                             email
                             isActive
-                            clientId
                             dApplicationCodes
                             dPermissions
                             dTenants
+                            dScopes
                             data
                             createdAt
                             updatedAt
@@ -706,7 +694,6 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 query: `
                     mutation ($payload:IamCreateAccountInput!)
@@ -721,6 +708,7 @@ describe('account', () =>
                             dApplicationCodes
                             dPermissions
                             dTenants
+                            dScopes
                             data
                         }
                     }
@@ -728,7 +716,7 @@ describe('account', () =>
                 variables: {
                     payload: {
                         ...mockData[0],
-                        ...{ id: '5b19d6ac-4081-573b-96b3-56964d5326a8', type: IamAccountType.SERVICE, email: 'john.***@gmail.com' },
+                        id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
                     },
                 },
             })
@@ -744,7 +732,6 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 query: `
                     query ($query:QueryStatement)
@@ -755,10 +742,10 @@ describe('account', () =>
                             type
                             email
                             isActive
-                            clientId
                             dApplicationCodes
                             dPermissions
                             dTenants
+                            dScopes
                             data
                             createdAt
                             updatedAt
@@ -771,7 +758,7 @@ describe('account', () =>
                     {
                         where:
                         {
-                            id: '025dacfa-709b-4d06-929e-e9324744d42f',
+                            id: 'ae7a98cd-bfd5-4a06-9ebb-891fba9c0a72',
                         },
                     },
                 },
@@ -790,7 +777,6 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 query: `
                     query ($query:QueryStatement)
@@ -801,10 +787,10 @@ describe('account', () =>
                             type
                             email
                             isActive
-                            clientId
                             dApplicationCodes
                             dPermissions
                             dTenants
+                            dScopes
                             data
                             createdAt
                             updatedAt
@@ -834,7 +820,6 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 query: `
                     query ($id:ID!)
@@ -845,10 +830,10 @@ describe('account', () =>
                             type
                             email
                             isActive
-                            clientId
                             dApplicationCodes
                             dPermissions
                             dTenants
+                            dScopes
                             data
                             createdAt
                             updatedAt
@@ -856,7 +841,7 @@ describe('account', () =>
                     }
                 `,
                 variables: {
-                    id: 'f6472639-c9f6-4f20-b3ce-2bc756f5f938',
+                    id: '6ac61315-dac3-49a8-84fe-896cedbf6486',
                 },
             })
             .expect(200)
@@ -873,7 +858,6 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 query: `
                     query ($id:ID!)
@@ -884,10 +868,10 @@ describe('account', () =>
                             type
                             email
                             isActive
-                            clientId
                             dApplicationCodes
                             dPermissions
                             dTenants
+                            dScopes
                             data
                             createdAt
                             updatedAt
@@ -910,7 +894,6 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 query: `
                     mutation ($payload:IamUpdateAccountInput!)
@@ -921,10 +904,10 @@ describe('account', () =>
                             type
                             email
                             isActive
-                            clientId
                             dApplicationCodes
                             dPermissions
                             dTenants
+                            dScopes
                             data
                             createdAt
                             updatedAt
@@ -934,7 +917,7 @@ describe('account', () =>
                 variables: {
                     payload: {
                         ...mockData[0],
-                        ...{ id: 'a8dd71f7-e8fd-4ba8-a032-71662226ff4a' },
+                        id: '31174d80-106c-4dc0-91a9-394ab007f8cf',
                     },
                 },
             })
@@ -952,7 +935,6 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 query: `
                     mutation ($payload:IamUpdateAccountInput!)
@@ -963,10 +945,10 @@ describe('account', () =>
                             type
                             email
                             isActive
-                            clientId
                             dApplicationCodes
                             dPermissions
                             dTenants
+                            dScopes
                             data
                             createdAt
                             updatedAt
@@ -975,17 +957,8 @@ describe('account', () =>
                 `,
                 variables: {
                     payload: {
+                        ...mockData[0],
                         id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
-                        type: IamAccountType.SERVICE,
-                        email: '0i0i70qbl79wglg43ze2dvb81j4xq6n4vbb64tlw5zlu9pez6y90dykpdaqcx60pzhit5rhv5z0jr8ss9kx0mumsrdpl507re3v5itc96iiftsni4l13e52',
-                        isActive: false,
-                        clientId: '5b19d6ac-4081-573b-96b3-56964d5326a8',
-                        dApplicationCodes: { "foo" : "bar" },
-                        dPermissions: { "foo" : "bar" },
-                        dTenants: { "foo" : "bar" },
-                        data: { "foo" : "bar" },
-                        roleIds: [],
-                        tenantIds: [],
                     },
                 },
             })
@@ -1001,7 +974,6 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 query: `
                     mutation ($id:ID!)
@@ -1012,10 +984,10 @@ describe('account', () =>
                             type
                             email
                             isActive
-                            clientId
                             dApplicationCodes
                             dPermissions
                             dTenants
+                            dScopes
                             data
                             createdAt
                             updatedAt
@@ -1023,7 +995,7 @@ describe('account', () =>
                     }
                 `,
                 variables: {
-                    id: '1fadbdf7-a644-45c6-b492-0c78d5007780',
+                    id: '6c1f96fc-9f23-43d5-b8ae-3a41eb6342f2',
                 },
             })
             .expect(200)
@@ -1040,7 +1012,6 @@ describe('account', () =>
         return request(app.getHttpServer())
             .post('/graphql')
             .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 query: `
                     mutation ($id:ID!)
@@ -1051,10 +1022,10 @@ describe('account', () =>
                             type
                             email
                             isActive
-                            clientId
                             dApplicationCodes
                             dPermissions
                             dTenants
+                            dScopes
                             data
                             createdAt
                             updatedAt
@@ -1072,43 +1043,9 @@ describe('account', () =>
             });
     });
 
-    test('/GraphQL iamFindMeAccount', () =>
-    {
-        return request(app.getHttpServer())
-            .post('/graphql')
-            .set('Accept', 'application/json')
-            .set('Authorization', `Bearer ${credential.accessToken}`)
-            .send({
-                query: `
-                    query
-                    {
-                        iamMeAccount
-                        {
-                            id
-                            type
-                            email
-                            isActive
-                            clientId
-                            dApplicationCodes
-                            dPermissions
-                            dTenants
-                            data
-                            createdAt
-                            updatedAt
-                        }
-                    }
-                `,
-            })
-            .expect(200)
-            .then(res =>
-            {
-                expect(res.body.data.iamMeAccount).toHaveProperty('email', 'john.doe@gmail.com');
-            });
-    });
-
     afterAll(async () =>
     {
-        await accountRepository.delete({
+        await repository.delete({
             queryStatement: {
                 where: {},
             },

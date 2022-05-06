@@ -28,7 +28,8 @@ describe('IamUpdateAccountResolver', () =>
                     },
                 },
             ],
-        }).compile();
+        })
+            .compile();
 
         resolver = module.get<IamUpdateAccountResolver>(IamUpdateAccountResolver);
         handler = module.get<IamUpdateAccountHandler>(IamUpdateAccountHandler);
