@@ -28,7 +28,8 @@ describe('OAuthUpdateApplicationResolver', () =>
                     },
                 },
             ],
-        }).compile();
+        })
+            .compile();
 
         resolver = module.get<OAuthUpdateApplicationResolver>(OAuthUpdateApplicationResolver);
         handler = module.get<OAuthUpdateApplicationHandler>(OAuthUpdateApplicationHandler);

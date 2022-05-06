@@ -35,7 +35,8 @@ describe('OAuthUpdateApplicationHandler', () =>
                     },
                 },
             ],
-        }).compile();
+        })
+            .compile();
 
         handler     = module.get<OAuthUpdateApplicationHandler>(OAuthUpdateApplicationHandler);
         queryBus    = module.get<IQueryBus>(IQueryBus);
