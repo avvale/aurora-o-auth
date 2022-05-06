@@ -63,7 +63,7 @@ describe('UpdateBoundedContextService', () =>
                     root: new BoundedContextRoot(boundedContexts[0].root),
                     sort: new BoundedContextSort(boundedContexts[0].sort),
                     isActive: new BoundedContextIsActive(boundedContexts[0].isActive),
-                }
+                },
             )).toBe(undefined);
         });
     });
