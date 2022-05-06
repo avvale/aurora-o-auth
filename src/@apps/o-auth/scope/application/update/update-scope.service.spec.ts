@@ -38,7 +38,8 @@ describe('UpdateScopeService', () =>
                     },
                 },
             ],
-        }).compile();
+        })
+            .compile();
 
         service         = module.get(UpdateScopeService);
         repository      = module.get(IScopeRepository);
@@ -59,7 +60,7 @@ describe('UpdateScopeService', () =>
                     id: new ScopeId(scopes[0].id),
                     code: new ScopeCode(scopes[0].code),
                     name: new ScopeName(scopes[0].name),
-                }
+                },
             )).toBe(undefined);
         });
     });

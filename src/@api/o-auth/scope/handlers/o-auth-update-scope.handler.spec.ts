@@ -35,7 +35,8 @@ describe('OAuthUpdateScopeHandler', () =>
                     },
                 },
             ],
-        }).compile();
+        })
+            .compile();
 
         handler     = module.get<OAuthUpdateScopeHandler>(OAuthUpdateScopeHandler);
         queryBus    = module.get<IQueryBus>(IQueryBus);

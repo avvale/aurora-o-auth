@@ -28,7 +28,8 @@ describe('OAuthCreateScopeResolver', () =>
                     },
                 },
             ],
-        }).compile();
+        })
+            .compile();
 
         resolver = module.get<OAuthCreateScopeResolver>(OAuthCreateScopeResolver);
         handler = module.get<OAuthCreateScopeHandler>(OAuthCreateScopeHandler);
