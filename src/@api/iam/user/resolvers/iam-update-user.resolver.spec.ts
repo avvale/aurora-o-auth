@@ -28,7 +28,8 @@ describe('IamUpdateUserResolver', () =>
                     },
                 },
             ],
-        }).compile();
+        })
+            .compile();
 
         resolver = module.get<IamUpdateUserResolver>(IamUpdateUserResolver);
         handler = module.get<IamUpdateUserHandler>(IamUpdateUserHandler);

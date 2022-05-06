@@ -25,7 +25,8 @@ describe('IamCreateUsersResolver', () =>
                     },
                 },
             ],
-        }).compile();
+        })
+            .compile();
 
         resolver = module.get<IamCreateUsersResolver>(IamCreateUsersResolver);
         handler = module.get<IamCreateUsersHandler>(IamCreateUsersHandler);

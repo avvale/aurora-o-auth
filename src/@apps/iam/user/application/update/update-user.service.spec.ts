@@ -47,7 +47,8 @@ describe('UpdateUserService', () =>
                     },
                 },
             ],
-        }).compile();
+        })
+            .compile();
 
         service         = module.get(UpdateUserService);
         repository      = module.get(IUserRepository);
@@ -77,7 +78,7 @@ describe('UpdateUserService', () =>
                     password: new UserPassword(users[0].password),
                     rememberToken: new UserRememberToken(users[0].rememberToken),
                     data: new UserData(users[0].data),
-                }
+                },
             )).toBe(undefined);
         });
     });
