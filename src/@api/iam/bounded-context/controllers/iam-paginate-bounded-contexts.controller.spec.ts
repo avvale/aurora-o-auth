@@ -28,7 +28,7 @@ describe('IamPaginateBoundedContextsController', () =>
                         main: () => { /**/ },
                     },
                 },
-            ]
+            ],
         })
             .compile();
 

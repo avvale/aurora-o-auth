@@ -243,7 +243,7 @@ describe('bounded-context', () =>
             .set('Authorization', `Bearer ${credential.accessToken}`)
             .send({
                 ...mockData[0],
-                ...{ root: undefined },
+                root: undefined,
             })
             .expect(400)
             .then(res =>
@@ -844,7 +844,7 @@ describe('bounded-context', () =>
                 variables: {
                     payload: {
                         ...mockData[0],
-                        ...{ id: '96e632db-aea8-48de-a7cc-e328187639ae' },
+                        id: '96e632db-aea8-48de-a7cc-e328187639ae',
                     },
                 },
             })

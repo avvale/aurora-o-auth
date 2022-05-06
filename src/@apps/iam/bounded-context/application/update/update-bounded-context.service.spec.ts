@@ -40,7 +40,8 @@ describe('UpdateBoundedContextService', () =>
                     },
                 },
             ],
-        }).compile();
+        })
+            .compile();
 
         service         = module.get(UpdateBoundedContextService);
         repository      = module.get(IBoundedContextRepository);
