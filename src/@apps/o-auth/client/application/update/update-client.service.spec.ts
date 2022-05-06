@@ -47,7 +47,8 @@ describe('UpdateClientService', () =>
                     },
                 },
             ],
-        }).compile();
+        })
+            .compile();
 
         service         = module.get(UpdateClientService);
         repository      = module.get(IClientRepository);
@@ -77,7 +78,7 @@ describe('UpdateClientService', () =>
                     isActive: new ClientIsActive(clients[0].isActive),
                     isMaster: new ClientIsMaster(clients[0].isMaster),
                     applicationIds: new ClientApplicationIds(clients[0].applicationIds),
-                }
+                },
             )).toBe(undefined);
         });
     });
