@@ -291,7 +291,7 @@
         },
         {
             "path": "src/@apps/iam/role/infrastructure/seeds/role.seed.ts",
-            "integrity": "sha1:7431fa6089fc4b18df317e4de29f3ddc8c18d066"
+            "integrity": "sha1:64d3d5a58ada28fa91f019182a473ecefb1f0aa3"
         },
         {
             "path": "src/@apps/iam/role/infrastructure/sequelize/sequelize-role.model.ts",
@@ -615,11 +615,11 @@
         },
         {
             "path": "test/acceptance/iam/role.e2e-spec.ts",
-            "integrity": "sha1:f344b800a8cb99f42ab3050291631cec1ea8bc28"
+            "integrity": "sha1:f112f8e7f4c5814e702775723ca070d115a9814c"
         },
         {
             "path": "postman/iam.role.postman.json",
-            "integrity": "sha1:396c0b0378ad23a494e4e1062b03915fea5736ba"
+            "integrity": "sha1:0983e4b3141ed82831d8ca5f4be6d585b65eed14"
         }
     ]
 }
