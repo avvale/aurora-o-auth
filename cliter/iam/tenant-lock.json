@@ -291,7 +291,7 @@
         },
         {
             "path": "src/@apps/iam/tenant/infrastructure/seeds/tenant.seed.ts",
-            "integrity": "sha1:ccc873a618e46a5622cfcbd81152adbb8ceaf213"
+            "integrity": "sha1:a9df8d7267a44bb1ebaf9b9e46ea7adef5cc2853"
         },
         {
             "path": "src/@apps/iam/tenant/infrastructure/sequelize/sequelize-tenant.model.ts",
@@ -623,11 +623,11 @@
         },
         {
             "path": "test/acceptance/iam/tenant.e2e-spec.ts",
-            "integrity": "sha1:b45d9b9c3fdd0744d6b9a512f55f78b6d9a0e33a"
+            "integrity": "sha1:4eda7aad75e94f0874b1a5cb7281772f48ef8956"
         },
         {
             "path": "postman/iam.tenant.postman.json",
-            "integrity": "sha1:9c44a2b06cce95a0c8ae024bb5bba7eecd0f2eaf"
+            "integrity": "sha1:6fc6e6ff1feb6faffb62684adf4c0c03577b0fd1"
         }
     ]
 }
