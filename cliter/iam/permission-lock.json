@@ -291,7 +291,7 @@
         },
         {
             "path": "src/@apps/iam/permission/infrastructure/seeds/permission.seed.ts",
-            "integrity": "sha1:f144e5d7295959aa8501861d3f0313120fea5409"
+            "integrity": "sha1:ef104d85a701a1c9e50316cf857606f414d4a831"
         },
         {
             "path": "src/@apps/iam/permission/infrastructure/sequelize/sequelize-permission.model.ts",
@@ -415,19 +415,19 @@
         },
         {
             "path": "src/@api/iam/permission/dto/iam-permission.dto.ts",
-            "integrity": "sha1:81fe7fba6e8dd2db0ccc6e3f6700b1269443e4a5"
+            "integrity": "sha1:826e54031427dbf1779556f396c1456dc24b1e75"
         },
         {
             "path": "src/@api/iam/permission/dto/iam-create-permission.dto.ts",
-            "integrity": "sha1:8c52f03c30e7c5b0e9afd771d277d2045bfe5036"
+            "integrity": "sha1:6908cb3260142d6675e414f125bded7bdbf443fb"
         },
         {
             "path": "src/@api/iam/permission/dto/iam-update-permission-by-id.dto.ts",
-            "integrity": "sha1:eaa091afbfc256998833c15197d867171549cf67"
+            "integrity": "sha1:8205be46200988ffc3eed024a11a75346034324a"
         },
         {
             "path": "src/@api/iam/permission/dto/iam-update-permissions.dto.ts",
-            "integrity": "sha1:8161e8293f9347fe9a50e05ee6a91c37848e453b"
+            "integrity": "sha1:bf989757ea4cb7b7a0c156045440bf3de2c128e7"
         },
         {
             "path": "src/@api/iam/permission/dto/index.ts",
@@ -611,11 +611,11 @@
         },
         {
             "path": "test/acceptance/iam/permission.e2e-spec.ts",
-            "integrity": "sha1:30023d50bdb6fb7600a7a213515430bd75e3039b"
+            "integrity": "sha1:2132381f2ccd71b5a690082a0e5ea48e1b0c4597"
         },
         {
             "path": "postman/iam.permission.postman.json",
-            "integrity": "sha1:ac71f8049e51d3760ed463a2157739bbc7a072b3"
+            "integrity": "sha1:93f37a06c77f7b2c4d522ab906bd0b00133aaaf7"
         }
     ]
 }
