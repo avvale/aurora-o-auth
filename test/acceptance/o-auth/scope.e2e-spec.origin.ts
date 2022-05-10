@@ -281,7 +281,7 @@ describe('scope', () =>
                 {
                     where:
                     {
-                        id: '4eb237a0-19b1-414a-90e1-83409c57e7de',
+                        id: 'ec8280f9-9d74-4f83-ba84-248bd150169e',
                     },
                 },
             })
@@ -296,7 +296,6 @@ describe('scope', () =>
             .send({
                 ...mockData[0],
                 id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
-                code: 'TEST:E2E',
             })
             .expect(201);
     });
@@ -325,7 +324,7 @@ describe('scope', () =>
     test('/REST:GET o-auth/scope/find/{id} - Got 404 Not Found', () =>
     {
         return request(app.getHttpServer())
-            .get('/o-auth/scope/find/acdbef90-0fdb-4a56-b892-e1fbce10d2cf')
+            .get('/o-auth/scope/find/12153496-6996-46df-bc46-f62fc06d742a')
             .set('Accept', 'application/json')
             .expect(404);
     });
@@ -349,7 +348,7 @@ describe('scope', () =>
             .set('Accept', 'application/json')
             .send({
                 ...mockData[0],
-                id: '8b3f4d2d-a0ff-4ecb-8d44-d17c25427c8c',
+                id: 'b5dcfe69-b63e-488e-bc63-ab98056b58f4',
             })
             .expect(404);
     });
@@ -362,7 +361,6 @@ describe('scope', () =>
             .send({
                 ...mockData[0],
                 id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
-                code: 'TEST:E2E',
             })
             .expect(200)
             .then(res =>
@@ -374,7 +372,7 @@ describe('scope', () =>
     test('/REST:DELETE o-auth/scope/delete/{id} - Got 404 Not Found', () =>
     {
         return request(app.getHttpServer())
-            .delete('/o-auth/scope/delete/44f2844a-04d1-429c-96ff-50764a0d7a7d')
+            .delete('/o-auth/scope/delete/2c6b76b6-d778-4bc2-a400-0b6d4aab9b6f')
             .set('Accept', 'application/json')
             .expect(404);
     });
@@ -507,7 +505,6 @@ describe('scope', () =>
                     payload: {
                         ...mockData[0],
                         id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
-                        code: 'TEST:E2E',
                     },
                 },
             })
@@ -543,7 +540,7 @@ describe('scope', () =>
                     {
                         where:
                         {
-                            id: '6dd68558-00ad-4416-a13f-4feb93708c08',
+                            id: '74b1b93a-5039-4be1-afbb-a495cf9089ad',
                         },
                     },
                 },
@@ -614,7 +611,7 @@ describe('scope', () =>
                     }
                 `,
                 variables: {
-                    id: 'e89d4209-1824-4f9b-bfb0-7a6d13190c81',
+                    id: 'a1d6b20c-42c0-40a1-bb99-77517fb0e32e',
                 },
             })
             .expect(200)
@@ -678,7 +675,7 @@ describe('scope', () =>
                 variables: {
                     payload: {
                         ...mockData[0],
-                        id: 'd72847bc-64b9-4948-9deb-31b02837e5b8',
+                        id: '43947653-a20a-44d1-9d2f-1f020c193adb',
                     },
                 },
             })
@@ -748,7 +745,6 @@ describe('scope', () =>
                     payload: {
                         ...mockData[0],
                         id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
-                        code: 'TEST:E2E',
                     },
                     query: {
                         where: {
@@ -784,7 +780,7 @@ describe('scope', () =>
                     }
                 `,
                 variables: {
-                    id: 'f5d2b42c-9a2f-447d-bb5d-9be27ac2693a',
+                    id: 'cc6c8f11-1dfa-466f-a4fb-374990a30b20',
                 },
             })
             .expect(200)
