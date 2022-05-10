@@ -110,7 +110,7 @@
             "integrity": "sha1:742b832c970e14365f6a168cfa57d9a6ef6d3d87"
         },
         {
-            "path": "src/@apps/iam/role/application/events/deleted-roles.event-handler copy.ts",
+            "path": "src/@apps/iam/role/application/events/deleted-roles.event-handler.ts",
             "integrity": "sha1:e9ba5af5c064ab4515e0613b52c88640dc92bd5a"
         },
         {
@@ -291,7 +291,7 @@
         },
         {
             "path": "src/@apps/iam/role/infrastructure/seeds/role.seed.ts",
-            "integrity": "sha1:64d3d5a58ada28fa91f019182a473ecefb1f0aa3"
+            "integrity": "sha1:690854fe2f75f5a189cdd6ecf02d892b82b6c483"
         },
         {
             "path": "src/@apps/iam/role/infrastructure/sequelize/sequelize-role.model.ts",
@@ -615,11 +615,11 @@
         },
         {
             "path": "test/acceptance/iam/role.e2e-spec.ts",
-            "integrity": "sha1:f112f8e7f4c5814e702775723ca070d115a9814c"
+            "integrity": "sha1:d70e5fb85593206c672618ddcb0eef2aeb745422"
         },
         {
             "path": "postman/iam.role.postman.json",
-            "integrity": "sha1:0983e4b3141ed82831d8ca5f4be6d585b65eed14"
+            "integrity": "sha1:aa5e62acb3290e5b662dccfbdb8aa3cb3b6e04d8"
         }
     ]
 }
