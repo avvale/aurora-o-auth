@@ -4,7 +4,7 @@ import { DeletedBoundedContextsEvent } from './deleted-bounded-contexts.event';
 @EventsHandler(DeletedBoundedContextsEvent)
 export class DeletedBoundedContextsEventHandler implements IEventHandler<DeletedBoundedContextsEvent>
 {
-    handle(event: DeletedBoundedContextsEvent): void
+    handle(event: DeletedBoundedContextsEvent)
     {
         // console.log('DeletedBoundedContextsEvent: ', event);
     }

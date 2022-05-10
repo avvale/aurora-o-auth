@@ -4,7 +4,7 @@ import { UpdatedBoundedContextEvent } from './updated-bounded-context.event';
 @EventsHandler(UpdatedBoundedContextEvent)
 export class UpdatedBoundedContextEventHandler implements IEventHandler<UpdatedBoundedContextEvent>
 {
-    handle(event: UpdatedBoundedContextEvent): void
+    handle(event: UpdatedBoundedContextEvent)
     {
         // console.log('UpdatedBoundedContextEvent: ', event);
     }
