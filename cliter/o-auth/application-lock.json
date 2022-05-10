@@ -110,7 +110,7 @@
             "integrity": "sha1:96644e3471106b0735f42a415d420a1f9528f24d"
         },
         {
-            "path": "src/@apps/o-auth/application/application/events/deleted-applications.event-handler copy.ts",
+            "path": "src/@apps/o-auth/application/application/events/deleted-applications.event-handler.ts",
             "integrity": "sha1:c6a8bafba37f96d6982007212477283c09a69729"
         },
         {
@@ -291,7 +291,7 @@
         },
         {
             "path": "src/@apps/o-auth/application/infrastructure/seeds/application.seed.ts",
-            "integrity": "sha1:a00ad50fe9b9a14e5608577a5e9614ca9cda0ca9"
+            "integrity": "sha1:04c28acbef15187093070e780614425d166bc0b2"
         },
         {
             "path": "src/@apps/o-auth/application/infrastructure/sequelize/sequelize-application.model.ts",
@@ -619,11 +619,11 @@
         },
         {
             "path": "test/acceptance/o-auth/application.e2e-spec.ts",
-            "integrity": "sha1:b734f08fd4b8e6a03ce6e29e40bc8c3b00dab58d"
+            "integrity": "sha1:966b7234ab041d7f851d91fd04d773e051811677"
         },
         {
             "path": "postman/o-auth.application.postman.json",
-            "integrity": "sha1:aa7f6ed3c7269998e77802a59b7acdf3d9fa6799"
+            "integrity": "sha1:ee3e51ff6b808df40c25e2b9e6d765177ac86b9b"
         }
     ]
 }
