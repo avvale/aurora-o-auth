@@ -102,3 +102,5 @@ excluded:
   - src/@apps/o-auth/access-token/application/events/updated-access-token.event.ts
   - src/@apps/o-auth/access-token/application/events/updated-access-tokens.event-handler.ts
   - src/@apps/o-auth/access-token/application/events/updated-access-tokens.event.ts
+  - src/@api/o-auth/access-token/seeder/seeder.ts
+  - src/@api/o-auth/access-token/seeder/seeder.module.ts
