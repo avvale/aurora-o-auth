@@ -13,7 +13,7 @@ export class OAuthRefreshTokenDto
     @ApiProperty({
         type       : String,
         description: 'accessTokenId [input here api field description]',
-        example    : '25ad0664-9799-41d2-bda5-6d854b12ce99',
+        example    : '3852285d-fe45-43fa-94be-78c59db0a2c6',
     })
     accessTokenId: string;
 

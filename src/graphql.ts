@@ -221,7 +221,7 @@ export interface OAuthCreateAccessTokenInput {
     refreshToken?: Nullable<OAuthCreateRefreshTokenInput>;
 }
 
-export interface OAuthUpdateAccessTokenInput {
+export interface OAuthUpdateAccessTokenByIdInput {
     id: string;
     clientId?: Nullable<string>;
     accountId?: Nullable<string>;
@@ -229,7 +229,18 @@ export interface OAuthUpdateAccessTokenInput {
     name?: Nullable<GraphQLString>;
     isRevoked?: Nullable<GraphQLBoolean>;
     expiresAt?: Nullable<GraphQLTimestamp>;
-    refreshToken?: Nullable<OAuthUpdateRefreshTokenInput>;
+    refreshToken?: Nullable<OAuthUpdateRefreshTokenByIdInput>;
+}
+
+export interface OAuthUpdateAccessTokensInput {
+    id?: Nullable<string>;
+    clientId?: Nullable<string>;
+    accountId?: Nullable<string>;
+    token?: Nullable<GraphQLString>;
+    name?: Nullable<GraphQLString>;
+    isRevoked?: Nullable<GraphQLBoolean>;
+    expiresAt?: Nullable<GraphQLTimestamp>;
+    refreshToken?: Nullable<OAuthUpdateRefreshTokensInput>;
 }
 
 export interface OAuthCreateApplicationInput {
@@ -323,8 +334,16 @@ export interface OAuthCreateRefreshTokenInput {
     expiresAt?: Nullable<GraphQLTimestamp>;
 }
 
-export interface OAuthUpdateRefreshTokenInput {
+export interface OAuthUpdateRefreshTokenByIdInput {
     id: string;
+    accessTokenId?: Nullable<string>;
+    token?: Nullable<GraphQLString>;
+    isRevoked?: Nullable<GraphQLBoolean>;
+    expiresAt?: Nullable<GraphQLTimestamp>;
+}
+
+export interface OAuthUpdateRefreshTokensInput {
+    id?: Nullable<string>;
     accessTokenId?: Nullable<string>;
     token?: Nullable<GraphQLString>;
     isRevoked?: Nullable<GraphQLBoolean>;
