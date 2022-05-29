@@ -15,7 +15,8 @@ export enum IamAccountType {
 export enum OAuthClientGrantType {
     AUTHORIZATION_CODE = "AUTHORIZATION_CODE",
     CLIENT_CREDENTIALS = "CLIENT_CREDENTIALS",
-    PASSWORD = "PASSWORD"
+    PASSWORD = "PASSWORD",
+    REFRESH_TOKEN = "REFRESH_TOKEN"
 }
 
 export interface IamCreateAccountInput {
@@ -315,7 +316,7 @@ export interface OAuthUpdateClientsInput {
     applicationIds?: Nullable<Nullable<string>[]>;
 }
 
-export interface OAuthCreateCredentialInput {
+export interface OAuthCreateCredentialsInput {
     grantType: OAuthClientGrantType;
     username?: Nullable<GraphQLString>;
     password?: Nullable<GraphQLString>;
@@ -497,7 +498,7 @@ export interface IMutation {
     oAuthUpdateClients(payload: OAuthUpdateClientsInput, query?: Nullable<QueryStatement>, constraint?: Nullable<QueryStatement>): Nullable<OAuthClient>[] | Promise<Nullable<OAuthClient>[]>;
     oAuthDeleteClientById(id: string, constraint?: Nullable<QueryStatement>): Nullable<OAuthClient> | Promise<Nullable<OAuthClient>>;
     oAuthDeleteClients(query?: Nullable<QueryStatement>, constraint?: Nullable<QueryStatement>): Nullable<OAuthClient>[] | Promise<Nullable<OAuthClient>[]>;
-    oAuthCreateCredential(payload: OAuthCreateCredentialInput): OAuthCredential | Promise<OAuthCredential>;
+    oAuthCreateCredentials(payload: OAuthCreateCredentialsInput): OAuthCredentials | Promise<OAuthCredentials>;
     oAuthDeleteRefreshTokenById(id: string, constraint?: Nullable<QueryStatement>): Nullable<OAuthRefreshToken> | Promise<Nullable<OAuthRefreshToken>>;
     oAuthDeleteRefreshTokens(query?: Nullable<QueryStatement>, constraint?: Nullable<QueryStatement>): Nullable<OAuthRefreshToken>[] | Promise<Nullable<OAuthRefreshToken>[]>;
     oAuthCreateScope(payload: OAuthCreateScopeInput): Nullable<OAuthScope> | Promise<Nullable<OAuthScope>>;
@@ -619,7 +620,7 @@ export interface OAuthClient {
     deletedAt?: Nullable<GraphQLTimestamp>;
 }
 
-export interface OAuthCredential {
+export interface OAuthCredentials {
     accessToken: GraphQLString;
     refreshToken: GraphQLString;
 }
