@@ -21,6 +21,7 @@ export enum OAuthClientGrantType {
 export interface IamCreateAccountInput {
     id: string;
     type: IamAccountType;
+    code?: Nullable<GraphQLString>;
     email: GraphQLString;
     isActive: GraphQLBoolean;
     clientId: string;
@@ -37,6 +38,7 @@ export interface IamCreateAccountInput {
 export interface IamUpdateAccountByIdInput {
     id: string;
     type?: Nullable<IamAccountType>;
+    code?: Nullable<GraphQLString>;
     email?: Nullable<GraphQLString>;
     isActive?: Nullable<GraphQLBoolean>;
     clientId?: Nullable<string>;
@@ -53,6 +55,7 @@ export interface IamUpdateAccountByIdInput {
 export interface IamUpdateAccountsInput {
     id?: Nullable<string>;
     type?: Nullable<IamAccountType>;
+    code?: Nullable<GraphQLString>;
     email?: Nullable<GraphQLString>;
     isActive?: Nullable<GraphQLBoolean>;
     clientId?: Nullable<string>;
@@ -170,7 +173,6 @@ export interface IamCreateUserInput {
     accountId: string;
     name: GraphQLString;
     surname?: Nullable<GraphQLString>;
-    code?: Nullable<GraphQLString>;
     avatar?: Nullable<GraphQLString>;
     mobile?: Nullable<GraphQLString>;
     langId?: Nullable<string>;
@@ -185,7 +187,6 @@ export interface IamUpdateUserByIdInput {
     accountId?: Nullable<string>;
     name?: Nullable<GraphQLString>;
     surname?: Nullable<GraphQLString>;
-    code?: Nullable<GraphQLString>;
     avatar?: Nullable<GraphQLString>;
     mobile?: Nullable<GraphQLString>;
     langId?: Nullable<string>;
@@ -200,7 +201,6 @@ export interface IamUpdateUsersInput {
     accountId?: Nullable<string>;
     name?: Nullable<GraphQLString>;
     surname?: Nullable<GraphQLString>;
-    code?: Nullable<GraphQLString>;
     avatar?: Nullable<GraphQLString>;
     mobile?: Nullable<GraphQLString>;
     langId?: Nullable<string>;
@@ -379,6 +379,7 @@ export interface QueryStatement {
 export interface IamAccount {
     id: string;
     type: IamAccountType;
+    code?: Nullable<GraphQLString>;
     email: GraphQLString;
     isActive: GraphQLBoolean;
     clientId: string;
@@ -560,7 +561,6 @@ export interface IamUser {
     account?: Nullable<IamAccount>;
     name: GraphQLString;
     surname?: Nullable<GraphQLString>;
-    code?: Nullable<GraphQLString>;
     avatar?: Nullable<GraphQLString>;
     mobile?: Nullable<GraphQLString>;
     langId?: Nullable<string>;
