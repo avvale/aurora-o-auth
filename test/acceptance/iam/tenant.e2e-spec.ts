@@ -356,18 +356,18 @@ describe('tenant', () =>
             });
     });
 
-    test('/REST:GET iam/tenant/find/{id} - Got 404 Not Found', () =>
+    test('/REST:POST iam/tenant/find/{id} - Got 404 Not Found', () =>
     {
         return request(app.getHttpServer())
-            .get('/iam/tenant/find/aadaada3-74a5-4803-8c8a-5cd7a4dbb8b6')
+            .post('/iam/tenant/find/aadaada3-74a5-4803-8c8a-5cd7a4dbb8b6')
             .set('Accept', 'application/json')
             .expect(404);
     });
 
-    test('/REST:GET iam/tenant/find/{id}', () =>
+    test('/REST:POST iam/tenant/find/{id}', () =>
     {
         return request(app.getHttpServer())
-            .get('/iam/tenant/find/5b19d6ac-4081-573b-96b3-56964d5326a8')
+            .post('/iam/tenant/find/5b19d6ac-4081-573b-96b3-56964d5326a8')
             .set('Accept', 'application/json')
             .expect(200)
             .then(res =>
