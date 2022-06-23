@@ -330,6 +330,7 @@ describe('tenant', () =>
             .set('Accept', 'application/json')
             .send({
                 ...mockData[0],
+                code: 'aurora', // code is a unique key
                 id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
             })
             .expect(201);
@@ -395,6 +396,7 @@ describe('tenant', () =>
             .set('Accept', 'application/json')
             .send({
                 ...mockData[0],
+                code: 'aurora', // code is a unique key
                 id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
             })
             .expect(200)
@@ -548,6 +550,7 @@ describe('tenant', () =>
                 variables: {
                     payload: {
                         ...mockData[0],
+                        code: 'aurora', // code is a unique key
                         id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
                     },
                 },
@@ -772,6 +775,7 @@ describe('tenant', () =>
                 variables: {
                     payload: {
                         ...mockData[0],
+                        code: 'aurora', // code is a unique key
                         id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
                     },
                 },
@@ -808,6 +812,7 @@ describe('tenant', () =>
                 variables: {
                     payload: {
                         ...mockData[0],
+                        code: 'aurora', // code is a unique key
                         id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
                     },
                     query: {
