@@ -416,18 +416,18 @@ describe('application', () =>
             });
     });
 
-    test('/REST:GET o-auth/application/find/{id} - Got 404 Not Found', () =>
+    test('/REST:POST o-auth/application/find/{id} - Got 404 Not Found', () =>
     {
         return request(app.getHttpServer())
-            .get('/o-auth/application/find/07dd3284-021b-4078-969d-237831d4f2eb')
+            .post('/o-auth/application/find/07dd3284-021b-4078-969d-237831d4f2eb')
             .set('Accept', 'application/json')
             .expect(404);
     });
 
-    test('/REST:GET o-auth/application/find/{id}', () =>
+    test('/REST:POST o-auth/application/find/{id}', () =>
     {
         return request(app.getHttpServer())
-            .get('/o-auth/application/find/5b19d6ac-4081-573b-96b3-56964d5326a8')
+            .post('/o-auth/application/find/5b19d6ac-4081-573b-96b3-56964d5326a8')
             .set('Accept', 'application/json')
             .expect(200)
             .then(res =>
