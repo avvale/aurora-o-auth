@@ -49,7 +49,6 @@ aggregateProperties:
     relationshipAggregate: OAuthRefreshToken
     relationshipModulePath: o-auth/refresh-token
     relationshipAvoidConstraint: true
-    index: index
   - name: createdAt
     type: timestamp
     nullable: true
