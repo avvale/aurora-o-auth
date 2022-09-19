@@ -5,6 +5,7 @@ moduleNames: users
 aggregateName: IamUser
 hasOAuth: true
 hasTenant: false
+hasAuditing: true
 aggregateProperties:
   - name: id
     type: id
@@ -53,7 +54,7 @@ aggregateProperties:
     type: varchar
     maxLength: 255
     nullable: true
-  - name: data
+  - name: meta
     type: json
     nullable: true
   - name: createdAt
@@ -65,3 +66,6 @@ aggregateProperties:
   - name: deletedAt
     type: timestamp
     nullable: true
+additionalApis: []
+y
+y

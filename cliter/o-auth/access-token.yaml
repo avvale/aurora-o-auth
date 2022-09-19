@@ -5,6 +5,7 @@ moduleNames: access-tokens
 aggregateName: OAuthAccessToken
 hasOAuth: true
 hasTenant: false
+hasAuditing: false
 aggregateProperties:
   - name: id
     type: id
@@ -58,6 +59,7 @@ aggregateProperties:
   - name: deletedAt
     type: timestamp
     nullable: true
+additionalApis: []
 excluded:
   - src/@api/o-auth/access-token/controllers/o-auth-create-access-token.controller.ts
   - src/@api/o-auth/access-token/controllers/o-auth-create-access-token.controller.spec.ts

@@ -5,6 +5,7 @@ moduleNames: refresh-tokens
 aggregateName: OAuthRefreshToken
 hasOAuth: true
 hasTenant: false
+hasAuditing: false
 aggregateProperties:
   - name: id
     type: id
@@ -41,6 +42,7 @@ aggregateProperties:
   - name: deletedAt
     type: timestamp
     nullable: true
+additionalApis: []
 excluded:
   - src/@api/o-auth/refresh-token/controllers/o-auth-create-refresh-token.controller.ts
   - src/@api/o-auth/refresh-token/controllers/o-auth-create-refresh-token.controller.spec.ts

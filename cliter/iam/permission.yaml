@@ -5,6 +5,7 @@ moduleNames: permissions
 aggregateName: IamPermission
 hasOAuth: true
 hasTenant: false
+hasAuditing: true
 aggregateProperties:
   - name: id
     type: id
@@ -45,3 +46,4 @@ aggregateProperties:
   - name: deletedAt
     type: timestamp
     nullable: true
+additionalApis: []

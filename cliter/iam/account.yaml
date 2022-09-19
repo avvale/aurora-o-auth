@@ -5,6 +5,7 @@ moduleNames: accounts
 aggregateName: IamAccount
 hasOAuth: true
 hasTenant: false
+hasAuditing: true
 aggregateProperties:
   - name: id
     type: id
@@ -56,7 +57,7 @@ aggregateProperties:
   - name: dScopes
     type: json
     nullable: true
-  - name: data
+  - name: meta
     type: json
     nullable: true
   - name: roles
@@ -96,6 +97,7 @@ aggregateProperties:
   - name: deletedAt
     type: timestamp
     nullable: true
+additionalApis: []
 excluded:
   - src/@api/iam/account/resolvers/iam-create-accounts.resolver.ts
   - src/@api/iam/account/resolvers/iam-create-accounts.resolver.spec.ts

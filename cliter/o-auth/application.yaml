@@ -5,21 +5,22 @@ moduleNames: applications
 aggregateName: OAuthApplication
 hasOAuth: true
 hasTenant: false
+hasAuditing: true
 aggregateProperties:
   - name: id
     type: id
     primaryKey: true
     length: 36
     nullable: false
-  - name: name
-    type: varchar
-    maxLength: 255
-    nullable: false
   - name: code
     type: varchar
     maxLength: 50
     nullable: false
     index: unique
+  - name: name
+    type: varchar
+    maxLength: 255
+    nullable: false
   - name: secret
     type: varchar
     maxLength: 90
@@ -49,3 +50,4 @@ aggregateProperties:
   - name: deletedAt
     type: timestamp
     nullable: true
+additionalApis: []
