@@ -43,7 +43,7 @@ describe('IamUpdateAccountByIdController', () =>
             expect(controller).toBeDefined();
         });
 
-        test('should return a account created', async () =>
+        test('should return a account updated', async () =>
         {
             jest.spyOn(handler, 'main').mockImplementation(() => new Promise(resolve => resolve(accounts[0])));
             expect(await controller.main(accounts[0])).toBe(accounts[0]);

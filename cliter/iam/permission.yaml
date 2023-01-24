@@ -5,7 +5,7 @@ moduleNames: permissions
 aggregateName: IamPermission
 hasOAuth: true
 hasTenant: false
-hasAuditing: true
+hasAuditing: false
 aggregateProperties:
   - name: id
     type: id

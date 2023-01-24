@@ -5,7 +5,7 @@ moduleNames: tenants
 aggregateName: IamTenant
 hasOAuth: true
 hasTenant: false
-hasAuditing: true
+hasAuditing: false
 aggregateProperties:
   - name: id
     type: id

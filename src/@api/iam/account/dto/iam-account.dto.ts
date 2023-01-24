@@ -4,7 +4,7 @@ import { IamRoleDto } from '../../../iam/role/dto/iam-role.dto';
 import { IamTenantDto } from '../../../iam/tenant/dto/iam-tenant.dto';
 import { OAuthClientDto } from '../../../o-auth/client/dto/o-auth-client.dto';
 import { IamUserDto } from '../../../iam/user/dto/iam-user.dto';
-import { IamAccountType } from '../../../../graphql';
+import { IamAccountType } from '@api/graphql';
 
 export class IamAccountDto
 {
@@ -45,7 +45,7 @@ export class IamAccountDto
     @ApiProperty({
         type       : String,
         description: 'clientId [input here api field description]',
-        example    : '8bba29a7-ae17-4fcd-be3d-65f011502d81',
+        example    : '467dc818-05a8-5053-9ec3-7ae4e2f225c0',
     })
     clientId: string;
 
@@ -54,6 +54,12 @@ export class IamAccountDto
         description: 'OAuthClient [input here api field description]',
     })
     client?: OAuthClientDto;
+
+    @ApiProperty({
+        type       : Object,
+        description: 'scopes [input here api field description]',
+    })
+    scopes?: any;
 
     @ApiProperty({
         type       : Object,
@@ -75,15 +81,9 @@ export class IamAccountDto
 
     @ApiProperty({
         type       : Object,
-        description: 'dScopes [input here api field description]',
+        description: 'meta [input here api field description]',
     })
-    dScopes?: any;
-
-    @ApiProperty({
-        type       : Object,
-        description: 'data [input here api field description]',
-    })
-    data?: any;
+    meta?: any;
 
     @ApiProperty({
         type       : () => [IamRoleDto],

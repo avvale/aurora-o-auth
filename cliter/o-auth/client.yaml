@@ -5,7 +5,7 @@ moduleNames: clients
 aggregateName: OAuthClient
 hasOAuth: true
 hasTenant: false
-hasAuditing: true
+hasAuditing: false
 aggregateProperties:
   - name: id
     type: id

@@ -19,9 +19,9 @@
 					}
 				},
 				"url": {
-					"raw": "{{URL}}/graphql",
+					"raw": "/graphql",
 					"host": [
-						"{{URL}}"
+						""
 					],
 					"path": [
 						"graphql"
@@ -43,9 +43,9 @@
 					}
 				},
 				"url": {
-					"raw": "{{URL}}/graphql",
+					"raw": "/graphql",
 					"host": [
-						"{{URL}}"
+						""
 					],
 					"path": [
 						"graphql"
@@ -68,9 +68,9 @@
 					}
 				},
 				"url": {
-					"raw": "{{URL}}/graphql",
+					"raw": "/graphql",
 					"host": [
-						"{{URL}}"
+						""
 					],
 					"path": [
 						"graphql"
@@ -93,9 +93,9 @@
 					}
 				},
 				"url": {
-					"raw": "{{URL}}/graphql",
+					"raw": "/graphql",
 					"host": [
-						"{{URL}}"
+						""
 					],
 					"path": [
 						"graphql"
@@ -118,9 +118,9 @@
 					}
 				},
 				"url": {
-					"raw": "{{URL}}/graphql",
+					"raw": "/graphql",
 					"host": [
-						"{{URL}}"
+						""
 					],
 					"path": [
 						"graphql"
@@ -143,9 +143,9 @@
 					}
 				},
 				"url": {
-					"raw": "{{URL}}/graphql",
+					"raw": "/graphql",
 					"host": [
-						"{{URL}}"
+						""
 					],
 					"path": [
 						"graphql"
@@ -168,9 +168,9 @@
 					}
 				},
 				"url": {
-					"raw": "{{URL}}/graphql",
+					"raw": "/graphql",
 					"host": [
-						"{{URL}}"
+						""
 					],
 					"path": [
 						"graphql"
@@ -193,9 +193,9 @@
 					}
 				},
 				"url": {
-					"raw": "{{URL}}/graphql",
+					"raw": "/graphql",
 					"host": [
-						"{{URL}}"
+						""
 					],
 					"path": [
 						"graphql"
@@ -218,9 +218,9 @@
 					}
 				},
 				"url": {
-					"raw": "{{URL}}/graphql",
+					"raw": "/graphql",
 					"host": [
-						"{{URL}}"
+						""
 					],
 					"path": [
 						"graphql"
@@ -250,9 +250,9 @@
 					}
 				},
 				"url": {
-					"raw": "{{URL}}/o-auth/client/create",
+					"raw": "/o-auth/client/create",
 					"host": [
-						"{{URL}}"
+						""
 					],
 					"path": [
 						"o-auth",
@@ -284,9 +284,9 @@
 					}
 				},
 				"url": {
-					"raw": "{{URL}}/o-auth/clients/create",
+					"raw": "/o-auth/clients/create",
 					"host": [
-						"{{URL}}"
+						""
 					],
 					"path": [
 						"o-auth",
@@ -321,9 +321,9 @@
 					}
 				},
 				"url": {
-					"raw": "{{URL}}/o-auth/clients/paginate",
+					"raw": "/o-auth/clients/paginate",
 					"host": [
-						"{{URL}}"
+						""
 					],
 					"path": [
 						"o-auth",
@@ -358,9 +358,9 @@
 					}
 				},
 				"url": {
-					"raw": "{{URL}}/o-auth/clients/get",
+					"raw": "/o-auth/clients/get",
 					"host": [
-						"{{URL}}"
+						""
 					],
 					"path": [
 						"o-auth",
@@ -395,9 +395,9 @@
 					}
 				},
 				"url": {
-					"raw": "{{URL}}/o-auth/client/find",
+					"raw": "/o-auth/client/find",
 					"host": [
-						"{{URL}}"
+						""
 					],
 					"path": [
 						"o-auth",
@@ -432,9 +432,9 @@
 					}
 				},
 				"url": {
-					"raw": "{{URL}}/o-auth/client/find/5b19d6ac-4081-573b-96b3-56964d5326a8",
+					"raw": "/o-auth/client/find/5b19d6ac-4081-573b-96b3-56964d5326a8",
 					"host": [
-						"{{URL}}"
+						""
 					],
 					"path": [
 						"o-auth",
@@ -467,9 +467,9 @@
 					}
 				},
 				"url": {
-					"raw": "{{URL}}/o-auth/client/update",
+					"raw": "/o-auth/client/update",
 					"host": [
-						"{{URL}}"
+						""
 					],
 					"path": [
 						"o-auth",
@@ -501,9 +501,9 @@
 					}
 				},
 				"url": {
-					"raw": "{{URL}}/o-auth/client/delete/5b19d6ac-4081-573b-96b3-56964d5326a8",
+					"raw": "/o-auth/client/delete/5b19d6ac-4081-573b-96b3-56964d5326a8",
 					"host": [
-						"{{URL}}"
+						""
 					],
 					"path": [
 						"o-auth",
@@ -536,9 +536,9 @@
 					}
 				},
 				"url": {
-					"raw": "{{URL}}/o-auth/clients/delete",
+					"raw": "/o-auth/clients/delete",
 					"host": [
-						"{{URL}}"
+						""
 					],
 					"path": [
 						"o-auth",
