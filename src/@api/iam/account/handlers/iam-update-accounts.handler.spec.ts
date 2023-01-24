@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Test, TestingModule } from '@nestjs/testing';
-import { ICommandBus, IQueryBus } from 'aurora-ts-core';
+import { ICommandBus, IQueryBus } from '@aurora-ts/core';
 
 // custom items
 import { IamUpdateAccountsHandler } from './iam-update-accounts.handler';
-import { IamUpdateAccountsInput } from '../../../../graphql';
+import { IamUpdateAccountsInput } from '@api/graphql';
 
 // sources
-import { accounts } from '@apps/iam/account/infrastructure/seeds/account.seed';
+import { accounts } from '@app/iam/account/infrastructure/seeds/account.seed';
 
 describe('IamUpdateAccountsHandler', () =>
 {

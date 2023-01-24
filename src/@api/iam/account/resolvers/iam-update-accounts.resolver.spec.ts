@@ -4,10 +4,10 @@ import { Test, TestingModule } from '@nestjs/testing';
 // custom items
 import { IamUpdateAccountsResolver } from './iam-update-accounts.resolver';
 import { IamUpdateAccountsHandler } from '../handlers/iam-update-accounts.handler';
-import { IamUpdateAccountsInput } from '../../../../graphql';
+import { IamUpdateAccountsInput } from '@api/graphql';
 
 // sources
-import { accounts } from '@apps/iam/account/infrastructure/seeds/account.seed';
+import { accounts } from '@app/iam/account/infrastructure/seeds/account.seed';
 
 describe('IamUpdateAccountsResolver', () =>
 {
