@@ -3,6 +3,7 @@ enum IamAccountType {
     SERVICE
 }
 
+
 type IamAccount
 {
     id: ID!
@@ -12,11 +13,11 @@ type IamAccount
     isActive: GraphQLBoolean!
     clientId: ID!
     client: OAuthClient
+    scopes: JSON
     dApplicationCodes: JSON!
     dPermissions: JSON!
     dTenants: JSON!
-    dScopes: JSON
-    data: JSON
+    meta: JSON
     roles: [IamRole]
     tenants: [IamTenant]
     user: IamUser
@@ -33,11 +34,8 @@ input IamCreateAccountInput
     email: GraphQLString!
     isActive: GraphQLBoolean!
     clientId: ID!
-    dApplicationCodes: JSON!
-    dPermissions: JSON!
-    dTenants: JSON!
-    dScopes: JSON
-    data: JSON
+    scopes: JSON
+    meta: JSON
     roleIds: [ID]
     tenantIds: [ID]
     user: IamCreateUserInput
@@ -51,11 +49,8 @@ input IamUpdateAccountByIdInput
     email: GraphQLString
     isActive: GraphQLBoolean
     clientId: ID
-    dApplicationCodes: JSON
-    dPermissions: JSON
-    dTenants: JSON
-    dScopes: JSON
-    data: JSON
+    scopes: JSON
+    meta: JSON
     roleIds: [ID]
     tenantIds: [ID]
     user: IamUpdateUserByIdInput
@@ -69,11 +64,10 @@ input IamUpdateAccountsInput
     email: GraphQLString
     isActive: GraphQLBoolean
     clientId: ID
+    scopes: JSON
     dApplicationCodes: JSON
     dPermissions: JSON
-    dTenants: JSON
-    dScopes: JSON
-    data: JSON
+    meta: JSON
     roleIds: [ID]
     tenantIds: [ID]
     user: IamUpdateUsersInput
@@ -81,19 +75,63 @@ input IamUpdateAccountsInput
 
 type Query
 {
+    iamFindAccount(
+        query: QueryStatement
+        constraint: QueryStatement
+    ): IamAccount
+
+    iamFindAccountById(
+        id: ID
+        constraint: QueryStatement
+        queryGetClients: QueryStatement
+        constraintGetClients: QueryStatement
+    ): IamAccount
+
+    iamGetAccounts(
+        query: QueryStatement
+        constraint: QueryStatement
+    ): [IamAccount]!
+
+    iamPaginateAccounts(
+        query: QueryStatement
+        constraint: QueryStatement
+    ): Pagination!
+
+    # ---- customizations ----
     iamMeAccount: IamAccount
-    iamFindAccount(query: QueryStatement constraint: QueryStatement): IamAccount
-    iamFindAccountById(id: ID constraint: QueryStatement): IamAccount
-    iamGetAccounts(query: QueryStatement constraint: QueryStatement): [IamAccount]!
-    iamPaginateAccounts(query: QueryStatement constraint: QueryStatement): Pagination!
 }
 
 type Mutation
 {
-    iamCreateAccount(payload: IamCreateAccountInput!): IamAccount
+    iamCreateAccount(
+        payload: IamCreateAccountInput!
+    ): IamAccount
+
+    iamUpdateAccountById(
+        payload: IamUpdateAccountByIdInput!
+        constraint: QueryStatement
+    ): IamAccount
+
+    iamUpdateAccounts(
+        payload: IamUpdateAccountsInput!
+        query: QueryStatement
+        constraint: QueryStatement
+    ): [IamAccount]!
+
+    iamUpsertAccount(
+        payload: IamUpdateAccountByIdInput!
+    ): IamAccount
+
+    iamDeleteAccountById(
+        id: ID!
+        constraint: QueryStatement
+    ): IamAccount
+
+    iamDeleteAccounts(
+        query: QueryStatement
+        constraint: QueryStatement
+    ): [IamAccount]!
+
+    # ---- customizations ----
     iamCreateAccounts(payload: [IamCreateAccountInput]!): Boolean!
-    iamUpdateAccountById(payload: IamUpdateAccountByIdInput! constraint: QueryStatement): IamAccount
-    iamUpdateAccounts(payload: IamUpdateAccountsInput! query: QueryStatement constraint: QueryStatement): [IamAccount]!
-    iamDeleteAccountById(id: ID! constraint: QueryStatement): IamAccount
-    iamDeleteAccounts(query: QueryStatement constraint: QueryStatement): [IamAccount]!
 }

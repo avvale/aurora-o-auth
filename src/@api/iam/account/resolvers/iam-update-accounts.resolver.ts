@@ -1,15 +1,15 @@
 import { UseGuards } from '@nestjs/common';
 import { Resolver, Args, Mutation } from '@nestjs/graphql';
-import { QueryStatement, Timezone } from 'aurora-ts-core';
+import { QueryStatement, Timezone } from '@aurora-ts/core';
 
 // authorization
 import { Permissions } from '@api/iam/shared/decorators/permissions.decorator';
 import { AuthenticationJwtGuard } from '@api/o-auth/shared/guards/authentication-jwt.guard';
 import { AuthorizationGuard } from '@api/iam/shared/guards/authorization.guard';
 
-// @apps
+// @app
 import { IamUpdateAccountsHandler } from '../handlers/iam-update-accounts.handler';
-import { IamAccount, IamUpdateAccountsInput } from '../../../../graphql';
+import { IamAccount, IamUpdateAccountsInput } from '@api/graphql';
 
 @Resolver()
 @Permissions('iam.account.update')

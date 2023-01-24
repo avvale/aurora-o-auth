@@ -1,21 +1,20 @@
-import { Injectable, LiteralObject } from '@nestjs/common';
-import { ICommandBus, IQueryBus, Jwt, Utils } from 'aurora-ts-core';
+import { Injectable } from '@nestjs/common';
+import { ICommandBus, IQueryBus, Jwt, Utils } from '@aurora-ts/core';
+import { Sequelize } from 'sequelize-typescript';
 
-// @apps
-import { FindAccountByIdQuery } from '@apps/iam/account/application/find/find-account-by-id.query';
-import { CreateAccountCommand } from '@apps/iam/account/application/create/create-account.command';
-import { IamAccount, IamAccountType, IamCreateAccountInput } from '../../../../graphql';
+// @app
+import { FindAccountByIdQuery } from '@app/iam/account/application/find/find-account-by-id.query';
+import { CreateAccountCommand } from '@app/iam/account/application/create/create-account.command';
+import { IamAccount, IamAccountType, IamCreateAccountInput } from '@api/graphql';
 import { IamAccountDto, IamCreateAccountDto } from '../dto';
 
 // ---- customizations ----
 import { JwtService } from '@nestjs/jwt';
-import { GetRolesQuery } from '@apps/iam/role/application/get/get-roles.query';
-import { FindClientByIdQuery } from '@apps/o-auth/client/application/find/find-client-by-id.query';
-import { FindAccessTokenByIdQuery } from '@apps/o-auth/access-token/application/find/find-access-token-by-id.query';
-import { CreateUserCommand } from '@apps/iam/user/application/create/create-user.command';
-import { AccountHelper } from '@apps/iam/account/domain/account.helper';
-import { OAuthApplicationModel } from '@apps/o-auth/application/infrastructure/sequelize/sequelize-application.model';
-import { IamPermissionModel } from '@apps/iam/permission/infrastructure/sequelize/sequelize-permission.model';
+import { GetRolesQuery } from '@app/iam/role/application/get/get-roles.query';
+import { FindClientByIdQuery } from '@app/o-auth/client/application/find/find-client-by-id.query';
+import { FindAccessTokenByIdQuery } from '@app/o-auth/access-token/application/find/find-access-token-by-id.query';
+import { CreateUserCommand } from '@app/iam/user/application/create/create-user.command';
+import { IamCreatePermissionsFromRolesService } from '@app/iam/permission-role/application/services/iam-create-permissions-from-roles.service';
 
 @Injectable()
 export class IamCreateAccountHandler
@@ -24,11 +23,12 @@ export class IamCreateAccountHandler
         private readonly commandBus: ICommandBus,
         private readonly queryBus: IQueryBus,
         private readonly jwtService: JwtService,
+        private readonly sequelize: Sequelize,
+        private readonly createPermissionsFromRolesService: IamCreatePermissionsFromRolesService,
     ) {}
 
     async main(
         payload: IamCreateAccountInput | IamCreateAccountDto,
-        headers: LiteralObject,
         timezone?: string,
     ): Promise<IamAccount | IamAccountDto>
     {
@@ -39,12 +39,12 @@ export class IamCreateAccountHandler
         const accessToken = await this.queryBus.ask(new FindAccessTokenByIdQuery(jwt.jit));
 
         // get client to get applications related FindClientByIdQuery
-        const client = await this.queryBus.ask(new FindClientByIdQuery(payload.type === IamAccountType.SERVICE ? payload.clientId : accessToken.clientId,
+        const client = await this.queryBus.ask(new FindClientByIdQuery(
+            payload.type === IamAccountType.SERVICE ? payload.clientId : accessToken.clientId,
             {
                 include: [
                     {
-                        model: OAuthApplicationModel,
-                        as   : 'applications',
+                        association: 'applications',
                     },
                 ],
             },
@@ -57,46 +57,83 @@ export class IamCreateAccountHandler
             },
             include: [
                 {
-                    model: IamPermissionModel,
-                    as   : 'permissions',
+                    association: 'permissions',
                 },
             ],
         }));
 
-        await this.commandBus.dispatch(new CreateAccountCommand(
-            {
-                id               : payload.id,
-                type             : payload.type,
-                code             : payload.code,
-                email            : payload.email,
-                isActive         : payload.isActive,
-                clientId         : client?.id,
-                dApplicationCodes: client?.applications.map(application => application.code),
-                dPermissions     : AccountHelper.createPermissions(roles),
-                dScopes          : payload.dScopes,
-                data             : payload.data,
-                roleIds          : payload.roleIds,
-                tenantIds        : payload.tenantIds,
-            },
-        ));
+        const transaction = await this.sequelize.transaction({
+            // logging: console.log,  // Just for debugging purposes
+        });
 
-        if (payload.type === IamAccountType.USER)
+        try
         {
-            await this.commandBus.dispatch(new CreateUserCommand(
+            const operationId = Utils.uuid();
+
+            await this.commandBus.dispatch(new CreateAccountCommand(
                 {
-                    id           : Utils.uuid(),
-                    accountId    : payload.id,
-                    name         : payload.user.name,
-                    surname      : payload.user.surname,
-                    avatar       : payload.user.avatar,
-                    mobile       : payload.user.mobile,
-                    langId       : payload.user.langId,
-                    username     : payload.user.username,
-                    password     : payload.user.password,
-                    rememberToken: payload.user.rememberToken,
-                    data         : payload.user.data,
-                }, { timezone },
+                    id               : payload.id,
+                    type             : payload.type,
+                    code             : payload.code,
+                    email            : payload.email,
+                    isActive         : payload.isActive,
+                    clientId         : client?.id,
+                    scopes           : payload.scopes,
+                    dApplicationCodes: client?.applications.map(application => application.code),
+                    dPermissions     : this.createPermissionsFromRolesService.main(roles),
+                    meta             : payload.meta,
+                    roleIds          : payload.roleIds,
+                    tenantIds        : payload.tenantIds,
+                },
+                {
+                    timezone,
+                    repositoryOptions: {
+                        transaction,
+                        auditing: {
+                            ...auditing,
+                            operationId,
+                            operationSort: 1,
+                        },
+                    },
+                },
             ));
+
+            if (payload.type === IamAccountType.USER)
+            {
+                await this.commandBus.dispatch(new CreateUserCommand(
+                    {
+                        id           : Utils.uuid(),
+                        accountId    : payload.id,
+                        name         : payload.user.name,
+                        surname      : payload.user.surname,
+                        avatar       : payload.user.avatar,
+                        mobile       : payload.user.mobile,
+                        langId       : payload.user.langId,
+                        username     : payload.user.username,
+                        password     : payload.user.password,
+                        rememberToken: payload.user.rememberToken,
+                        meta         : null,
+                    },
+                    {
+                        timezone,
+                        repositoryOptions: {
+                            transaction,
+                            auditing: {
+                                ...auditing,
+                                operationId,
+                                operationSort: 2,
+                            },
+                        },
+                    },
+                ));
+            }
+
+            await transaction.commit();
+        }
+        catch (error)
+        {
+            await transaction.rollback();
+            throw error;
         }
 
         return await this.queryBus.ask(new FindAccountByIdQuery(payload.id, {}, { timezone }));

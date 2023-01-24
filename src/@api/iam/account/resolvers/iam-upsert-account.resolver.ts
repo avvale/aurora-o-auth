@@ -1,6 +1,6 @@
 import { UseGuards } from '@nestjs/common';
 import { Resolver, Args, Mutation } from '@nestjs/graphql';
-import { QueryStatement, Timezone } from '@aurora-ts/core';
+import { Timezone } from '@aurora-ts/core';
 
 // authorization
 import { Permissions } from '@api/iam/shared/decorators/permissions.decorator';
@@ -8,28 +8,26 @@ import { AuthenticationJwtGuard } from '@api/o-auth/shared/guards/authentication
 import { AuthorizationGuard } from '@api/iam/shared/guards/authorization.guard';
 
 // @app
-import { IamDeleteAccountByIdHandler } from '../handlers/iam-delete-account-by-id.handler';
-import { IamAccount } from '@api/graphql';
+import { IamUpsertAccountHandler } from '../handlers/iam-upsert-account.handler';
+import { IamAccount, IamUpdateAccountByIdInput } from '@api/graphql';
 
 @Resolver()
-@Permissions('iam.account.delete')
+@Permissions('iam.account.upsert')
 @UseGuards(AuthenticationJwtGuard, AuthorizationGuard)
-export class IamDeleteAccountByIdResolver
+export class IamUpsertAccountResolver
 {
     constructor(
-        private readonly handler: IamDeleteAccountByIdHandler,
+        private readonly handler: IamUpsertAccountHandler,
     ) {}
 
-    @Mutation('iamDeleteAccountById')
+    @Mutation('iamUpsertAccount')
     async main(
-        @Args('id') id: string,
-        @Args('constraint') constraint?: QueryStatement,
+        @Args('payload') payload: IamUpdateAccountByIdInput,
         @Timezone() timezone?: string,
     ): Promise<IamAccount>
     {
         return await this.handler.main(
-            id,
-            constraint,
+            payload,
             timezone,
         );
     }

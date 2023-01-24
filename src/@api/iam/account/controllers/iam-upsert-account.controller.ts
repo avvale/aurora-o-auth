@@ -2,7 +2,7 @@
 import { Controller, Post, Body, UseGuards } from '@nestjs/common';
 import { ApiTags, ApiCreatedResponse, ApiOperation } from '@nestjs/swagger';
 import { Timezone } from '@aurora-ts/core';
-import { IamAccountDto, IamCreateAccountDto } from '../dto';
+import { IamAccountDto, IamUpdateAccountByIdDto } from '../dto';
 
 // authorization
 import { Permissions } from '@api/iam/shared/decorators/permissions.decorator';
@@ -10,23 +10,23 @@ import { AuthenticationJwtGuard } from '@api/o-auth/shared/guards/authentication
 import { AuthorizationGuard } from '@api/iam/shared/guards/authorization.guard';
 
 // @app
-import { IamCreateAccountHandler } from '../handlers/iam-create-account.handler';
+import { IamUpsertAccountHandler } from '../handlers/iam-upsert-account.handler';
 
 @ApiTags('[iam] account')
-@Controller('iam/account/create')
-@Permissions('iam.account.create')
+@Controller('iam/account/upsert')
+@Permissions('iam.account.upsert')
 @UseGuards(AuthenticationJwtGuard, AuthorizationGuard)
-export class IamCreateAccountController
+export class IamUpsertAccountController
 {
     constructor(
-        private readonly handler: IamCreateAccountHandler,
+        private readonly handler: IamUpsertAccountHandler,
     ) {}
 
     @Post()
-    @ApiOperation({ summary: 'Create account' })
-    @ApiCreatedResponse({ description: 'The record has been successfully created.', type: IamAccountDto })
+    @ApiOperation({ summary: 'Upsert account' })
+    @ApiCreatedResponse({ description: 'The record has been successfully upserted.', type: IamAccountDto })
     async main(
-        @Body() payload: IamCreateAccountDto,
+        @Body() payload: IamUpdateAccountByIdDto,
         @Timezone() timezone?: string,
     )
     {
