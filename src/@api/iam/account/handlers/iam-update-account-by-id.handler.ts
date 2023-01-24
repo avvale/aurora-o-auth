@@ -2,9 +2,6 @@ import { Injectable } from '@nestjs/common';
 import { ICommandBus, IQueryBus, QueryStatement, Utils } from '@aurora-ts/core';
 import { Sequelize } from 'sequelize-typescript';
 
-// auditing
-import { AuditingMeta } from '@api/auditing/auditing.types';
-
 // @app
 import { FindAccountByIdQuery } from '@app/iam/account/application/find/find-account-by-id.query';
 import { UpdateAccountByIdCommand } from '@app/iam/account/application/update/update-account-by-id.command';
@@ -29,7 +26,6 @@ export class IamUpdateAccountByIdHandler
         payload: IamUpdateAccountByIdInput | IamUpdateAccountByIdDto,
         constraint?: QueryStatement,
         timezone?: string,
-        auditing?: AuditingMeta,
     ): Promise<IamAccount | IamAccountDto>
     {
         const account = await this.queryBus.ask(new FindAccountByIdQuery(
@@ -59,8 +55,6 @@ export class IamUpdateAccountByIdHandler
 
         try
         {
-            const operationId = Utils.uuid();
-
             await this.commandBus.dispatch(new UpdateAccountByIdCommand(
                 {
                     ...dataToUpdate,
@@ -71,11 +65,6 @@ export class IamUpdateAccountByIdHandler
                     timezone,
                     repositoryOptions: {
                         transaction,
-                        auditing: {
-                            ...auditing,
-                            operationId,
-                            operationSort: 1,
-                        },
                     },
                 },
             ));
@@ -99,11 +88,6 @@ export class IamUpdateAccountByIdHandler
                         timezone,
                         repositoryOptions: {
                             transaction,
-                            auditing: {
-                                ...auditing,
-                                operationId,
-                                operationSort: 2,
-                            },
                         },
                     },
                 ));

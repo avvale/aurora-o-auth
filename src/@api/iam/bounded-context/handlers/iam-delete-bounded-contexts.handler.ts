@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { ICommandBus, IQueryBus, QueryStatement } from 'aurora-ts-core';
+import { ICommandBus, IQueryBus, QueryStatement } from '@aurora-ts/core';
 
-// @apps
-import { GetBoundedContextsQuery } from '@apps/iam/bounded-context/application/get/get-bounded-contexts.query';
-import { DeleteBoundedContextsCommand } from '@apps/iam/bounded-context/application/delete/delete-bounded-contexts.command';
-import { IamBoundedContext } from '../../../../graphql';
+// @app
+import { GetBoundedContextsQuery } from '@app/iam/bounded-context/application/get/get-bounded-contexts.query';
+import { DeleteBoundedContextsCommand } from '@app/iam/bounded-context/application/delete/delete-bounded-contexts.command';
+import { IamBoundedContext } from '@api/graphql';
 import { IamBoundedContextDto } from '../dto';
 
 @Injectable()
@@ -23,7 +23,13 @@ export class IamDeleteBoundedContextsHandler
     {
         const boundedContexts = await this.queryBus.ask(new GetBoundedContextsQuery(queryStatement, constraint, { timezone }));
 
-        await this.commandBus.dispatch(new DeleteBoundedContextsCommand(queryStatement, constraint, { timezone }));
+        await this.commandBus.dispatch(new DeleteBoundedContextsCommand(
+            queryStatement,
+            constraint,
+            {
+                timezone,
+            },
+        ));
 
         return boundedContexts;
     }

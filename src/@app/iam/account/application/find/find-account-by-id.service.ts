@@ -17,6 +17,12 @@ export class FindAccountByIdService
         cQMetadata?: CQMetadata,
     ): Promise<IamAccount>
     {
-        return await this.repository.findById(id, { constraint, cQMetadata });
+        return await this.repository.findById(
+            id,
+            {
+                constraint,
+                cQMetadata,
+            },
+        );
     }
 }

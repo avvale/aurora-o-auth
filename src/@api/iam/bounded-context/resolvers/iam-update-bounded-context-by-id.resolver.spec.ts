@@ -4,10 +4,10 @@ import { Test, TestingModule } from '@nestjs/testing';
 // custom items
 import { IamUpdateBoundedContextByIdResolver } from './iam-update-bounded-context-by-id.resolver';
 import { IamUpdateBoundedContextByIdHandler } from '../handlers/iam-update-bounded-context-by-id.handler';
-import { IamUpdateBoundedContextByIdInput } from '../../../../graphql';
+import { IamUpdateBoundedContextByIdInput } from '@api/graphql';
 
 // sources
-import { boundedContexts } from '@apps/iam/bounded-context/infrastructure/seeds/bounded-context.seed';
+import { boundedContexts } from '@app/iam/bounded-context/infrastructure/seeds/bounded-context.seed';
 
 describe('IamUpdateBoundedContextByIdResolver', () =>
 {

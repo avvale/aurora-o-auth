@@ -6,7 +6,7 @@ import { IamUpdateBoundedContextByIdController } from './iam-update-bounded-cont
 import { IamUpdateBoundedContextByIdHandler } from '../handlers/iam-update-bounded-context-by-id.handler';
 
 // sources
-import { boundedContexts } from '@apps/iam/bounded-context/infrastructure/seeds/bounded-context.seed';
+import { boundedContexts } from '@app/iam/bounded-context/infrastructure/seeds/bounded-context.seed';
 
 describe('IamUpdateBoundedContextByIdController', () =>
 {
@@ -43,7 +43,7 @@ describe('IamUpdateBoundedContextByIdController', () =>
             expect(controller).toBeDefined();
         });
 
-        test('should return a boundedContext created', async () =>
+        test('should return a boundedContext updated', async () =>
         {
             jest.spyOn(handler, 'main').mockImplementation(() => new Promise(resolve => resolve(boundedContexts[0])));
             expect(await controller.main(boundedContexts[0])).toBe(boundedContexts[0]);

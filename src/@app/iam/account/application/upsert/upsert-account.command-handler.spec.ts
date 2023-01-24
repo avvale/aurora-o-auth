@@ -42,6 +42,19 @@ describe('UpsertAccountCommandHandler', () =>
             expect(await commandHandler.execute(
                 new UpsertAccountCommand(
                     {
+                        id: accounts[0].id,
+                        type: accounts[0].type,
+                        code: accounts[0].code,
+                        email: accounts[0].email,
+                        isActive: accounts[0].isActive,
+                        clientId: accounts[0].clientId,
+                        scopes: accounts[0].scopes,
+                        dApplicationCodes: accounts[0].dApplicationCodes,
+                        dPermissions: accounts[0].dPermissions,
+                        dTenants: accounts[0].dTenants,
+                        meta: accounts[0].meta,
+                        roleIds: accounts[0].roleIds,
+                        tenantIds: accounts[0].tenantIds,
                     },
                     { timezone: process.env.TZ },
                 ),
