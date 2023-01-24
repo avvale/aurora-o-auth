@@ -3,6 +3,7 @@ import { CreateScopeCommandHandler } from './application/create/create-scope.com
 import { CreateScopesCommandHandler } from './application/create/create-scopes.command-handler';
 import { UpdateScopeByIdCommandHandler } from './application/update/update-scope-by-id.command-handler';
 import { UpdateScopesCommandHandler } from './application/update/update-scopes.command-handler';
+import { UpsertScopeCommandHandler } from './application/upsert/upsert-scope.command-handler';
 import { DeleteScopeByIdCommandHandler } from './application/delete/delete-scope-by-id.command-handler';
 import { DeleteScopesCommandHandler } from './application/delete/delete-scopes.command-handler';
 
@@ -29,6 +30,7 @@ import { FindScopeService } from './application/find/find-scope.service';
 import { FindScopeByIdService } from './application/find/find-scope-by-id.service';
 import { UpdateScopeByIdService } from './application/update/update-scope-by-id.service';
 import { UpdateScopesService } from './application/update/update-scopes.service';
+import { UpsertScopeService } from './application/upsert/upsert-scope.service';
 import { DeleteScopeByIdService } from './application/delete/delete-scope-by-id.service';
 import { DeleteScopesService } from './application/delete/delete-scopes.service';
 
@@ -48,6 +50,7 @@ export const OAuthScopeHandlers = [
     CreateScopesCommandHandler,
     UpdateScopeByIdCommandHandler,
     UpdateScopesCommandHandler,
+    UpsertScopeCommandHandler,
     DeleteScopeByIdCommandHandler,
     DeleteScopesCommandHandler,
 
@@ -75,6 +78,7 @@ export const OAuthScopeServices = [
     FindScopeByIdService,
     UpdateScopeByIdService,
     UpdateScopesService,
+    UpsertScopeService,
     DeleteScopeByIdService,
     DeleteScopesService,
 ];

@@ -1,7 +1,7 @@
 /* eslint-disable key-spacing */
 import { LiteralObject } from '@nestjs/common';
 import { AggregateRoot } from '@nestjs/cqrs';
-import { Utils } from 'aurora-ts-core';
+import { Utils } from '@aurora-ts/core';
 import {
     ScopeId,
     ScopeCode,
@@ -123,10 +123,18 @@ export class OAuthScope extends AggregateRoot
         };
     }
 
-
-    toI18nDTO(): LiteralObject
+    // function called to get data for repository side effect methods
+    toRepository(): LiteralObject
     {
         return {
+            id: this.id.value,
+            code: this.code.value,
+            name: this.name.value,
+            createdAt: this.createdAt?.value,
+            updatedAt: this.updatedAt?.value,
+            deletedAt: this.deletedAt?.value,
+
+            // eager relationship
         };
     }
 }

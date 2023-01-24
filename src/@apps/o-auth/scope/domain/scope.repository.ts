@@ -1,6 +1,6 @@
 
 import { LiteralObject } from '@nestjs/common';
-import { CQMetadata, IRepository, Pagination, QueryStatement } from 'aurora-ts-core';
+import { CQMetadata, IRepository, Pagination, QueryStatement } from '@aurora-ts/core';
 import { OAuthScope } from './scope.aggregate';
 import { ScopeId } from './value-objects';
 
@@ -98,6 +98,15 @@ export abstract class IScopeRepository implements IRepository<OAuthScope>
             queryStatement?: QueryStatement;
             constraint?: QueryStatement;
             cQMetadata?: CQMetadata;
+            dataFactory?: (aggregate: OAuthScope) => LiteralObject;
+        }
+    ): Promise<void>;
+
+    // insert or update key identification element already existing in the table
+    abstract upsert(
+        scope: OAuthScope,
+        options?: {
+            upsertOptions?: LiteralObject;
             dataFactory?: (aggregate: OAuthScope) => LiteralObject;
         }
     ): Promise<void>;
