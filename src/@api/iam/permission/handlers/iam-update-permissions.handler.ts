@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { ICommandBus, IQueryBus, QueryStatement } from 'aurora-ts-core';
+import { ICommandBus, IQueryBus, QueryStatement } from '@aurora-ts/core';
 
-// @apps
-import { GetPermissionsQuery } from '@apps/iam/permission/application/get/get-permissions.query';
-import { UpdatePermissionsCommand } from '@apps/iam/permission/application/update/update-permissions.command';
-import { IamPermission, IamUpdatePermissionsInput } from '../../../../graphql';
+// @app
+import { GetPermissionsQuery } from '@app/iam/permission/application/get/get-permissions.query';
+import { UpdatePermissionsCommand } from '@app/iam/permission/application/update/update-permissions.command';
+import { IamPermission, IamUpdatePermissionsInput } from '@api/graphql';
 import { IamPermissionDto, IamUpdatePermissionsDto } from '../dto';
 
 @Injectable()
@@ -22,7 +22,14 @@ export class IamUpdatePermissionsHandler
         timezone?: string,
     ): Promise<IamPermission | IamPermissionDto>
     {
-        await this.commandBus.dispatch(new UpdatePermissionsCommand(payload, queryStatement, constraint, { timezone }));
+        await this.commandBus.dispatch(new UpdatePermissionsCommand(
+            payload,
+            queryStatement,
+            constraint,
+            {
+                timezone,
+            },
+        ));
 
         return await this.queryBus.ask(new GetPermissionsQuery(queryStatement, constraint, { timezone }));
     }

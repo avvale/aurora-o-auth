@@ -37,18 +37,61 @@ input IamUpdatePermissionsInput
 
 type Query
 {
-    iamFindPermission(query: QueryStatement constraint: QueryStatement): IamPermission
-    iamFindPermissionById(id: ID constraint: QueryStatement): IamPermission
-    iamGetPermissions(query: QueryStatement constraint: QueryStatement): [IamPermission]!
-    iamPaginatePermissions(query: QueryStatement constraint: QueryStatement): Pagination!
+    iamFindPermission(
+        query: QueryStatement
+        constraint: QueryStatement
+    ): IamPermission
+
+    iamFindPermissionById(
+        id: ID
+        constraint: QueryStatement
+    ): IamPermission
+
+    iamGetPermissions(
+        query: QueryStatement
+        constraint: QueryStatement
+    ): [IamPermission]!
+
+    iamPaginatePermissions(
+        query: QueryStatement
+        constraint: QueryStatement
+    ): Pagination!
+
 }
 
 type Mutation
 {
-    iamCreatePermission(payload: IamCreatePermissionInput!): IamPermission
-    iamCreatePermissions(payload: [IamCreatePermissionInput]!): Boolean!
-    iamUpdatePermissionById(payload: IamUpdatePermissionByIdInput! constraint: QueryStatement): IamPermission
-    iamUpdatePermissions(payload: IamUpdatePermissionsInput! query: QueryStatement constraint: QueryStatement): [IamPermission]!
-    iamDeletePermissionById(id: ID! constraint: QueryStatement): IamPermission
-    iamDeletePermissions(query: QueryStatement constraint: QueryStatement): [IamPermission]!
+    iamCreatePermission(
+        payload: IamCreatePermissionInput!
+    ): IamPermission
+
+    iamCreatePermissions(
+        payload: [IamCreatePermissionInput]!
+    ): Boolean!
+
+    iamUpdatePermissionById(
+        payload: IamUpdatePermissionByIdInput!
+        constraint: QueryStatement
+    ): IamPermission
+
+    iamUpdatePermissions(
+        payload: IamUpdatePermissionsInput!
+        query: QueryStatement
+        constraint: QueryStatement
+    ): [IamPermission]!
+
+    iamUpsertPermission(
+        payload: IamUpdatePermissionByIdInput!
+    ): IamPermission
+
+    iamDeletePermissionById(
+        id: ID!
+        constraint: QueryStatement
+    ): IamPermission
+
+    iamDeletePermissions(
+        query: QueryStatement
+        constraint: QueryStatement
+    ): [IamPermission]!
+
 }

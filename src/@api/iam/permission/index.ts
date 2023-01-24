@@ -7,6 +7,7 @@ import { IamFindPermissionByIdController } from './controllers/iam-find-permissi
 import { IamFindPermissionController } from './controllers/iam-find-permission.controller';
 import { IamUpdatePermissionByIdController } from './controllers/iam-update-permission-by-id.controller';
 import { IamUpdatePermissionsController } from './controllers/iam-update-permissions.controller';
+import { IamUpsertPermissionController } from './controllers/iam-upsert-permission.controller';
 import { IamDeletePermissionByIdController } from './controllers/iam-delete-permission-by-id.controller';
 import { IamDeletePermissionsController } from './controllers/iam-delete-permissions.controller';
 
@@ -19,6 +20,7 @@ import { IamFindPermissionByIdResolver } from './resolvers/iam-find-permission-b
 import { IamFindPermissionResolver } from './resolvers/iam-find-permission.resolver';
 import { IamUpdatePermissionByIdResolver } from './resolvers/iam-update-permission-by-id.resolver';
 import { IamUpdatePermissionsResolver } from './resolvers/iam-update-permissions.resolver';
+import { IamUpsertPermissionResolver } from './resolvers/iam-upsert-permission.resolver';
 import { IamDeletePermissionByIdResolver } from './resolvers/iam-delete-permission-by-id.resolver';
 import { IamDeletePermissionsResolver } from './resolvers/iam-delete-permissions.resolver';
 
@@ -31,8 +33,12 @@ import { IamFindPermissionByIdHandler } from './handlers/iam-find-permission-by-
 import { IamFindPermissionHandler } from './handlers/iam-find-permission.handler';
 import { IamUpdatePermissionByIdHandler } from './handlers/iam-update-permission-by-id.handler';
 import { IamUpdatePermissionsHandler } from './handlers/iam-update-permissions.handler';
+import { IamUpsertPermissionHandler } from './handlers/iam-upsert-permission.handler';
 import { IamDeletePermissionByIdHandler } from './handlers/iam-delete-permission-by-id.handler';
 import { IamDeletePermissionsHandler } from './handlers/iam-delete-permissions.handler';
+
+// seeder
+import { IamPermissionSeeder } from './seeder/iam-permission.seeder';
 
 export const IamPermissionControllers = [
     IamCreatePermissionController,
@@ -43,6 +49,7 @@ export const IamPermissionControllers = [
     IamFindPermissionController,
     IamUpdatePermissionByIdController,
     IamUpdatePermissionsController,
+    IamUpsertPermissionController,
     IamDeletePermissionByIdController,
     IamDeletePermissionsController,
 ];
@@ -56,6 +63,7 @@ export const IamPermissionResolvers = [
     IamFindPermissionResolver,
     IamUpdatePermissionByIdResolver,
     IamUpdatePermissionsResolver,
+    IamUpsertPermissionResolver,
     IamDeletePermissionByIdResolver,
     IamDeletePermissionsResolver,
 ];
@@ -69,6 +77,11 @@ export const IamPermissionApiHandlers = [
     IamFindPermissionHandler,
     IamUpdatePermissionByIdHandler,
     IamUpdatePermissionsHandler,
+    IamUpsertPermissionHandler,
     IamDeletePermissionByIdHandler,
     IamDeletePermissionsHandler,
+];
+
+export const IamPermissionServices = [
+    IamPermissionSeeder,
 ];

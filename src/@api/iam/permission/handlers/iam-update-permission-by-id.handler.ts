@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { ICommandBus, IQueryBus, QueryStatement } from 'aurora-ts-core';
+import { ICommandBus, IQueryBus, QueryStatement, Utils } from '@aurora-ts/core';
 
-// @apps
-import { FindPermissionByIdQuery } from '@apps/iam/permission/application/find/find-permission-by-id.query';
-import { UpdatePermissionByIdCommand } from '@apps/iam/permission/application/update/update-permission-by-id.command';
-import { IamPermission, IamUpdatePermissionByIdInput } from '../../../../graphql';
+// @app
+import { FindPermissionByIdQuery } from '@app/iam/permission/application/find/find-permission-by-id.query';
+import { UpdatePermissionByIdCommand } from '@app/iam/permission/application/update/update-permission-by-id.command';
+import { IamPermission, IamUpdatePermissionByIdInput } from '@api/graphql';
 import { IamPermissionDto, IamUpdatePermissionByIdDto } from '../dto';
 
 @Injectable()
@@ -21,7 +21,24 @@ export class IamUpdatePermissionByIdHandler
         timezone?: string,
     ): Promise<IamPermission | IamPermissionDto>
     {
-        await this.commandBus.dispatch(new UpdatePermissionByIdCommand(payload, constraint, { timezone }));
+        const permission = await this.queryBus.ask(new FindPermissionByIdQuery(
+            payload.id,
+            constraint,
+            { timezone },
+        ));
+
+        const dataToUpdate = Utils.diff(payload, permission);
+
+        await this.commandBus.dispatch(new UpdatePermissionByIdCommand(
+            {
+                ...dataToUpdate,
+                id: payload.id,
+            },
+            constraint,
+            {
+                timezone,
+            },
+        ));
 
         return await this.queryBus.ask(new FindPermissionByIdQuery(payload.id, constraint, { timezone }));
     }

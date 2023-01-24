@@ -1,15 +1,15 @@
 import { UseGuards } from '@nestjs/common';
 import { Resolver, Args, Query } from '@nestjs/graphql';
-import { QueryStatement, Timezone } from 'aurora-ts-core';
+import { QueryStatement, Timezone } from '@aurora-ts/core';
 
 // authorization
 import { Permissions } from '@api/iam/shared/decorators/permissions.decorator';
 import { AuthenticationJwtGuard } from '@api/o-auth/shared/guards/authentication-jwt.guard';
 import { AuthorizationGuard } from '@api/iam/shared/guards/authorization.guard';
 
-// @apps
+// @app
 import { IamFindPermissionHandler } from '../handlers/iam-find-permission.handler';
-import { IamPermission } from '../../../../graphql';
+import { IamPermission } from '@api/graphql';
 
 @Resolver()
 @Permissions('iam.permission.get')

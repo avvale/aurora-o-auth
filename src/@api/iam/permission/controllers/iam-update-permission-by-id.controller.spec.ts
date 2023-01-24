@@ -6,7 +6,7 @@ import { IamUpdatePermissionByIdController } from './iam-update-permission-by-id
 import { IamUpdatePermissionByIdHandler } from '../handlers/iam-update-permission-by-id.handler';
 
 // sources
-import { permissions } from '@apps/iam/permission/infrastructure/seeds/permission.seed';
+import { permissions } from '@app/iam/permission/infrastructure/seeds/permission.seed';
 
 describe('IamUpdatePermissionByIdController', () =>
 {
@@ -43,7 +43,7 @@ describe('IamUpdatePermissionByIdController', () =>
             expect(controller).toBeDefined();
         });
 
-        test('should return a permission created', async () =>
+        test('should return a permission updated', async () =>
         {
             jest.spyOn(handler, 'main').mockImplementation(() => new Promise(resolve => resolve(permissions[0])));
             expect(await controller.main(permissions[0])).toBe(permissions[0]);

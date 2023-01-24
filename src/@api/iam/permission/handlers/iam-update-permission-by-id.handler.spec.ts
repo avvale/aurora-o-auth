@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Test, TestingModule } from '@nestjs/testing';
-import { ICommandBus, IQueryBus } from 'aurora-ts-core';
+import { ICommandBus, IQueryBus } from '@aurora-ts/core';
 
 // custom items
 import { IamUpdatePermissionByIdHandler } from './iam-update-permission-by-id.handler';
-import { IamUpdatePermissionByIdInput } from '../../../../graphql';
+import { IamUpdatePermissionByIdInput } from '@api/graphql';
 
 // sources
-import { permissions } from '@apps/iam/permission/infrastructure/seeds/permission.seed';
+import { permissions } from '@app/iam/permission/infrastructure/seeds/permission.seed';
 
 describe('IamUpdatePermissionByIdHandler', () =>
 {

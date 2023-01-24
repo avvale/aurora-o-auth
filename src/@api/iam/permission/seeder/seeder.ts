@@ -1,8 +1,8 @@
 import { NestFactory } from '@nestjs/core';
-import { ICommandBus } from 'aurora-ts-core';
-import { CreatePermissionsCommand } from '@apps/iam/permission/application/create/create-permissions.command';
+import { ICommandBus } from '@aurora-ts/core';
+import { CreatePermissionsCommand } from '@app/iam/permission/application/create/create-permissions.command';
 import { SeederModule } from './seeder.module';
-import { permissions } from '@apps/iam/permission/infrastructure/seeds/permission.seed';
+import { permissions } from '@app/iam/permission/infrastructure/seeds/permission.seed';
 
 export class Seeder
 {
@@ -12,6 +12,7 @@ export class Seeder
         {
             const commandBus = appContext.get(ICommandBus);
             commandBus.dispatch(new CreatePermissionsCommand(permissions, { timezone: process.env.TZ }));
+            appContext.close();
         });
     }
 }
