@@ -67,5 +67,16 @@ aggregateProperties:
     type: timestamp
     nullable: true
 additionalApis: []
-y
-y
+excluded:
+  - src/@api/iam/user/handlers/iam-create-user.handler.spec.ts
+  - src/@api/iam/user/handlers/iam-create-user.handler.ts
+  - src/@api/iam/user/controllers/iam-create-users.controller.spec.ts
+  - src/@api/iam/user/controllers/iam-create-users.controller.ts
+  - src/@api/iam/user/controllers/iam-create-user.controller.spec.ts
+  - src/@api/iam/user/controllers/iam-create-user.controller.ts
+  - src/@api/iam/user/handlers/iam-create-users.handler.spec.ts
+  - src/@api/iam/user/handlers/iam-create-users.handler.ts
+  - src/@api/iam/user/resolvers/iam-create-user.resolver.spec.ts
+  - src/@api/iam/user/resolvers/iam-create-user.resolver.ts
+  - src/@api/iam/user/resolvers/iam-create-users.resolver.spec.ts
+  - src/@api/iam/user/resolvers/iam-create-users.resolver.ts

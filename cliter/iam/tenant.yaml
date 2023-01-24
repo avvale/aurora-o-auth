@@ -22,15 +22,14 @@ aggregateProperties:
     nullable: true
     index: unique
   - name: logo
-    type: varchar
-    maxLength: 255
+    type: blob.medium
     nullable: true
   - name: isActive
     type: boolean
     nullable: false
     defaultValue: false
     example: true
-  - name: data
+  - name: meta
     type: json
     nullable: true
   - name: accounts

@@ -26,6 +26,7 @@ aggregateProperties:
     relationshipKey: id
     relationshipField: boundedContext
     relationshipAvoidConstraint: true
+    index: index
   - name: roles
     type: relationship
     nullable: true
@@ -47,3 +48,9 @@ aggregateProperties:
     type: timestamp
     nullable: true
 additionalApis: []
+excluded:
+  - src/app/modules/admin/apps/iam/permission/permission-detail.component.html
+  - src/app/modules/admin/apps/iam/permission/permission-detail.component.ts
+  - src/app/modules/admin/apps/iam/permission/permission-list.component.html
+  - src/app/modules/admin/apps/iam/permission/permission-list.component.ts
+  - src/app/modules/admin/apps/iam/permission/permission.resolvers.ts

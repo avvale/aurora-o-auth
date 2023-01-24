@@ -36,7 +36,7 @@ aggregateProperties:
     type: varchar
     maxLength: 2048
     nullable: true
-  - name: scopes
+  - name: scopeOptions
     type: json
     nullable: true
   - name: expiredAccessToken
@@ -85,3 +85,4 @@ aggregateProperties:
   - name: deletedAt
     type: timestamp
     nullable: true
+additionalApis: []

@@ -45,6 +45,9 @@ aggregateProperties:
     relationshipKey: id
     relationshipField: client
     relationshipAvoidConstraint: true
+  - name: scopes
+    type: json
+    nullable: true
   - name: dApplicationCodes
     type: json
     nullable: false
@@ -54,9 +57,6 @@ aggregateProperties:
   - name: dTenants
     type: json
     nullable: false
-  - name: dScopes
-    type: json
-    nullable: true
   - name: meta
     type: json
     nullable: true

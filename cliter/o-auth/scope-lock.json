@@ -258,8 +258,28 @@
             "integrity": "sha1:9ddb6350e51f2eab96d1e20552469c39d4aa4a56"
         },
         {
+            "path": "src/@apps/o-auth/scope/application/upsert/upsert-scope.command-handler.spec.ts",
+            "integrity": "sha1:4eb06114c43c88a158fbbbcd819caf1f95c81ccb"
+        },
+        {
+            "path": "src/@apps/o-auth/scope/application/upsert/upsert-scope.command-handler.ts",
+            "integrity": "sha1:47bfad92b0963cc9084a4d7b72774a2236452422"
+        },
+        {
+            "path": "src/@apps/o-auth/scope/application/upsert/upsert-scope.command.ts",
+            "integrity": "sha1:4d25efb3761e63fea4c60d0ad530e1f0873cfc8a"
+        },
+        {
+            "path": "src/@apps/o-auth/scope/application/upsert/upsert-scope.service.spec.ts",
+            "integrity": "sha1:4503b9058b3b02147867c4d8479cfed5a926281b"
+        },
+        {
+            "path": "src/@apps/o-auth/scope/application/upsert/upsert-scope.service.ts",
+            "integrity": "sha1:16246a9251fb1f2321b8bf43f388f12e59118407"
+        },
+        {
             "path": "src/@apps/o-auth/scope/domain/scope.aggregate.ts",
-            "integrity": "sha1:402b0b7de75f54422e0fceb9b455b2127dd660de"
+            "integrity": "sha1:611e5a2becdac97ecced9a6d67c081fe69b0b467"
         },
         {
             "path": "src/@apps/o-auth/scope/domain/scope.mapper.ts",
@@ -267,7 +287,7 @@
         },
         {
             "path": "src/@apps/o-auth/scope/domain/scope.repository.ts",
-            "integrity": "sha1:5ac14ff2ed7a31a673b10648843a3467bd67df73"
+            "integrity": "sha1:3a616577a34008bf5585da38c999631430924720"
         },
         {
             "path": "src/@apps/o-auth/scope/domain/scope.response.ts",
@@ -279,7 +299,7 @@
         },
         {
             "path": "src/@apps/o-auth/scope/index.ts",
-            "integrity": "sha1:4e4420ad127a04ce0fb7b26b1a5738b6347d51d9"
+            "integrity": "sha1:888453901668f7a41a218bf7cf9ee29360620966"
         },
         {
             "path": "src/@apps/o-auth/scope/infrastructure/mock/mock-scope.repository.ts",
@@ -291,11 +311,11 @@
         },
         {
             "path": "src/@apps/o-auth/scope/infrastructure/seeds/scope.seed.ts",
-            "integrity": "sha1:74e97265c59898763f3f239ff2b46e40944ac87c"
+            "integrity": "sha1:088f5e985aed4a0eb0efbebf6295dc1e7169a72f"
         },
         {
             "path": "src/@apps/o-auth/scope/infrastructure/sequelize/sequelize-scope.model.ts",
-            "integrity": "sha1:2704a2effd666c294db7d88845b08fdd4346ae64"
+            "integrity": "sha1:823f28c2ab2ad459281ce15f0007428c3d0b67f3"
         },
         {
             "path": "src/@apps/o-auth/scope/infrastructure/sequelize/sequelize-scope.repository.ts",
@@ -331,7 +351,7 @@
         },
         {
             "path": "src/@api/o-auth/scope/controllers/o-auth-create-scope.controller.ts",
-            "integrity": "sha1:542210340992286289d0fbef3e30881b0ce29f97"
+            "integrity": "sha1:1a52e055fc02ff7e14db694fd0366d4b553153af"
         },
         {
             "path": "src/@api/o-auth/scope/controllers/o-auth-create-scopes.controller.spec.ts",
@@ -339,7 +359,7 @@
         },
         {
             "path": "src/@api/o-auth/scope/controllers/o-auth-create-scopes.controller.ts",
-            "integrity": "sha1:c2bf3ac5511e70411eaab02f0fb7fcbd0609e3a6"
+            "integrity": "sha1:99270ceee14cd9bec51d04f4a793ac15d28c22b2"
         },
         {
             "path": "src/@api/o-auth/scope/controllers/o-auth-delete-scope-by-id.controller.spec.ts",
@@ -347,7 +367,7 @@
         },
         {
             "path": "src/@api/o-auth/scope/controllers/o-auth-delete-scope-by-id.controller.ts",
-            "integrity": "sha1:3f894b6f5161d5c9c2fc657157679525925748b9"
+            "integrity": "sha1:829f7105a4172bf8364dc0bd76dc8b011d20ed5c"
         },
         {
             "path": "src/@api/o-auth/scope/controllers/o-auth-delete-scopes.controller.spec.ts",
@@ -355,7 +375,7 @@
         },
         {
             "path": "src/@api/o-auth/scope/controllers/o-auth-delete-scopes.controller.ts",
-            "integrity": "sha1:1fa569cabbd94da02588cae37f0699a5ab09b767"
+            "integrity": "sha1:eb27a85885a42fa4fd7e3cbe591884513b2e9d2b"
         },
         {
             "path": "src/@api/o-auth/scope/controllers/o-auth-find-scope-by-id.controller.spec.ts",
@@ -363,7 +383,7 @@
         },
         {
             "path": "src/@api/o-auth/scope/controllers/o-auth-find-scope-by-id.controller.ts",
-            "integrity": "sha1:7f61822d9836f0d7d0039a232d67780a694bbf17"
+            "integrity": "sha1:a955cbc7fa613338c1d395863451c860b5846f40"
         },
         {
             "path": "src/@api/o-auth/scope/controllers/o-auth-find-scope.controller.spec.ts",
@@ -391,11 +411,11 @@
         },
         {
             "path": "src/@api/o-auth/scope/controllers/o-auth-update-scope-by-id.controller.spec.ts",
-            "integrity": "sha1:2cf07c6725c7cfe44d8c976acfd09816d7c51270"
+            "integrity": "sha1:94e05eee5090e5d8b01794255928f2fc315b9b8c"
         },
         {
             "path": "src/@api/o-auth/scope/controllers/o-auth-update-scope-by-id.controller.ts",
-            "integrity": "sha1:3a95c263713484ea80511a7c936e998b2be58f39"
+            "integrity": "sha1:9609678868d7c1562dea52ca66ac57c5ebeb2bce"
         },
         {
             "path": "src/@api/o-auth/scope/controllers/o-auth-update-scopes.controller.spec.ts",
@@ -403,7 +423,15 @@
         },
         {
             "path": "src/@api/o-auth/scope/controllers/o-auth-update-scopes.controller.ts",
-            "integrity": "sha1:4bf98e878d5fec126bdb920d1e453e2dd695fb76"
+            "integrity": "sha1:7e776f126b6925efa748adc9643c8b1760da5dc4"
+        },
+        {
+            "path": "src/@api/o-auth/scope/controllers/o-auth-upsert-scope.controller.spec.ts",
+            "integrity": "sha1:5d84511d9f9c4cbefd0aa8cd5b9a3c718861703e"
+        },
+        {
+            "path": "src/@api/o-auth/scope/controllers/o-auth-upsert-scope.controller.ts",
+            "integrity": "sha1:f9cf920166fdf37d411bab28ece06cb24f469656"
         },
         {
             "path": "src/@api/o-auth/scope/dto/o-auth-scope.dto.ts",
@@ -427,7 +455,7 @@
         },
         {
             "path": "src/@api/o-auth/scope/graphql/scope.graphql",
-            "integrity": "sha1:c71c29cf1ac64a5b53561c730a9f998f34f5e289"
+            "integrity": "sha1:5afd46a6fae688fcfb37a0d64a5b171b010cf1cf"
         },
         {
             "path": "src/@api/o-auth/scope/handlers/o-auth-create-scope.handler.spec.ts",
@@ -435,7 +463,7 @@
         },
         {
             "path": "src/@api/o-auth/scope/handlers/o-auth-create-scope.handler.ts",
-            "integrity": "sha1:3edd69bd941d6b39a2a8ef9f0e0ff4132ef3af19"
+            "integrity": "sha1:0876ed4abf108468cbdaa16adde931a9866d919b"
         },
         {
             "path": "src/@api/o-auth/scope/handlers/o-auth-create-scopes.handler.spec.ts",
@@ -443,7 +471,7 @@
         },
         {
             "path": "src/@api/o-auth/scope/handlers/o-auth-create-scopes.handler.ts",
-            "integrity": "sha1:6255eb22864865f7f5bdc8d5b8558edb346cffd9"
+            "integrity": "sha1:a31005f77b2826522a3aec132a3f48561ac19f0c"
         },
         {
             "path": "src/@api/o-auth/scope/handlers/o-auth-delete-scope-by-id.handler.spec.ts",
@@ -451,7 +479,7 @@
         },
         {
             "path": "src/@api/o-auth/scope/handlers/o-auth-delete-scope-by-id.handler.ts",
-            "integrity": "sha1:cbdf6128e4299ec22a9bc15025452f0924763a98"
+            "integrity": "sha1:106cf4c6bbdd0fc0e792c63091977857645cd4e9"
         },
         {
             "path": "src/@api/o-auth/scope/handlers/o-auth-delete-scopes.handler.spec.ts",
@@ -459,7 +487,7 @@
         },
         {
             "path": "src/@api/o-auth/scope/handlers/o-auth-delete-scopes.handler.ts",
-            "integrity": "sha1:6de3d7491b4d8d7414a0e8fb0615474a383cfd4c"
+            "integrity": "sha1:3f25888f69f237a4206e9e29e5149d150860ef58"
         },
         {
             "path": "src/@api/o-auth/scope/handlers/o-auth-find-scope-by-id.handler.spec.ts",
@@ -467,7 +495,7 @@
         },
         {
             "path": "src/@api/o-auth/scope/handlers/o-auth-find-scope-by-id.handler.ts",
-            "integrity": "sha1:eff360fec724899cd9aaaedc57fe4784ee44e83b"
+            "integrity": "sha1:55df1a4891e07740bf4cc6a109afca5361c950b3"
         },
         {
             "path": "src/@api/o-auth/scope/handlers/o-auth-find-scope.handler.spec.ts",
@@ -475,7 +503,7 @@
         },
         {
             "path": "src/@api/o-auth/scope/handlers/o-auth-find-scope.handler.ts",
-            "integrity": "sha1:e73e813ead14f52e6739d5a6efacf8542b42e10a"
+            "integrity": "sha1:b420f8a4d3831936675edaad23ac1537f3e1169e"
         },
         {
             "path": "src/@api/o-auth/scope/handlers/o-auth-get-scopes.handler.spec.ts",
@@ -483,7 +511,7 @@
         },
         {
             "path": "src/@api/o-auth/scope/handlers/o-auth-get-scopes.handler.ts",
-            "integrity": "sha1:64aac92c391aab318d0a0777e260c42425f66231"
+            "integrity": "sha1:d106c7328996c061efecc70857f3e453cbc53ae3"
         },
         {
             "path": "src/@api/o-auth/scope/handlers/o-auth-paginate-scopes.handler.spec.ts",
@@ -491,43 +519,51 @@
         },
         {
             "path": "src/@api/o-auth/scope/handlers/o-auth-paginate-scopes.handler.ts",
-            "integrity": "sha1:b27aee6d733710d25c6568a7939350f92437963b"
+            "integrity": "sha1:d759f2535c12afd1275070feb7a63938d9557740"
         },
         {
             "path": "src/@api/o-auth/scope/handlers/o-auth-update-scope-by-id.handler.spec.ts",
-            "integrity": "sha1:8dda9add9ff277846a4f47b776d5c25ec216f973"
+            "integrity": "sha1:85431ef09e7f2267ecd5d52285ffab45c106c559"
         },
         {
             "path": "src/@api/o-auth/scope/handlers/o-auth-update-scope-by-id.handler.ts",
-            "integrity": "sha1:031b50fd9ae1aafeaea50d541973d03cb3cc3051"
+            "integrity": "sha1:ff644b7a5616a7769f03339a6e700146a199c079"
         },
         {
             "path": "src/@api/o-auth/scope/handlers/o-auth-update-scopes.handler.spec.ts",
-            "integrity": "sha1:8f8c07e9923bb2f54562437073ec7cee8ae67e65"
+            "integrity": "sha1:a66c4857f0145470f1acde99676fe330e0fe16ed"
         },
         {
             "path": "src/@api/o-auth/scope/handlers/o-auth-update-scopes.handler.ts",
-            "integrity": "sha1:3a79c8e89dca5bdfc675fa79efdb3f38159ae52f"
+            "integrity": "sha1:95044312fb710bcd6902eab00928be8f45108874"
+        },
+        {
+            "path": "src/@api/o-auth/scope/handlers/o-auth-upsert-scope.handler.spec.ts",
+            "integrity": "sha1:94abeae9435ace98e3bf099a1f0f775fdd297c01"
+        },
+        {
+            "path": "src/@api/o-auth/scope/handlers/o-auth-upsert-scope.handler.ts",
+            "integrity": "sha1:191dd9f0869b3594cf3745262213cfaec00dc88c"
         },
         {
             "path": "src/@api/o-auth/scope/index.ts",
-            "integrity": "sha1:36ee23dfa2425cfd56416c4503877fb05fc064c8"
+            "integrity": "sha1:23afdf15c8158e5439211f3f7d88683dc18521f4"
         },
         {
             "path": "src/@api/o-auth/scope/resolvers/o-auth-create-scope.resolver.spec.ts",
-            "integrity": "sha1:cb385f8cd11f504aba82e31fa6076f4e1c9f6a7f"
+            "integrity": "sha1:e012a520d6080f9389c5c7848017a370096d0fcd"
         },
         {
             "path": "src/@api/o-auth/scope/resolvers/o-auth-create-scope.resolver.ts",
-            "integrity": "sha1:fe28e5bd3eb8d90e5d206ddc2f128f4536b8f469"
+            "integrity": "sha1:958e436f4729fcb1a51b9210caa1a46396e9fc8a"
         },
         {
             "path": "src/@api/o-auth/scope/resolvers/o-auth-create-scopes.resolver.spec.ts",
-            "integrity": "sha1:db76f9eafb03bd746f2a65e31959f6dbbdfafbcb"
+            "integrity": "sha1:2929e72342dacf548fceaaff416c86ff0b1f015c"
         },
         {
             "path": "src/@api/o-auth/scope/resolvers/o-auth-create-scopes.resolver.ts",
-            "integrity": "sha1:c92e522f04af49017b4366918fea1ea1bd76ded4"
+            "integrity": "sha1:da2d6b54bc977cac1be5fccc362e8dce088075d3"
         },
         {
             "path": "src/@api/o-auth/scope/resolvers/o-auth-delete-scope-by-id.resolver.spec.ts",
@@ -535,7 +571,7 @@
         },
         {
             "path": "src/@api/o-auth/scope/resolvers/o-auth-delete-scope-by-id.resolver.ts",
-            "integrity": "sha1:0c27a70cc3f32cdb674edf3ad218e2c5dc68e8f8"
+            "integrity": "sha1:9f0ea4e478182f105369c382e7945d935607cb4b"
         },
         {
             "path": "src/@api/o-auth/scope/resolvers/o-auth-delete-scopes.resolver.spec.ts",
@@ -543,7 +579,7 @@
         },
         {
             "path": "src/@api/o-auth/scope/resolvers/o-auth-delete-scopes.resolver.ts",
-            "integrity": "sha1:b107a564ee930addb653cd7b40e347d47b9da68a"
+            "integrity": "sha1:69bee5a86edfaaf9e6e1aebbc9761eb4b5244008"
         },
         {
             "path": "src/@api/o-auth/scope/resolvers/o-auth-find-scope-by-id.resolver.spec.ts",
@@ -551,7 +587,7 @@
         },
         {
             "path": "src/@api/o-auth/scope/resolvers/o-auth-find-scope-by-id.resolver.ts",
-            "integrity": "sha1:5e5c5130f552ec714d8ea26aaff134c5e30856c4"
+            "integrity": "sha1:7080a2060d7e7d123f37d73cad822adb43049e02"
         },
         {
             "path": "src/@api/o-auth/scope/resolvers/o-auth-find-scope.resolver.spec.ts",
@@ -559,7 +595,7 @@
         },
         {
             "path": "src/@api/o-auth/scope/resolvers/o-auth-find-scope.resolver.ts",
-            "integrity": "sha1:911972442c258d10be21e95eef4ed85ea46e0d55"
+            "integrity": "sha1:dd7def078e541d76ff78f6f72eeff9511280cfd2"
         },
         {
             "path": "src/@api/o-auth/scope/resolvers/o-auth-get-scopes.resolver.spec.ts",
@@ -567,7 +603,7 @@
         },
         {
             "path": "src/@api/o-auth/scope/resolvers/o-auth-get-scopes.resolver.ts",
-            "integrity": "sha1:42d91c4641f9dc4a7acdbaa53adc581fd1096ed3"
+            "integrity": "sha1:d2b79d77832d429934d54ea6d230b4c149dc76cd"
         },
         {
             "path": "src/@api/o-auth/scope/resolvers/o-auth-paginate-scopes.resolver.spec.ts",
@@ -575,23 +611,31 @@
         },
         {
             "path": "src/@api/o-auth/scope/resolvers/o-auth-paginate-scopes.resolver.ts",
-            "integrity": "sha1:6cd92605e12865969f96297e3c00f92082b29d29"
+            "integrity": "sha1:b67dbc03a164161e6b61c8ef983bc314c7040379"
         },
         {
             "path": "src/@api/o-auth/scope/resolvers/o-auth-update-scope-by-id.resolver.spec.ts",
-            "integrity": "sha1:490555c1d7cc59e6144099bffefd01b89c508c17"
+            "integrity": "sha1:2e577279a780e477c5785f7181e20fbcaae009fe"
         },
         {
             "path": "src/@api/o-auth/scope/resolvers/o-auth-update-scope-by-id.resolver.ts",
-            "integrity": "sha1:6bf17bd2dccb997265fac61406d6819d350cb412"
+            "integrity": "sha1:2f4705be45be605847f483e0a1f6112ff21f005b"
         },
         {
             "path": "src/@api/o-auth/scope/resolvers/o-auth-update-scopes.resolver.spec.ts",
-            "integrity": "sha1:917889e29dac8571be2a15185e81e87d6b1c4062"
+            "integrity": "sha1:550ebda97e12273439b4f791630dd36fe24a2fc0"
         },
         {
             "path": "src/@api/o-auth/scope/resolvers/o-auth-update-scopes.resolver.ts",
-            "integrity": "sha1:b996576b502d77940f9eecc2fd0e3ef3e7d9d0aa"
+            "integrity": "sha1:2931b558c23e0fc615d2d8b3c521c51a428fd05f"
+        },
+        {
+            "path": "src/@api/o-auth/scope/resolvers/o-auth-upsert-scope.resolver.spec.ts",
+            "integrity": "sha1:647620f0dc80835134bd3adf2cc7bff230e18107"
+        },
+        {
+            "path": "src/@api/o-auth/scope/resolvers/o-auth-upsert-scope.resolver.ts",
+            "integrity": "sha1:8f7682eca6ad28ad8de440cda7a55354e0788a92"
         },
         {
             "path": "src/@api/o-auth/scope/seeder/seeder.module.ts",
@@ -599,15 +643,15 @@
         },
         {
             "path": "src/@api/o-auth/scope/seeder/seeder.ts",
-            "integrity": "sha1:81c21d1b00dae625c43295b43c5312b56e62e0f9"
+            "integrity": "sha1:f69e4225b36a52d312f810b7b7fc3c4a669bbdb4"
         },
         {
             "path": "test/acceptance/o-auth/scope.e2e-spec.ts",
-            "integrity": "sha1:6f27111d123dc83f5ca6d75f7c1acc0cf42ba033"
+            "integrity": "sha1:fdd32131d12cc755b3426757067d7993c4625d9d"
         },
         {
             "path": "postman/o-auth.scope.postman.json",
-            "integrity": "sha1:00f3f199fa722e236e8b197423b96809be54720c"
+            "integrity": "sha1:571ce581a30639bfc9e61529793640f429d575d7"
         }
     ]
 }
