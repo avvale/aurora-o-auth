@@ -5,6 +5,10 @@
 /dist
 /node_modules
 
+# aurora files
+/oauth-private.key
+/oauth-public.key
+
 # Logs
 logs
 *.log
@@ -19,6 +23,7 @@ lerna-debug.log*
 
 # Tests
 /coverage
+/src/coverage
 /.nyc_output
 
 # IDEs and editors

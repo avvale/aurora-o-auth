@@ -1,29 +1,34 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloDriver, ApolloDriverConfig } from '@nestjs/apollo';
 import { join } from 'path';
-import { AnyScalar, JsonScalar, UploadScalar } from 'aurora-ts-core';
+import { AnyScalar, JsonScalar, UploadScalar } from '@aurora-ts/core';
 import { Hello } from './hello.resolver';
 import GraphQLJSON from 'graphql-type-json';
 
 @Module({
     imports: [
-        GraphQLModule.forRoot<ApolloDriverConfig>({
+        GraphQLModule.forRootAsync<ApolloDriverConfig>({
             driver    : ApolloDriver,
-            context   : ({ req }) => ({ req }),
-            debug     : true,
-            playground: true,
-            typePaths : ['./**/*.graphql'],
-            resolvers : {
-                JSON: GraphQLJSON, // define JSON Scalar type
-            },
-            definitions: {
-                path: join(process.cwd(), 'src/graphql.ts'),
-            },
-            /* uploads: {
-                maxFileSize: 100000000, // 100 MB
-                maxFiles   : 5,
-            } */
+            imports   : [ConfigModule],
+            useFactory: (configService: ConfigService) => ({
+                context   : ({ req }) => ({ req }),
+                debug     : configService.get('GRAPHQL_DEBUG') === 'true',
+                playground: configService.get('GRAPHQL_PLAYGROUND') === 'true',
+                typePaths : ['./**/*.graphql'],
+                resolvers : {
+                    JSON: GraphQLJSON, // define JSON Scalar type
+                },
+                definitions: configService.get('GRAPHQL_CREATE_DEFINITIONS') === 'true' ?  {
+                    path: join(process.cwd(), 'src/@api/graphql.ts'),
+                } : undefined,
+                /* uploads: {
+                    maxFileSize: 100000000, // 100 MB
+                    maxFiles   : 5,
+                } */
+            }),
+            inject: [ConfigService],
         }),
     ],
     providers: [
