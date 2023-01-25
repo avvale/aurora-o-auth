@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, LiteralObject } from '@nestjs/common';
 import { ICommandBus, IQueryBus, Jwt, Utils } from '@aurora-ts/core';
 import { Sequelize } from 'sequelize-typescript';
 
@@ -29,6 +29,7 @@ export class IamCreateAccountHandler
 
     async main(
         payload: IamCreateAccountInput | IamCreateAccountDto,
+        headers: LiteralObject,
         timezone?: string,
     ): Promise<IamAccount | IamAccountDto>
     {
@@ -68,8 +69,6 @@ export class IamCreateAccountHandler
 
         try
         {
-            const operationId = Utils.uuid();
-
             await this.commandBus.dispatch(new CreateAccountCommand(
                 {
                     id               : payload.id,
@@ -89,11 +88,6 @@ export class IamCreateAccountHandler
                     timezone,
                     repositoryOptions: {
                         transaction,
-                        auditing: {
-                            ...auditing,
-                            operationId,
-                            operationSort: 1,
-                        },
                     },
                 },
             ));
@@ -118,11 +112,6 @@ export class IamCreateAccountHandler
                         timezone,
                         repositoryOptions: {
                             transaction,
-                            auditing: {
-                                ...auditing,
-                                operationId,
-                                operationSort: 2,
-                            },
                         },
                     },
                 ));
