@@ -1,14 +1,15 @@
 import { Module } from '@nestjs/common';
 import { SequelizeModule } from '@nestjs/sequelize';
 import { SharedModule } from '../../@aurora/shared.module';
-import { IamModels, IamHandlers, IamServices, IamRepositories, IamSagas } from '../../@apps/iam';
-import { IamBoundedContextControllers, IamBoundedContextResolvers, IamBoundedContextApiHandlers } from './bounded-context';
-import { IamPermissionControllers, IamPermissionResolvers, IamPermissionApiHandlers } from './permission';
-import { IamTenantControllers, IamTenantResolvers, IamTenantApiHandlers } from './tenant';
-import { IamRoleControllers, IamRoleResolvers, IamRoleApiHandlers } from './role';
-import { IamAccountControllers, IamAccountResolvers, IamAccountApiHandlers } from './account';
-import { IamUserControllers, IamUserResolvers, IamUserApiHandlers } from './user';
-import { IamUserDataControllers, IamUserDataResolvers, IamUserDataApiHandlers } from './user-data';
+import { IamModels, IamHandlers, IamServices, IamRepositories, IamSagas } from '@app/iam';
+import { IamBoundedContextControllers, IamBoundedContextResolvers, IamBoundedContextApiHandlers, IamBoundedContextServices } from './bounded-context';
+import { IamPermissionControllers, IamPermissionResolvers, IamPermissionApiHandlers, IamPermissionServices } from './permission';
+import { IamPermissionRoleControllers, IamPermissionRoleResolvers, IamPermissionRoleApiHandlers } from './permission-role';
+import { IamTenantControllers, IamTenantResolvers, IamTenantApiHandlers, IamTenantServices } from './tenant';
+import { IamRoleControllers, IamRoleResolvers, IamRoleApiHandlers, IamRoleServices } from './role';
+import { IamAccountControllers, IamAccountResolvers, IamAccountApiHandlers, IamAccountServices } from './account';
+import { IamUserControllers, IamUserResolvers, IamUserApiHandlers, IamUserServices } from './user';
+import { IamUserMetaControllers, IamUserMetaResolvers, IamUserMetaApiHandlers } from './user-meta';
 
 @Module({
     imports: [
@@ -18,33 +19,42 @@ import { IamUserDataControllers, IamUserDataResolvers, IamUserDataApiHandlers } 
         ]),
     ],
     controllers: [
+        ...IamAccountControllers,
         ...IamBoundedContextControllers,
         ...IamPermissionControllers,
-        ...IamTenantControllers,
+        ...IamPermissionRoleControllers,
         ...IamRoleControllers,
-        ...IamAccountControllers,
+        ...IamTenantControllers,
         ...IamUserControllers,
-        ...IamUserDataControllers,
+        ...IamUserMetaControllers,
     ],
     providers: [
-        ...IamHandlers,
-        ...IamServices,
-        ...IamRepositories,
-        ...IamSagas,
-        ...IamBoundedContextResolvers,
-        ...IamPermissionResolvers,
-        ...IamTenantResolvers,
-        ...IamRoleResolvers,
-        ...IamAccountResolvers,
-        ...IamUserResolvers,
-        ...IamUserDataResolvers,
         ...IamAccountApiHandlers,
-        ...IamUserApiHandlers,
-        ...IamRoleApiHandlers,
-        ...IamPermissionApiHandlers,
+        ...IamAccountResolvers,
         ...IamBoundedContextApiHandlers,
+        ...IamBoundedContextResolvers,
+        ...IamHandlers,
+        ...IamPermissionApiHandlers,
+        ...IamPermissionResolvers,
+        ...IamPermissionRoleApiHandlers,
+        ...IamPermissionRoleResolvers,
+        ...IamRepositories,
+        ...IamRoleApiHandlers,
+        ...IamRoleResolvers,
+        ...IamSagas,
+        ...IamServices,
         ...IamTenantApiHandlers,
-        ...IamUserDataApiHandlers,
+        ...IamTenantResolvers,
+        ...IamUserApiHandlers,
+        ...IamUserMetaApiHandlers,
+        ...IamUserMetaResolvers,
+        ...IamUserResolvers,
+        ...IamAccountServices,
+        ...IamBoundedContextServices,
+        ...IamPermissionServices,
+        ...IamRoleServices,
+        ...IamTenantServices,
+        ...IamUserServices
     ],
 })
 export class IamModule {}

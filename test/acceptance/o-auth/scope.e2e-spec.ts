@@ -4,9 +4,9 @@ import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { IScopeRepository } from '@apps/o-auth/scope/domain/scope.repository';
-import { MockScopeSeeder } from '@apps/o-auth/scope/infrastructure/mock/mock-scope.seeder';
-import { scopes } from '@apps/o-auth/scope/infrastructure/seeds/scope.seed';
+import { IScopeRepository } from '@app/o-auth/scope/domain/scope.repository';
+import { MockScopeSeeder } from '@app/o-auth/scope/infrastructure/mock/mock-scope.seeder';
+import { scopes } from '@app/o-auth/scope/infrastructure/seeds/scope.seed';
 import { GraphQLConfigModule } from '@aurora/graphql/graphql-config.module';
 import { OAuthModule } from '@api/o-auth/o-auth.module';
 import * as request from 'supertest';
@@ -281,7 +281,7 @@ describe('scope', () =>
                 {
                     where:
                     {
-                        id: '4eb237a0-19b1-414a-90e1-83409c57e7de',
+                        id: '13e5f3b7-e953-560a-b8e7-da8bf93a7931',
                     },
                 },
             })
@@ -325,7 +325,7 @@ describe('scope', () =>
     test('/REST:POST o-auth/scope/find/{id} - Got 404 Not Found', () =>
     {
         return request(app.getHttpServer())
-            .post('/o-auth/scope/find/acdbef90-0fdb-4a56-b892-e1fbce10d2cf')
+            .post('/o-auth/scope/find/544fb8a0-6763-5cf0-87cf-4ba8b63dad4c')
             .set('Accept', 'application/json')
             .expect(404);
     });
@@ -349,7 +349,7 @@ describe('scope', () =>
             .set('Accept', 'application/json')
             .send({
                 ...mockData[0],
-                id: '8b3f4d2d-a0ff-4ecb-8d44-d17c25427c8c',
+                id: '7c157dc4-cad2-5ca2-bbea-281696dc62e2',
             })
             .expect(404);
     });
@@ -374,7 +374,7 @@ describe('scope', () =>
     test('/REST:DELETE o-auth/scope/delete/{id} - Got 404 Not Found', () =>
     {
         return request(app.getHttpServer())
-            .delete('/o-auth/scope/delete/44f2844a-04d1-429c-96ff-50764a0d7a7d')
+            .delete('/o-auth/scope/delete/7e1473d9-a00b-5325-8bff-a61aa5ad2aa1')
             .set('Accept', 'application/json')
             .expect(404);
     });
@@ -543,7 +543,7 @@ describe('scope', () =>
                     {
                         where:
                         {
-                            id: '6dd68558-00ad-4416-a13f-4feb93708c08',
+                            id: 'c05f5fd0-c01a-54fa-9e5c-d7bbd74e338c',
                         },
                     },
                 },
@@ -614,7 +614,7 @@ describe('scope', () =>
                     }
                 `,
                 variables: {
-                    id: 'e89d4209-1824-4f9b-bfb0-7a6d13190c81',
+                    id: 'e8d441b5-18dc-50dd-bcd5-a6b3574f0497',
                 },
             })
             .expect(200)
@@ -678,7 +678,7 @@ describe('scope', () =>
                 variables: {
                     payload: {
                         ...mockData[0],
-                        id: 'd72847bc-64b9-4948-9deb-31b02837e5b8',
+                        id: '6072dc9e-501c-5c04-b507-7157039e91bc',
                     },
                 },
             })
@@ -784,7 +784,7 @@ describe('scope', () =>
                     }
                 `,
                 variables: {
-                    id: 'f5d2b42c-9a2f-447d-bb5d-9be27ac2693a',
+                    id: '59478b11-e972-57a4-9ecc-1264c6b534f2',
                 },
             })
             .expect(200)
