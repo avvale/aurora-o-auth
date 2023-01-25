@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { ICommandBus, IQueryBus, QueryStatement } from 'aurora-ts-core';
+import { ICommandBus, IQueryBus, QueryStatement, Utils } from '@aurora-ts/core';
 
-// @apps
-import { FindTenantByIdQuery } from '@apps/iam/tenant/application/find/find-tenant-by-id.query';
-import { UpdateTenantByIdCommand } from '@apps/iam/tenant/application/update/update-tenant-by-id.command';
-import { IamTenant, IamUpdateTenantByIdInput } from '../../../../graphql';
+// @app
+import { FindTenantByIdQuery } from '@app/iam/tenant/application/find/find-tenant-by-id.query';
+import { UpdateTenantByIdCommand } from '@app/iam/tenant/application/update/update-tenant-by-id.command';
+import { IamTenant, IamUpdateTenantByIdInput } from '@api/graphql';
 import { IamTenantDto, IamUpdateTenantByIdDto } from '../dto';
 
 @Injectable()
@@ -21,8 +21,29 @@ export class IamUpdateTenantByIdHandler
         timezone?: string,
     ): Promise<IamTenant | IamTenantDto>
     {
-        await this.commandBus.dispatch(new UpdateTenantByIdCommand(payload, constraint, { timezone }));
+        const tenant = await this.queryBus.ask(new FindTenantByIdQuery(
+            payload.id,
+            constraint,
+            { timezone },
+        ));
 
-        return await this.queryBus.ask(new FindTenantByIdQuery(payload.id, constraint, { timezone }));
+        const dataToUpdate = Utils.diff(payload, tenant);
+
+        await this.commandBus.dispatch(new UpdateTenantByIdCommand(
+            {
+                ...dataToUpdate,
+                id: payload.id,
+            },
+            constraint,
+            {
+                timezone,
+            },
+        ));
+
+        return await this.queryBus.ask(new FindTenantByIdQuery(
+            payload.id,
+            constraint,
+            { timezone },
+        ));
     }
 }

@@ -37,9 +37,9 @@ export class IamTenantDto
 
     @ApiProperty({
         type       : Object,
-        description: 'data [input here api field description]',
+        description: 'meta [input here api field description]',
     })
-    data?: any;
+    meta?: any;
 
     @ApiProperty({
         type       : () => [IamAccountDto],

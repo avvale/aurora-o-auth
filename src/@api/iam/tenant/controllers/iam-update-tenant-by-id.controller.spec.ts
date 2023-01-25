@@ -6,7 +6,7 @@ import { IamUpdateTenantByIdController } from './iam-update-tenant-by-id.control
 import { IamUpdateTenantByIdHandler } from '../handlers/iam-update-tenant-by-id.handler';
 
 // sources
-import { tenants } from '@apps/iam/tenant/infrastructure/seeds/tenant.seed';
+import { tenants } from '@app/iam/tenant/infrastructure/seeds/tenant.seed';
 
 describe('IamUpdateTenantByIdController', () =>
 {
@@ -43,7 +43,7 @@ describe('IamUpdateTenantByIdController', () =>
             expect(controller).toBeDefined();
         });
 
-        test('should return a tenant created', async () =>
+        test('should return a tenant updated', async () =>
         {
             jest.spyOn(handler, 'main').mockImplementation(() => new Promise(resolve => resolve(tenants[0])));
             expect(await controller.main(tenants[0])).toBe(tenants[0]);

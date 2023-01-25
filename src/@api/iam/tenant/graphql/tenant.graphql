@@ -6,7 +6,7 @@ type IamTenant
     code: GraphQLString
     logo: GraphQLString
     isActive: GraphQLBoolean!
-    data: JSON
+    meta: JSON
     accounts: [IamAccount]
     createdAt: GraphQLTimestamp
     updatedAt: GraphQLTimestamp
@@ -20,7 +20,6 @@ input IamCreateTenantInput
     code: GraphQLString
     logo: GraphQLString
     isActive: GraphQLBoolean!
-    data: JSON
     accountIds: [ID]
 }
 
@@ -31,7 +30,6 @@ input IamUpdateTenantByIdInput
     code: GraphQLString
     logo: GraphQLString
     isActive: GraphQLBoolean
-    data: JSON
     accountIds: [ID]
 }
 
@@ -42,24 +40,66 @@ input IamUpdateTenantsInput
     code: GraphQLString
     logo: GraphQLString
     isActive: GraphQLBoolean
-    data: JSON
     accountIds: [ID]
 }
 
 type Query
 {
-    iamFindTenant(query: QueryStatement constraint: QueryStatement): IamTenant
-    iamFindTenantById(id: ID constraint: QueryStatement): IamTenant
-    iamGetTenants(query: QueryStatement constraint: QueryStatement): [IamTenant]!
-    iamPaginateTenants(query: QueryStatement constraint: QueryStatement): Pagination!
+    iamFindTenant(
+        query: QueryStatement
+        constraint: QueryStatement
+    ): IamTenant
+
+    iamFindTenantById(
+        id: ID
+        constraint: QueryStatement
+    ): IamTenant
+
+    iamGetTenants(
+        query: QueryStatement
+        constraint: QueryStatement
+    ): [IamTenant]!
+
+    iamPaginateTenants(
+        query: QueryStatement
+        constraint: QueryStatement
+    ): Pagination!
+
 }
 
 type Mutation
 {
-    iamCreateTenant(payload: IamCreateTenantInput!): IamTenant
-    iamCreateTenants(payload: [IamCreateTenantInput]!): Boolean!
-    iamUpdateTenantById(payload: IamUpdateTenantByIdInput! constraint: QueryStatement): IamTenant
-    iamUpdateTenants(payload: IamUpdateTenantsInput! query: QueryStatement constraint: QueryStatement): [IamTenant]!
-    iamDeleteTenantById(id: ID! constraint: QueryStatement): IamTenant
-    iamDeleteTenants(query: QueryStatement constraint: QueryStatement): [IamTenant]!
+    iamCreateTenant(
+        payload: IamCreateTenantInput!
+    ): IamTenant
+
+    iamCreateTenants(
+        payload: [IamCreateTenantInput]!
+    ): Boolean!
+
+    iamUpdateTenantById(
+        payload: IamUpdateTenantByIdInput!
+        constraint: QueryStatement
+    ): IamTenant
+
+    iamUpdateTenants(
+        payload: IamUpdateTenantsInput!
+        query: QueryStatement
+        constraint: QueryStatement
+    ): [IamTenant]!
+
+    iamUpsertTenant(
+        payload: IamUpdateTenantByIdInput!
+    ): IamTenant
+
+    iamDeleteTenantById(
+        id: ID!
+        constraint: QueryStatement
+    ): IamTenant
+
+    iamDeleteTenants(
+        query: QueryStatement
+        constraint: QueryStatement
+    ): [IamTenant]!
+
 }

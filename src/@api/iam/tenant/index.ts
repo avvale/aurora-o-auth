@@ -7,6 +7,7 @@ import { IamFindTenantByIdController } from './controllers/iam-find-tenant-by-id
 import { IamFindTenantController } from './controllers/iam-find-tenant.controller';
 import { IamUpdateTenantByIdController } from './controllers/iam-update-tenant-by-id.controller';
 import { IamUpdateTenantsController } from './controllers/iam-update-tenants.controller';
+import { IamUpsertTenantController } from './controllers/iam-upsert-tenant.controller';
 import { IamDeleteTenantByIdController } from './controllers/iam-delete-tenant-by-id.controller';
 import { IamDeleteTenantsController } from './controllers/iam-delete-tenants.controller';
 
@@ -19,6 +20,7 @@ import { IamFindTenantByIdResolver } from './resolvers/iam-find-tenant-by-id.res
 import { IamFindTenantResolver } from './resolvers/iam-find-tenant.resolver';
 import { IamUpdateTenantByIdResolver } from './resolvers/iam-update-tenant-by-id.resolver';
 import { IamUpdateTenantsResolver } from './resolvers/iam-update-tenants.resolver';
+import { IamUpsertTenantResolver } from './resolvers/iam-upsert-tenant.resolver';
 import { IamDeleteTenantByIdResolver } from './resolvers/iam-delete-tenant-by-id.resolver';
 import { IamDeleteTenantsResolver } from './resolvers/iam-delete-tenants.resolver';
 
@@ -31,8 +33,12 @@ import { IamFindTenantByIdHandler } from './handlers/iam-find-tenant-by-id.handl
 import { IamFindTenantHandler } from './handlers/iam-find-tenant.handler';
 import { IamUpdateTenantByIdHandler } from './handlers/iam-update-tenant-by-id.handler';
 import { IamUpdateTenantsHandler } from './handlers/iam-update-tenants.handler';
+import { IamUpsertTenantHandler } from './handlers/iam-upsert-tenant.handler';
 import { IamDeleteTenantByIdHandler } from './handlers/iam-delete-tenant-by-id.handler';
 import { IamDeleteTenantsHandler } from './handlers/iam-delete-tenants.handler';
+
+// seeder
+import { IamTenantSeeder } from './seeder/iam-tenant.seeder';
 
 export const IamTenantControllers = [
     IamCreateTenantController,
@@ -43,6 +49,7 @@ export const IamTenantControllers = [
     IamFindTenantController,
     IamUpdateTenantByIdController,
     IamUpdateTenantsController,
+    IamUpsertTenantController,
     IamDeleteTenantByIdController,
     IamDeleteTenantsController,
 ];
@@ -56,6 +63,7 @@ export const IamTenantResolvers = [
     IamFindTenantResolver,
     IamUpdateTenantByIdResolver,
     IamUpdateTenantsResolver,
+    IamUpsertTenantResolver,
     IamDeleteTenantByIdResolver,
     IamDeleteTenantsResolver,
 ];
@@ -69,6 +77,11 @@ export const IamTenantApiHandlers = [
     IamFindTenantHandler,
     IamUpdateTenantByIdHandler,
     IamUpdateTenantsHandler,
+    IamUpsertTenantHandler,
     IamDeleteTenantByIdHandler,
     IamDeleteTenantsHandler,
+];
+
+export const IamTenantServices = [
+    IamTenantSeeder,
 ];

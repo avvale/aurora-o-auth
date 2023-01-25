@@ -35,12 +35,6 @@ export class IamUpdateTenantByIdDto
     isActive?: boolean;
 
     @ApiProperty({
-        type       : Object,
-        description: 'data [input here api field description]',
-    })
-    data?: any;
-
-    @ApiProperty({
         type       : [String],
         description: 'accounts [input here api field description]',
     })
