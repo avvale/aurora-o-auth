@@ -1,16 +1,16 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Test, TestingModule } from '@nestjs/testing';
-import { ICommandBus, IQueryBus } from 'aurora-ts-core';
+import { ICommandBus, IQueryBus } from '@aurora-ts/core';
 
 // custom items
-import { IamCreateUserHandler } from './iam-create-user.handler';
+import { IamUpsertUserHandler } from './iam-upsert-user.handler';
 
 // sources
-import { users } from '@apps/iam/user/infrastructure/seeds/user.seed';
+import { users } from '@app/iam/user/infrastructure/seeds/user.seed';
 
-describe('IamCreateUserHandler', () =>
+describe('IamUpsertUserHandler', () =>
 {
-    let handler: IamCreateUserHandler;
+    let handler: IamUpsertUserHandler;
     let queryBus: IQueryBus;
     let commandBus: ICommandBus;
 
@@ -20,7 +20,7 @@ describe('IamCreateUserHandler', () =>
             imports: [
             ],
             providers: [
-                IamCreateUserHandler,
+                IamUpsertUserHandler,
                 {
                     provide : IQueryBus,
                     useValue: {
@@ -37,19 +37,19 @@ describe('IamCreateUserHandler', () =>
         })
             .compile();
 
-        handler     = module.get<IamCreateUserHandler>(IamCreateUserHandler);
+        handler     = module.get<IamUpsertUserHandler>(IamUpsertUserHandler);
         queryBus    = module.get<IQueryBus>(IQueryBus);
         commandBus  = module.get<ICommandBus>(ICommandBus);
     });
 
     describe('main', () =>
     {
-        test('IamCreateUserHandler should be defined', () =>
+        test('IamUpsertUserHandler should be defined', () =>
         {
             expect(handler).toBeDefined();
         });
 
-        test('should return an user created', async () =>
+        test('should return an user upserted', async () =>
         {
             jest.spyOn(queryBus, 'ask').mockImplementation(() => new Promise(resolve => resolve(users[0])));
             expect(await handler.main(users[0])).toBe(users[0]);

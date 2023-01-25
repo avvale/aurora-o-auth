@@ -1,30 +1,30 @@
 import { UseGuards } from '@nestjs/common';
 import { Resolver, Args, Mutation } from '@nestjs/graphql';
-import { Timezone } from 'aurora-ts-core';
+import { Timezone } from '@aurora-ts/core';
 
 // authorization
 import { Permissions } from '@api/iam/shared/decorators/permissions.decorator';
 import { AuthenticationJwtGuard } from '@api/o-auth/shared/guards/authentication-jwt.guard';
 import { AuthorizationGuard } from '@api/iam/shared/guards/authorization.guard';
 
-// @apps
-import { IamCreateUsersHandler } from '../handlers/iam-create-users.handler';
-import { IamCreateUserInput } from '../../../../graphql';
+// @app
+import { IamUpsertUserHandler } from '../handlers/iam-upsert-user.handler';
+import { IamUser, IamUpdateUserByIdInput } from '@api/graphql';
 
 @Resolver()
-@Permissions('iam.user.create')
+@Permissions('iam.user.upsert')
 @UseGuards(AuthenticationJwtGuard, AuthorizationGuard)
-export class IamCreateUsersResolver
+export class IamUpsertUserResolver
 {
     constructor(
-        private readonly handler: IamCreateUsersHandler,
+        private readonly handler: IamUpsertUserHandler,
     ) {}
 
-    @Mutation('iamCreateUsers')
+    @Mutation('iamUpsertUser')
     async main(
-        @Args('payload') payload: IamCreateUserInput[],
+        @Args('payload') payload: IamUpdateUserByIdInput,
         @Timezone() timezone?: string,
-    ): Promise<boolean>
+    ): Promise<IamUser>
     {
         return await this.handler.main(
             payload,

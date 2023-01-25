@@ -1,33 +1,32 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { Controller, Post, Body, UseGuards } from '@nestjs/common';
-import { ApiTags, ApiCreatedResponse, ApiBody, ApiOperation } from '@nestjs/swagger';
-import { Timezone } from 'aurora-ts-core';
-import { IamUserDto, IamCreateUserDto } from '../dto';
+import { ApiTags, ApiCreatedResponse, ApiOperation } from '@nestjs/swagger';
+import { Timezone } from '@aurora-ts/core';
+import { IamUserDto, IamUpdateUserByIdDto } from '../dto';
 
 // authorization
 import { Permissions } from '@api/iam/shared/decorators/permissions.decorator';
 import { AuthenticationJwtGuard } from '@api/o-auth/shared/guards/authentication-jwt.guard';
 import { AuthorizationGuard } from '@api/iam/shared/guards/authorization.guard';
 
-// @apps
-import { IamCreateUsersHandler } from '../handlers/iam-create-users.handler';
+// @app
+import { IamUpsertUserHandler } from '../handlers/iam-upsert-user.handler';
 
 @ApiTags('[iam] user')
-@Controller('iam/users/create')
-@Permissions('iam.user.create')
+@Controller('iam/user/upsert')
+@Permissions('iam.user.upsert')
 @UseGuards(AuthenticationJwtGuard, AuthorizationGuard)
-export class IamCreateUsersController
+export class IamUpsertUserController
 {
     constructor(
-        private readonly handler: IamCreateUsersHandler,
+        private readonly handler: IamUpsertUserHandler,
     ) {}
 
     @Post()
-    @ApiOperation({ summary: 'Create users in batch' })
-    @ApiCreatedResponse({ description: 'The records has been created successfully.' , type: [IamUserDto]})
-    @ApiBody({ type: [IamCreateUserDto]})
+    @ApiOperation({ summary: 'Upsert user' })
+    @ApiCreatedResponse({ description: 'The record has been successfully upserted.', type: IamUserDto })
     async main(
-        @Body() payload: IamCreateUserDto[],
+        @Body() payload: IamUpdateUserByIdDto,
         @Timezone() timezone?: string,
     )
     {

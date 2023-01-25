@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { IQueryBus, QueryStatement } from 'aurora-ts-core';
+import { IQueryBus, QueryStatement } from '@aurora-ts/core';
 
-// @apps
-import { PaginateUsersQuery } from '@apps/iam/user/application/paginate/paginate-users.query';
-import { Pagination } from '../../../../graphql';
+// @app
+import { PaginateUsersQuery } from '@app/iam/user/application/paginate/paginate-users.query';
+import { Pagination } from '@api/graphql';
 
 @Injectable()
 export class IamPaginateUsersHandler
@@ -18,6 +18,10 @@ export class IamPaginateUsersHandler
         timezone?: string,
     ): Promise<Pagination>
     {
-        return await this.queryBus.ask(new PaginateUsersQuery(queryStatement, constraint, { timezone }));
+        return await this.queryBus.ask(new PaginateUsersQuery(
+            queryStatement,
+            constraint,
+            { timezone },
+        ));
     }
 }

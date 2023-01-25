@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { IQueryBus, QueryStatement } from 'aurora-ts-core';
+import { IQueryBus, QueryStatement } from '@aurora-ts/core';
 
-// @apps
-import { GetUsersQuery } from '@apps/iam/user/application/get/get-users.query';
-import { IamUser } from '../../../../graphql';
+// @app
+import { GetUsersQuery } from '@app/iam/user/application/get/get-users.query';
+import { IamUser } from '@api/graphql';
 import { IamUserDto } from '../dto';
 
 @Injectable()

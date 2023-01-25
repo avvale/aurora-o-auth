@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { ICommandBus, IQueryBus, QueryStatement } from 'aurora-ts-core';
+import { ICommandBus, IQueryBus, QueryStatement } from '@aurora-ts/core';
 
-// @apps
-import { FindUserByIdQuery } from '@apps/iam/user/application/find/find-user-by-id.query';
-import { DeleteUserByIdCommand } from '@apps/iam/user/application/delete/delete-user-by-id.command';
-import { IamUser } from '../../../../graphql';
+// @app
+import { FindUserByIdQuery } from '@app/iam/user/application/find/find-user-by-id.query';
+import { DeleteUserByIdCommand } from '@app/iam/user/application/delete/delete-user-by-id.command';
+import { IamUser } from '@api/graphql';
 import { IamUserDto } from '../dto';
 
 @Injectable()
@@ -23,7 +23,13 @@ export class IamDeleteUserByIdHandler
     {
         const user = await this.queryBus.ask(new FindUserByIdQuery(id, constraint, { timezone }));
 
-        await this.commandBus.dispatch(new DeleteUserByIdCommand(id, constraint, { timezone }));
+        await this.commandBus.dispatch(new DeleteUserByIdCommand(
+            id,
+            constraint,
+            {
+                timezone,
+            },
+        ));
 
         return user;
     }

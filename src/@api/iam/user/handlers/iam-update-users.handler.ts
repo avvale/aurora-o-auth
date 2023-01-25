@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { ICommandBus, IQueryBus, QueryStatement } from 'aurora-ts-core';
+import { ICommandBus, IQueryBus, QueryStatement } from '@aurora-ts/core';
 
-// @apps
-import { GetUsersQuery } from '@apps/iam/user/application/get/get-users.query';
-import { UpdateUsersCommand } from '@apps/iam/user/application/update/update-users.command';
-import { IamUser, IamUpdateUsersInput } from '../../../../graphql';
+// @app
+import { GetUsersQuery } from '@app/iam/user/application/get/get-users.query';
+import { UpdateUsersCommand } from '@app/iam/user/application/update/update-users.command';
+import { IamUser, IamUpdateUsersInput } from '@api/graphql';
 import { IamUserDto, IamUpdateUsersDto } from '../dto';
 
 @Injectable()
@@ -22,7 +22,14 @@ export class IamUpdateUsersHandler
         timezone?: string,
     ): Promise<IamUser | IamUserDto>
     {
-        await this.commandBus.dispatch(new UpdateUsersCommand(payload, queryStatement, constraint, { timezone }));
+        await this.commandBus.dispatch(new UpdateUsersCommand(
+            payload,
+            queryStatement,
+            constraint,
+            {
+                timezone,
+            },
+        ));
 
         return await this.queryBus.ask(new GetUsersQuery(queryStatement, constraint, { timezone }));
     }

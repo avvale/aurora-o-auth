@@ -2,16 +2,16 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
 // custom items
-import { IamCreateUserController } from './iam-create-user.controller';
-import { IamCreateUserHandler } from '../handlers/iam-create-user.handler';
+import { IamUpsertUserController } from './iam-upsert-user.controller';
+import { IamUpsertUserHandler } from '../handlers/iam-upsert-user.handler';
 
 // sources
-import { users } from '@apps/iam/user/infrastructure/seeds/user.seed';
+import { users } from '@app/iam/user/infrastructure/seeds/user.seed';
 
-describe('IamCreateUserController', () =>
+describe('IamUpsertUserController', () =>
 {
-    let controller: IamCreateUserController;
-    let handler: IamCreateUserHandler;
+    let controller: IamUpsertUserController;
+    let handler: IamUpsertUserHandler;
 
     beforeAll(async () =>
     {
@@ -19,11 +19,11 @@ describe('IamCreateUserController', () =>
             imports: [
             ],
             controllers: [
-                IamCreateUserController,
+                IamUpsertUserController,
             ],
             providers: [
                 {
-                    provide : IamCreateUserHandler,
+                    provide : IamUpsertUserHandler,
                     useValue: {
                         main: () => { /**/ },
                     },
@@ -32,18 +32,18 @@ describe('IamCreateUserController', () =>
         })
             .compile();
 
-        controller = module.get<IamCreateUserController>(IamCreateUserController);
-        handler = module.get<IamCreateUserHandler>(IamCreateUserHandler);
+        controller = module.get<IamUpsertUserController>(IamUpsertUserController);
+        handler = module.get<IamUpsertUserHandler>(IamUpsertUserHandler);
     });
 
     describe('main', () =>
     {
-        test('IamCreateUserController should be defined', () =>
+        test('IamUpsertUserController should be defined', () =>
         {
             expect(controller).toBeDefined();
         });
 
-        test('should return an user created', async () =>
+        test('should return an user upserted', async () =>
         {
             jest.spyOn(handler, 'main').mockImplementation(() => new Promise(resolve => resolve(users[0])));
             expect(await controller.main(users[0])).toBe(users[0]);

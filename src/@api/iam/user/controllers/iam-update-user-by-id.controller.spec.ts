@@ -6,7 +6,7 @@ import { IamUpdateUserByIdController } from './iam-update-user-by-id.controller'
 import { IamUpdateUserByIdHandler } from '../handlers/iam-update-user-by-id.handler';
 
 // sources
-import { users } from '@apps/iam/user/infrastructure/seeds/user.seed';
+import { users } from '@app/iam/user/infrastructure/seeds/user.seed';
 
 describe('IamUpdateUserByIdController', () =>
 {
@@ -43,7 +43,7 @@ describe('IamUpdateUserByIdController', () =>
             expect(controller).toBeDefined();
         });
 
-        test('should return a user created', async () =>
+        test('should return a user updated', async () =>
         {
             jest.spyOn(handler, 'main').mockImplementation(() => new Promise(resolve => resolve(users[0])));
             expect(await controller.main(users[0])).toBe(users[0]);

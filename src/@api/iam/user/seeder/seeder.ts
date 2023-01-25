@@ -1,8 +1,8 @@
 import { NestFactory } from '@nestjs/core';
-import { ICommandBus } from 'aurora-ts-core';
-import { CreateUsersCommand } from '@apps/iam/user/application/create/create-users.command';
+import { ICommandBus } from '@aurora-ts/core';
+import { CreateUsersCommand } from '@app/iam/user/application/create/create-users.command';
 import { SeederModule } from './seeder.module';
-import { users } from '@apps/iam/user/infrastructure/seeds/user.seed';
+import { users } from '@app/iam/user/infrastructure/seeds/user.seed';
 
 export class Seeder
 {
@@ -12,6 +12,7 @@ export class Seeder
         {
             const commandBus = appContext.get(ICommandBus);
             commandBus.dispatch(new CreateUsersCommand(users, { timezone: process.env.TZ }));
+            appContext.close();
         });
     }
 }

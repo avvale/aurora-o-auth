@@ -2,17 +2,17 @@
 import { Test, TestingModule } from '@nestjs/testing';
 
 // custom items
-import { IamUpdateUserByIdResolver } from './iam-update-user-by-id.resolver';
-import { IamUpdateUserByIdHandler } from '../handlers/iam-update-user-by-id.handler';
+import { IamUpsertUserResolver } from './iam-upsert-user.resolver';
+import { IamUpsertUserHandler } from '../handlers/iam-upsert-user.handler';
 import { IamUpdateUserByIdInput } from '@api/graphql';
 
 // sources
 import { users } from '@app/iam/user/infrastructure/seeds/user.seed';
 
-describe('IamUpdateUserByIdResolver', () =>
+describe('IamUpsertUserResolver', () =>
 {
-    let resolver: IamUpdateUserByIdResolver;
-    let handler: IamUpdateUserByIdHandler;
+    let resolver: IamUpsertUserResolver;
+    let handler: IamUpsertUserHandler;
 
     beforeAll(async () =>
     {
@@ -20,9 +20,9 @@ describe('IamUpdateUserByIdResolver', () =>
             imports: [
             ],
             providers: [
-                IamUpdateUserByIdResolver,
+                IamUpsertUserResolver,
                 {
-                    provide : IamUpdateUserByIdHandler,
+                    provide : IamUpsertUserHandler,
                     useValue: {
                         main: () => { /**/ },
                     },
@@ -31,23 +31,23 @@ describe('IamUpdateUserByIdResolver', () =>
         })
             .compile();
 
-        resolver = module.get<IamUpdateUserByIdResolver>(IamUpdateUserByIdResolver);
-        handler = module.get<IamUpdateUserByIdHandler>(IamUpdateUserByIdHandler);
+        resolver = module.get<IamUpsertUserResolver>(IamUpsertUserResolver);
+        handler = module.get<IamUpsertUserHandler>(IamUpsertUserHandler);
     });
 
-    test('IamUpdateUserByIdResolver should be defined', () =>
+    test('IamUpsertUserResolver should be defined', () =>
     {
         expect(resolver).toBeDefined();
     });
 
     describe('main', () =>
     {
-        test('IamUpdateUserByIdResolver should be defined', () =>
+        test('IamUpsertUserResolver should be defined', () =>
         {
             expect(resolver).toBeDefined();
         });
 
-        test('should return a user by id updated', async () =>
+        test('should return an user upserted', async () =>
         {
             jest.spyOn(handler, 'main').mockImplementation(() => new Promise(resolve => resolve(users[0])));
             expect(await resolver.main(<IamUpdateUserByIdInput>users[0])).toBe(users[0]);
