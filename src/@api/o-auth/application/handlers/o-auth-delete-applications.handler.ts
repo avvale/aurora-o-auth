@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { ICommandBus, IQueryBus, QueryStatement } from 'aurora-ts-core';
+import { ICommandBus, IQueryBus, QueryStatement } from '@aurora-ts/core';
 
-// @apps
-import { GetApplicationsQuery } from '@apps/o-auth/application/application/get/get-applications.query';
-import { DeleteApplicationsCommand } from '@apps/o-auth/application/application/delete/delete-applications.command';
-import { OAuthApplication } from '../../../../graphql';
+// @app
+import { GetApplicationsQuery } from '@app/o-auth/application/application/get/get-applications.query';
+import { DeleteApplicationsCommand } from '@app/o-auth/application/application/delete/delete-applications.command';
+import { OAuthApplication } from '@api/graphql';
 import { OAuthApplicationDto } from '../dto';
 
 @Injectable()
@@ -23,7 +23,13 @@ export class OAuthDeleteApplicationsHandler
     {
         const applications = await this.queryBus.ask(new GetApplicationsQuery(queryStatement, constraint, { timezone }));
 
-        await this.commandBus.dispatch(new DeleteApplicationsCommand(queryStatement, constraint, { timezone }));
+        await this.commandBus.dispatch(new DeleteApplicationsCommand(
+            queryStatement,
+            constraint,
+            {
+                timezone,
+            },
+        ));
 
         return applications;
     }

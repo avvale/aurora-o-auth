@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { ICommandBus, IQueryBus, QueryStatement } from 'aurora-ts-core';
+import { ICommandBus, IQueryBus, QueryStatement, Utils } from '@aurora-ts/core';
 
-// @apps
-import { FindApplicationByIdQuery } from '@apps/o-auth/application/application/find/find-application-by-id.query';
-import { UpdateApplicationByIdCommand } from '@apps/o-auth/application/application/update/update-application-by-id.command';
-import { OAuthApplication, OAuthUpdateApplicationByIdInput } from '../../../../graphql';
+// @app
+import { FindApplicationByIdQuery } from '@app/o-auth/application/application/find/find-application-by-id.query';
+import { UpdateApplicationByIdCommand } from '@app/o-auth/application/application/update/update-application-by-id.command';
+import { OAuthApplication, OAuthUpdateApplicationByIdInput } from '@api/graphql';
 import { OAuthApplicationDto, OAuthUpdateApplicationByIdDto } from '../dto';
 
 @Injectable()
@@ -21,8 +21,29 @@ export class OAuthUpdateApplicationByIdHandler
         timezone?: string,
     ): Promise<OAuthApplication | OAuthApplicationDto>
     {
-        await this.commandBus.dispatch(new UpdateApplicationByIdCommand(payload, constraint, { timezone }));
+        const application = await this.queryBus.ask(new FindApplicationByIdQuery(
+            payload.id,
+            constraint,
+            { timezone },
+        ));
 
-        return await this.queryBus.ask(new FindApplicationByIdQuery(payload.id, constraint, { timezone }));
+        const dataToUpdate = Utils.diff(payload, application);
+
+        await this.commandBus.dispatch(new UpdateApplicationByIdCommand(
+            {
+                ...dataToUpdate,
+                id: payload.id,
+            },
+            constraint,
+            {
+                timezone,
+            },
+        ));
+
+        return await this.queryBus.ask(new FindApplicationByIdQuery(
+            payload.id,
+            constraint,
+            { timezone },
+        ));
     }
 }

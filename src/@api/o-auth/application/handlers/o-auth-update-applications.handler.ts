@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { ICommandBus, IQueryBus, QueryStatement } from 'aurora-ts-core';
+import { ICommandBus, IQueryBus, QueryStatement } from '@aurora-ts/core';
 
-// @apps
-import { GetApplicationsQuery } from '@apps/o-auth/application/application/get/get-applications.query';
-import { UpdateApplicationsCommand } from '@apps/o-auth/application/application/update/update-applications.command';
-import { OAuthApplication, OAuthUpdateApplicationsInput } from '../../../../graphql';
+// @app
+import { GetApplicationsQuery } from '@app/o-auth/application/application/get/get-applications.query';
+import { UpdateApplicationsCommand } from '@app/o-auth/application/application/update/update-applications.command';
+import { OAuthApplication, OAuthUpdateApplicationsInput } from '@api/graphql';
 import { OAuthApplicationDto, OAuthUpdateApplicationsDto } from '../dto';
 
 @Injectable()
@@ -22,7 +22,14 @@ export class OAuthUpdateApplicationsHandler
         timezone?: string,
     ): Promise<OAuthApplication | OAuthApplicationDto>
     {
-        await this.commandBus.dispatch(new UpdateApplicationsCommand(payload, queryStatement, constraint, { timezone }));
+        await this.commandBus.dispatch(new UpdateApplicationsCommand(
+            payload,
+            queryStatement,
+            constraint,
+            {
+                timezone,
+            },
+        ));
 
         return await this.queryBus.ask(new GetApplicationsQuery(queryStatement, constraint, { timezone }));
     }

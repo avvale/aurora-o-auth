@@ -6,7 +6,7 @@ import { OAuthUpdateApplicationByIdController } from './o-auth-update-applicatio
 import { OAuthUpdateApplicationByIdHandler } from '../handlers/o-auth-update-application-by-id.handler';
 
 // sources
-import { applications } from '@apps/o-auth/application/infrastructure/seeds/application.seed';
+import { applications } from '@app/o-auth/application/infrastructure/seeds/application.seed';
 
 describe('OAuthUpdateApplicationByIdController', () =>
 {
@@ -43,7 +43,7 @@ describe('OAuthUpdateApplicationByIdController', () =>
             expect(controller).toBeDefined();
         });
 
-        test('should return a application created', async () =>
+        test('should return a application updated', async () =>
         {
             jest.spyOn(handler, 'main').mockImplementation(() => new Promise(resolve => resolve(applications[0])));
             expect(await controller.main(applications[0])).toBe(applications[0]);

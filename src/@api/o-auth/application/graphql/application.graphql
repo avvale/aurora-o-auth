@@ -2,8 +2,8 @@
 type OAuthApplication
 {
     id: ID!
-    name: GraphQLString!
     code: GraphQLString!
+    name: GraphQLString!
     secret: GraphQLString!
     isMaster: GraphQLBoolean!
     clients: [OAuthClient]
@@ -15,8 +15,8 @@ type OAuthApplication
 input OAuthCreateApplicationInput
 {
     id: ID!
-    name: GraphQLString!
     code: GraphQLString!
+    name: GraphQLString!
     secret: GraphQLString!
     isMaster: GraphQLBoolean!
     clientIds: [ID]
@@ -25,8 +25,8 @@ input OAuthCreateApplicationInput
 input OAuthUpdateApplicationByIdInput
 {
     id: ID!
-    name: GraphQLString
     code: GraphQLString
+    name: GraphQLString
     secret: GraphQLString
     isMaster: GraphQLBoolean
     clientIds: [ID]
@@ -35,8 +35,8 @@ input OAuthUpdateApplicationByIdInput
 input OAuthUpdateApplicationsInput
 {
     id: ID
-    name: GraphQLString
     code: GraphQLString
+    name: GraphQLString
     secret: GraphQLString
     isMaster: GraphQLBoolean
     clientIds: [ID]
@@ -44,18 +44,61 @@ input OAuthUpdateApplicationsInput
 
 type Query
 {
-    oAuthFindApplication(query: QueryStatement constraint: QueryStatement): OAuthApplication
-    oAuthFindApplicationById(id: ID constraint: QueryStatement): OAuthApplication
-    oAuthGetApplications(query: QueryStatement constraint: QueryStatement): [OAuthApplication]!
-    oAuthPaginateApplications(query: QueryStatement constraint: QueryStatement): Pagination!
+    oAuthFindApplication(
+        query: QueryStatement
+        constraint: QueryStatement
+    ): OAuthApplication
+
+    oAuthFindApplicationById(
+        id: ID
+        constraint: QueryStatement
+    ): OAuthApplication
+
+    oAuthGetApplications(
+        query: QueryStatement
+        constraint: QueryStatement
+    ): [OAuthApplication]!
+
+    oAuthPaginateApplications(
+        query: QueryStatement
+        constraint: QueryStatement
+    ): Pagination!
+
 }
 
 type Mutation
 {
-    oAuthCreateApplication(payload: OAuthCreateApplicationInput!): OAuthApplication
-    oAuthCreateApplications(payload: [OAuthCreateApplicationInput]!): Boolean!
-    oAuthUpdateApplicationById(payload: OAuthUpdateApplicationByIdInput! constraint: QueryStatement): OAuthApplication
-    oAuthUpdateApplications(payload: OAuthUpdateApplicationsInput! query: QueryStatement constraint: QueryStatement): [OAuthApplication]!
-    oAuthDeleteApplicationById(id: ID! constraint: QueryStatement): OAuthApplication
-    oAuthDeleteApplications(query: QueryStatement constraint: QueryStatement): [OAuthApplication]!
+    oAuthCreateApplication(
+        payload: OAuthCreateApplicationInput!
+    ): OAuthApplication
+
+    oAuthCreateApplications(
+        payload: [OAuthCreateApplicationInput]!
+    ): Boolean!
+
+    oAuthUpdateApplicationById(
+        payload: OAuthUpdateApplicationByIdInput!
+        constraint: QueryStatement
+    ): OAuthApplication
+
+    oAuthUpdateApplications(
+        payload: OAuthUpdateApplicationsInput!
+        query: QueryStatement
+        constraint: QueryStatement
+    ): [OAuthApplication]!
+
+    oAuthUpsertApplication(
+        payload: OAuthUpdateApplicationByIdInput!
+    ): OAuthApplication
+
+    oAuthDeleteApplicationById(
+        id: ID!
+        constraint: QueryStatement
+    ): OAuthApplication
+
+    oAuthDeleteApplications(
+        query: QueryStatement
+        constraint: QueryStatement
+    ): [OAuthApplication]!
+
 }

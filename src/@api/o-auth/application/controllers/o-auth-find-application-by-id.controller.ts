@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { Body, Controller, HttpCode, Param, Post, UseGuards } from '@nestjs/common';
 import { ApiTags, ApiOkResponse, ApiOperation } from '@nestjs/swagger';
-import { QueryStatement, Timezone } from 'aurora-ts-core';
+import { QueryStatement, Timezone } from '@aurora-ts/core';
 import { OAuthApplicationDto } from '../dto';
 
 // authorization
@@ -9,7 +9,7 @@ import { Permissions } from '@api/iam/shared/decorators/permissions.decorator';
 import { AuthenticationJwtGuard } from '@api/o-auth/shared/guards/authentication-jwt.guard';
 import { AuthorizationGuard } from '@api/iam/shared/guards/authorization.guard';
 
-// @apps
+// @app
 import { OAuthFindApplicationByIdHandler } from '../handlers/o-auth-find-application-by-id.handler';
 
 @ApiTags('[o-auth] application')
@@ -25,7 +25,7 @@ export class OAuthFindApplicationByIdController
     @Post(':id')
     @HttpCode(200)
     @ApiOperation({ summary: 'Find application by id' })
-    @ApiOkResponse({ description: 'The record has been successfully created.', type: OAuthApplicationDto })
+    @ApiOkResponse({ description: 'The record has been successfully requested.', type: OAuthApplicationDto })
     async main(
         @Param('id') id: string,
         @Body('constraint') constraint?: QueryStatement,
