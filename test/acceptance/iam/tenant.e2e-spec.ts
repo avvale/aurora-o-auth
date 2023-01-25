@@ -4,9 +4,9 @@ import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { ITenantRepository } from '@apps/iam/tenant/domain/tenant.repository';
-import { MockTenantSeeder } from '@apps/iam/tenant/infrastructure/mock/mock-tenant.seeder';
-import { tenants } from '@apps/iam/tenant/infrastructure/seeds/tenant.seed';
+import { ITenantRepository } from '@app/iam/tenant/domain/tenant.repository';
+import { MockTenantSeeder } from '@app/iam/tenant/infrastructure/mock/mock-tenant.seeder';
+import { tenants } from '@app/iam/tenant/infrastructure/seeds/tenant.seed';
 import { GraphQLConfigModule } from '@aurora/graphql/graphql-config.module';
 import { IamModule } from '@api/iam/iam.module';
 import * as request from 'supertest';
@@ -228,22 +228,6 @@ describe('tenant', () =>
             });
     });
 
-    test('/REST:POST iam/tenant/create - Got 400 Conflict, TenantLogo is too large, has a maximum length of 255', () =>
-    {
-        return request(app.getHttpServer())
-            .post('/iam/tenant/create')
-            .set('Accept', 'application/json')
-            .send({
-                ...mockData[0],
-                logo: '****************************************************************************************************************************************************************************************************************************************************************',
-            })
-            .expect(400)
-            .then(res =>
-            {
-                expect(res.body.message).toContain('Value for TenantLogo is too large, has a maximum length of 255');
-            });
-    });
-
     test('/REST:POST iam/tenant/create - Got 400 Conflict, TenantIsActive has to be a boolean value', () =>
     {
         return request(app.getHttpServer())
@@ -316,7 +300,7 @@ describe('tenant', () =>
                 {
                     where:
                     {
-                        id: 'ce22386f-478d-4fb3-ae52-5f945f92200d',
+                        id: '5e77bccd-e64c-5723-9cb4-dfb67de19649',
                     },
                 },
             })
@@ -360,7 +344,7 @@ describe('tenant', () =>
     test('/REST:POST iam/tenant/find/{id} - Got 404 Not Found', () =>
     {
         return request(app.getHttpServer())
-            .post('/iam/tenant/find/aadaada3-74a5-4803-8c8a-5cd7a4dbb8b6')
+            .post('/iam/tenant/find/06b2b4cf-78ee-5db5-98bf-aad352079976')
             .set('Accept', 'application/json')
             .expect(404);
     });
@@ -384,7 +368,7 @@ describe('tenant', () =>
             .set('Accept', 'application/json')
             .send({
                 ...mockData[0],
-                id: 'e8371640-b0b6-421f-8f3c-87660cfce4ea',
+                id: '35c293b5-db6e-59e0-88df-ea556972e0f4',
             })
             .expect(404);
     });
@@ -409,7 +393,7 @@ describe('tenant', () =>
     test('/REST:DELETE iam/tenant/delete/{id} - Got 404 Not Found', () =>
     {
         return request(app.getHttpServer())
-            .delete('/iam/tenant/delete/02b79daa-d874-48a9-9492-3084e39ac0b5')
+            .delete('/iam/tenant/delete/cfd7f16e-0f0c-5727-ab22-0c4a9543a9d0')
             .set('Accept', 'application/json')
             .expect(404);
     });
@@ -438,7 +422,7 @@ describe('tenant', () =>
                             code
                             logo
                             isActive
-                            data
+                            meta
                         }
                     }
                 `,
@@ -509,7 +493,7 @@ describe('tenant', () =>
                             code
                             logo
                             isActive
-                            data
+                            meta
                             createdAt
                             updatedAt
                         }
@@ -543,7 +527,7 @@ describe('tenant', () =>
                             code
                             logo
                             isActive
-                            data
+                            meta
                         }
                     }
                 `,
@@ -578,7 +562,7 @@ describe('tenant', () =>
                             code
                             logo
                             isActive
-                            data
+                            meta
                             createdAt
                             updatedAt
                         }
@@ -590,7 +574,7 @@ describe('tenant', () =>
                     {
                         where:
                         {
-                            id: '71d51b77-89b2-482d-961f-324a65e57fe2',
+                            id: 'f15a04af-0a45-54ef-9e8a-1960792a29c2',
                         },
                     },
                 },
@@ -620,7 +604,7 @@ describe('tenant', () =>
                             code
                             logo
                             isActive
-                            data
+                            meta
                             createdAt
                             updatedAt
                         }
@@ -660,14 +644,14 @@ describe('tenant', () =>
                             code
                             logo
                             isActive
-                            data
+                            meta
                             createdAt
                             updatedAt
                         }
                     }
                 `,
                 variables: {
-                    id: '88d8d733-1c3d-4988-96da-9d148758888b',
+                    id: '7f0e1d2c-7f72-5cdf-afb8-85017e892e4e',
                 },
             })
             .expect(200)
@@ -695,7 +679,7 @@ describe('tenant', () =>
                             code
                             logo
                             isActive
-                            data
+                            meta
                             createdAt
                             updatedAt
                         }
@@ -728,7 +712,7 @@ describe('tenant', () =>
                             code
                             logo
                             isActive
-                            data
+                            meta
                             createdAt
                             updatedAt
                         }
@@ -737,7 +721,7 @@ describe('tenant', () =>
                 variables: {
                     payload: {
                         ...mockData[0],
-                        ...{ id: 'ce69d62a-f428-4544-8c3c-dc79ee269e3d' },
+                        id: 'ca2019ab-646b-5d22-bc62-b85c4120d400',
                     },
                 },
             })
@@ -766,7 +750,7 @@ describe('tenant', () =>
                             code
                             logo
                             isActive
-                            data
+                            meta
                             createdAt
                             updatedAt
                         }
@@ -803,7 +787,7 @@ describe('tenant', () =>
                             code
                             logo
                             isActive
-                            data
+                            meta
                             createdAt
                             updatedAt
                         }
@@ -845,14 +829,14 @@ describe('tenant', () =>
                             code
                             logo
                             isActive
-                            data
+                            meta
                             createdAt
                             updatedAt
                         }
                     }
                 `,
                 variables: {
-                    id: '8f162a5a-4026-47eb-9eab-175cb122faba',
+                    id: 'a33b8c38-64fa-50f6-9716-30e2a84ae986',
                 },
             })
             .expect(200)
@@ -880,7 +864,7 @@ describe('tenant', () =>
                             code
                             logo
                             isActive
-                            data
+                            meta
                             createdAt
                             updatedAt
                         }

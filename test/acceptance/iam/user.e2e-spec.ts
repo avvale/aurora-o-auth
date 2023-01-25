@@ -4,9 +4,9 @@ import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { IUserRepository } from '@apps/iam/user/domain/user.repository';
-import { MockUserSeeder } from '@apps/iam/user/infrastructure/mock/mock-user.seeder';
-import { users } from '@apps/iam/user/infrastructure/seeds/user.seed';
+import { IUserRepository } from '@app/iam/user/domain/user.repository';
+import { MockUserSeeder } from '@app/iam/user/infrastructure/mock/mock-user.seeder';
+import { users } from '@app/iam/user/infrastructure/seeds/user.seed';
 import { GraphQLConfigModule } from '@aurora/graphql/graphql-config.module';
 import { IamModule } from '@api/iam/iam.module';
 import * as request from 'supertest';
@@ -18,8 +18,8 @@ import { AuthorizationGuard } from '@api/iam/shared/guards/authorization.guard';
 
 // ---- customizations ----
 import { OAuthModule } from '@api/o-auth/o-auth.module';
-import { IAccountRepository } from '@apps/iam/account/domain/account.repository';
-import { MockAccountSeeder } from '@apps/iam/account/infrastructure/mock/mock-account.seeder';
+import { IAccountRepository } from '@app/iam/account/domain/account.repository';
+import { MockAccountSeeder } from '@app/iam/account/infrastructure/mock/mock-account.seeder';
 
 // disable import foreign modules, can be micro-services
 const importForeignModules = [];
@@ -469,7 +469,7 @@ describe('user', () =>
                 {
                     where:
                     {
-                        id: '7cd90360-0808-47da-a9f8-c4d7d23fcdc2',
+                        id: 'bf506093-ebc1-59a3-a593-a51e83e1e902',
                     },
                 },
             })
@@ -513,7 +513,7 @@ describe('user', () =>
     test('/REST:POST iam/user/find/{id} - Got 404 Not Found', () =>
     {
         return request(app.getHttpServer())
-            .post('/iam/user/find/82a740a5-ff2a-4172-8683-73e45c0bec85')
+            .post('/iam/user/find/686e4086-5c28-5cdd-b3f3-a75e48bafb74')
             .set('Accept', 'application/json')
             .expect(404);
     });
@@ -537,7 +537,7 @@ describe('user', () =>
             .set('Accept', 'application/json')
             .send({
                 ...mockData[0],
-                id: 'ae8f945d-3dc9-48ea-99ee-9586bd007023',
+                id: '13b379aa-70ae-5986-8dc7-b25665f9537b',
             })
             .expect(404);
     });
@@ -562,7 +562,7 @@ describe('user', () =>
     test('/REST:DELETE iam/user/delete/{id} - Got 404 Not Found', () =>
     {
         return request(app.getHttpServer())
-            .delete('/iam/user/delete/98b8321e-86e0-4c2e-a199-74a702440d06')
+            .delete('/iam/user/delete/7de61996-1432-5ad9-97d5-1e767da51e1a')
             .set('Accept', 'application/json')
             .expect(404);
     });
@@ -596,7 +596,7 @@ describe('user', () =>
                             username
                             password
                             rememberToken
-                            data
+                            meta
                         }
                     }
                 `,
@@ -672,7 +672,7 @@ describe('user', () =>
                             username
                             password
                             rememberToken
-                            data
+                            meta
                             createdAt
                             updatedAt
                         }
@@ -711,7 +711,7 @@ describe('user', () =>
                             username
                             password
                             rememberToken
-                            data
+                            meta
                         }
                     }
                 `,
@@ -751,7 +751,7 @@ describe('user', () =>
                             username
                             password
                             rememberToken
-                            data
+                            meta
                             createdAt
                             updatedAt
                         }
@@ -763,7 +763,7 @@ describe('user', () =>
                     {
                         where:
                         {
-                            id: '630403dd-4aca-4598-a147-5e0c009fc110',
+                            id: '59ff60bf-e503-5235-ad00-0e38102c1c97',
                         },
                     },
                 },
@@ -798,7 +798,7 @@ describe('user', () =>
                             username
                             password
                             rememberToken
-                            data
+                            meta
                             createdAt
                             updatedAt
                         }
@@ -843,14 +843,14 @@ describe('user', () =>
                             username
                             password
                             rememberToken
-                            data
+                            meta
                             createdAt
                             updatedAt
                         }
                     }
                 `,
                 variables: {
-                    id: '7c46cdd0-dd6b-4285-9664-06f4c9a65a01',
+                    id: '79f72934-b560-59ad-9ef1-d70978dca578',
                 },
             })
             .expect(200)
@@ -883,7 +883,7 @@ describe('user', () =>
                             username
                             password
                             rememberToken
-                            data
+                            meta
                             createdAt
                             updatedAt
                         }
@@ -921,7 +921,7 @@ describe('user', () =>
                             username
                             password
                             rememberToken
-                            data
+                            meta
                             createdAt
                             updatedAt
                         }
@@ -930,7 +930,7 @@ describe('user', () =>
                 variables: {
                     payload: {
                         ...mockData[0],
-                        id: 'ce1bc5ca-3807-4d07-af33-2dd7c4e7e5eb',
+                        id: 'afbc2035-2063-5731-b1c5-9455b37e333b',
                     },
                 },
             })
@@ -964,7 +964,7 @@ describe('user', () =>
                             username
                             password
                             rememberToken
-                            data
+                            meta
                             createdAt
                             updatedAt
                         }
@@ -1006,7 +1006,7 @@ describe('user', () =>
                             username
                             password
                             rememberToken
-                            data
+                            meta
                             createdAt
                             updatedAt
                         }
@@ -1053,14 +1053,14 @@ describe('user', () =>
                             username
                             password
                             rememberToken
-                            data
+                            meta
                             createdAt
                             updatedAt
                         }
                     }
                 `,
                 variables: {
-                    id: '11679c38-f973-4f3a-974c-e68329207df5',
+                    id: 'dcb2f282-5678-5305-a233-2dad33eddf1b',
                 },
             })
             .expect(200)
@@ -1093,7 +1093,7 @@ describe('user', () =>
                             username
                             password
                             rememberToken
-                            data
+                            meta
                             createdAt
                             updatedAt
                         }

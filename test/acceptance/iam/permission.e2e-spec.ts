@@ -4,9 +4,9 @@ import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { IPermissionRepository } from '@apps/iam/permission/domain/permission.repository';
-import { MockPermissionSeeder } from '@apps/iam/permission/infrastructure/mock/mock-permission.seeder';
-import { permissions } from '@apps/iam/permission/infrastructure/seeds/permission.seed';
+import { IPermissionRepository } from '@app/iam/permission/domain/permission.repository';
+import { MockPermissionSeeder } from '@app/iam/permission/infrastructure/mock/mock-permission.seeder';
+import { permissions } from '@app/iam/permission/infrastructure/seeds/permission.seed';
 import { GraphQLConfigModule } from '@aurora/graphql/graphql-config.module';
 import { IamModule } from '@api/iam/iam.module';
 import * as request from 'supertest';
@@ -285,7 +285,7 @@ describe('permission', () =>
                 {
                     where:
                     {
-                        id: '76b17ee9-45f8-4bcb-a220-eb41c82cc52d',
+                        id: 'f93fb9f9-3302-5320-8b65-ba7668c86803',
                     },
                 },
             })
@@ -328,7 +328,7 @@ describe('permission', () =>
     test('/REST:POST iam/permission/find/{id} - Got 404 Not Found', () =>
     {
         return request(app.getHttpServer())
-            .post('/iam/permission/find/27f7625d-7e8c-4055-9010-99cc4dc0d242')
+            .post('/iam/permission/find/704f8ef6-0cfb-5615-858c-24330d0447cf')
             .set('Accept', 'application/json')
             .expect(404);
     });
@@ -352,7 +352,7 @@ describe('permission', () =>
             .set('Accept', 'application/json')
             .send({
                 ...mockData[0],
-                id: '70029693-0b6b-4c16-bdf7-2a5c8a519802',
+                id: '3d7d17f1-0ebb-5782-85ac-1f61d54f4e37',
             })
             .expect(404);
     });
@@ -376,7 +376,7 @@ describe('permission', () =>
     test('/REST:DELETE iam/permission/delete/{id} - Got 404 Not Found', () =>
     {
         return request(app.getHttpServer())
-            .delete('/iam/permission/delete/93a72b59-bdc8-4ea1-9dec-51fdda854629')
+            .delete('/iam/permission/delete/6a34eee0-e47a-53fb-8e79-0165c19e0d40')
             .set('Accept', 'application/json')
             .expect(404);
     });
@@ -542,7 +542,7 @@ describe('permission', () =>
                     {
                         where:
                         {
-                            id: '5bd92b61-f5df-4f97-939a-addd862237a5',
+                            id: '77a0eb4b-dc58-529b-aada-d0b216559be0',
                         },
                     },
                 },
@@ -611,7 +611,7 @@ describe('permission', () =>
                     }
                 `,
                 variables: {
-                    id: '6ddc8da9-1361-43cd-a024-47e03e095112',
+                    id: '4d2957df-26d6-57b4-8d35-27fdd1873ebe',
                 },
             })
             .expect(200)
@@ -673,7 +673,7 @@ describe('permission', () =>
                 variables: {
                     payload: {
                         ...mockData[0],
-                        ...{ id: '7ab2dbbb-b1cc-4caa-9d2c-503342cf5bae' },
+                        id: '5d85dcc9-2ccb-5647-96eb-99fa4ef851bc',
                     },
                 },
             })
@@ -774,7 +774,7 @@ describe('permission', () =>
                     }
                 `,
                 variables: {
-                    id: 'bacc4d82-b87c-4335-8759-516b28b59441',
+                    id: '5b99bbd9-7c3c-5db8-a34d-651021f189db',
                 },
             })
             .expect(200)

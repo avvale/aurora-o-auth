@@ -5,29 +5,29 @@ import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { IAccountRepository } from '@apps/iam/account/domain/account.repository';
-import { MockAccountSeeder } from '@apps/iam/account/infrastructure/mock/mock-account.seeder';
-import { accounts } from '@apps/iam/account/infrastructure/seeds/account.seed';
+import { IAccountRepository } from '@app/iam/account/domain/account.repository';
+import { MockAccountSeeder } from '@app/iam/account/infrastructure/mock/mock-account.seeder';
+import { accounts } from '@app/iam/account/infrastructure/seeds/account.seed';
 import { GraphQLConfigModule } from '@aurora/graphql/graphql-config.module';
 import { IamModule } from '@api/iam/iam.module';
-import { IamAccountType, OAuthClientGrantType, OAuthCredentials } from '../../../src/graphql';
+import { IamAccountType, OAuthClientGrantType, OAuthCredentials } from '@api/graphql';
 import * as request from 'supertest';
 import * as _ from 'lodash';
 
 // ---- customizations ----
-import { jwtConfig } from '@apps/o-auth/shared/jwt-config';
+import { jwtConfig } from '@app/o-auth/shared/jwt-config';
 import { AuthorizationGuard } from '@api/iam/shared/guards/authorization.guard';
-import { AuthModule } from '@apps/o-auth/shared/modules/auth.module';
+import { AuthModule } from '@app/o-auth/shared/modules/auth.module';
 import { OAuthModule } from '@api/o-auth/o-auth.module';
-import { MockApplicationSeeder } from '@apps/o-auth/application/infrastructure/mock/mock-application.seeder';
+import { MockApplicationSeeder } from '@app/o-auth/application/infrastructure/mock/mock-application.seeder';
 import { OAuthCreateCredentialsHandler } from '@api/o-auth/credential/handlers/o-auth-create-credentials.handler';
-import { IApplicationRepository } from '@apps/o-auth/application/domain/application.repository';
-import { MockAccessTokenSeeder } from '@apps/o-auth/access-token/infrastructure/mock/mock-access-token.seeder';
-import { IAccessTokenRepository } from '@apps/o-auth/access-token';
-import { MockClientSeeder } from '@apps/o-auth/client/infrastructure/mock/mock-client.seeder';
-import { IClientRepository } from '@apps/o-auth/client';
-import { MockUserSeeder } from '@apps/iam/user/infrastructure/mock/mock-user.seeder';
-import { IUserRepository } from '@apps/iam/user/domain/user.repository';
+import { IApplicationRepository } from '@app/o-auth/application/domain/application.repository';
+import { MockAccessTokenSeeder } from '@app/o-auth/access-token/infrastructure/mock/mock-access-token.seeder';
+import { IAccessTokenRepository } from '@app/o-auth/access-token';
+import { MockClientSeeder } from '@app/o-auth/client/infrastructure/mock/mock-client.seeder';
+import { IClientRepository } from '@app/o-auth/client';
+import { MockUserSeeder } from '@app/iam/user/infrastructure/mock/mock-user.seeder';
+import { IUserRepository } from '@app/iam/user/domain/user.repository';
 
 // disable import foreign modules, can be micro-services
 const importForeignModules = [];
@@ -35,6 +35,8 @@ const importForeignModules = [];
 describe('account', () =>
 {
     let app: INestApplication;
+    let accountRepository: IAccountRepository;
+    let accountSeeder: MockAccountSeeder;
     let credentials: OAuthCredentials;
     let oAuthCreateCredentialsHandler: OAuthCreateCredentialsHandler;
     let applicationRepository: IApplicationRepository;
@@ -43,8 +45,6 @@ describe('account', () =>
     let accessTokenSeeder: MockAccessTokenSeeder;
     let clientRepository: IClientRepository;
     let clientSeeder: MockClientSeeder;
-    let accountRepository: IAccountRepository;
-    let accountSeeder: MockAccountSeeder;
     let userRepository: IUserRepository;
     let userSeeder: MockUserSeeder;
 
@@ -59,8 +59,8 @@ describe('account', () =>
         const module: TestingModule = await Test.createTestingModule({
             imports: [
                 ...importForeignModules,
-                IamModule,
                 OAuthModule,
+                IamModule,
                 AuthModule.forRoot(jwtConfig),
                 GraphQLConfigModule,
                 SequelizeModule.forRootAsync({
@@ -292,7 +292,8 @@ describe('account', () =>
             .set('Authorization', `Bearer ${credentials.accessToken}`)
             .send({
                 ...mockData[0],
-                ...{ clientId: null, type: IamAccountType.SERVICE },
+                clientId: null,
+                type: IamAccountType.SERVICE,
             })
             .expect(400)
             .then(res =>
@@ -403,7 +404,8 @@ describe('account', () =>
             .set('Authorization', `Bearer ${credentials.accessToken}`)
             .send({
                 ...mockData[0],
-                ...{ id: '5b19d6ac-4081-573b-96b3-56964d5326a8', type: IamAccountType.SERVICE },
+                id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
+                type: IamAccountType.SERVICE,
             })
             .expect(409);
     });
@@ -458,7 +460,7 @@ describe('account', () =>
                 {
                     where:
                     {
-                        id: '32e06919-59e5-4745-9f2b-1bc26443b037',
+                        id: 'ffdeb8fa-1891-5334-bb2a-97ba07a4f6cf',
                     },
                 },
             })
@@ -473,7 +475,9 @@ describe('account', () =>
             .set('Authorization', `Bearer ${credentials.accessToken}`)
             .send({
                 ...mockData[0],
-                ...{ id: '5b19d6ac-4081-573b-96b3-56964d5326a8', type: IamAccountType.SERVICE, email: 'john.***@gmail.com' },
+                id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
+                type: IamAccountType.SERVICE,
+                email: 'john.***@gmail.com',
             })
             .expect(201);
     });
@@ -503,7 +507,7 @@ describe('account', () =>
     test('/REST:POST iam/account/find/{id} - Got 404 Not Found', () =>
     {
         return request(app.getHttpServer())
-            .post('/iam/account/find/e259e743-d7b2-462d-81b8-9738ec4cf8e3')
+            .post('/iam/account/find/dfc69021-9b78-571a-97b3-b1d3a8774a36')
             .set('Accept', 'application/json')
             .set('Authorization', `Bearer ${credentials.accessToken}`)
             .expect(404);
@@ -530,7 +534,7 @@ describe('account', () =>
             .set('Authorization', `Bearer ${credentials.accessToken}`)
             .send({
                 ...mockData[0],
-                ...{ id: '5d4ce994-0f65-4758-abb8-dc57280eae50' },
+                id: 'fd30370e-a1ff-5f57-8a9c-b4c390bf9065',
             })
             .expect(404);
     });
@@ -556,7 +560,7 @@ describe('account', () =>
     test('/REST:DELETE iam/account/delete/{id} - Got 404 Not Found', () =>
     {
         return request(app.getHttpServer())
-            .delete('/iam/account/delete/028e1feb-bf33-4ac2-8fb7-865d099eb143')
+            .delete('/iam/account/delete/b5e30892-23dd-5434-af16-f53744b1a215')
             .set('Accept', 'application/json')
             .set('Authorization', `Bearer ${credentials.accessToken}`)
             .expect(404);
@@ -606,7 +610,7 @@ describe('account', () =>
                             dPermissions
                             dTenants
                             dScopes
-                            data
+                            meta
                         }
                     }
                 `,
@@ -684,7 +688,7 @@ describe('account', () =>
                             dPermissions
                             dTenants
                             dScopes
-                            data
+                            meta
                             createdAt
                             updatedAt
                         }
@@ -724,14 +728,16 @@ describe('account', () =>
                             dPermissions
                             dTenants
                             dScopes
-                            data
+                            meta
                         }
                     }
                 `,
                 variables: {
                     payload: {
                         ...mockData[0],
-                        ...{ id: '5b19d6ac-4081-573b-96b3-56964d5326a8', type: IamAccountType.SERVICE, email: 'john.***@gmail.com' },
+                        id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
+                        type: IamAccountType.SERVICE,
+                        email: 'john.***@gmail.com',
                     },
                 },
             })
@@ -764,7 +770,7 @@ describe('account', () =>
                             dPermissions
                             dTenants
                             dScopes
-                            data
+                            meta
                             createdAt
                             updatedAt
                         }
@@ -776,7 +782,7 @@ describe('account', () =>
                     {
                         where:
                         {
-                            id: '025dacfa-709b-4d06-929e-e9324744d42f',
+                            id: '0d1e2685-140b-5e61-8cde-9f5f4b6b6864',
                         },
                     },
                 },
@@ -812,7 +818,7 @@ describe('account', () =>
                             dPermissions
                             dTenants
                             dScopes
-                            data
+                            meta
                             createdAt
                             updatedAt
                         }
@@ -858,7 +864,7 @@ describe('account', () =>
                             dPermissions
                             dTenants
                             dScopes
-                            data
+                            meta
                             createdAt
                             updatedAt
                         }
@@ -899,7 +905,7 @@ describe('account', () =>
                             dPermissions
                             dTenants
                             dScopes
-                            data
+                            meta
                             createdAt
                             updatedAt
                         }
@@ -938,7 +944,7 @@ describe('account', () =>
                             dPermissions
                             dTenants
                             dScopes
-                            data
+                            meta
                             createdAt
                             updatedAt
                         }
@@ -982,7 +988,7 @@ describe('account', () =>
                             dPermissions
                             dTenants
                             dScopes
-                            data
+                            meta
                             createdAt
                             updatedAt
                         }
@@ -1026,7 +1032,7 @@ describe('account', () =>
                             dPermissions
                             dTenants
                             dScopes
-                            data
+                            meta
                             createdAt
                             updatedAt
                         }
@@ -1075,7 +1081,7 @@ describe('account', () =>
                             dPermissions
                             dTenants
                             dScopes
-                            data
+                            meta
                             createdAt
                             updatedAt
                         }
@@ -1116,7 +1122,7 @@ describe('account', () =>
                             dPermissions
                             dTenants
                             dScopes
-                            data
+                            meta
                             createdAt
                             updatedAt
                         }
@@ -1155,7 +1161,7 @@ describe('account', () =>
                             dPermissions
                             dTenants
                             dScopes
-                            data
+                            meta
                             createdAt
                             updatedAt
                         }

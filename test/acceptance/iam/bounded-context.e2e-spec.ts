@@ -4,9 +4,9 @@ import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { IBoundedContextRepository } from '@apps/iam/bounded-context/domain/bounded-context.repository';
-import { MockBoundedContextSeeder } from '@apps/iam/bounded-context/infrastructure/mock/mock-bounded-context.seeder';
-import { boundedContexts } from '@apps/iam/bounded-context/infrastructure/seeds/bounded-context.seed';
+import { IBoundedContextRepository } from '@app/iam/bounded-context/domain/bounded-context.repository';
+import { MockBoundedContextSeeder } from '@app/iam/bounded-context/infrastructure/mock/mock-bounded-context.seeder';
+import { boundedContexts } from '@app/iam/bounded-context/infrastructure/seeds/bounded-context.seed';
 import { GraphQLConfigModule } from '@aurora/graphql/graphql-config.module';
 import { IamModule } from '@api/iam/iam.module';
 import * as request from 'supertest';
@@ -348,7 +348,7 @@ describe('bounded-context', () =>
                 {
                     where:
                     {
-                        id: 'd19eac96-a180-47a7-8f29-3e5e59e89732',
+                        id: '9adba201-128a-5512-a6ab-26f5e6a77b4a',
                     },
                 },
             })
@@ -391,7 +391,7 @@ describe('bounded-context', () =>
     test('/REST:POST iam/bounded-context/find/{id} - Got 404 Not Found', () =>
     {
         return request(app.getHttpServer())
-            .post('/iam/bounded-context/find/9d23b184-ab1f-4249-a97c-682565256b5b')
+            .post('/iam/bounded-context/find/e35a6ccf-851c-5eb8-8667-f82277e9abcf')
             .set('Accept', 'application/json')
             .expect(404);
     });
@@ -415,7 +415,7 @@ describe('bounded-context', () =>
             .set('Accept', 'application/json')
             .send({
                 ...mockData[0],
-                id: 'dd82e4d9-c8e3-4d82-8eaa-2e5f4d3bf6f5',
+                id: '13c0b7b9-3149-5beb-bab5-4ddd5ff80aea',
             })
             .expect(404);
     });
@@ -439,7 +439,7 @@ describe('bounded-context', () =>
     test('/REST:DELETE iam/bounded-context/delete/{id} - Got 404 Not Found', () =>
     {
         return request(app.getHttpServer())
-            .delete('/iam/bounded-context/delete/e51e3e43-58e4-4642-9ece-4c0aa63d895b')
+            .delete('/iam/bounded-context/delete/72b5c3b8-a2e7-5cab-ba4b-b0952bf46590')
             .set('Accept', 'application/json')
             .expect(404);
     });
@@ -615,7 +615,7 @@ describe('bounded-context', () =>
                     {
                         where:
                         {
-                            id: '46422d3b-8aa8-44d7-b3bc-24ee9a663cf9',
+                            id: 'fef2d1d1-e7f7-5a89-8c52-3e581aeaf368',
                         },
                     },
                 },
@@ -690,7 +690,7 @@ describe('bounded-context', () =>
                     }
                 `,
                 variables: {
-                    id: 'a49f72db-0d3e-4d13-8cde-5d108e3f8bf4',
+                    id: '5219450c-f94d-5467-bfdb-778729cbc06d',
                 },
             })
             .expect(200)
@@ -758,7 +758,7 @@ describe('bounded-context', () =>
                 variables: {
                     payload: {
                         ...mockData[0],
-                        id: 'ec4bec5e-564b-4eb0-a0f6-f5ce2ce026be',
+                        id: '6628f75a-3c04-5c80-a862-3f868cde7513',
                     },
                 },
             })
@@ -868,7 +868,7 @@ describe('bounded-context', () =>
                     }
                 `,
                 variables: {
-                    id: 'e9c1b14c-e80c-452e-96f3-618a8e7dce05',
+                    id: '35385106-8942-51d0-aeb9-583c721c828d',
                 },
             })
             .expect(200)
