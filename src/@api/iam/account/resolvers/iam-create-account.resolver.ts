@@ -1,5 +1,5 @@
 import { UseGuards } from '@nestjs/common';
-import { Resolver, Args, Mutation } from '@nestjs/graphql';
+import { Args, Context, Mutation, Resolver } from '@nestjs/graphql';
 import { Timezone } from '@aurora-ts/core';
 
 // authorization
@@ -23,11 +23,13 @@ export class IamCreateAccountResolver
     @Mutation('iamCreateAccount')
     async main(
         @Args('payload') payload: IamCreateAccountInput,
+        @Context() context,
         @Timezone() timezone?: string,
     ): Promise<IamAccount>
     {
         return await this.handler.main(
             payload,
+            context.req.headers,
             timezone,
         );
     }

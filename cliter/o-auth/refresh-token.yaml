@@ -102,3 +102,4 @@ excluded:
   - src/@app/o-auth/refresh-token/application/events/updated-refresh-tokens.event.ts
   - src/@api/o-auth/refresh-token/seeder/seeder.ts
   - src/@api/o-auth/refresh-token/seeder/seeder.module.ts
+  - src/@api/o-auth/refresh-token/seeder/o-auth-refresh-token.seeder.ts

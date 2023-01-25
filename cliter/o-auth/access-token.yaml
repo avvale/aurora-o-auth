@@ -118,3 +118,4 @@ excluded:
   - src/@app/o-auth/access-token/application/events/updated-access-tokens.event.ts
   - src/@api/o-auth/access-token/seeder/seeder.ts
   - src/@api/o-auth/access-token/seeder/seeder.module.ts
+  - src/@api/o-auth/access-token/seeder/o-auth-access-token.seeder.ts
