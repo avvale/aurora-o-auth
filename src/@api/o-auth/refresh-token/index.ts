@@ -22,9 +22,6 @@ import { OAuthFindRefreshTokenHandler } from './handlers/o-auth-find-refresh-tok
 import { OAuthDeleteRefreshTokenByIdHandler } from './handlers/o-auth-delete-refresh-token-by-id.handler';
 import { OAuthDeleteRefreshTokensHandler } from './handlers/o-auth-delete-refresh-tokens.handler';
 
-// seeder
-import { OAuthRefreshTokenSeeder } from './seeder/o-auth-refresh-token.seeder';
-
 export const OAuthRefreshTokenControllers = [
     OAuthPaginateRefreshTokensController,
     OAuthGetRefreshTokensController,
@@ -52,6 +49,4 @@ export const OAuthRefreshTokenApiHandlers = [
     OAuthDeleteRefreshTokensHandler,
 ];
 
-export const OAuthRefreshTokenServices = [
-    OAuthRefreshTokenSeeder,
-];
+export const OAuthRefreshTokenServices = [];

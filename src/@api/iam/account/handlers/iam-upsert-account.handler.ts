@@ -27,6 +27,10 @@ export class IamUpsertAccountHandler
             },
         ));
 
-        return await this.queryBus.ask(new FindAccountByIdQuery(payload.id, {}, { timezone }));
+        return await this.queryBus.ask(new FindAccountByIdQuery(
+            payload.id,
+            {},
+            { timezone },
+        ));
     }
 }

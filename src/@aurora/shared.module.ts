@@ -4,8 +4,9 @@ import { HttpModule } from '@nestjs/axios';
 import { CqrsModule } from '@nestjs/cqrs';
 import { AddI18NConstraintService, CoreModule } from '@aurora-ts/core';
 import { CqrsConfigModule } from './cqrs-config.module';
-import { AuthModule } from '../@app/o-auth/shared/modules/auth.module';
-import { jwtConfig } from '../@app/o-auth/shared/jwt-config';
+import { AuthModule } from '@app/o-auth/shared/modules/auth.module';
+import { jwtConfig } from '@app/o-auth/shared/jwt-config';
+import { IamCreatePermissionsFromRolesService } from '@app/iam/permission-role/application/services/iam-create-permissions-from-roles.service';
 
 @Module({
     imports: [
@@ -15,10 +16,11 @@ import { jwtConfig } from '../@app/o-auth/shared/jwt-config';
         CqrsConfigModule,
         CqrsModule,
         HttpModule,
-        AuthModule.forRoot(jwtConfig)
+        AuthModule.forRoot(jwtConfig),
     ],
     providers: [
         AddI18NConstraintService,
+        IamCreatePermissionsFromRolesService,
     ],
     exports: [
         AddI18NConstraintService,
@@ -26,7 +28,8 @@ import { jwtConfig } from '../@app/o-auth/shared/jwt-config';
         ConfigModule,
         CqrsConfigModule,
         HttpModule,
-        AuthModule
+        AuthModule,
+        IamCreatePermissionsFromRolesService
     ],
 })
 export class SharedModule {}
