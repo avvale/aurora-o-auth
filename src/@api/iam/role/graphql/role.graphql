@@ -40,18 +40,61 @@ input IamUpdateRolesInput
 
 type Query
 {
-    iamFindRole(query: QueryStatement constraint: QueryStatement): IamRole
-    iamFindRoleById(id: ID constraint: QueryStatement): IamRole
-    iamGetRoles(query: QueryStatement constraint: QueryStatement): [IamRole]!
-    iamPaginateRoles(query: QueryStatement constraint: QueryStatement): Pagination!
+    iamFindRole(
+        query: QueryStatement
+        constraint: QueryStatement
+    ): IamRole
+
+    iamFindRoleById(
+        id: ID
+        constraint: QueryStatement
+    ): IamRole
+
+    iamGetRoles(
+        query: QueryStatement
+        constraint: QueryStatement
+    ): [IamRole]!
+
+    iamPaginateRoles(
+        query: QueryStatement
+        constraint: QueryStatement
+    ): Pagination!
+
 }
 
 type Mutation
 {
-    iamCreateRole(payload: IamCreateRoleInput!): IamRole
-    iamCreateRoles(payload: [IamCreateRoleInput]!): Boolean!
-    iamUpdateRoleById(payload: IamUpdateRoleByIdInput! constraint: QueryStatement): IamRole
-    iamUpdateRoles(payload: IamUpdateRolesInput! query: QueryStatement constraint: QueryStatement): [IamRole]!
-    iamDeleteRoleById(id: ID! constraint: QueryStatement): IamRole
-    iamDeleteRoles(query: QueryStatement constraint: QueryStatement): [IamRole]!
+    iamCreateRole(
+        payload: IamCreateRoleInput!
+    ): IamRole
+
+    iamCreateRoles(
+        payload: [IamCreateRoleInput]!
+    ): Boolean!
+
+    iamUpdateRoleById(
+        payload: IamUpdateRoleByIdInput!
+        constraint: QueryStatement
+    ): IamRole
+
+    iamUpdateRoles(
+        payload: IamUpdateRolesInput!
+        query: QueryStatement
+        constraint: QueryStatement
+    ): [IamRole]!
+
+    iamUpsertRole(
+        payload: IamUpdateRoleByIdInput!
+    ): IamRole
+
+    iamDeleteRoleById(
+        id: ID!
+        constraint: QueryStatement
+    ): IamRole
+
+    iamDeleteRoles(
+        query: QueryStatement
+        constraint: QueryStatement
+    ): [IamRole]!
+
 }

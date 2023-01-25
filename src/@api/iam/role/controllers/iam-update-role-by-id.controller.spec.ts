@@ -6,7 +6,7 @@ import { IamUpdateRoleByIdController } from './iam-update-role-by-id.controller'
 import { IamUpdateRoleByIdHandler } from '../handlers/iam-update-role-by-id.handler';
 
 // sources
-import { roles } from '@apps/iam/role/infrastructure/seeds/role.seed';
+import { roles } from '@app/iam/role/infrastructure/seeds/role.seed';
 
 describe('IamUpdateRoleByIdController', () =>
 {
@@ -43,7 +43,7 @@ describe('IamUpdateRoleByIdController', () =>
             expect(controller).toBeDefined();
         });
 
-        test('should return a role created', async () =>
+        test('should return a role updated', async () =>
         {
             jest.spyOn(handler, 'main').mockImplementation(() => new Promise(resolve => resolve(roles[0])));
             expect(await controller.main(roles[0])).toBe(roles[0]);

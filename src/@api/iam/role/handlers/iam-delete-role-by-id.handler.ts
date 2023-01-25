@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { ICommandBus, IQueryBus, QueryStatement } from 'aurora-ts-core';
+import { ICommandBus, IQueryBus, QueryStatement } from '@aurora-ts/core';
 
-// @apps
-import { FindRoleByIdQuery } from '@apps/iam/role/application/find/find-role-by-id.query';
-import { DeleteRoleByIdCommand } from '@apps/iam/role/application/delete/delete-role-by-id.command';
-import { IamRole } from '../../../../graphql';
+// @app
+import { FindRoleByIdQuery } from '@app/iam/role/application/find/find-role-by-id.query';
+import { DeleteRoleByIdCommand } from '@app/iam/role/application/delete/delete-role-by-id.command';
+import { IamRole } from '@api/graphql';
 import { IamRoleDto } from '../dto';
 
 @Injectable()
@@ -23,7 +23,13 @@ export class IamDeleteRoleByIdHandler
     {
         const role = await this.queryBus.ask(new FindRoleByIdQuery(id, constraint, { timezone }));
 
-        await this.commandBus.dispatch(new DeleteRoleByIdCommand(id, constraint, { timezone }));
+        await this.commandBus.dispatch(new DeleteRoleByIdCommand(
+            id,
+            constraint,
+            {
+                timezone,
+            },
+        ));
 
         return role;
     }

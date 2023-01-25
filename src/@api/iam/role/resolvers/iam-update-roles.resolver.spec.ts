@@ -4,10 +4,10 @@ import { Test, TestingModule } from '@nestjs/testing';
 // custom items
 import { IamUpdateRolesResolver } from './iam-update-roles.resolver';
 import { IamUpdateRolesHandler } from '../handlers/iam-update-roles.handler';
-import { IamUpdateRolesInput } from '../../../../graphql';
+import { IamUpdateRolesInput } from '@api/graphql';
 
 // sources
-import { roles } from '@apps/iam/role/infrastructure/seeds/role.seed';
+import { roles } from '@app/iam/role/infrastructure/seeds/role.seed';
 
 describe('IamUpdateRolesResolver', () =>
 {

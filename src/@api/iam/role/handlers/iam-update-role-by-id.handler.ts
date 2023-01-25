@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { ICommandBus, IQueryBus, QueryStatement } from 'aurora-ts-core';
+import { ICommandBus, IQueryBus, QueryStatement, Utils } from '@aurora-ts/core';
 
-// @apps
-import { FindRoleByIdQuery } from '@apps/iam/role/application/find/find-role-by-id.query';
-import { UpdateRoleByIdCommand } from '@apps/iam/role/application/update/update-role-by-id.command';
-import { IamRole, IamUpdateRoleByIdInput } from '../../../../graphql';
+// @app
+import { FindRoleByIdQuery } from '@app/iam/role/application/find/find-role-by-id.query';
+import { UpdateRoleByIdCommand } from '@app/iam/role/application/update/update-role-by-id.command';
+import { IamRole, IamUpdateRoleByIdInput } from '@api/graphql';
 import { IamRoleDto, IamUpdateRoleByIdDto } from '../dto';
 
 @Injectable()
@@ -21,8 +21,29 @@ export class IamUpdateRoleByIdHandler
         timezone?: string,
     ): Promise<IamRole | IamRoleDto>
     {
-        await this.commandBus.dispatch(new UpdateRoleByIdCommand(payload, constraint, { timezone }));
+        const role = await this.queryBus.ask(new FindRoleByIdQuery(
+            payload.id,
+            constraint,
+            { timezone },
+        ));
 
-        return await this.queryBus.ask(new FindRoleByIdQuery(payload.id, constraint, { timezone }));
+        const dataToUpdate = Utils.diff(payload, role);
+
+        await this.commandBus.dispatch(new UpdateRoleByIdCommand(
+            {
+                ...dataToUpdate,
+                id: payload.id,
+            },
+            constraint,
+            {
+                timezone,
+            },
+        ));
+
+        return await this.queryBus.ask(new FindRoleByIdQuery(
+            payload.id,
+            constraint,
+            { timezone },
+        ));
     }
 }

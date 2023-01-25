@@ -3,10 +3,10 @@ import { Test, TestingModule } from '@nestjs/testing';
 // custom items
 import { IamCreateRolesResolver } from './iam-create-roles.resolver';
 import { IamCreateRolesHandler } from '../handlers/iam-create-roles.handler';
-import { IamCreateRoleInput } from '../../../../graphql';
+import { IamCreateRoleInput } from '@api/graphql';
 
 // sources
-import { roles } from '@apps/iam/role/infrastructure/seeds/role.seed';
+import { roles } from '@app/iam/role/infrastructure/seeds/role.seed';
 
 describe('IamCreateRolesResolver', () =>
 {

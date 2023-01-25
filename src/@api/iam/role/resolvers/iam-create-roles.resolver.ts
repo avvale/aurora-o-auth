@@ -1,15 +1,15 @@
 import { UseGuards } from '@nestjs/common';
 import { Resolver, Args, Mutation } from '@nestjs/graphql';
-import { Timezone } from 'aurora-ts-core';
+import { Timezone } from '@aurora-ts/core';
 
 // authorization
 import { Permissions } from '@api/iam/shared/decorators/permissions.decorator';
 import { AuthenticationJwtGuard } from '@api/o-auth/shared/guards/authentication-jwt.guard';
 import { AuthorizationGuard } from '@api/iam/shared/guards/authorization.guard';
 
-// @apps
+// @app
 import { IamCreateRolesHandler } from '../handlers/iam-create-roles.handler';
-import { IamCreateRoleInput } from '../../../../graphql';
+import { IamCreateRoleInput } from '@api/graphql';
 
 @Resolver()
 @Permissions('iam.role.create')
