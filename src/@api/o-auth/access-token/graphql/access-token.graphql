@@ -9,7 +9,8 @@ type OAuthAccessToken
     name: GraphQLString
     isRevoked: GraphQLBoolean!
     expiresAt: GraphQLTimestamp
-    refreshToken: OAuthRefreshToken
+    refreshToken: ID
+    : OAuthRefreshToken
     createdAt: GraphQLTimestamp
     updatedAt: GraphQLTimestamp
     deletedAt: GraphQLTimestamp
@@ -53,14 +54,38 @@ input OAuthUpdateAccessTokensInput
 
 type Query
 {
-    oAuthFindAccessToken(query: QueryStatement constraint: QueryStatement): OAuthAccessToken
-    oAuthFindAccessTokenById(id: ID constraint: QueryStatement): OAuthAccessToken
-    oAuthGetAccessTokens(query: QueryStatement constraint: QueryStatement): [OAuthAccessToken]!
-    oAuthPaginateAccessTokens(query: QueryStatement constraint: QueryStatement): Pagination!
+    oAuthFindAccessToken(
+        query: QueryStatement
+        constraint: QueryStatement
+    ): OAuthAccessToken
+
+    oAuthFindAccessTokenById(
+        id: ID
+        constraint: QueryStatement
+    ): OAuthAccessToken
+
+    oAuthGetAccessTokens(
+        query: QueryStatement
+        constraint: QueryStatement
+    ): [OAuthAccessToken]!
+
+    oAuthPaginateAccessTokens(
+        query: QueryStatement
+        constraint: QueryStatement
+    ): Pagination!
+
 }
 
 type Mutation
 {
-    oAuthDeleteAccessTokenById(id: ID! constraint: QueryStatement): OAuthAccessToken
-    oAuthDeleteAccessTokens(query: QueryStatement constraint: QueryStatement): [OAuthAccessToken]!
+    oAuthDeleteAccessTokenById(
+        id: ID!
+        constraint: QueryStatement
+    ): OAuthAccessToken
+
+    oAuthDeleteAccessTokens(
+        query: QueryStatement
+        constraint: QueryStatement
+    ): [OAuthAccessToken]!
+
 }

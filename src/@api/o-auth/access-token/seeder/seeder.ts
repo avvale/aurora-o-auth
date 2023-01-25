@@ -1,7 +1,7 @@
 import { NestFactory } from '@nestjs/core';
-import { ICommandBus } from 'aurora-ts-core';
+import { ICommandBus } from '@aurora-ts/core';
 import { SeederModule } from './seeder.module';
-import { accessTokens } from '../../../../@apps/o-auth/access-token/infrastructure/seeds/access-token.seed';
+import { accessTokens } from '@app/o-auth/access-token/infrastructure/seeds/access-token.seed';
 
 export class Seeder
 {
@@ -11,8 +11,8 @@ export class Seeder
         {
             const commandBus = appContext.get(ICommandBus);
             commandBus.dispatch(new CreateAccessTokensCommand(accessTokens, { timezone: process.env.TZ }));
+            appContext.close();
         }); */
-        console.log('CreateAccessTokensCommand not defined');
     }
 }
 new Seeder().main();

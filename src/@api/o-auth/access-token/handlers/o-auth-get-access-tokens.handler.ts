@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { IQueryBus, QueryStatement } from 'aurora-ts-core';
+import { IQueryBus, QueryStatement } from '@aurora-ts/core';
 
-// @apps
-import { GetAccessTokensQuery } from '@apps/o-auth/access-token/application/get/get-access-tokens.query';
-import { OAuthAccessToken } from '../../../../graphql';
+// @app
+import { GetAccessTokensQuery } from '@app/o-auth/access-token/application/get/get-access-tokens.query';
+import { OAuthAccessToken } from '@api/graphql';
 import { OAuthAccessTokenDto } from '../dto';
 
 @Injectable()
