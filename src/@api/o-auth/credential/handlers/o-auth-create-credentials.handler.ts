@@ -16,8 +16,8 @@ import { FindAccountByIdQuery } from '@app/iam/account/application/find/find-acc
 import { GetRolesQuery } from '@app/iam/role/application/get/get-roles.query';
 import { OAuthClientGrantType, OAuthCredentials, OAuthCreateCredentialsInput, IamAccountType, OAuthClient, IamAccount } from '@api/graphql';
 import { UpdateAccountByIdCommand } from '@app/iam/account/application/update/update-account-by-id.command';
-import { IamCreatePermissionsFromRolesService } from '@app/iam/permission-role/application/services/iam-create-permissions-from-roles.service';
 import { OAuthCreateCredentialsDto, OAuthCredentialsDto } from '../dto';
+import { iamCreatePermissionsFromRoles } from '@api/iam/shared/functions';
 
 @Injectable()
 export class OAuthCreateCredentialsHandler
@@ -26,7 +26,6 @@ export class OAuthCreateCredentialsHandler
         private readonly commandBus: ICommandBus,
         private readonly queryBus: IQueryBus,
         private readonly jwtService: JwtService,
-        private readonly createPermissionsFromRolesService: IamCreatePermissionsFromRolesService,
     ) {}
 
     async main(
@@ -204,7 +203,7 @@ export class OAuthCreateCredentialsHandler
         }));
 
         // get permissions from roles
-        const dPermissions = this.createPermissionsFromRolesService.main(roles);
+        const dPermissions = iamCreatePermissionsFromRoles(roles);
 
         // check if account permissions are equals
         if (Utils.arraysHasSameValues(account.dPermissions.all, dPermissions.all))

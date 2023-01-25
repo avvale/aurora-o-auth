@@ -6,7 +6,6 @@ import { AddI18NConstraintService, CoreModule } from '@aurora-ts/core';
 import { CqrsConfigModule } from './cqrs-config.module';
 import { AuthModule } from '@app/o-auth/shared/modules/auth.module';
 import { jwtConfig } from '@app/o-auth/shared/jwt-config';
-import { IamCreatePermissionsFromRolesService } from '@app/iam/permission-role/application/services/iam-create-permissions-from-roles.service';
 
 @Module({
     imports: [
@@ -20,7 +19,6 @@ import { IamCreatePermissionsFromRolesService } from '@app/iam/permission-role/a
     ],
     providers: [
         AddI18NConstraintService,
-        IamCreatePermissionsFromRolesService,
     ],
     exports: [
         AddI18NConstraintService,
@@ -29,7 +27,6 @@ import { IamCreatePermissionsFromRolesService } from '@app/iam/permission-role/a
         CqrsConfigModule,
         HttpModule,
         AuthModule,
-        IamCreatePermissionsFromRolesService
     ],
 })
 export class SharedModule {}

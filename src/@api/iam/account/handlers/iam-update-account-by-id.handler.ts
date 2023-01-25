@@ -9,8 +9,8 @@ import { IamAccount, IamAccountType, IamUpdateAccountByIdInput } from '@api/grap
 import { IamAccountDto, IamUpdateAccountByIdDto } from '../dto';
 import { FindUserByIdQuery } from '@app/iam/user/application/find/find-user-by-id.query';
 import { GetRolesQuery } from '@app/iam/role/application/get/get-roles.query';
-import { IamCreatePermissionsFromRolesService } from '@app/iam/permission-role/application/services/iam-create-permissions-from-roles.service';
 import { UpdateUserByIdCommand } from '@app/iam/user/application/update/update-user-by-id.command';
+import { iamCreatePermissionsFromRoles } from '@api/iam/shared/functions';
 
 @Injectable()
 export class IamUpdateAccountByIdHandler
@@ -18,7 +18,6 @@ export class IamUpdateAccountByIdHandler
     constructor(
         private readonly commandBus: ICommandBus,
         private readonly queryBus: IQueryBus,
-        private readonly createPermissionsFromRolesService: IamCreatePermissionsFromRolesService,
         private readonly sequelize: Sequelize,
     ) {}
 
@@ -46,7 +45,7 @@ export class IamUpdateAccountByIdHandler
                 include: ['permissions'],
             }));
 
-            dataToUpdate['dPermissions'] = this.createPermissionsFromRolesService.main(roles);
+            dataToUpdate['dPermissions'] = iamCreatePermissionsFromRoles(roles);
         }
 
         const transaction = await this.sequelize.transaction({

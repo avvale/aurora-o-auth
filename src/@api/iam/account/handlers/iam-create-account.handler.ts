@@ -14,7 +14,7 @@ import { GetRolesQuery } from '@app/iam/role/application/get/get-roles.query';
 import { FindClientByIdQuery } from '@app/o-auth/client/application/find/find-client-by-id.query';
 import { FindAccessTokenByIdQuery } from '@app/o-auth/access-token/application/find/find-access-token-by-id.query';
 import { CreateUserCommand } from '@app/iam/user/application/create/create-user.command';
-import { IamCreatePermissionsFromRolesService } from '@app/iam/permission-role/application/services/iam-create-permissions-from-roles.service';
+import { iamCreatePermissionsFromRoles } from '@api/iam/shared/functions';
 
 @Injectable()
 export class IamCreateAccountHandler
@@ -24,7 +24,6 @@ export class IamCreateAccountHandler
         private readonly queryBus: IQueryBus,
         private readonly jwtService: JwtService,
         private readonly sequelize: Sequelize,
-        private readonly createPermissionsFromRolesService: IamCreatePermissionsFromRolesService,
     ) {}
 
     async main(
@@ -79,7 +78,7 @@ export class IamCreateAccountHandler
                     clientId         : client?.id,
                     scopes           : payload.scopes,
                     dApplicationCodes: client?.applications.map(application => application.code),
-                    dPermissions     : this.createPermissionsFromRolesService.main(roles),
+                    dPermissions     : iamCreatePermissionsFromRoles(roles),
                     meta             : payload.meta,
                     roleIds          : payload.roleIds,
                     tenantIds        : payload.tenantIds,
