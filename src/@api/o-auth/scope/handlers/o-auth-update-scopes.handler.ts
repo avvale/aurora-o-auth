@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { ICommandBus, IQueryBus, QueryStatement } from 'aurora-ts-core';
+import { ICommandBus, IQueryBus, QueryStatement } from '@aurora-ts/core';
 
-// @apps
-import { GetScopesQuery } from '@apps/o-auth/scope/application/get/get-scopes.query';
-import { UpdateScopesCommand } from '@apps/o-auth/scope/application/update/update-scopes.command';
-import { OAuthScope, OAuthUpdateScopesInput } from '../../../../graphql';
+// @app
+import { GetScopesQuery } from '@app/o-auth/scope/application/get/get-scopes.query';
+import { UpdateScopesCommand } from '@app/o-auth/scope/application/update/update-scopes.command';
+import { OAuthScope, OAuthUpdateScopesInput } from '@api/graphql';
 import { OAuthScopeDto, OAuthUpdateScopesDto } from '../dto';
 
 @Injectable()
@@ -22,7 +22,14 @@ export class OAuthUpdateScopesHandler
         timezone?: string,
     ): Promise<OAuthScope | OAuthScopeDto>
     {
-        await this.commandBus.dispatch(new UpdateScopesCommand(payload, queryStatement, constraint, { timezone }));
+        await this.commandBus.dispatch(new UpdateScopesCommand(
+            payload,
+            queryStatement,
+            constraint,
+            {
+                timezone,
+            },
+        ));
 
         return await this.queryBus.ask(new GetScopesQuery(queryStatement, constraint, { timezone }));
     }

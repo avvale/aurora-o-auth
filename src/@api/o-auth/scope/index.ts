@@ -7,6 +7,7 @@ import { OAuthFindScopeByIdController } from './controllers/o-auth-find-scope-by
 import { OAuthFindScopeController } from './controllers/o-auth-find-scope.controller';
 import { OAuthUpdateScopeByIdController } from './controllers/o-auth-update-scope-by-id.controller';
 import { OAuthUpdateScopesController } from './controllers/o-auth-update-scopes.controller';
+import { OAuthUpsertScopeController } from './controllers/o-auth-upsert-scope.controller';
 import { OAuthDeleteScopeByIdController } from './controllers/o-auth-delete-scope-by-id.controller';
 import { OAuthDeleteScopesController } from './controllers/o-auth-delete-scopes.controller';
 
@@ -19,6 +20,7 @@ import { OAuthFindScopeByIdResolver } from './resolvers/o-auth-find-scope-by-id.
 import { OAuthFindScopeResolver } from './resolvers/o-auth-find-scope.resolver';
 import { OAuthUpdateScopeByIdResolver } from './resolvers/o-auth-update-scope-by-id.resolver';
 import { OAuthUpdateScopesResolver } from './resolvers/o-auth-update-scopes.resolver';
+import { OAuthUpsertScopeResolver } from './resolvers/o-auth-upsert-scope.resolver';
 import { OAuthDeleteScopeByIdResolver } from './resolvers/o-auth-delete-scope-by-id.resolver';
 import { OAuthDeleteScopesResolver } from './resolvers/o-auth-delete-scopes.resolver';
 
@@ -31,8 +33,12 @@ import { OAuthFindScopeByIdHandler } from './handlers/o-auth-find-scope-by-id.ha
 import { OAuthFindScopeHandler } from './handlers/o-auth-find-scope.handler';
 import { OAuthUpdateScopeByIdHandler } from './handlers/o-auth-update-scope-by-id.handler';
 import { OAuthUpdateScopesHandler } from './handlers/o-auth-update-scopes.handler';
+import { OAuthUpsertScopeHandler } from './handlers/o-auth-upsert-scope.handler';
 import { OAuthDeleteScopeByIdHandler } from './handlers/o-auth-delete-scope-by-id.handler';
 import { OAuthDeleteScopesHandler } from './handlers/o-auth-delete-scopes.handler';
+
+// seeder
+import { OAuthScopeSeeder } from './seeder/o-auth-scope.seeder';
 
 export const OAuthScopeControllers = [
     OAuthCreateScopeController,
@@ -43,6 +49,7 @@ export const OAuthScopeControllers = [
     OAuthFindScopeController,
     OAuthUpdateScopeByIdController,
     OAuthUpdateScopesController,
+    OAuthUpsertScopeController,
     OAuthDeleteScopeByIdController,
     OAuthDeleteScopesController,
 ];
@@ -56,6 +63,7 @@ export const OAuthScopeResolvers = [
     OAuthFindScopeResolver,
     OAuthUpdateScopeByIdResolver,
     OAuthUpdateScopesResolver,
+    OAuthUpsertScopeResolver,
     OAuthDeleteScopeByIdResolver,
     OAuthDeleteScopesResolver,
 ];
@@ -69,6 +77,11 @@ export const OAuthScopeApiHandlers = [
     OAuthFindScopeHandler,
     OAuthUpdateScopeByIdHandler,
     OAuthUpdateScopesHandler,
+    OAuthUpsertScopeHandler,
     OAuthDeleteScopeByIdHandler,
     OAuthDeleteScopesHandler,
+];
+
+export const OAuthScopeServices = [
+    OAuthScopeSeeder,
 ];

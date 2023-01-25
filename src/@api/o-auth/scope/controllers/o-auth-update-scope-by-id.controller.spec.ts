@@ -6,7 +6,7 @@ import { OAuthUpdateScopeByIdController } from './o-auth-update-scope-by-id.cont
 import { OAuthUpdateScopeByIdHandler } from '../handlers/o-auth-update-scope-by-id.handler';
 
 // sources
-import { scopes } from '@apps/o-auth/scope/infrastructure/seeds/scope.seed';
+import { scopes } from '@app/o-auth/scope/infrastructure/seeds/scope.seed';
 
 describe('OAuthUpdateScopeByIdController', () =>
 {
@@ -43,7 +43,7 @@ describe('OAuthUpdateScopeByIdController', () =>
             expect(controller).toBeDefined();
         });
 
-        test('should return a scope created', async () =>
+        test('should return a scope updated', async () =>
         {
             jest.spyOn(handler, 'main').mockImplementation(() => new Promise(resolve => resolve(scopes[0])));
             expect(await controller.main(scopes[0])).toBe(scopes[0]);

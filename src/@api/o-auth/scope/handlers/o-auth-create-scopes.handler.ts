@@ -1,9 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { ICommandBus } from 'aurora-ts-core';
+import { ICommandBus } from '@aurora-ts/core';
 
-// @apps
-import { CreateScopesCommand } from '@apps/o-auth/scope/application/create/create-scopes.command';
-import { OAuthCreateScopeInput } from '../../../../graphql';
+// @app
+import { CreateScopesCommand } from '@app/o-auth/scope/application/create/create-scopes.command';
+import { OAuthCreateScopeInput } from '@api/graphql';
 import { OAuthCreateScopeDto } from '../dto';
 
 @Injectable()
@@ -18,7 +18,12 @@ export class OAuthCreateScopesHandler
         timezone?: string,
     ): Promise<boolean>
     {
-        await this.commandBus.dispatch(new CreateScopesCommand(payload, { timezone }));
+        await this.commandBus.dispatch(new CreateScopesCommand(
+            payload,
+            {
+                timezone,
+            },
+        ));
         return true;
     }
 }

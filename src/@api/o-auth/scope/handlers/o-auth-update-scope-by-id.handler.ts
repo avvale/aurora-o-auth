@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { ICommandBus, IQueryBus, QueryStatement } from 'aurora-ts-core';
+import { ICommandBus, IQueryBus, QueryStatement, Utils } from '@aurora-ts/core';
 
-// @apps
-import { FindScopeByIdQuery } from '@apps/o-auth/scope/application/find/find-scope-by-id.query';
-import { UpdateScopeByIdCommand } from '@apps/o-auth/scope/application/update/update-scope-by-id.command';
-import { OAuthScope, OAuthUpdateScopeByIdInput } from '../../../../graphql';
+// @app
+import { FindScopeByIdQuery } from '@app/o-auth/scope/application/find/find-scope-by-id.query';
+import { UpdateScopeByIdCommand } from '@app/o-auth/scope/application/update/update-scope-by-id.command';
+import { OAuthScope, OAuthUpdateScopeByIdInput } from '@api/graphql';
 import { OAuthScopeDto, OAuthUpdateScopeByIdDto } from '../dto';
 
 @Injectable()
@@ -21,8 +21,29 @@ export class OAuthUpdateScopeByIdHandler
         timezone?: string,
     ): Promise<OAuthScope | OAuthScopeDto>
     {
-        await this.commandBus.dispatch(new UpdateScopeByIdCommand(payload, constraint, { timezone }));
+        const scope = await this.queryBus.ask(new FindScopeByIdQuery(
+            payload.id,
+            constraint,
+            { timezone },
+        ));
 
-        return await this.queryBus.ask(new FindScopeByIdQuery(payload.id, constraint, { timezone }));
+        const dataToUpdate = Utils.diff(payload, scope);
+
+        await this.commandBus.dispatch(new UpdateScopeByIdCommand(
+            {
+                ...dataToUpdate,
+                id: payload.id,
+            },
+            constraint,
+            {
+                timezone,
+            },
+        ));
+
+        return await this.queryBus.ask(new FindScopeByIdQuery(
+            payload.id,
+            constraint,
+            { timezone },
+        ));
     }
 }

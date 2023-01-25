@@ -32,18 +32,61 @@ input OAuthUpdateScopesInput
 
 type Query
 {
-    oAuthFindScope(query: QueryStatement constraint: QueryStatement): OAuthScope
-    oAuthFindScopeById(id: ID constraint: QueryStatement): OAuthScope
-    oAuthGetScopes(query: QueryStatement constraint: QueryStatement): [OAuthScope]!
-    oAuthPaginateScopes(query: QueryStatement constraint: QueryStatement): Pagination!
+    oAuthFindScope(
+        query: QueryStatement
+        constraint: QueryStatement
+    ): OAuthScope
+
+    oAuthFindScopeById(
+        id: ID
+        constraint: QueryStatement
+    ): OAuthScope
+
+    oAuthGetScopes(
+        query: QueryStatement
+        constraint: QueryStatement
+    ): [OAuthScope]!
+
+    oAuthPaginateScopes(
+        query: QueryStatement
+        constraint: QueryStatement
+    ): Pagination!
+
 }
 
 type Mutation
 {
-    oAuthCreateScope(payload: OAuthCreateScopeInput!): OAuthScope
-    oAuthCreateScopes(payload: [OAuthCreateScopeInput]!): Boolean!
-    oAuthUpdateScopeById(payload: OAuthUpdateScopeByIdInput! constraint: QueryStatement): OAuthScope
-    oAuthUpdateScopes(payload: OAuthUpdateScopesInput! query: QueryStatement constraint: QueryStatement): [OAuthScope]!
-    oAuthDeleteScopeById(id: ID! constraint: QueryStatement): OAuthScope
-    oAuthDeleteScopes(query: QueryStatement constraint: QueryStatement): [OAuthScope]!
+    oAuthCreateScope(
+        payload: OAuthCreateScopeInput!
+    ): OAuthScope
+
+    oAuthCreateScopes(
+        payload: [OAuthCreateScopeInput]!
+    ): Boolean!
+
+    oAuthUpdateScopeById(
+        payload: OAuthUpdateScopeByIdInput!
+        constraint: QueryStatement
+    ): OAuthScope
+
+    oAuthUpdateScopes(
+        payload: OAuthUpdateScopesInput!
+        query: QueryStatement
+        constraint: QueryStatement
+    ): [OAuthScope]!
+
+    oAuthUpsertScope(
+        payload: OAuthUpdateScopeByIdInput!
+    ): OAuthScope
+
+    oAuthDeleteScopeById(
+        id: ID!
+        constraint: QueryStatement
+    ): OAuthScope
+
+    oAuthDeleteScopes(
+        query: QueryStatement
+        constraint: QueryStatement
+    ): [OAuthScope]!
+
 }

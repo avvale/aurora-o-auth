@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { ICommandBus, IQueryBus } from 'aurora-ts-core';
+import { ICommandBus, IQueryBus } from '@aurora-ts/core';
 
-// @apps
-import { FindScopeByIdQuery } from '@apps/o-auth/scope/application/find/find-scope-by-id.query';
-import { CreateScopeCommand } from '@apps/o-auth/scope/application/create/create-scope.command';
-import { OAuthScope, OAuthCreateScopeInput } from '../../../../graphql';
+// @app
+import { FindScopeByIdQuery } from '@app/o-auth/scope/application/find/find-scope-by-id.query';
+import { CreateScopeCommand } from '@app/o-auth/scope/application/create/create-scope.command';
+import { OAuthScope, OAuthCreateScopeInput } from '@api/graphql';
 import { OAuthScopeDto, OAuthCreateScopeDto } from '../dto';
 
 @Injectable()
@@ -20,7 +20,12 @@ export class OAuthCreateScopeHandler
         timezone?: string,
     ): Promise<OAuthScope | OAuthScopeDto>
     {
-        await this.commandBus.dispatch(new CreateScopeCommand(payload, { timezone }));
+        await this.commandBus.dispatch(new CreateScopeCommand(
+            payload,
+            {
+                timezone,
+            },
+        ));
 
         return await this.queryBus.ask(new FindScopeByIdQuery(payload.id, {}, { timezone }));
     }

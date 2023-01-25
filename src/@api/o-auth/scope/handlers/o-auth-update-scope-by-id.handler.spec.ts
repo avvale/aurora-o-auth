@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Test, TestingModule } from '@nestjs/testing';
-import { ICommandBus, IQueryBus } from 'aurora-ts-core';
+import { ICommandBus, IQueryBus } from '@aurora-ts/core';
 
 // custom items
 import { OAuthUpdateScopeByIdHandler } from './o-auth-update-scope-by-id.handler';
-import { OAuthUpdateScopeByIdInput } from '../../../../graphql';
+import { OAuthUpdateScopeByIdInput } from '@api/graphql';
 
 // sources
-import { scopes } from '@apps/o-auth/scope/infrastructure/seeds/scope.seed';
+import { scopes } from '@app/o-auth/scope/infrastructure/seeds/scope.seed';
 
 describe('OAuthUpdateScopeByIdHandler', () =>
 {
