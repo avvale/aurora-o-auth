@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { IQueryBus, QueryStatement } from '@aurora-ts/core';
 
-// @apps
+// @app
 import { PaginateRefreshTokensQuery } from '@app/o-auth/refresh-token/application/paginate/paginate-refresh-tokens.query';
 import { Pagination } from '@api/graphql';
 
@@ -18,6 +18,10 @@ export class OAuthPaginateRefreshTokensHandler
         timezone?: string,
     ): Promise<Pagination>
     {
-        return await this.queryBus.ask(new PaginateRefreshTokensQuery(queryStatement, constraint, { timezone }));
+        return await this.queryBus.ask(new PaginateRefreshTokensQuery(
+            queryStatement,
+            constraint,
+            { timezone },
+        ));
     }
 }

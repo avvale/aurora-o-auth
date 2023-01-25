@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { Controller, Post, Body, Headers } from '@nestjs/common';
 import { ApiTags, ApiCreatedResponse, ApiOperation } from '@nestjs/swagger';
+import { Timezone } from '@aurora-ts/core';
 import { OAuthCreateCredentialsDto } from '../dto';
 
 // @apps
@@ -20,11 +21,13 @@ export class OAuthCreateCredentialsController
     async main(
         @Body() payload: OAuthCreateCredentialsDto,
         @Headers('Authorization') authorization: string,
+        @Timezone() timezone?: string,
     )
     {
         return await this.handler.main(
             payload,
             authorization,
+            timezone,
         );
     }
 }

@@ -4,9 +4,9 @@ import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { IApplicationRepository } from '@apps/o-auth/application/domain/application.repository';
-import { MockApplicationSeeder } from '@apps/o-auth/application/infrastructure/mock/mock-application.seeder';
-import { applications } from '@apps/o-auth/application/infrastructure/seeds/application.seed';
+import { IApplicationRepository } from '@app/o-auth/application/domain/application.repository';
+import { MockApplicationSeeder } from '@app/o-auth/application/infrastructure/mock/mock-application.seeder';
+import { applications } from '@app/o-auth/application/infrastructure/seeds/application.seed';
 import { GraphQLConfigModule } from '@aurora/graphql/graphql-config.module';
 import { OAuthModule } from '@api/o-auth/o-auth.module';
 import * as request from 'supertest';
@@ -96,22 +96,6 @@ describe('application', () =>
             });
     });
 
-    test('/REST:POST o-auth/application/create - Got 400 Conflict, ApplicationName property can not to be null', () =>
-    {
-        return request(app.getHttpServer())
-            .post('/o-auth/application/create')
-            .set('Accept', 'application/json')
-            .send({
-                ...mockData[0],
-                name: null,
-            })
-            .expect(400)
-            .then(res =>
-            {
-                expect(res.body.message).toContain('Value for ApplicationName must be defined, can not be null');
-            });
-    });
-
     test('/REST:POST o-auth/application/create - Got 400 Conflict, ApplicationCode property can not to be null', () =>
     {
         return request(app.getHttpServer())
@@ -125,6 +109,22 @@ describe('application', () =>
             .then(res =>
             {
                 expect(res.body.message).toContain('Value for ApplicationCode must be defined, can not be null');
+            });
+    });
+
+    test('/REST:POST o-auth/application/create - Got 400 Conflict, ApplicationName property can not to be null', () =>
+    {
+        return request(app.getHttpServer())
+            .post('/o-auth/application/create')
+            .set('Accept', 'application/json')
+            .send({
+                ...mockData[0],
+                name: null,
+            })
+            .expect(400)
+            .then(res =>
+            {
+                expect(res.body.message).toContain('Value for ApplicationName must be defined, can not be null');
             });
     });
 
@@ -176,22 +176,6 @@ describe('application', () =>
             });
     });
 
-    test('/REST:POST o-auth/application/create - Got 400 Conflict, ApplicationName property can not to be undefined', () =>
-    {
-        return request(app.getHttpServer())
-            .post('/o-auth/application/create')
-            .set('Accept', 'application/json')
-            .send({
-                ...mockData[0],
-                name: undefined,
-            })
-            .expect(400)
-            .then(res =>
-            {
-                expect(res.body.message).toContain('Value for ApplicationName must be defined, can not be undefined');
-            });
-    });
-
     test('/REST:POST o-auth/application/create - Got 400 Conflict, ApplicationCode property can not to be undefined', () =>
     {
         return request(app.getHttpServer())
@@ -205,6 +189,22 @@ describe('application', () =>
             .then(res =>
             {
                 expect(res.body.message).toContain('Value for ApplicationCode must be defined, can not be undefined');
+            });
+    });
+
+    test('/REST:POST o-auth/application/create - Got 400 Conflict, ApplicationName property can not to be undefined', () =>
+    {
+        return request(app.getHttpServer())
+            .post('/o-auth/application/create')
+            .set('Accept', 'application/json')
+            .send({
+                ...mockData[0],
+                name: undefined,
+            })
+            .expect(400)
+            .then(res =>
+            {
+                expect(res.body.message).toContain('Value for ApplicationName must be defined, can not be undefined');
             });
     });
 
@@ -256,22 +256,6 @@ describe('application', () =>
             });
     });
 
-    test('/REST:POST o-auth/application/create - Got 400 Conflict, ApplicationName is too large, has a maximum length of 255', () =>
-    {
-        return request(app.getHttpServer())
-            .post('/o-auth/application/create')
-            .set('Accept', 'application/json')
-            .send({
-                ...mockData[0],
-                name: '****************************************************************************************************************************************************************************************************************************************************************',
-            })
-            .expect(400)
-            .then(res =>
-            {
-                expect(res.body.message).toContain('Value for ApplicationName is too large, has a maximum length of 255');
-            });
-    });
-
     test('/REST:POST o-auth/application/create - Got 400 Conflict, ApplicationCode is too large, has a maximum length of 50', () =>
     {
         return request(app.getHttpServer())
@@ -285,6 +269,22 @@ describe('application', () =>
             .then(res =>
             {
                 expect(res.body.message).toContain('Value for ApplicationCode is too large, has a maximum length of 50');
+            });
+    });
+
+    test('/REST:POST o-auth/application/create - Got 400 Conflict, ApplicationName is too large, has a maximum length of 255', () =>
+    {
+        return request(app.getHttpServer())
+            .post('/o-auth/application/create')
+            .set('Accept', 'application/json')
+            .send({
+                ...mockData[0],
+                name: '****************************************************************************************************************************************************************************************************************************************************************',
+            })
+            .expect(400)
+            .then(res =>
+            {
+                expect(res.body.message).toContain('Value for ApplicationName is too large, has a maximum length of 255');
             });
     });
 
@@ -376,7 +376,7 @@ describe('application', () =>
                 {
                     where:
                     {
-                        id: '4d2c7c50-ded8-4d1d-b693-787b85d613fb',
+                        id: 'a430a95c-b13b-500d-82be-37a52aaf54bd',
                     },
                 },
             })
@@ -420,7 +420,7 @@ describe('application', () =>
     test('/REST:POST o-auth/application/find/{id} - Got 404 Not Found', () =>
     {
         return request(app.getHttpServer())
-            .post('/o-auth/application/find/07dd3284-021b-4078-969d-237831d4f2eb')
+            .post('/o-auth/application/find/a667176e-6937-5bf2-9ab3-58ec2e5d5cbf')
             .set('Accept', 'application/json')
             .expect(404);
     });
@@ -444,7 +444,7 @@ describe('application', () =>
             .set('Accept', 'application/json')
             .send({
                 ...mockData[0],
-                id: '2d70aa89-422f-44c0-b7b0-2ac0eb7c43eb',
+                id: 'cd62f750-693a-564d-b529-0bbf6ca414cc',
             })
             .expect(404);
     });
@@ -459,10 +459,9 @@ describe('application', () =>
                 code: 'aurora2', // code is a unique key
                 id: '5b19d6ac-4081-573b-96b3-56964d5326a8',
             })
-            //.expect(200)
+            .expect(200)
             .then(res =>
             {
-                console.log(res.body)
                 expect(res.body).toHaveProperty('id', '5b19d6ac-4081-573b-96b3-56964d5326a8');
             });
     });
@@ -470,7 +469,7 @@ describe('application', () =>
     test('/REST:DELETE o-auth/application/delete/{id} - Got 404 Not Found', () =>
     {
         return request(app.getHttpServer())
-            .delete('/o-auth/application/delete/41d63361-7d87-4316-9ce9-4d0d0546530b')
+            .delete('/o-auth/application/delete/a769d002-3f18-5ceb-b62b-acd9963a2686')
             .set('Accept', 'application/json')
             .expect(404);
     });
@@ -495,8 +494,8 @@ describe('application', () =>
                         oAuthCreateApplication (payload:$payload)
                         {
                             id
-                            name
                             code
+                            name
                             secret
                             isMaster
                         }
@@ -565,8 +564,8 @@ describe('application', () =>
                         oAuthGetApplications (query:$query)
                         {
                             id
-                            name
                             code
+                            name
                             secret
                             isMaster
                             createdAt
@@ -598,8 +597,8 @@ describe('application', () =>
                         oAuthCreateApplication (payload:$payload)
                         {
                             id
-                            name
                             code
+                            name
                             secret
                             isMaster
                         }
@@ -632,8 +631,8 @@ describe('application', () =>
                         oAuthFindApplication (query:$query)
                         {
                             id
-                            name
                             code
+                            name
                             secret
                             isMaster
                             createdAt
@@ -647,7 +646,7 @@ describe('application', () =>
                     {
                         where:
                         {
-                            id: 'd2c561fb-508e-4408-b705-f7b37b45b6e7',
+                            id: '9a2a8b30-c363-5c80-bb14-2b2e0058eefa',
                         },
                     },
                 },
@@ -673,8 +672,8 @@ describe('application', () =>
                         oAuthFindApplication (query:$query)
                         {
                             id
-                            name
                             code
+                            name
                             secret
                             isMaster
                             createdAt
@@ -712,8 +711,8 @@ describe('application', () =>
                         oAuthFindApplicationById (id:$id)
                         {
                             id
-                            name
                             code
+                            name
                             secret
                             isMaster
                             createdAt
@@ -722,7 +721,7 @@ describe('application', () =>
                     }
                 `,
                 variables: {
-                    id: '7790aa9e-aa06-46f4-9b27-7ce6b71c577b',
+                    id: '897a41f9-dd52-5912-b120-2ea1c5d493f8',
                 },
             })
             .expect(200)
@@ -746,8 +745,8 @@ describe('application', () =>
                         oAuthFindApplicationById (id:$id)
                         {
                             id
-                            name
                             code
+                            name
                             secret
                             isMaster
                             createdAt
@@ -778,8 +777,8 @@ describe('application', () =>
                         oAuthUpdateApplicationById (payload:$payload)
                         {
                             id
-                            name
                             code
+                            name
                             secret
                             isMaster
                             createdAt
@@ -790,7 +789,7 @@ describe('application', () =>
                 variables: {
                     payload: {
                         ...mockData[0],
-                        id: 'b3090f7d-6f04-441e-8ea0-51ac0b0ec192',
+                        id: 'a8896596-7c80-53c2-86e3-0253530df0e9',
                     },
                 },
             })
@@ -815,8 +814,8 @@ describe('application', () =>
                         oAuthUpdateApplicationById (payload:$payload)
                         {
                             id
-                            name
                             code
+                            name
                             secret
                             isMaster
                             createdAt
@@ -851,8 +850,8 @@ describe('application', () =>
                         oAuthUpdateApplications (payload:$payload query:$query)
                         {
                             id
-                            name
                             code
+                            name
                             secret
                             isMaster
                             createdAt
@@ -892,8 +891,8 @@ describe('application', () =>
                         oAuthDeleteApplicationById (id:$id)
                         {
                             id
-                            name
                             code
+                            name
                             secret
                             isMaster
                             createdAt
@@ -902,7 +901,7 @@ describe('application', () =>
                     }
                 `,
                 variables: {
-                    id: '2532d4ba-40a7-40f2-bf38-4cc057622a41',
+                    id: '93430a16-a49a-567f-b692-b967951622cd',
                 },
             })
             .expect(200)
@@ -926,8 +925,8 @@ describe('application', () =>
                         oAuthDeleteApplicationById (id:$id)
                         {
                             id
-                            name
                             code
+                            name
                             secret
                             isMaster
                             createdAt

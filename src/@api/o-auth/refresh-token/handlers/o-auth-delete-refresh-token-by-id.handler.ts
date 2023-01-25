@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
 import { ICommandBus, IQueryBus, QueryStatement } from '@aurora-ts/core';
 
-// @apps
+// @app
 import { FindRefreshTokenByIdQuery } from '@app/o-auth/refresh-token/application/find/find-refresh-token-by-id.query';
 import { DeleteRefreshTokenByIdCommand } from '@app/o-auth/refresh-token/application/delete/delete-refresh-token-by-id.command';
 import { OAuthRefreshToken } from '@api/graphql';

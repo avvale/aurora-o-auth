@@ -1,21 +1,22 @@
 import { Injectable, UnauthorizedException, BadRequestException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { ICommandBus, IQueryBus, Jwt, Utils } from 'aurora-ts-core';
+import { ICommandBus, IQueryBus, Jwt, Utils } from '@aurora-ts/core';
 
 // @apps
-import { FindClientQuery } from '@apps/o-auth/client/application/find/find-client.query';
-import { CreateAccessTokenCommand } from '@apps/o-auth/access-token/application/create/create-access-token.command';
-import { CreateRefreshTokenCommand } from '@apps/o-auth/refresh-token/application/create/create-refresh-token.command';
-import { FindAccessTokenQuery } from '@apps/o-auth/access-token/application/find/find-access-token.query';
-import { FindAccountQuery } from '@apps/iam/account/application/find/find-account.query';
-import { OAuthRefreshTokenModel } from '@apps/o-auth/refresh-token/infrastructure/sequelize/sequelize-refresh-token.model';
-import { FindUserByUsernamePasswordQuery } from '@apps/iam/user/application/find/find-user-by-username-password.query';
-import { FindApplicationByAuthorizationHeaderQuery } from '@apps/o-auth/application/application/find/find-application-by-authorization-header.query';
-import { FindRefreshTokenByIdQuery } from '@apps/o-auth/refresh-token/application/find/find-refresh-token-by-id.query';
-import { DeleteAccessTokenByIdCommand } from '@apps/o-auth/access-token/application/delete/delete-access-token-by-id.command';
-import { OAuthAccessTokenModel } from '@apps/o-auth/access-token';
-import { OAuthClientModel } from '@apps/o-auth/client';
-import { OAuthClientGrantType, OAuthCredentials, OAuthCreateCredentialsInput, IamAccountType, OAuthClient } from '../../../../graphql';
+import { FindClientQuery } from '@app/o-auth/client/application/find/find-client.query';
+import { CreateAccessTokenCommand } from '@app/o-auth/access-token/application/create/create-access-token.command';
+import { CreateRefreshTokenCommand } from '@app/o-auth/refresh-token/application/create/create-refresh-token.command';
+import { FindAccessTokenQuery } from '@app/o-auth/access-token/application/find/find-access-token.query';
+import { FindAccountQuery } from '@app/iam/account/application/find/find-account.query';
+import { FindUserByUsernamePasswordQuery } from '@app/iam/user/application/find/find-user-by-username-password.query';
+import { FindApplicationByAuthorizationHeaderQuery } from '@app/o-auth/application/application/find/find-application-by-authorization-header.query';
+import { FindRefreshTokenByIdQuery } from '@app/o-auth/refresh-token/application/find/find-refresh-token-by-id.query';
+import { DeleteAccessTokenByIdCommand } from '@app/o-auth/access-token/application/delete/delete-access-token-by-id.command';
+import { FindAccountByIdQuery } from '@app/iam/account/application/find/find-account-by-id.query';
+import { GetRolesQuery } from '@app/iam/role/application/get/get-roles.query';
+import { OAuthClientGrantType, OAuthCredentials, OAuthCreateCredentialsInput, IamAccountType, OAuthClient, IamAccount } from '@api/graphql';
+import { UpdateAccountByIdCommand } from '@app/iam/account/application/update/update-account-by-id.command';
+import { IamCreatePermissionsFromRolesService } from '@app/iam/permission-role/application/services/iam-create-permissions-from-roles.service';
 import { OAuthCreateCredentialsDto, OAuthCredentialsDto } from '../dto';
 
 @Injectable()
@@ -25,11 +26,13 @@ export class OAuthCreateCredentialsHandler
         private readonly commandBus: ICommandBus,
         private readonly queryBus: IQueryBus,
         private readonly jwtService: JwtService,
+        private readonly createPermissionsFromRolesService: IamCreatePermissionsFromRolesService,
     ) {}
 
     async main(
         payload: OAuthCreateCredentialsInput | OAuthCreateCredentialsDto,
         authorization: string,
+        timezone?: string,
     ): Promise<OAuthCredentials | OAuthCredentialsDto>
     {
         if (!payload.grantType) throw new BadRequestException('Value for grantType property must be defined, can not be undefined');
@@ -65,7 +68,7 @@ export class OAuthCreateCredentialsHandler
             // if not exist client throw error
             if (!client) throw new UnauthorizedException();
 
-            return await this.createCredential(client, account.id);
+            return await this.createCredential(client, account);
         }
 
         if (payload.grantType === OAuthClientGrantType.PASSWORD)
@@ -75,6 +78,19 @@ export class OAuthCreateCredentialsHandler
 
             // if not exist user throw error
             if (!user) throw new UnauthorizedException();
+
+            // get account to create credential and consolidate permissions
+            const account = await this.consolidatePermissions(
+                await this.queryBus.ask(new FindAccountByIdQuery(
+                    user.accountId,
+                    {
+                        include: [
+                            { association: 'roles' },
+                        ],
+                    },
+                )),
+                timezone,
+            );
 
             // get application and clients with header authorization basic authentication
             const application = await this.queryBus.ask(new FindApplicationByAuthorizationHeaderQuery(authorization));
@@ -91,7 +107,7 @@ export class OAuthCreateCredentialsHandler
             if (!client) throw new UnauthorizedException();
 
             // create a JWT access tToken
-            return await this.createCredential(client, user.accountId);
+            return await this.createCredential(client, account);
         }
 
         if (payload.grantType === OAuthClientGrantType.REFRESH_TOKEN)
@@ -103,17 +119,18 @@ export class OAuthCreateCredentialsHandler
             const refreshTokenAggregate = await this.queryBus.ask(new FindRefreshTokenByIdQuery(refreshTokenSession.jit, {
                 include: [
                     {
-                        model  : OAuthAccessTokenModel,
-                        as     : 'accessToken',
-                        include: [
+                        association: 'accessToken',
+                        include    : [
                             {
-                                model: OAuthClientModel,
-                                as   : 'client',
+                                association: 'client',
                             },
                         ],
                     },
                 ],
             }));
+
+            // get account to create credential
+            const account = await this.queryBus.ask(new FindAccountByIdQuery(refreshTokenAggregate.accessToken.accountId));
 
             // check that refresh token isn't expired
             if (refreshTokenSession.exp < parseInt(Utils.now().format('X'))) throw new UnauthorizedException();
@@ -121,20 +138,23 @@ export class OAuthCreateCredentialsHandler
             // delete access token from database
             await this.commandBus.dispatch(new DeleteAccessTokenByIdCommand(refreshTokenAggregate.accessTokenId));
 
-            return await this.createCredential(refreshTokenAggregate.accessToken.client, refreshTokenAggregate.accessToken.accountId);
+            return await this.createCredential(refreshTokenAggregate.accessToken.client, account);
         }
     }
 
-    private async createCredential(client: OAuthClient, accountId: string): Promise<OAuthCredentials | OAuthCredentialsDto>
+    private async createCredential(
+        client: OAuthClient,
+        account: IamAccount,
+    ): Promise<OAuthCredentials | OAuthCredentialsDto>
     {
-        // create a JWT access tToken
+        // create a JWT access token
         const accessTokenId = Utils.uuid();
         await this.commandBus.dispatch(new CreateAccessTokenCommand(
             {
                 id                : accessTokenId,
                 clientId          : client.id,
-                scopes            : client.scopes,
-                accountId,
+                scopes            : account.scopes,
+                accountId         : account.id,
                 name              : client.name,
                 expiredAccessToken: client.expiredAccessToken,
             },
@@ -157,8 +177,7 @@ export class OAuthCreateCredentialsHandler
                 },
                 include: [
                     {
-                        model: OAuthRefreshTokenModel,
-                        as   : 'refreshToken',
+                        association: 'refreshToken',
                     },
                 ],
             },
@@ -168,5 +187,44 @@ export class OAuthCreateCredentialsHandler
             accessToken : accessToken.token,
             refreshToken: accessToken.refreshToken.token,
         };
+    }
+
+    private async consolidatePermissions(
+        account: IamAccount,
+        timezone?: string,
+    ): Promise<IamAccount>
+    {
+        const roles = await this.queryBus.ask(new GetRolesQuery({
+            where: {
+                id: account.roles.map(role => role.id),
+            },
+            include: [
+                { association: 'permissions' },
+            ],
+        }));
+
+        // get permissions from roles
+        const dPermissions = this.createPermissionsFromRolesService.main(roles);
+
+        // check if account permissions are equals
+        if (Utils.arraysHasSameValues(account.dPermissions.all, dPermissions.all))
+        {
+            return account;
+        }
+
+        account.dPermissions = dPermissions;
+
+        await this.commandBus.dispatch(new UpdateAccountByIdCommand(
+            {
+                dPermissions: account.dPermissions,
+                id          : account.id,
+            },
+            {},
+            {
+                timezone,
+            },
+        ));
+
+        return account;
     }
 }

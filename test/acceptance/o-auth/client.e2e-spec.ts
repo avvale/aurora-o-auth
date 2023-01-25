@@ -4,9 +4,9 @@ import { INestApplication } from '@nestjs/common';
 import { Test, TestingModule } from '@nestjs/testing';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { SequelizeModule } from '@nestjs/sequelize';
-import { IClientRepository } from '@apps/o-auth/client/domain/client.repository';
-import { MockClientSeeder } from '@apps/o-auth/client/infrastructure/mock/mock-client.seeder';
-import { clients } from '@apps/o-auth/client/infrastructure/seeds/client.seed';
+import { IClientRepository } from '@app/o-auth/client/domain/client.repository';
+import { MockClientSeeder } from '@app/o-auth/client/infrastructure/mock/mock-client.seeder';
+import { clients } from '@app/o-auth/client/infrastructure/seeds/client.seed';
 import { GraphQLConfigModule } from '@aurora/graphql/graphql-config.module';
 import { OAuthModule } from '@api/o-auth/o-auth.module';
 import * as request from 'supertest';
@@ -456,7 +456,7 @@ describe('client', () =>
             .expect(400)
             .then(res =>
             {
-                expect(res.body.message).toContain('Value for ClientGrantType has to be any of this options: AUTHORIZATION_CODE, CLIENT_CREDENTIALS, PASSWORD');
+                expect(res.body.message).toContain('Value for ClientGrantType has to be any of this options: AUTHORIZATION_CODE, CLIENT_CREDENTIALS, PASSWORD, REFRESH_TOKEN');
             });
     });
 
@@ -516,7 +516,7 @@ describe('client', () =>
                 {
                     where:
                     {
-                        id: '56c6feb2-67df-4b9c-bed4-f4891e652abc',
+                        id: 'd8821beb-2431-5471-9cee-affa8d6e4a19',
                     },
                 },
             })
@@ -559,7 +559,7 @@ describe('client', () =>
     test('/REST:POST o-auth/client/find/{id} - Got 404 Not Found', () =>
     {
         return request(app.getHttpServer())
-            .post('/o-auth/client/find/bf74129a-3a38-45b6-a672-4507e5e9e9e3')
+            .post('/o-auth/client/find/5d2f78b2-2712-5576-904d-1b3016da9df2')
             .set('Accept', 'application/json')
             .expect(404);
     });
@@ -583,7 +583,7 @@ describe('client', () =>
             .set('Accept', 'application/json')
             .send({
                 ...mockData[0],
-                id: 'b27d81a5-c8a3-4b2a-8cf3-fe0d164ca1bd',
+                id: 'da08ceda-e379-5235-97bc-0739472bb4ca',
             })
             .expect(404);
     });
@@ -607,7 +607,7 @@ describe('client', () =>
     test('/REST:DELETE o-auth/client/delete/{id} - Got 404 Not Found', () =>
     {
         return request(app.getHttpServer())
-            .delete('/o-auth/client/delete/00ece5da-e41f-4131-be7f-e0ef2e072803')
+            .delete('/o-auth/client/delete/e56528ff-499a-545b-84f4-665e59b038fc')
             .set('Accept', 'application/json')
             .expect(404);
     });
@@ -637,7 +637,7 @@ describe('client', () =>
                             secret
                             authUrl
                             redirect
-                            scopes
+                            scopeOptions
                             expiredAccessToken
                             expiredRefreshToken
                             isActive
@@ -713,7 +713,7 @@ describe('client', () =>
                             secret
                             authUrl
                             redirect
-                            scopes
+                            scopeOptions
                             expiredAccessToken
                             expiredRefreshToken
                             isActive
@@ -752,7 +752,7 @@ describe('client', () =>
                             secret
                             authUrl
                             redirect
-                            scopes
+                            scopeOptions
                             expiredAccessToken
                             expiredRefreshToken
                             isActive
@@ -791,7 +791,7 @@ describe('client', () =>
                             secret
                             authUrl
                             redirect
-                            scopes
+                            scopeOptions
                             expiredAccessToken
                             expiredRefreshToken
                             isActive
@@ -807,7 +807,7 @@ describe('client', () =>
                     {
                         where:
                         {
-                            id: '05b53fa4-9aaa-4714-b549-88e008dd9bac',
+                            id: '8a0554a1-a327-5284-9e9e-906f3059b0b1',
                         },
                     },
                 },
@@ -838,7 +838,7 @@ describe('client', () =>
                             secret
                             authUrl
                             redirect
-                            scopes
+                            scopeOptions
                             expiredAccessToken
                             expiredRefreshToken
                             isActive
@@ -883,7 +883,7 @@ describe('client', () =>
                             secret
                             authUrl
                             redirect
-                            scopes
+                            scopeOptions
                             expiredAccessToken
                             expiredRefreshToken
                             isActive
@@ -894,7 +894,7 @@ describe('client', () =>
                     }
                 `,
                 variables: {
-                    id: '5551df0f-be74-46ad-9479-c7ffde1c4c12',
+                    id: 'ddc1e088-cad6-5da8-8cfc-ce1d4ea39dd9',
                 },
             })
             .expect(200)
@@ -923,7 +923,7 @@ describe('client', () =>
                             secret
                             authUrl
                             redirect
-                            scopes
+                            scopeOptions
                             expiredAccessToken
                             expiredRefreshToken
                             isActive
@@ -961,7 +961,7 @@ describe('client', () =>
                             secret
                             authUrl
                             redirect
-                            scopes
+                            scopeOptions
                             expiredAccessToken
                             expiredRefreshToken
                             isActive
@@ -1004,7 +1004,7 @@ describe('client', () =>
                             secret
                             authUrl
                             redirect
-                            scopes
+                            scopeOptions
                             expiredAccessToken
                             expiredRefreshToken
                             isActive
@@ -1045,7 +1045,7 @@ describe('client', () =>
                             secret
                             authUrl
                             redirect
-                            scopes
+                            scopeOptions
                             expiredAccessToken
                             expiredRefreshToken
                             isActive
@@ -1091,7 +1091,7 @@ describe('client', () =>
                             secret
                             authUrl
                             redirect
-                            scopes
+                            scopeOptions
                             expiredAccessToken
                             expiredRefreshToken
                             isActive
@@ -1102,7 +1102,7 @@ describe('client', () =>
                     }
                 `,
                 variables: {
-                    id: 'be896f2b-513d-4a7a-9190-90ed514f1ab8',
+                    id: '11f1cb54-94aa-593e-86a6-8389322fa481',
                 },
             })
             .expect(200)
@@ -1131,7 +1131,7 @@ describe('client', () =>
                             secret
                             authUrl
                             redirect
-                            scopes
+                            scopeOptions
                             expiredAccessToken
                             expiredRefreshToken
                             isActive
