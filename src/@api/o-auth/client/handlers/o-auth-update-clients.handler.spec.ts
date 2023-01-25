@@ -1,13 +1,13 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Test, TestingModule } from '@nestjs/testing';
-import { ICommandBus, IQueryBus } from 'aurora-ts-core';
+import { ICommandBus, IQueryBus } from '@aurora-ts/core';
 
 // custom items
 import { OAuthUpdateClientsHandler } from './o-auth-update-clients.handler';
-import { OAuthUpdateClientsInput } from '../../../../graphql';
+import { OAuthUpdateClientsInput } from '@api/graphql';
 
 // sources
-import { clients } from '@apps/o-auth/client/infrastructure/seeds/client.seed';
+import { clients } from '@app/o-auth/client/infrastructure/seeds/client.seed';
 
 describe('OAuthUpdateClientsHandler', () =>
 {

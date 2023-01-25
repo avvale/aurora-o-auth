@@ -5,6 +5,7 @@ enum OAuthClientGrantType {
     REFRESH_TOKEN
 }
 
+
 type OAuthClient
 {
     id: ID!
@@ -13,7 +14,7 @@ type OAuthClient
     secret: GraphQLString!
     authUrl: GraphQLString
     redirect: GraphQLString
-    scopes: JSON
+    scopeOptions: JSON
     expiredAccessToken: GraphQLInt
     expiredRefreshToken: GraphQLInt
     isActive: GraphQLBoolean!
@@ -33,7 +34,7 @@ input OAuthCreateClientInput
     secret: GraphQLString!
     authUrl: GraphQLString
     redirect: GraphQLString
-    scopes: JSON
+    scopeOptions: JSON
     expiredAccessToken: GraphQLInt
     expiredRefreshToken: GraphQLInt
     isActive: GraphQLBoolean!
@@ -49,7 +50,7 @@ input OAuthUpdateClientByIdInput
     secret: GraphQLString
     authUrl: GraphQLString
     redirect: GraphQLString
-    scopes: JSON
+    scopeOptions: JSON
     expiredAccessToken: GraphQLInt
     expiredRefreshToken: GraphQLInt
     isActive: GraphQLBoolean
@@ -65,7 +66,7 @@ input OAuthUpdateClientsInput
     secret: GraphQLString
     authUrl: GraphQLString
     redirect: GraphQLString
-    scopes: JSON
+    scopeOptions: JSON
     expiredAccessToken: GraphQLInt
     expiredRefreshToken: GraphQLInt
     isActive: GraphQLBoolean
@@ -75,18 +76,61 @@ input OAuthUpdateClientsInput
 
 type Query
 {
-    oAuthFindClient(query: QueryStatement constraint: QueryStatement): OAuthClient
-    oAuthFindClientById(id: ID constraint: QueryStatement): OAuthClient
-    oAuthGetClients(query: QueryStatement constraint: QueryStatement): [OAuthClient]!
-    oAuthPaginateClients(query: QueryStatement constraint: QueryStatement): Pagination!
+    oAuthFindClient(
+        query: QueryStatement
+        constraint: QueryStatement
+    ): OAuthClient
+
+    oAuthFindClientById(
+        id: ID
+        constraint: QueryStatement
+    ): OAuthClient
+
+    oAuthGetClients(
+        query: QueryStatement
+        constraint: QueryStatement
+    ): [OAuthClient]!
+
+    oAuthPaginateClients(
+        query: QueryStatement
+        constraint: QueryStatement
+    ): Pagination!
+
 }
 
 type Mutation
 {
-    oAuthCreateClient(payload: OAuthCreateClientInput!): OAuthClient
-    oAuthCreateClients(payload: [OAuthCreateClientInput]!): Boolean!
-    oAuthUpdateClientById(payload: OAuthUpdateClientByIdInput! constraint: QueryStatement): OAuthClient
-    oAuthUpdateClients(payload: OAuthUpdateClientsInput! query: QueryStatement constraint: QueryStatement): [OAuthClient]!
-    oAuthDeleteClientById(id: ID! constraint: QueryStatement): OAuthClient
-    oAuthDeleteClients(query: QueryStatement constraint: QueryStatement): [OAuthClient]!
+    oAuthCreateClient(
+        payload: OAuthCreateClientInput!
+    ): OAuthClient
+
+    oAuthCreateClients(
+        payload: [OAuthCreateClientInput]!
+    ): Boolean!
+
+    oAuthUpdateClientById(
+        payload: OAuthUpdateClientByIdInput!
+        constraint: QueryStatement
+    ): OAuthClient
+
+    oAuthUpdateClients(
+        payload: OAuthUpdateClientsInput!
+        query: QueryStatement
+        constraint: QueryStatement
+    ): [OAuthClient]!
+
+    oAuthUpsertClient(
+        payload: OAuthUpdateClientByIdInput!
+    ): OAuthClient
+
+    oAuthDeleteClientById(
+        id: ID!
+        constraint: QueryStatement
+    ): OAuthClient
+
+    oAuthDeleteClients(
+        query: QueryStatement
+        constraint: QueryStatement
+    ): [OAuthClient]!
+
 }

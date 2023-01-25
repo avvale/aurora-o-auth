@@ -1,10 +1,10 @@
 import { Injectable } from '@nestjs/common';
-import { ICommandBus, IQueryBus, QueryStatement } from 'aurora-ts-core';
+import { ICommandBus, IQueryBus, QueryStatement } from '@aurora-ts/core';
 
-// @apps
-import { GetClientsQuery } from '@apps/o-auth/client/application/get/get-clients.query';
-import { DeleteClientsCommand } from '@apps/o-auth/client/application/delete/delete-clients.command';
-import { OAuthClient } from '../../../../graphql';
+// @app
+import { GetClientsQuery } from '@app/o-auth/client/application/get/get-clients.query';
+import { DeleteClientsCommand } from '@app/o-auth/client/application/delete/delete-clients.command';
+import { OAuthClient } from '@api/graphql';
 import { OAuthClientDto } from '../dto';
 
 @Injectable()
@@ -23,7 +23,13 @@ export class OAuthDeleteClientsHandler
     {
         const clients = await this.queryBus.ask(new GetClientsQuery(queryStatement, constraint, { timezone }));
 
-        await this.commandBus.dispatch(new DeleteClientsCommand(queryStatement, constraint, { timezone }));
+        await this.commandBus.dispatch(new DeleteClientsCommand(
+            queryStatement,
+            constraint,
+            {
+                timezone,
+            },
+        ));
 
         return clients;
     }

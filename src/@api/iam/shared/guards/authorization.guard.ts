@@ -1,4 +1,4 @@
-import { Injectable, CanActivate, ExecutionContext } from '@nestjs/common';
+import { Injectable, CanActivate, ExecutionContext, UnauthorizedException } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
 import { GqlExecutionContext } from '@nestjs/graphql';
 import { Observable } from 'rxjs';
@@ -18,12 +18,24 @@ export class AuthorizationGuard implements CanActivate
         if (context['contextType'] === 'graphql')
         {
             const ctx = GqlExecutionContext.create(context);
-            return permissions.every(permission => ctx.getContext().req.user.dPermissions.all?.includes(permission));
+            if (permissions.every(permission => ctx.getContext().req.user.dPermissions.all?.includes(permission))) return true;
+
+            throw new UnauthorizedException({
+                statusCode: 403,
+                message   : 'Forbidden resource, requires the following permissions ' + permissions.join(', '),
+                error     : 'Forbidden',
+            });
         }
         else if (context['contextType'] === 'http')
         {
             const ctx = context.switchToHttp();
-            return permissions.every(permission => ctx.getRequest().user.dPermissions.all?.includes(permission));
+            if (permissions.every(permission => ctx.getRequest().user.dPermissions.all?.includes(permission))) return true;
+
+            throw new UnauthorizedException({
+                statusCode: 403,
+                message   : 'Forbidden resource, requires the following permissions ' + permissions.join(', '),
+                error     : 'Forbidden',
+            });
         }
     }
 }

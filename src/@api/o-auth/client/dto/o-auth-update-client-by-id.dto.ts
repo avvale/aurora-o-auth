@@ -1,6 +1,6 @@
 /* eslint-disable indent */
 import { ApiProperty } from '@nestjs/swagger';
-import { OAuthClientGrantType } from '../../../../graphql';
+import { OAuthClientGrantType } from '@api/graphql';
 
 export class OAuthUpdateClientByIdDto
 {
@@ -43,9 +43,9 @@ export class OAuthUpdateClientByIdDto
 
     @ApiProperty({
         type       : Object,
-        description: 'scopes [input here api field description]',
+        description: 'scopeOptions [input here api field description]',
     })
-    scopes?: any;
+    scopeOptions?: any;
 
     @ApiProperty({
         type       : Number,

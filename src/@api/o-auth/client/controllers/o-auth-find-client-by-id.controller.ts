@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/explicit-function-return-type */
 import { Body, Controller, HttpCode, Param, Post, UseGuards } from '@nestjs/common';
 import { ApiTags, ApiOkResponse, ApiOperation } from '@nestjs/swagger';
-import { QueryStatement, Timezone } from 'aurora-ts-core';
+import { QueryStatement, Timezone } from '@aurora-ts/core';
 import { OAuthClientDto } from '../dto';
 
 // authorization
@@ -9,7 +9,7 @@ import { Permissions } from '@api/iam/shared/decorators/permissions.decorator';
 import { AuthenticationJwtGuard } from '@api/o-auth/shared/guards/authentication-jwt.guard';
 import { AuthorizationGuard } from '@api/iam/shared/guards/authorization.guard';
 
-// @apps
+// @app
 import { OAuthFindClientByIdHandler } from '../handlers/o-auth-find-client-by-id.handler';
 
 @ApiTags('[o-auth] client')
@@ -25,7 +25,7 @@ export class OAuthFindClientByIdController
     @Post(':id')
     @HttpCode(200)
     @ApiOperation({ summary: 'Find client by id' })
-    @ApiOkResponse({ description: 'The record has been successfully created.', type: OAuthClientDto })
+    @ApiOkResponse({ description: 'The record has been successfully requested.', type: OAuthClientDto })
     async main(
         @Param('id') id: string,
         @Body('constraint') constraint?: QueryStatement,

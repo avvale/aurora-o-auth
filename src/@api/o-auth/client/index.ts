@@ -7,6 +7,7 @@ import { OAuthFindClientByIdController } from './controllers/o-auth-find-client-
 import { OAuthFindClientController } from './controllers/o-auth-find-client.controller';
 import { OAuthUpdateClientByIdController } from './controllers/o-auth-update-client-by-id.controller';
 import { OAuthUpdateClientsController } from './controllers/o-auth-update-clients.controller';
+import { OAuthUpsertClientController } from './controllers/o-auth-upsert-client.controller';
 import { OAuthDeleteClientByIdController } from './controllers/o-auth-delete-client-by-id.controller';
 import { OAuthDeleteClientsController } from './controllers/o-auth-delete-clients.controller';
 
@@ -19,6 +20,7 @@ import { OAuthFindClientByIdResolver } from './resolvers/o-auth-find-client-by-i
 import { OAuthFindClientResolver } from './resolvers/o-auth-find-client.resolver';
 import { OAuthUpdateClientByIdResolver } from './resolvers/o-auth-update-client-by-id.resolver';
 import { OAuthUpdateClientsResolver } from './resolvers/o-auth-update-clients.resolver';
+import { OAuthUpsertClientResolver } from './resolvers/o-auth-upsert-client.resolver';
 import { OAuthDeleteClientByIdResolver } from './resolvers/o-auth-delete-client-by-id.resolver';
 import { OAuthDeleteClientsResolver } from './resolvers/o-auth-delete-clients.resolver';
 
@@ -31,8 +33,12 @@ import { OAuthFindClientByIdHandler } from './handlers/o-auth-find-client-by-id.
 import { OAuthFindClientHandler } from './handlers/o-auth-find-client.handler';
 import { OAuthUpdateClientByIdHandler } from './handlers/o-auth-update-client-by-id.handler';
 import { OAuthUpdateClientsHandler } from './handlers/o-auth-update-clients.handler';
+import { OAuthUpsertClientHandler } from './handlers/o-auth-upsert-client.handler';
 import { OAuthDeleteClientByIdHandler } from './handlers/o-auth-delete-client-by-id.handler';
 import { OAuthDeleteClientsHandler } from './handlers/o-auth-delete-clients.handler';
+
+// seeder
+import { OAuthClientSeeder } from './seeder/o-auth-client.seeder';
 
 export const OAuthClientControllers = [
     OAuthCreateClientController,
@@ -43,6 +49,7 @@ export const OAuthClientControllers = [
     OAuthFindClientController,
     OAuthUpdateClientByIdController,
     OAuthUpdateClientsController,
+    OAuthUpsertClientController,
     OAuthDeleteClientByIdController,
     OAuthDeleteClientsController,
 ];
@@ -56,6 +63,7 @@ export const OAuthClientResolvers = [
     OAuthFindClientResolver,
     OAuthUpdateClientByIdResolver,
     OAuthUpdateClientsResolver,
+    OAuthUpsertClientResolver,
     OAuthDeleteClientByIdResolver,
     OAuthDeleteClientsResolver,
 ];
@@ -69,6 +77,11 @@ export const OAuthClientApiHandlers = [
     OAuthFindClientHandler,
     OAuthUpdateClientByIdHandler,
     OAuthUpdateClientsHandler,
+    OAuthUpsertClientHandler,
     OAuthDeleteClientByIdHandler,
     OAuthDeleteClientsHandler,
+];
+
+export const OAuthClientServices = [
+    OAuthClientSeeder,
 ];
